@@ -9,13 +9,28 @@ import Banner from './components/commont/banner/banner';
 import Ad from './components/commont/banner/ad';
 //标题
 import Title from './components/commont/content/title';
+//内容
+import Content from './components/commont/content/cont';
+//经典排行榜
+import Classical from './components/commont/content/Classical';
+//专题阅读
+import Special from './components/commont/content/special';
+
+//数据
+import Main from './data/main';
 class App extends Component {
 	constructor(){
 		super();
 		this.state = {
-			
+			Data:null
 		}
 	}
+	
+	componentDidMount(){
+//		Main(this,this.state.Data)
+	}
+	
+	
   render() {
 //	header--start//导航条  
     return (
@@ -36,9 +51,27 @@ class App extends Component {
 	        	<Title/>
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
-	        			
+	        			<Content />
 	        		</ul>
 	        	</div>
+	        </section>
+	        
+	        <section className="m-list-box clearfix">
+	        	<Ad />
+	        </section>
+	     
+	        <section className="m-list-box subject-box">    
+	        	<Title/>
+	        	<div className="m-book-list">
+            		<ul className="clearfix">
+	        			<Classical />
+	        		</ul>
+	        	</div>
+	        </section>
+	        
+	        <section className="m-list-box subject-box">    
+	        	<Title />
+	        	<Special />
 	        </section>
 		</div>
     );
