@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import Nav from './components/index/nav.js';
-import TitleList from './components/index/titleList.js';
-import Banner from './components/index/banner.js';
+//头部
+import Nav from './components/commont/nav/nav';
+//列表
+import TitleList from './components/commont/nav/titleList';
+//banner
+import Banner from './components/commont/banner/banner';
+//广告
+import Ad from './components/commont/banner/ad';
+//标题
+import Title from './components/commont/content/title';
 class App extends Component {
 	constructor(){
 		super();
@@ -14,10 +21,8 @@ class App extends Component {
     return (
   		<div>
 			<header>
-			
 		        <Nav>注释:头部导航条</Nav>
-		     
-				<TitleList />
+				<TitleList>注释:头部导航条列表</TitleList>
 	    	</header>
 	    	
 	    	<Banner />
@@ -27,7 +32,14 @@ class App extends Component {
 	          	<a href="/shelf/read.do" className="shelf" >书架</a> 
 	          	<i className="sep"></i>          
 	        </div>
-	        
+	        <section className="m-list-box">
+	        	<Title/>
+	        	<div className="m-book-list">
+	        		<ul className="clearfix">
+	        			
+	        		</ul>
+	        	</div>
+	        </section>
 		</div>
     );
 //  header--end
