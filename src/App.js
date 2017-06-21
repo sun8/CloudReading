@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //头部
 import Nav from './components/commont/nav/nav';
 //列表
-import TitleList from './components/commont/nav/titleList';
+import Titlelist from './components/commont/nav/titleList';
 //banner
 import Banner from './components/commont/banner/banner';
 //广告
@@ -17,41 +17,87 @@ import Classical from './components/commont/content/Classical';
 import Special from './components/commont/content/special';
 
 //数据
-import Main from './data/main';
+import $ from 'jquery';
+//import main from './data/main';
 class App extends Component {
 	constructor(){
 		super();
 		this.state = {
-			Data:null
+			list:null
 		}
 	}
 	
 	componentDidMount(){
-//		Main(this,this.state.Data)
+		let _this = this; 
+		$.ajax({
+			url:'https://n.bjtrm.com/myproject/Book/GetData',
+			dataType:'jsonp',
+			callback:'test',
+			success:function(data){
+				_this.setState({
+		          list:data
+		       	})
+				console.log(data)
+			}
+		});
+		
+		
+		
 	}
 	
 	
   render() {
-//	header--start//导航条  
+  	let arrZbtj = null;
+  	if(this.state.list){
+  		
+		let {zbtj} = this.state.list;
+		console.log(zbtj)
+		arrZbtj = zbtj.content.map((e,i)=>{
+      		let data = {
+		        key:e.id,
+		        imgUrl:e.img_url,
+		        username:e.username,
+				name:e.name
+	    	}
+      	return <Content {...data} />
+	    });
+  		
+  	}
+  	
+	
+//	let {zbtj} = this.state.list;
+//	let {zbtj} = this.state.list;
+//	let arrZbtj = content.map((e,i)=>{
+//    let data = {
+//      key:i,
+//      imgUrl:e.img_url,
+//      username:e.username,
+//		name:e.name
+//
+//    }
+//    return <Content {...data} />
+//  });
+  	
+
     return (
   		<div>
 			<header>
 		        <Nav>注释:头部导航条</Nav>
-				<TitleList>注释:头部导航条列表</TitleList>
+				<Titlelist>注释:头部导航条列表</Titlelist>
 	    	</header>
 	    	
 	    	<Banner />
 	    	<div className="m-last-book clearfix">  
 	        	<span>还没有最近阅读的书籍哟</span>
 	          	<a href="" className="j-gap last-book" ></a>
-	          	<a href="/shelf/read.do" className="shelf" >书架</a> 
+	          	<a href="javascript:;" className="shelf" >书架</a> 
 	          	<i className="sep"></i>          
 	        </div>
 	        <section className="m-list-box">
-	        	<Title/>
+	        	<Title />
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
-	        			<Content />
+						{arrZbtj}
 	        		</ul>
 	        	</div>
 	        </section>
@@ -75,7 +121,7 @@ class App extends Component {
 	        </section>
 		</div>
     );
-//  header--end
+
   }
 }
 

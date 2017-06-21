@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 //    <!--内容列表--start-->
 class Content extends Component {
+	constructor(props){
+    super(props)
+  }
+	
+	
   render() {
     return (
-			<li>
-        <a href="bookDetails.html" className="pic">
-        	<img src={require('../../../img/1.jpg')}  alt="24个比利" />
-        </a>
-        <a href=""  className="info">
-            <h4>24个比利</h4>
-            <span>【美】丹尼尔·凯斯</span>
-        </a>
+		<li>
+	        <a href="bookDetails.html" className="pic">
+	        	<img src={this.props.imgUrl}  alt={this.props.name} />
+	        </a>
+	        <a href=""  className="info">
+	            <h4>{this.props.name}</h4>
+	            <span>{this.props.username}</span>
+	        </a>
     	</li>
 
     );

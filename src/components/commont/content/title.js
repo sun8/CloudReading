@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 //<!--内容标题-->
 class Title extends Component {
+	constructor(props){
+    super(props)
+  }
   render() {
     return (
 			<h3 className="clearfix">

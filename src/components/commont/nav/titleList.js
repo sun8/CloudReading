@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //头部导航列表
-class TitleList extends Component {
+class Titlelist extends Component {
 	
   render() {
     return (
@@ -35,4 +35,4 @@ class TitleList extends Component {
   }
 }
 
-export default TitleList;
+export default Titlelist;

@@ -1,14 +1,15 @@
 
 //import $ from 'jquery';
-//export default function (that,Data){
+//export default function(){
+//	let Data = null;
 //	$.ajax({
-//		url:'http://n.bjtrm.com/myproject/Book/GetData',
+//		url:'https://n.bjtrm.com/myproject/Book/GetData?',
 //		dataType:'jsonp',
-//		callback:'callback',
+//		callback:'test',
 //		success:function(data){
-//			that.setState({
-//            Data:data
-//         })
+//			Data = data
+//			console.log(1)
+//			console.log(data)
 //		}
 //	});
 //	
