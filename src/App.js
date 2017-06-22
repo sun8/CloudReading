@@ -15,24 +15,34 @@ import Content from './components/commont/content/cont';
 import Classical from './components/commont/content/Classical';
 //专题阅读
 import Special from './components/commont/content/special';
+//下载客户端
+import Down from './components/different/down';
+//footer底部
+import Footer from './components/commont/footer/footer';
 
 //数据
 import $ from 'jquery';
 //import main from './data/main';
+
+//路由
+//import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
+
+
 class App extends Component {
 	constructor(){
 		super();
 		this.state = {
-			list:null
+			list:null,
+			banner:null
 		}
 	}
 	
 	componentDidMount(){
 		let _this = this; 
 		$.ajax({
-			url:'https://n.bjtrm.com/myproject/Book/GetData',
+			url:'https://n.bjtrm.com/myproject/Book/GetData?',
 			dataType:'jsonp',
-			callback:'test',
+			callback:'list',
 			success:function(data){
 				_this.setState({
 		          list:data
@@ -44,40 +54,59 @@ class App extends Component {
 		
 		
 	}
-	
-	
-  render() {
-  	let arrZbtj = null;
-  	if(this.state.list){
-  		
-		let {zbtj} = this.state.list;
-		console.log(zbtj)
-		arrZbtj = zbtj.content.map((e,i)=>{
-      		let data = {
+
+	cont(data){
+		
+		let Data = this.state.list[data];
+		let title = Data.title;
+		
+		let arr = Data.content.map((e,i)=>{
+      		let dataA = {
 		        key:e.id,
 		        imgUrl:e.img_url,
 		        username:e.username,
 				name:e.name
 	    	}
-      	return <Content {...data} />
+      		if(data ==='jdph'){
+      			return <Classical {...dataA} />
+      		}else{
+      			return <Content {...dataA} />
+      		}
+      		
 	    });
+		
+		return {
+			arr:arr,
+			title:title
+		}
+	}
+	
+  render() {
+	let arrZbtj = null;
+	let title = null;
+	let arrXssj = null;
+	let titleX = null;
+	let arrJdph = null;
+	let titleJ = null;
+  	console.log(2)
+  	if(this.state.list){
+  		console.log(1)
   		
+  		arrZbtj = this.cont('zbtj').arr;
+		title = this.cont('zbtj').title;
+  		
+  		arrXssj = this.cont('xssj').arr;
+		titleX = this.cont('xssj').title;
+  			
+  		arrJdph = this.cont('jdph').arr;
+		titleJ = this.cont('jdph').title;	
+  			
+  			
   	}
   	
-	
-//	let {zbtj} = this.state.list;
-//	let {zbtj} = this.state.list;
-//	let arrZbtj = content.map((e,i)=>{
-//    let data = {
-//      key:i,
-//      imgUrl:e.img_url,
-//      username:e.username,
-//		name:e.name
-//
-//    }
-//    return <Content {...data} />
-//  });
   	
+	
+
 
     return (
   		<div>
@@ -86,7 +115,7 @@ class App extends Component {
 				<Titlelist>注释:头部导航条列表</Titlelist>
 	    	</header>
 	    	
-	    	<Banner />
+	    	<Banner>轮播图</Banner>
 	    	<div className="m-last-book clearfix">  
 	        	<span>还没有最近阅读的书籍哟</span>
 	          	<a href="" className="j-gap last-book" ></a>
@@ -94,7 +123,7 @@ class App extends Component {
 	          	<i className="sep"></i>          
 	        </div>
 	        <section className="m-list-box">
-	        	<Title />
+	        	<Title title={title}/>
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
 						{arrZbtj}
@@ -102,15 +131,24 @@ class App extends Component {
 	        	</div>
 	        </section>
 	        
-	        <section className="m-list-box clearfix">
-	        	<Ad />
-	        </section>
 	     
+	        <Ad>两条广告</Ad>
+	     
+	     	
+	     	<section className="m-list-box">
+	        	<Title title={titleX}/>
+	        	<div className="m-book-list">
+	        		<ul className="clearfix">
+						{arrXssj}
+	        		</ul>
+	        	</div>
+	        </section>
+	     	
 	        <section className="m-list-box subject-box">    
-	        	<Title/>
+	        	<Title title={titleJ}/>
 	        	<div className="m-book-list">
             		<ul className="clearfix">
-	        			<Classical />
+	        			{arrJdph}
 	        		</ul>
 	        	</div>
 	        </section>
@@ -119,10 +157,29 @@ class App extends Component {
 	        	<Title />
 	        	<Special />
 	        </section>
+	        
+	        <Down>下载和搜索</Down>
+	        
+	        <Footer>底部</Footer>
+	        
+	        
+	        <div className="m-dl-tip" id="close">
+	        	<img src={require('./img/download.png')} />
+	        	<a href="javascript:;" className="close" onClick={this.close}></a>
+	        </div>
+	        
 		</div>
     );
 
   }
+
+  close(){
+  	$('#close').css('display','none');
+  }
+
+
+
+
 }
 
 export default App;

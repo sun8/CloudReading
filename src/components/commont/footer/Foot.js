@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+//				<!--footer--start-->
 class Foot extends Component {
   render() {
     return (
-//				<!--footer--start-->
-		   	<footer>
+
+		  <footer>
 				<nav className="channel">
 					<a href="/yc">男生</a>
 					<a href="/ycmm">女生</a>
@@ -20,7 +21,7 @@ class Foot extends Component {
 				</nav>
 				<div className="m-right"><p>网易公司版权所有©1997-2017</p></div>
 			</footer>
-// 	<!--footer--end-->
+
     );
   }
 }

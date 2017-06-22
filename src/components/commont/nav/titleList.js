@@ -3,31 +3,16 @@ import React, { Component } from 'react';
 class Titlelist extends Component {
 	
   render() {
+  	let arr = ['男频','女频','出版','分类','免费','口味','排行'];
+  	let Arr = arr.map((e,i)=>{
+  		return <li key={i}><a  href="" >{e}</a></li>
+  	})
+  	
     return (
     	
 		<ul className="menu clearfix">
-	    	<li>
-	        	<a  href="man.html" >男频</a>
-	        </li>
-	        <li>
-	        	<a href="man.html" >女频</a>
-	        </li>
-	        <li>
-	        	<a  href="index.html" >出版</a>
-	        </li>
-	        <li>
-	        	<a  href="classNameify.html" >分类</a>
-	        </li>
-	        <li>
-	        	<a href="free.html" >免费</a>
-	        </li>
-	        <li>
-	        	<a  href="taste.html" >口味</a>
-	        </li>
-	        <li>
-	        	<a  href="ranking.html" >排行</a>
-	        </li>
-	        <li>
+	    	{Arr}
+	        <li key="8">
 	        	<a href="account.html" className="recharge" >充值</a>
 	        </li>           
     	</ul>

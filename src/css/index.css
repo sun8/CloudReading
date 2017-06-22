@@ -162,6 +162,7 @@ h6 {
 /*标题*/
 .m-list-box {
   padding: 0.575rem;
+  padding-bottom: 0;
   margin-bottom: 0.45rem;
   background-color: #fff;
 }
@@ -209,21 +210,16 @@ h6 {
   -webkit-transition: opacity .5s;
   -o-transition: opacity .5s;
 }
-.m-book-list ul {
-  margin-bottom: 0.75rem;
-}
 .m-book-list ul li:nth-of-type(3),
-.m-book-list ul li:nth-last-of-type {
+.m-book-list ul li:nth-of-type(6) {
   margin: 0;
 }
 .m-book-list li {
   position: relative;
   float: left;
   width: 30%;
+  margin-bottom: 0.75rem;
   margin-right: 5%;
-}
-.m-book-list ul:nth-last-child {
-  margin: 0;
 }
 a.pic {
   display: block;
@@ -260,6 +256,9 @@ a.info span {
   white-space: nowrap;
 }
 /*作品欣赏*/
+.sbanner:nth-of-type(2) {
+  margin: 0;
+}
 .sbanner {
   width: 48%;
   margin-right: 4%;
@@ -401,6 +400,24 @@ a.delete {
   z-index: 4999;
   background: url(../img/up-1.png) 0 0;
   background-size: 100% 100%;
+}
+/*固定定位*/
+.m-dl-tip {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+}
+.m-dl-tip img {
+  width: 100%;
+  display: block;
+}
+.m-dl-tip .close {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10%;
+  height: 100%;
 }
 /*footer底部*/
 footer {
