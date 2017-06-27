@@ -95,12 +95,17 @@ h6 {
   color: #3b352d;
 }
 .menu a {
-  width: 2.25rem;
-  height: 0.9rem;
+  width: 2.75rem;
+  height: 1.05rem;
   line-height: 0.9rem;
   display: block;
   text-align: center;
   margin: 0.15rem auto;
+}
+.menu a.crt {
+  background: #ed6460;
+  border-radius: 0.125rem;
+  color: #fff;
 }
 .menu .recharge {
   width: 2.65rem;
@@ -162,7 +167,6 @@ h6 {
 /*标题*/
 .m-list-box {
   padding: 0.575rem;
-  padding-bottom: 0;
   margin-bottom: 0.45rem;
   background-color: #fff;
 }
@@ -406,7 +410,7 @@ a.delete {
   width: 100%;
   position: fixed;
   bottom: 0;
-  z-index: 9999;
+  z-index: 11;
 }
 .m-dl-tip img {
   width: 100%;

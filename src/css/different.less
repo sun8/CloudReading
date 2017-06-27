@@ -252,18 +252,18 @@
     margin-right: 22/@rem;
 }
 /*loading*/
-.u-loading {
+#u-loading {
     height: 53/@rem;
     line-height: 53/@rem;
     font-size: 24/@rem;
     color: #333;
     text-align: center;
 }
-.u-loading>b {
+#u-loading>b {
     display: inline-block;
     width: 24/@rem;
     height: 24/@rem;
-//  background: url() 0 0 no-repeat;
+    background: url(../img/load1.gif) 0 0 no-repeat;
     background-size: 24/@rem 24/@rem;
 }
 /*列表*/
@@ -425,7 +425,7 @@ span.abstract {
         width: 84%;
         padding: 0;
     }
-    button {
+    i {
         width: 76/@rem;
         height: 42/@rem;
         border: none;
@@ -553,7 +553,7 @@ nav.channel {
 .m-introduction .content {
     font-size: 21/@rem;
     color: #545454;
-    line-height: 21/@rem;
+    line-height: 28/@rem;
     -webkit-line-clamp: 3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -579,8 +579,8 @@ nav.channel {
     background-size: 100% 100%;
 }
 /*内容列表*/
-.book {
-    padding: 23/@rem 0;
+.m-booklist .book {
+    padding: 24/@rem 0;
     margin: 0 4.6%;
     border-bottom: 2/@rem solid #e8e7e6;
 }
@@ -676,11 +676,7 @@ nav.channel {
         text-align: center;
         border-bottom: #dcdcdc solid 2/@rem;
     }
-    a.crt {
-        height: 62/@rem;
-        border-bottom: #c9483c solid 4/@rem;
-        color: #c9483c;
-    }
+   
 }
 
 /*内容*/
@@ -774,3 +770,52 @@ nav.channel {
 
 
 /*========分类跳转(样式)==end======*/
+
+/*搜素*/
+.search-bookele {
+    position: relative;
+    background-color: #fff;
+}
+.search-bookele a.wrap1 {
+    position: relative;
+    display: block;
+    padding: 26/@rem 23/@rem;
+}
+.search-bookele img.img {
+    width: 113/@rem;
+    height: 158/@rem;
+    float: left;
+    margin: 0 40/@rem 0 0;
+}
+.search-bookele h3 {
+    font-size: 24/@rem;
+    line-height: 27/@rem;
+    height: 27/@rem;
+    overflow: hidden;
+    word-break: break-all;
+    font-weight: normal;
+    color: #6c6358;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-bottom: 9/@rem;
+}
+.search-bookele p {
+    color: #aba59a;
+    line-height: 24/@rem;
+    height: 24/@rem;
+    overflow: hidden;
+    font-size: 18/@rem;
+    margin-bottom: 8/@rem
+}
+.search-bookele span.abstract1 {
+    padding-top: 6/@rem;
+    height: 57/@rem;
+    line-height: 28.5/@rem;
+    color: #807a73;
+    font-size: 21/@rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

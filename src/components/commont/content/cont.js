@@ -9,7 +9,7 @@ class Content extends Component {
   render() {
     return (
 		<li>
-	        <a href="bookDetails.html" className="pic">
+	        <a href="" className="pic">
 	        	<img src={this.props.imgUrl}  alt={this.props.name} />
 	        </a>
 	        <a href=""  className="info">

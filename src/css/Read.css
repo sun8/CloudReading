@@ -5,7 +5,7 @@ button,
 select,
 keygen,
 legend {
-  font-size: 0.45rem;
+  font-size: 0.55rem;
   line-height: 1.14;
   color: #333;
   outline: 0;
@@ -200,7 +200,14 @@ li {
   z-index: 12;
   background: rgba(0, 0, 0, 0.5);
   text-align: center;
-  display: none;
+}
+#loading {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 12;
+  display: block;
 }
 .guide p {
   color: #ccc;

@@ -11,7 +11,7 @@ class Title extends Component {
 	        	<em className="sep"></em>
 	        	<span className="gradient">{this.props.title}</span>
 	        </strong>
-	        <a href="more.html" className="more" >更多
+	        <a href="/more" className="more" >更多
 	        	<em className="m-arrow"></em>
 	        </a>
     	</h3> 

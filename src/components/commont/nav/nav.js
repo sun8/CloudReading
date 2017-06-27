@@ -4,12 +4,13 @@ import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 class Nav extends Component {
   render() {
     return (
+    
     	
 			<section className="head clearfix">
         <h1 className="logo">网易云阅读</h1>
-        <a href="/client" className="download" >下载APP</a>
+        <a href="javascript:;" className="download" >下载APP</a>
         <div className="headR">
-        	<a href="search.html"  className="search fl" >搜索</a>
+        	<Link to="/search" className="search fl" >搜索</Link>
         	<i className="sep fl"></i>
         	<Link to="/account" className="account fl">
         		帐户
