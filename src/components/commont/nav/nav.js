@@ -10,7 +10,7 @@ class Nav extends Component {
         <h1 className="logo">网易云阅读</h1>
         <a href="javascript:;" className="download" >下载APP</a>
         <div className="headR">
-        	<Link to="/search" className="search fl" >搜索</Link>
+        	<Link to="/search/cont" className="search fl" >搜索</Link>
         	<i className="sep fl"></i>
         	<Link to="/account" className="account fl">
         		帐户

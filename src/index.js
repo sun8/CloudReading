@@ -1,27 +1,19 @@
 //依赖的跟目录
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Link, Switch} from 'react-router-dom';
 //主页出版
 import App from './App';
 //注册
 import Account from './root/account';
 //搜索
 import Search from './root/search';
-//男频
-import Boy from './root/boy';
-//分类
-import Classification from './root/classification';
-//免费
-import Free from './root/free';
+
+//搜索
+// import BookDetails from './root/bookDetails';
+
 //更多
 import More from './root/more';
-//专题
-import Special from './root/special';
-//口味
-import Taste from './root/taste';
-//排行
-import Ranking from './root/ranking';
 import registerServiceWorker from './registerServiceWorker';
 
 require('./css/reset.css');
@@ -35,20 +27,25 @@ require('./css/Read.css');
 ReactDOM.render(
 	<Router>
 	    <div>
-	      <switch>
-			<Route  path="/ranking" component={Ranking}/>
+	      <Switch>
+			{/*<Route  path="/ranking" component={Ranking}/>
 			<Route  path="/taste" component={Taste}/>
 			<Route  path="/special" component={Special}/>
-			<Route  path="/more" component={More}/>
+			
 	      	<Route  path="/free" component={Free}/>
 	      	<Route  path="/classification" component={Classification}/>
-	      	<Route  path="/girl" component={Boy}/>
+	      	<Route  path="/girl" component={Girl}/>
 	      	<Route  path="/boy" component={Boy}/>
-	      	<Route  path="/search" component={Search}/>
-	      	<Route  path="/account" component={Account}/>
-	      	<Route  path="/publish" component={App}/>
-	      	<Route exact path="/" component={App}/>
-	      </switch>
+	      	
+	      	*/}
+			  
+			{/*<Route  path="/bookDetails" component={BookDetails}/>*/}
+			<Route  path="/more" component={More}/>
+			<Route  path="/account" component={Account}/>
+			<Route  path="/search" component={Search}/>
+			<Route  path="/" component={App}/>
+	      </Switch>
+		  	
 	    </div>
   	</Router>
   ,

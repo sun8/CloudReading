@@ -46,13 +46,6 @@ class Classification extends Component {
 	
     return (
   		<div className="wrap">
-			<header>
-		        <Nav>注释:头部导航条</Nav>
-				<Titlelist name={'classification'}>注释:头部导航条列表</Titlelist>
-	    	</header>
-	    	
-	    	 
-        
 		<section className="m-lib men">
 			<h3><a href=""><em className="sep"></em>男生小说</a></h3>
 			<table><tbody>

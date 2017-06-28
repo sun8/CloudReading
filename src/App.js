@@ -5,17 +5,35 @@ import Nav from './components/commont/nav/nav';
 import Titlelist from './components/commont/nav/titleList';
 //大盒子内容的切换
 import Publish from './root/publish';
-//下载客户端
-import Down from './components/different/down';
-//footer底部
-import Footer from './components/commont/footer/footer';
+
+
+
+//男频
+import Boy from './root/boy';
+//女频
+import Girl from './root/girl';
+//分类
+import Classification from './root/classification';
+//免费
+import Free from './root/free';
+
+//专题
+import Special from './root/special';
+//口味
+import Taste from './root/taste';
+//排行
+import Ranking from './root/ranking';
+
+
+
+
 
 //数据
 import $ from 'jquery';
 //import main from './data/main';
 
 //路由
-//import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 
 class App extends Component {
 	constructor(props){
@@ -23,34 +41,51 @@ class App extends Component {
 		
 	}
 
+	// componentDidMount(){
+		
+	// }
+
+	// componentWillUnmount(){
+	// 	won.re
+	// }
+
+
+
 	
   render() {
-	
-	
+	 let {match:{path}, history,location, location:{state}} = this.props;
 	
     return (
   		<div>
 			<header>
 		        <Nav>注释:头部导航条</Nav>
-				<Titlelist name={'publish'}>注释:头部导航条列表</Titlelist>
+				<Titlelist 
+				history={history} 
+				{...{
+					location
+				}} >注释:头部导航条列表</Titlelist>
 	    	</header>
-	    	
-	    	
-	        <Publish />
+
+			<Route exact path={`/`} component={Publish}/>
+			<Route  path={`/publish`} component={Publish}/>
+			<Route  path={`/ranking`} component={Ranking}/>
+			<Route  path={`/taste`} component={Taste}/>
+			<Route  path={`/special`} component={Special}/>
+	      	<Route  path={`/free`} component={Free}/>
+	      	<Route  path={`/classification`} component={Classification}/>
+	      	<Route  path={`/girl`} component={Girl}/>
+			<Route  path={`/boy`} component={Girl}/>
 	        
-	        <Down>下载和搜索</Down>
-	        <a id="J_GoTop" className="m-gotop" href="#root"></a>
-	        <Footer>底部</Footer>
-	        
-	        
-	        <div className="m-dl-tip" id="close">
+	       
+	        {/*<img id="loading" src={require('./img/loading.gif')}/>*/}
+
+			<div className="m-dl-tip" id="close">
 	        	<img src={require('./img/download.png')} />
 	        	<a href="javascript:;" 
 	        	className="close" 
 	        	onClick={this.close}>
 	        	</a>
 	        </div>
-	        <img id="loading" src={require('./img/loading.gif')}/>
 		</div>
 		
 	

@@ -37,7 +37,6 @@ class Taste extends Component {
                 _this.setState({
                     list: data
                 })
-				console.log(data)
             }
         });
 		
@@ -70,10 +69,7 @@ class Taste extends Component {
 	
     return (
   		<div className="wrap">
-			<header>
-		        <Nav>注释:头部导航条</Nav>
-				<Titlelist name={'taste'}>注释:头部导航条列表</Titlelist>
-	    	</header>
+			
 	    	<div className="g-bd">
 			
             <div className="m-taste">

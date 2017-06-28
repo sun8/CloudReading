@@ -12,28 +12,35 @@ class Search extends Component {
     super(props);
     this.state = {
       data:null,
-      arr:null
+      arr:null,
+      value:null
     }
     this.tab = this.tab.bind(this);
     this.retuP = this.retuP.bind(this);
   }
   render() {
+    let {match:{path}, history} = this.props;
+    let {value} = this.state;
+
+
+
+    console.log(`${path}/ret`, path)
+
     return (
     	<div className="g-wrap">
-    		<SearchNav tab={this.tab} 
-    		retuP={this.retuP}/>
-    		{this.state.data?
-    			<SeachResult data={this.state.data}/>
-    			:<SearchCont retuP={this.retuP}/>}
-    		
+    		<SearchNav history={history} tab={this.tab} 
+    		/>
+        <Route path={`${path}/ret`} component={SeachResult} />
+        <Route path={`${path}/cont`} component={SearchCont} />
+    	
     		
 		</div>
     );
   }
   
-  tab(data,val){
+  tab(val){
   	this.setState({
-  		data:data
+  		value: val
   	})
   }
   

@@ -4,33 +4,42 @@ import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 import $ from 'jquery';
 //头部导航列表
 let arr = [
-  		{
+  		{	
+			id: Math.random().toString(),
   			title:'男频',
-  			name:'boy'
+  			name:'/boy',
+			data: {q:'python', fields: 'all'}
   		},
   		{
+			id: Math.random().toString(),
   			title:'女频',
-  			name:'girl'
+  			name:'/girl',
+			data: {q:'仙剑', fields: 'all'}
   		},
   		{
+			id: Math.random().toString(),
   			title:'出版',
-  			name:'publish'
+  			name:'/'
   		},
   		{
+			id: Math.random().toString(),
   			title:'分类',
-  			name:'classification'
+  			name:'/classification'
   		},
   		{
+			id: Math.random().toString(),
   			title:'免费',
-  			name:'free'
+  			name:'/free'
   		},
   		{
+			id: Math.random().toString(),
   			title:'口味',
-  			name:'taste'
+  			name:'/taste'
   		},
   		{
+			id: Math.random().toString(),
   			title:'排行',
-  			name:'ranking'
+  			name:'/ranking'
   		}
   	]
 
@@ -44,16 +53,32 @@ class Titlelist extends Component {
 	}
 	
   render() {
-  	
+  	let {history, location:{pathname}} = this.props;
   	let Arr = this.state.arr.map((e,i)=>{
-  		
-  		return <li key={i}>
-		  			<Link to={e.name}
-		  			className={this.props.name==e.name?'crt':''}
-		  			>{e.title}</Link>
-	  			</li>
-  	})
-  	console.log(this.props.name)
+
+		let {q, fields} = e.data?  e.data : {};
+
+  		return (
+		<li key={i}>
+			<a 
+				onClick={ev=>{
+					ev.preventDefault();
+					ev.stopPropagation();
+					history.push({
+						pathname: e.name,
+						state:{
+							q, fields
+						}
+					});
+				}}
+				className={e.name=== pathname ? 'crt': ''}
+				href="javascript:;"
+			>
+				{e.title}
+			</a>
+		</li>
+		);
+  	});
     return (
     	
 		<ul className="menu clearfix">

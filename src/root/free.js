@@ -44,7 +44,6 @@ class Free extends Component {
                 _this.setState({
                     timer: data
                 })
-                console.log(data)
             }
         });
 
@@ -59,7 +58,6 @@ class Free extends Component {
         if (this.state.timer) {
             //限时畅读
             let {books} = this.state.timer;
-            console.log(books)
             arrTimer = books.map((e,i)=>{
                 if(i>=3&&i<9){
                 let j ={
@@ -82,12 +80,6 @@ class Free extends Component {
 
         return ( 
             <div className = "wrap" >
-                < header >
-                    <Nav > 注释: 头部导航条 < /Nav>
-                    <Titlelist name = { 'free' } > 注释: 头部导航条列表 < /Titlelist> 
-                < /header >
-
-
                 <section className = "m-list-box" >
                     <TimeTitle title = { this.state.time }/ > 
                     <ul className = "m-free-list" >

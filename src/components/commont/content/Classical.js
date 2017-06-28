@@ -7,11 +7,11 @@ class Classical extends Component {
     	<li>
 				<em className="classical">1</em>
         <a href="" className="pic">
-        	<img src={require('../../../img/5.jpg')}  alt="24个比利" />
+        	<img src={this.props.img}  alt={this.props.title} />
         </a>
         <a href=""  className="info">
-            <h4>24个比利</h4>
-            <span>【美】丹尼尔·凯斯</span>
+            <h4>{this.props.title}</h4>
+            <span>{this.props.name}</span>
         </a>
     	</li>
 			

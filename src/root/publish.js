@@ -13,6 +13,12 @@ import Content from '../components/commont/content/cont';
 import Classical from '../components/commont/content/Classical';
 //专题阅读
 import Special from '../components/commont/content/special';
+//下载down
+import Down from '../components/different/down';
+//底部footer
+import Footer from '../components/commont/footer/footer';
+
+
 
 //数据
 import $ from 'jquery';
@@ -34,64 +40,71 @@ class Publish extends Component {
 	componentDidMount(){
 		let _this = this; 
 		$.ajax({
-			url:'https://n.bjtrm.com/myproject/Book/GetData?',
-			dataType:'jsonp',
-			callback:'list',
-			success:function(data){
-				_this.setState({
-		          list:data
-		       	})
-				console.log(111,data)
-			}
-		});
+            url: 'https://api.douban.com/v2/book/search',
+            type: 'get',
+            dataType: 'jsonp',
+            callback: 'time',
+            data:{
+                tag:'javascript',
+                fields:'all'
+            },
+            success: function(data) {
+                _this.setState({
+                    list: data
+                })
+            }
+        });
 		
 		
 		
-	}
-
-	cont(data){
-		
-		let Data = this.state.list[data];
-		let title = Data.title;
-		
-		let arr = Data.content.map((e,i)=>{
-      		let dataA = {
-		        key:e.id,
-		        imgUrl:e.img_url,
-		        username:e.username,
-				name:e.name
-	    	}
-      		if(data ==='jdph'){
-      			return <Classical {...dataA} />
-      		}else{
-      			return <Content {...dataA} />
-      		}
-      		
-	    });
-		
-		return {
-			arr:arr,
-			title:title
-		}
 	}
 	
   render() {
+	  //重磅推荐
 	let arrZbtj = null;
-	let title = null;
-	let arrXssj = null;
-	let titleX = null;
+		//经典排行榜
 	let arrJdph = null;
-	let titleJ = null;
   	if(this.state.list){
-  		//主编推荐
-  		arrZbtj = this.cont('zbtj').arr;
-		title = this.cont('zbtj').title;
-  		//新书上架
-  		arrXssj = this.cont('xssj').arr;
-		titleX = this.cont('xssj').title;
-  		//经典推荐	
-  		arrJdph = this.cont('jdph').arr;
-		titleJ = this.cont('jdph').title;	
+		let {books} = this.state.list;
+		//重磅推荐
+		arrZbtj = books.map((e,i)=>{ 
+			if(i<6){
+				let j ={
+					key:e.id,
+					id:e.id,
+					title:e.title,
+					summary:e.summary,
+					binding:e.binding,
+					name:e.subtitle,
+					img:e.images.medium
+
+				}
+				
+				return <Content {...j }/>
+			}
+		})
+		//经典排行榜
+		arrJdph = books.map((e,i)=>{ 
+			if(i>6&&i<10){
+				let j ={
+					key:e.id,
+					id:e.id,
+					title:e.title,
+					summary:e.summary,
+					binding:e.binding,
+					name:e.subtitle,
+					img:e.images.medium
+
+				}
+				
+				return <Classical {...j }/>
+			}
+		})
+
+
+
+
+
   		//loading加载中
   		$('#loading').css('display','none');
   	}
@@ -106,7 +119,7 @@ class Publish extends Component {
 	    	<Banner>轮播图</Banner>
 	    	<Readed />
 	        <section className="m-list-box">
-	        	<Title title={title}/>
+	        	<Title title={'主编推荐'}/>
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
 						{arrZbtj}
@@ -119,16 +132,16 @@ class Publish extends Component {
 	     
 	     	
 	     	<section className="m-list-box">
-	        	<Title title={titleX}/>
+	        	<Title title={'新书上线'}/>
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
-						{arrXssj}
+						{arrZbtj}
 	        		</ul>
 	        	</div>
 	        </section>
 	     	
 	        <section className="m-list-box subject-box">    
-	        	<Title title={titleJ}/>
+	        	<Title title={'经典排行榜'}/>
 	        	<div className="m-book-list">
             		<ul className="clearfix">
 	        			{arrJdph}
@@ -140,7 +153,13 @@ class Publish extends Component {
 	        	<Title title={'精彩书单'}/>
 	        	<Special />
 	        </section>
-	       
+			
+			<Down>下载和搜索</Down>
+	        <a id="J_GoTop" className="m-gotop" href="#root"></a>
+	        <Footer>底部</Footer>
+	        
+	        
+	        
 		</div>
 		
 	
@@ -148,6 +167,7 @@ class Publish extends Component {
 
   }
 
+  
 
 }
 

@@ -30,7 +30,6 @@ class Special extends Component {
                 _this.setState({
                     list: data
                 })
-                console.log(data)
             }
         });
 

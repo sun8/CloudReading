@@ -93,7 +93,6 @@ class Account extends Component {
   	let _this = this;
   	//value值为空的情况下
   	if(!$('#user').val()||!$('#pass').val()){
-  		console.log(1)
   		$('#erro').html('用户名或密码不能为空！')
   		$('#erro').css('display','block');
       _this.shake($('#erro')[0],'left',function(){
@@ -118,7 +117,6 @@ class Account extends Component {
       callback:acco,
       dataType:'jsonp',
       success:function(data){
-      	console.log(data)
         if(data[0]){
           //成功跳转
           console.log('成功')

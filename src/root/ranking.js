@@ -41,7 +41,6 @@ class Ranking extends Component {
                 _this.setState({
                     list: data
                 })
-				console.log(data)
             }
         });
 		
@@ -104,15 +103,11 @@ class Ranking extends Component {
 			
 			return <RankOne {...j}/>
 		})
-		console.log(arrLove4)
 	}
 	
     return (
   		<div className="wrap">
-			<header>
-		        <Nav>注释:头部导航条</Nav>
-				<Titlelist name={'ranking'}>注释:头部导航条列表</Titlelist>
-	    	</header>
+			
 	    	<section className="m-list-box"> 
 				<Title title={'女生排行榜'}/>
 				<ul className="m-rank-list clearfix">

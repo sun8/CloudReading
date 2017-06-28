@@ -41,7 +41,7 @@ import Down from '../components/different/down';
 import Footer from '../components/commont/footer/footer';
 
 
-class Boy extends Component {
+class Girl extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,7 +55,8 @@ class Boy extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillReceiveProps(){
+        let {q, fields} = this.props.location.state;
         let _this = this;
         
         $.ajax({
@@ -64,8 +65,33 @@ class Boy extends Component {
             dataType: 'jsonp',
             callback: 'time',
             data:{
-                q:'python',
-                fields:'all'
+                q,
+                fields
+            },
+            success: function(data) {
+                _this.setState({
+                    timer: data
+                })
+            }
+        });
+    }
+
+
+
+    componentDidMount() {
+        if(!this.props.location.state) return;
+        let {q, fields} = this.props.location.state;
+
+        let _this = this;
+        
+        $.ajax({
+            url: 'https://api.douban.com/v2/book/search',
+            type: 'get',
+            dataType: 'jsonp',
+            callback: 'time',
+            data:{
+                q,
+                fields
             },
             success: function(data) {
                 _this.setState({
@@ -76,12 +102,12 @@ class Boy extends Component {
 
     }
 
+
     render() {
         //经典排行榜
         let arrJdph = null;
         //重磅推荐
         let arrZbtj = null;
-        
         //重磅推荐列表
         let arrTimer = null;
         //限时畅读列表
@@ -93,7 +119,6 @@ class Boy extends Component {
                 if(i<4){
                     let j ={
                         key:e.id,
-                        id:e.id,
                         title:e.title,
                         img:e.images.medium,
                         summary:e.summary,
@@ -111,7 +136,6 @@ class Boy extends Component {
                 if(i>4&&i<9){
                     let j ={
                         key:e.id,
-                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -127,7 +151,6 @@ class Boy extends Component {
                 if(i>9&&i<13){
                     let j ={
                         key:e.id,
-                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -144,7 +167,6 @@ class Boy extends Component {
                 if(i>13&&i<17){
                     let j ={
                         key:e.id,
-                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -157,16 +179,13 @@ class Boy extends Component {
                 }
             })
         }
-
+        let {path} = this.props.match;
 
         return (
 
 
             <div className = "wrap" >
-                <header >
-                    <Nav > 注释: 头部导航条 < /Nav> 
-                    <Titlelist name = { 'boy' } > 注释: 头部导航条列表 < /Titlelist>
-                </header > 
+                
                 <Readed / >
                 <section className = "m-list-box" >
                     <Title title = { '重磅推荐' }/> 
@@ -252,4 +271,4 @@ class Boy extends Component {
 
 }
 
-export default Boy;
+export default Girl;
