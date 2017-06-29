@@ -42,7 +42,7 @@ class Classification extends Component {
 	
 	
   render() {
-
+	let {history,location, location:{state}} = this.props;
 	
     return (
   		<div className="wrap">
@@ -126,7 +126,7 @@ class Classification extends Component {
 	    	
 	    	
 	    	<a id="J_GoTop" className="m-gotop" href="#root"></a>
-	    	<Down>下载和搜索</Down>
+	    	<Down history={history}>下载和搜索</Down>
 		        
 		    <Footer>底部</Footer>
 		</div>

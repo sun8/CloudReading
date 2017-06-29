@@ -48,6 +48,7 @@ class Taste extends Component {
 	
   render() {
 	let arrLove = null;
+	let {history,location, location:{state}} = this.props;
 	if(this.state.list){
 		$('#u-loading').css('display','none');
 
@@ -55,6 +56,7 @@ class Taste extends Component {
 		arrLove = books.map((e,i)=>{ 
 			let j ={
 				key:e.id,
+				id:e.id,
 				title:e.title,
 				img:e.images.medium,
 				summary:e.summary,
@@ -63,7 +65,12 @@ class Taste extends Component {
 
 			}
 			
-			return <TasteCont {...j}/>
+			return <TasteCont {...j}
+				history={history} 
+					{...{
+						location
+					}}
+			/>
 		})
 	}
 	

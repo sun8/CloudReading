@@ -10,7 +10,13 @@ import Account from './root/account';
 import Search from './root/search';
 
 //搜索
-// import BookDetails from './root/bookDetails';
+import BookDetails from './root/bookDetails';
+
+//专题
+import Special from './root/special';
+
+//读书
+import Reading from './root/reading';
 
 //更多
 import More from './root/more';
@@ -38,8 +44,9 @@ ReactDOM.render(
 	      	<Route  path="/boy" component={Boy}/>
 	      	
 	      	*/}
-			  
-			{/*<Route  path="/bookDetails" component={BookDetails}/>*/}
+			<Route  path="/reading" component={Reading}/>
+			<Route  path="/bookDetails" component={BookDetails}/>
+			<Route  path="/special" component={Special}/>
 			<Route  path="/more" component={More}/>
 			<Route  path="/account" component={Account}/>
 			<Route  path="/search" component={Search}/>

@@ -60,6 +60,9 @@ class Publish extends Component {
 	}
 	
   render() {
+	
+	let {history,location, location:{state}} = this.props;
+
 	  //重磅推荐
 	let arrZbtj = null;
 		//经典排行榜
@@ -80,7 +83,12 @@ class Publish extends Component {
 
 				}
 				
-				return <Content {...j }/>
+				return <Content {...j } 
+					history={history} 
+					{...{
+						location
+					}}
+				/>
 			}
 		})
 		//经典排行榜
@@ -97,7 +105,12 @@ class Publish extends Component {
 
 				}
 				
-				return <Classical {...j }/>
+				return <Classical {...j }
+					history={history} 
+					{...{
+						location
+					}}
+				/>
 			}
 		})
 
@@ -106,7 +119,7 @@ class Publish extends Component {
 
 
   		//loading加载中
-  		$('#loading').css('display','none');
+  		$('#u-loading').css('display','none');
   	}
   	
   	
@@ -118,8 +131,12 @@ class Publish extends Component {
 			
 	    	<Banner>轮播图</Banner>
 	    	<Readed />
+			
 	        <section className="m-list-box">
 	        	<Title title={'主编推荐'}/>
+				<div id="u-loading" style={{display:'blcok'}}>
+					<b></b> 正在加载...
+				</div>
 	        	<div className="m-book-list">
 	        		<ul className="clearfix">
 						{arrZbtj}
@@ -154,7 +171,7 @@ class Publish extends Component {
 	        	<Special />
 	        </section>
 			
-			<Down>下载和搜索</Down>
+			<Down history={history}>下载和搜索</Down>
 	        <a id="J_GoTop" className="m-gotop" href="#root"></a>
 	        <Footer>底部</Footer>
 	        

@@ -7,11 +7,17 @@ class MoreTitle extends Component {
     super(props)
   }
   render() {
+		let {history:{push, goBack}} = this.props;
     return (
 			<header className="level2">
 				<section className="title clearfix">
 					<a className="mid" href="javascript:;">{this.props.title}</a>
-					<a className="left" href="/">
+					<a className="left"
+						onClick={ev=>{
+								ev.stopPropagation();
+								ev.preventDefault();
+								goBack();
+						}}>
 						<span className="ui-leftaw-2"></span>
 					</a>
 					<Link className="right" to="/">首页</Link>

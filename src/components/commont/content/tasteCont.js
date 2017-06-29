@@ -7,8 +7,19 @@ class TasteCont extends Component {
 	
 	
   render() {
+		let {id} = this.props; 
+		let {history, location:{pathname}} = this.props;
     return (
-			<div className="taste-bookele">
+			<div className="taste-bookele"
+				onClick={ev=>{
+					history.push({
+						pathname: '/bookDetails',
+						state:{
+							id
+						}
+					}); 
+				}}
+			>
 				<a className="wrap1 clearfix" href="javascript:;">
 						<img className="bookcover" src={this.props.img} alt={this.props.title} />
 						<h3>{this.props.title}</h3>

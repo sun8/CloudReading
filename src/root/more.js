@@ -44,6 +44,7 @@ class More extends Component {
 	
   render() {
 	let arrMore =null;
+	let {history} = this.props;
 	if(this.state.list){
 		let {books} = this.state.list;
 		arrMore = books.map((e,i)=>{ 
@@ -67,7 +68,7 @@ class More extends Component {
 	
     return (
   		<div className="g-wrap" >
-			<MoreTitle title={'主编推荐'}/>
+			<MoreTitle title={'主编推荐'} history={history}/>
 
 			<div className="more-bd">
             

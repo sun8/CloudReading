@@ -7,9 +7,20 @@ class RankCont extends Component {
 	
 	
   render() {
+		let {id} = this.props; 
+		let {history, location:{pathname}} = this.props;
     return (
-			<li>
-				<a href="/bookDetails">
+			<li 
+				onClick={ev=>{
+					history.push({
+						pathname: '/bookDetails',
+						state:{
+							id
+						}
+					}); 
+				}}
+			>
+				<a href="javascript:;">
 					<em className="bg2">{this.props.num}</em>
 					<span>{this.props.title} </span>                
 				</a>

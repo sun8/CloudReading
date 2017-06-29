@@ -8,8 +8,7 @@ import Publish from './root/publish';
 
 
 
-//男频
-import Boy from './root/boy';
+
 //女频
 import Girl from './root/girl';
 //分类
@@ -17,8 +16,7 @@ import Classification from './root/classification';
 //免费
 import Free from './root/free';
 
-//专题
-import Special from './root/special';
+
 //口味
 import Taste from './root/taste';
 //排行
@@ -70,16 +68,13 @@ class App extends Component {
 			<Route  path={`/publish`} component={Publish}/>
 			<Route  path={`/ranking`} component={Ranking}/>
 			<Route  path={`/taste`} component={Taste}/>
-			<Route  path={`/special`} component={Special}/>
 	      	<Route  path={`/free`} component={Free}/>
 	      	<Route  path={`/classification`} component={Classification}/>
 	      	<Route  path={`/girl`} component={Girl}/>
 			<Route  path={`/boy`} component={Girl}/>
 	        
 	       
-	        {/*<img id="loading" src={require('./img/loading.gif')}/>*/}
-
-			<div className="m-dl-tip" id="close">
+	        <div className="m-dl-tip" id="close">
 	        	<img src={require('./img/download.png')} />
 	        	<a href="javascript:;" 
 	        	className="close" 

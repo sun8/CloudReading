@@ -4,23 +4,23 @@ import $ from 'jquery';
 class Content extends Component {
 	constructor(props){
     super(props);
-		this.book = this.book.bind(this);
+		// this.book = this.book.bind(this);
   }
 	
 	
   render() {
 		let {id} = this.props; 
-
+		let {history, location:{pathname}} = this.props;
     return (
 		<li 
-			/*onClick={ev=>{
-				push({
+			onClick={ev=>{
+				history.push({
 					pathname: '/bookDetails',
 					state:{
 						id
 					}
 				}); 
-			}}*/
+			}}
 		>
 			<a href="javascript:;" className="pic" >
 				<img src={this.props.img}  alt={this.props.title} />
@@ -34,22 +34,22 @@ class Content extends Component {
     );
   }
 
-	book(){
-		let _this = this ;
+	// book(){
+	// 	let _this = this ;
 
-		$.ajax({
-			url: 'https://api.douban.com/v2/book/'+this.props.id+'',
-			type: 'get',
-			dataType: 'jsonp',
-			callback: 'time',
-			success: function(data) {
-				console.log(data);
-					// _this.setState({
-					// 		list: data
-					// })
-			}
-		});
-	}
+	// 	$.ajax({
+	// 		url: 'https://api.douban.com/v2/book/'+this.props.id+'',
+	// 		type: 'get',
+	// 		dataType: 'jsonp',
+	// 		callback: 'time',
+	// 		success: function(data) {
+	// 			console.log(data);
+	// 				// _this.setState({
+	// 				// 		list: data
+	// 				// })
+	// 		}
+	// 	});
+	// }
 
 }
 

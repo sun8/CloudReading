@@ -7,14 +7,26 @@ class Heavy extends Component {
 	
 	
   render() {
+    let {id} = this.props; 
+		let {history, location:{pathname}} = this.props;
+
     return (
     	
-		<li>
-            <a href="" className="j-gap">
-                <h4>[{this.props.binding}]{this.props.name}：{this.props.title}</h4>
-                <p>{this.props.summary}</p>
-            </a>
-        </li>	
+		<li 
+      onClick={ev=>{
+				history.push({
+					pathname: '/bookDetails',
+					state:{
+						id
+					}
+				}); 
+			}}
+    >
+      <a href="javascript:;" className="j-gap">
+          <h4>[{this.props.binding}]{this.props.name}：{this.props.title}</h4>
+          <p>{this.props.summary}</p>
+      </a>
+    </li>	
        
     );
   }

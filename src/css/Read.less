@@ -1,13 +1,14 @@
 @rem:40rem;
 body, textarea, input, button, select, keygen, legend {
-    font-size: 22/@rem;
+    font-size: 18/@rem;
     line-height: 1.14;
     color: #333;
     outline: 0;
 }
 .reader.mode-light {
     background-color: #f0ebe4;
-    margin:0;
+    width: 100%;
+    height: auto;
 }
 
 /*内容*/
@@ -123,6 +124,10 @@ aside {
     background: #fbf7f3;
     height: 100%;
     overflow: hidden;
+    position: absolute;
+    top: 0;
+    // overflow: hidden;
+    // height: 27.6rem;
 }
 //.ui-panel {
 //  top: 0;
@@ -225,14 +230,8 @@ li {
     z-index: 12;
     background: rgba(0,0,0,0.5);
     text-align: center;
-}
-#loading {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 12;
-    display: block;
+     display: none; 
+    
 }
 .guide p {
     color: #ccc;
@@ -247,3 +246,30 @@ li {
     background: url(../img/pointer.png) 0 0 no-repeat;
     background-size: 100%;
 }
+
+/*固定定位*/
+
+    .nav_bot{
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: #5c5c5c;
+        padding-top: 10/@rem;
+        overflow: hidden;
+        z-index: 10;
+        a{
+            width: 25%;
+            display: block;
+            text-align: center;
+            float: left;
+            color: #fff;
+            strong{
+                line-height: 42/@rem;
+                display: block;
+                font-weight: normal;
+                font-size: 24/@rem;
+            }
+        }
+ 
+    }

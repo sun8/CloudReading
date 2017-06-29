@@ -55,6 +55,7 @@ class Free extends Component {
 
     render() {
         let arrTimer = null;
+        let {history,location, location:{state}} = this.props;
         if (this.state.timer) {
             //限时畅读
             let {books} = this.state.timer;
@@ -62,6 +63,7 @@ class Free extends Component {
                 if(i>=3&&i<9){
                 let j ={
                     key:e.id,
+                    id:e.id,
                     title:e.title,
                     img:e.images.medium,
                     summary:e.summary,
@@ -70,9 +72,15 @@ class Free extends Component {
                     num:e.rating.average
 
                 }
-                return <TimeCont {...j}/>}
+                return <TimeCont {...j}
+                    history={history} 
+					{...{
+						location
+					}}
+                />}
             })
-
+        //loading加载中
+  		$('#u-loading').css('display','none');
 
         }
 
@@ -82,6 +90,9 @@ class Free extends Component {
             <div className = "wrap" >
                 <section className = "m-list-box" >
                     <TimeTitle title = { this.state.time }/ > 
+                    <div id="u-loading" style={{display:'blcok'}}>
+                        <b></b> 正在加载...
+                    </div>
                     <ul className = "m-free-list" >
                         {arrTimer}
                     </ul> 
@@ -90,7 +101,7 @@ class Free extends Component {
 
 
                 <a id="J_GoTop" className="m-gotop" href="#root"></a> 
-                <Down > 下载和搜索 < /Down>
+                <Down history={history}> 下载和搜索 < /Down>
 
                 <Footer > 底部 < /Footer> 
             < /div >

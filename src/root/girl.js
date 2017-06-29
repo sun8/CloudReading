@@ -104,6 +104,7 @@ class Girl extends Component {
 
 
     render() {
+        let {history,location, location:{state}} = this.props;
         //经典排行榜
         let arrJdph = null;
         //重磅推荐
@@ -119,6 +120,7 @@ class Girl extends Component {
                 if(i<4){
                     let j ={
                         key:e.id,
+                        id:e.id,
                         title:e.title,
                         img:e.images.medium,
                         summary:e.summary,
@@ -128,7 +130,12 @@ class Girl extends Component {
 
                     }
                     
-                    return <TimeCont {...j}/>
+                    return <TimeCont {...j}
+                        history={history} 
+                        {...{
+                            location
+                        }}
+                    />
                 }
             })
             //限时畅读列表
@@ -136,6 +143,7 @@ class Girl extends Component {
                 if(i>4&&i<9){
                     let j ={
                         key:e.id,
+                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -143,7 +151,12 @@ class Girl extends Component {
 
                     }
                     
-                    return <Heavy {...j}/ >
+                    return <Heavy {...j}
+                        history={history} 
+                        {...{
+                            location
+                        }}
+                    / >
                 }
             })
             //重磅推荐
@@ -151,6 +164,7 @@ class Girl extends Component {
                 if(i>9&&i<13){
                     let j ={
                         key:e.id,
+                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -159,7 +173,12 @@ class Girl extends Component {
 
                     }
                     
-                    return <Content {...j }/>
+                    return <Content {...j }
+                        history={history} 
+                        {...{
+                            location
+                        }}
+                    />
                 }
             })
             //经典排行榜
@@ -167,6 +186,7 @@ class Girl extends Component {
                 if(i>13&&i<17){
                     let j ={
                         key:e.id,
+                        id:e.id,
                         title:e.title,
                         summary:e.summary,
                         binding:e.binding,
@@ -175,9 +195,15 @@ class Girl extends Component {
 
                     }
                     
-                    return <Classical {...j }/>
+                    return <Classical {...j }
+                        history={history} 
+                        {...{
+                            location
+                        }}
+                    />
                 }
             })
+            $('#u-loading').css('display','none');
         }
         let {path} = this.props.match;
 
@@ -187,6 +213,9 @@ class Girl extends Component {
             <div className = "wrap" >
                 
                 <Readed / >
+                <div id="u-loading" style={{display:'blcok'}}>
+                    <b></b> 正在加载...
+                </div>
                 <section className = "m-list-box" >
                     <Title title = { '重磅推荐' }/> 
                     <div className = "m-book-list" >
@@ -260,7 +289,7 @@ class Girl extends Component {
 
                 < div id = "J_GoTop" className = "m-gotop" > < /div>
 
-                <Down > 下载和搜索 < /Down>
+                <Down history={history}> 下载和搜索 < /Down>
                 <a id="J_GoTop" className="m-gotop" href="#root"></a>
                 <Footer > 底部 < /Footer> 
             < /div >

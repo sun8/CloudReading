@@ -55,44 +55,64 @@ class Ranking extends Component {
 	let arrLove2 = null;
 	let arrLove3 = null;
 	let arrLove4 = [];
+	let {history,location, location:{state}} = this.props;
 	if(this.state.list){
 
 		let {books} = this.state.list;
 		arrLove = books.map((e,i)=>{ 
 			let j ={
 				key:e.id,
+				id:e.id,
 				title:e.title,
 				num:i+2
 
 			}
 			if(i>3)return
-			return <RankCont {...j}/>
+			return <RankCont {...j}
+				history={history} 
+					{...{
+						location
+					}}
+			/>
 		})
 		arrLove2 = books.map((e,i)=>{
 			if(i>3&&i<8){
 			let j ={
 				key:e.id,
+				id:e.id,
 				title:e.title,
 				num:i-2
 
 			}
 			
-			return <RankCont {...j}/>}
+			return <RankCont {...j}
+				history={history} 
+					{...{
+						location
+					}}
+			/>}
 		})
 		arrLove3 = books.map((e,i)=>{ 
 			if(i>7&&i<12){
 			let j ={
 				key:e.id,
+				id:e.id,
 				title:e.title,
 				num:i-6
 
 			}
 			
-			return <RankCont {...j}/>}
+			return <RankCont {...j}
+				history={history} 
+					{...{
+						location
+					}}
+			/>}
 		})
 		arrLove4 = books.map((e,i)=>{
 			let j ={
 				key:e.id,
+				id:e.id,
 				title:e.title,
 				img:e.images.medium,
 				summary:e.summary,
@@ -101,8 +121,14 @@ class Ranking extends Component {
 
 			}
 			
-			return <RankOne {...j}/>
+			return <RankOne {...j}
+				history={history} 
+					{...{
+						location
+					}}
+			/>
 		})
+		$('#u-loading').css('display','none');
 	}
 	
     return (
@@ -110,6 +136,9 @@ class Ranking extends Component {
 			
 	    	<section className="m-list-box"> 
 				<Title title={'女生排行榜'}/>
+				<div id="u-loading" style={{display:'blcok'}}>
+					<b></b> 正在加载...
+				</div>
 				<ul className="m-rank-list clearfix">
 					{arrLove4[15]}
 					{arrLove}
@@ -135,7 +164,7 @@ class Ranking extends Component {
 	    	
 	    	<a id="J_GoTop" className="m-gotop" href="#root"></a>
 	    	
-		    <Down > 下载和搜索 < /Down>   
+		    <Down history={history}> 下载和搜索 < /Down>   
 		    <Footer>底部</Footer>
 		</div>
     );

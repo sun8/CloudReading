@@ -11,6 +11,7 @@ class Account extends Component {
     this.login = this.login.bind(this);
   }
   render() {
+		let {history:{push, goBack}} = this.props;
     return (
     	<div className="g-wrap">
     		<header className="level1">
@@ -25,7 +26,15 @@ class Account extends Component {
 	    	<div className="m-login-container">
 	        
 	        <div className="m-login-header">
-		        <a className="left back" id="goBack" href="/"></a>
+		        <a className="left back"
+						 id="goBack" 
+						 href="/"
+						 onClick={ev=>{
+								ev.stopPropagation();
+								ev.preventDefault();
+								goBack();
+							}}
+						></a>
 		        <span>用户名快速登录</span>
 		        <Link to="/" className="right" id="goHome"> 首页 </Link>
 	        </div>
