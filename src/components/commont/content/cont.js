@@ -11,6 +11,10 @@ class Content extends Component {
   render() {
 		let {id} = this.props; 
 		let {history, location:{pathname}} = this.props;
+
+
+
+		
     return (
 		<li 
 			onClick={ev=>{
@@ -18,6 +22,7 @@ class Content extends Component {
 					pathname: '/bookDetails',
 					state:{
 						id
+						
 					}
 				}); 
 			}}

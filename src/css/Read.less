@@ -12,34 +12,32 @@ body, textarea, input, button, select, keygen, legend {
 }
 
 /*内容*/
-.ui-main {
-    position: relative;
-    -webkit-transition: -webkit-transform 350ms ease;
-    transition: transform 350ms ease;
-    -webkit-transform: translate(0,0);
-    transform: translate(0,0);
-    z-index: 1;
-}
+// .ui-main {
+//     position: relative;
+//     -webkit-transition: -webkit-transform 350ms ease;
+//     transition: transform 350ms ease;
+//     -webkit-transform: translate(0,0);
+//     transform: translate(0,0);
+//     z-index: 1;
+// }
 
 .g-main {
     min-height: 100%;
     position: relative;
-    display: none;
+    display: block;
     font-size: 27/@rem;
+    transition: 1s;
 }
 
-/*整体位移*/
-.ui-main.state-opened {
-    -webkit-transform: translate(450/@rem,0);
-    transform: translate(450/@rem,0);
-    -ms-touch-action: none;
-}
+
 
 .reader .content {
-    box-sizing: border-box;
+   box-sizing: border-box;
     width: 100%;
     overflow: hidden;
-   
+    font-size: 1em;
+     opacity: 1; 
+     height: auto;
     padding: 0 15/@rem;
     min-height: 100%;
     width: 100%;
@@ -126,6 +124,8 @@ aside {
     overflow: hidden;
     position: absolute;
     top: 0;
+    transition: 1s;
+    transform: translate(-11.3rem,0);
     // overflow: hidden;
     // height: 27.6rem;
 }
@@ -180,6 +180,7 @@ aside {
 }
 .m-cata .aside-btn {
     padding: 23/@rem 0;
+    border-bottom:'#D1CFCD solid 0.05rem'
 }
 .m-cata .aside-btn .dir-btn:first-child {
     margin-right: 20/@rem;
@@ -227,10 +228,10 @@ li {
     top: 0;
     height: 100%;
     width: 100%;
-    z-index: 12;
+    z-index: 99;
     background: rgba(0,0,0,0.5);
     text-align: center;
-     display: none; 
+    display: block; 
     
 }
 .guide p {
@@ -247,29 +248,99 @@ li {
     background-size: 100%;
 }
 
+/*整体位移*/
+.ui-main{
+    -webkit-transform: translate(11.3rem,0);
+    transform: translate(11.3rem,0);
+    -ms-touch-action: none;
+}
+.ui-main1{
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    -ms-touch-action: none;
+}
+/*夜间白天模式*/ 
+.reader.bg{
+    background-color: #000;
+    opacity: 0.8;
+    .content p{
+        color: #fff;
+    }
+}
+/*字体大小模式*/ 
+.reader.font{
+    .content p{
+        font-size: 16/@rem;
+    }
+    .content h1{
+        font-size: 20/@rem;
+    }
+}
+
 /*固定定位*/
 
-    .nav_bot{
-        width: 100%;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        background-color: #5c5c5c;
-        padding-top: 10/@rem;
-        overflow: hidden;
-        z-index: 10;
-        a{
-            width: 25%;
+.nav_bot{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #5c5c5c;
+    padding-top: 10/@rem;
+    overflow: hidden;
+    z-index: 100;
+    a{
+        width: 25%;
+        display: block;
+        text-align: center;
+        float: left;
+        color: #fff;
+        strong{
+            line-height: 42/@rem;
             display: block;
-            text-align: center;
-            float: left;
-            color: #fff;
-            strong{
-                line-height: 42/@rem;
-                display: block;
-                font-weight: normal;
-                font-size: 24/@rem;
-            }
+            font-weight: normal;
+            font-size: 24/@rem;
         }
- 
     }
+
+}
+/*书没有内容*/
+.unsupport {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 11;
+    background: #EDEDED;
+    text-align: center;
+    padding: 150/@rem 24/@rem;
+    box-sizing: border-box;
+    z-index: 200;
+    display: none; 
+}
+.unsupport p {
+    margin-bottom: 15/@rem;
+    font-size: 26/@rem;
+    line-height: 3;
+}
+// .unsupport p img {
+//     zoom: .8;
+// }
+.btn.btn-primary {
+    background-image: -moz-linear-gradient(top,#78bc59,#5d9943);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#78bc59),to(#5d9943));
+    background-image: -webkit-linear-gradient(top,#78bc59,#5d9943);
+    background-image: -o-linear-gradient(top,#78bc59,#5d9943);
+    background-image: linear-gradient(to bottom,#78bc59,#5d9943);
+    border: #50823b solid 2/@rem;
+    color: #fff;
+}
+.g-wrap a {
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    tap-highlight-color: rgba(255,255,255,0);
+}
+.btn.block {
+    display: block;
+}
+.support{
+    display: block;
+}

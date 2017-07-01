@@ -22,27 +22,27 @@ class Ranking extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			list:null
+			list:null,
+			girl:{
+				name:'html',
+				count:6,
+				star:0
+			},
+			boy:{
+				name:'node',
+				count:6,
+				star:0
+			},
+			books:{
+				name:'jquery',
+				count:6,
+				star:0
+			}
+
 		}
 	}
 	
 	componentDidMount(){
-		let _this = this; 
-		$.ajax({
-            url: 'https://api.douban.com/v2/book/search',
-            type: 'get',
-			data:{
-				tag:'都市',
-				fields:'all'
-			},
-            dataType: 'jsonp',
-            callback: 'love',
-            success: function(data) {
-                _this.setState({
-                    list: data
-                })
-            }
-        });
 		
 	}
 	
@@ -51,85 +51,7 @@ class Ranking extends Component {
 	
 	
   render() {
-	let arrLove = null;
-	let arrLove2 = null;
-	let arrLove3 = null;
-	let arrLove4 = [];
 	let {history,location, location:{state}} = this.props;
-	if(this.state.list){
-
-		let {books} = this.state.list;
-		arrLove = books.map((e,i)=>{ 
-			let j ={
-				key:e.id,
-				id:e.id,
-				title:e.title,
-				num:i+2
-
-			}
-			if(i>3)return
-			return <RankCont {...j}
-				history={history} 
-					{...{
-						location
-					}}
-			/>
-		})
-		arrLove2 = books.map((e,i)=>{
-			if(i>3&&i<8){
-			let j ={
-				key:e.id,
-				id:e.id,
-				title:e.title,
-				num:i-2
-
-			}
-			
-			return <RankCont {...j}
-				history={history} 
-					{...{
-						location
-					}}
-			/>}
-		})
-		arrLove3 = books.map((e,i)=>{ 
-			if(i>7&&i<12){
-			let j ={
-				key:e.id,
-				id:e.id,
-				title:e.title,
-				num:i-6
-
-			}
-			
-			return <RankCont {...j}
-				history={history} 
-					{...{
-						location
-					}}
-			/>}
-		})
-		arrLove4 = books.map((e,i)=>{
-			let j ={
-				key:e.id,
-				id:e.id,
-				title:e.title,
-				img:e.images.medium,
-				summary:e.summary,
-				name:e.subtitle,
-				author:e.author[0]
-
-			}
-			
-			return <RankOne {...j}
-				history={history} 
-					{...{
-						location
-					}}
-			/>
-		})
-		$('#u-loading').css('display','none');
-	}
 	
     return (
   		<div className="wrap">
@@ -139,24 +61,37 @@ class Ranking extends Component {
 				<div id="u-loading" style={{display:'blcok'}}>
 					<b></b> 正在加载...
 				</div>
-				<ul className="m-rank-list clearfix">
+				{/*<ul className="m-rank-list clearfix">
 					{arrLove4[15]}
 					{arrLove}
-				</ul>
+				</ul>*/}
+				<RankCont
+					reqData={this.state.girl}
+					history={history} 
+					{...{
+						location
+					}}
+				/>
 			</section>
     		<section className="m-list-box"> 
 				<Title title={'男生排行榜'}/>
-				<ul className="m-rank-list clearfix">
-					{arrLove4[14]}
-					{arrLove2}
-				</ul>
+				<RankCont
+					reqData={this.state.boy}
+					history={history} 
+					{...{
+						location
+					}}
+				/>
 			</section>
 	    	<section className="m-list-box"> 
 				<Title title={'图书排行榜'}/>
-				<ul className="m-rank-list clearfix">
-					{arrLove4[2]}
-					{arrLove3}
-				</ul>
+				<RankCont
+					reqData={this.state.books}
+					history={history} 
+					{...{
+						location
+					}}
+				/>
 			</section>
         
 		

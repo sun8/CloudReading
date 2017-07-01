@@ -7,9 +7,10 @@ import $ from 'jquery';
 class BookDetails extends Component {
 	constructor(props){
     super(props);
-		this.state = {
-			data:null
-		}
+	this.state = {
+		data:null
+	}
+	this.download = this.download.bind(this);
   }
 	
 	componentDidMount(){
@@ -35,9 +36,11 @@ class BookDetails extends Component {
   render() {
 	let {history,location, location:{state}} = this.props;
 	let {id} = this.props.location.state;
+	console.log(id)
 	let catalog = null;
 	if(!this.state.data)return (<div></div>)
 	let {data} = this.state;
+	// let {id} = data.series;
 	let title = data.series?data.series.title:'暂无哟！';
 	catalog = data.tags.map((e,i)=>{
 		let j={
@@ -66,7 +69,7 @@ class BookDetails extends Component {
 		<section className="m-book-info">
 			<div className="info">
 				<div className="img">
-					<img src={data.images.medium} />
+					<img src={data.images.medium} ref="pic" />
 				</div>
 				<h1>{data.title}</h1>
 				<p>作者：{data.author[0]}</p>
@@ -96,7 +99,11 @@ class BookDetails extends Component {
 					}} 
 					className="ui-blue fl" 
 					>立即阅读</a>
-					<a id="J_Offline" href="javascript:;" className="ui-blue-light fr">下载整本</a>
+					<a href={data.catalog}
+					className="ui-blue-light fr"
+					download={data.title}
+					
+					>下载整本</a>
 				</div>
 				<div className="btns">
 					<a href="javascript:;" className="m-shelf ui-grey ">
@@ -179,8 +186,8 @@ class BookDetails extends Component {
 							<img src={require('../img/6.jpg')} alt="24个比利" />
 						</a>
 						<a href=""  className="info">
-								<h4>时光倒流的女孩（现象级畅销书《岛上书店》作者口碑成名作！</h4>
-								<span>【美】加·泽文</span>
+							<h4>时光倒流的女孩（现象级畅销书《岛上书店》作者口碑成名作！</h4>
+							<span>【美】加·泽文</span>
 						</a>
 					</li>
 				</ul>
@@ -191,7 +198,10 @@ class BookDetails extends Component {
 			
     );
   }
-
+  download(){
+	// this.refs.down.download=this.refs.name;
+	// this.refs.down.href=this.refs.pic.src.toDataURL();
+  }
 
 
 }
