@@ -27,6 +27,7 @@ class SeachResult extends Component {
 				},
 				success:(data)=>{
 					//通知父级数据传递
+					console.log(data)
 					this.setState({data});
 					//存储搜索的记录
 					arr.push(value);

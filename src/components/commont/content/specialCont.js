@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 //			<!--专题阅读--start-->
 class SpecialCont extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            list:null
+        }
+    }
+
+    componentDidMount(){
+        
+	}
+
     render() {
         return (
 

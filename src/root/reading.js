@@ -37,7 +37,6 @@ class Reading extends Component {
 		this.fontF = this.fontF.bind(this);
 		this.catalogF = this.catalogF.bind(this);
 		this.lent = this.lent.bind(this);
-		this.noCont = this.noCont.bind(this);
 		this.gotoCategory = this.gotoCategory.bind(this);
 		
 	}
@@ -57,12 +56,14 @@ class Reading extends Component {
             callback: 'book',
             success: (data) =>{
 				console.log(data);
+
                 this.setState({
                     list: data,
 					down:{
 						catalog:data.catalog,
 						title:data.title
-					}
+					},
+					noCont:data.catalog
                 })
             }
         });
@@ -90,10 +91,8 @@ class Reading extends Component {
 			>{e}</p>
 		)
 	})
-	// let cont = content.cont.map((e)=>{
-
-	// })
-
+	//返回
+	let {history:{goBack}} = this.props;
     return (
   		<div className={`g-wrap reader mode-light ${this.state.atNeight ? 'bg':''} ${this.state.font ? 'font':''}`}
 		  >
@@ -145,12 +144,16 @@ class Reading extends Component {
    			</div>
 
 			   {/*目录*/}
-  			<ReadingCatalog 
-			  data={this.state}
-			  lent={this.lent}
-			  noCont = {this.noCont}
-			  gotoCategory={this.gotoCategory}
-			/>
+			   
+			  `${this.state.noCont?
+				   <ReadingCatalog 
+					data={this.state}
+					lent={this.lent}
+					gotoCategory={this.gotoCategory}
+					/>:''}`
+			    
+			  
+  			
    			
    			
    			<div className="aside-btn">
@@ -180,12 +183,18 @@ class Reading extends Component {
 		<p>下一页</p>
 	</section>
 	<section 
-	className={`unsupport ${this.state.noCont ? 'support':''}`}
+	className={`unsupport ${this.state.noCont ? '':'support'}`}
 	>
 		<p><img src={require('../img/face-error.png')} /></p>
 		<p>本地书需要先放入书架才能阅读</p>
-		<p><a className="btn btn-primary block j-put-shelf" href="javascript:0;">放入书架</a></p>
-		<p><a href="javascript:;">&lt;&lt;返回</a></p>
+		<p><a className="btn btn-primary block j-put-shelf" href="javascript:;">放入书架</a></p>
+		<p><a href=""
+			onClick={ev=>{
+				ev.stopPropagation();
+				ev.preventDefault();
+				goBack();
+			}}
+		>&lt;&lt;返回</a></p>
 	</section>
    
    </div>
@@ -251,21 +260,12 @@ class Reading extends Component {
 
 	//章节
 	lent(n){
-		console.log(n)
+		// console.log(n)
 		// let lent = n;
 		// this.setState({
 		// 	lent:lent
 		// })
 	}
-	//无内容时
-	noCont(){
-		this.setState({
-			noCont:true
-		})
-	}
-
-
-
 }
 
 export default Reading;

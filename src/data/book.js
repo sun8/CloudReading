@@ -1,6 +1,6 @@
 export default [
     {
-        name:'第一章',
+        name:'第一章 Java 的起源',
         cont:`
             对于计算机语言的发展史，业界一般认为：B语言导致了C语言的诞生，C语言演变出
 了C++ 语言，而C++ 语言将让位于Java 语言。要想更好地了解Java 语言，就必须了解它产生
@@ -437,7 +437,7 @@ Java 2 ，而不注明版本号。
         `
     },
     {
-        "name":'第二章',
+        "name":'第二章 ',
         "cont":`
             像所有其他的计算机语言一样，Java 的各种要素不是独立存在的，它们作为一个整体
 共同构成了Java 语言。这种关联使得不讲其他方面而单独描述Java 的某一方面是困难的。讨
@@ -1278,6 +1278,20912 @@ Java 是Java 语言本身和它的标准类的组合体。你将会看到，Java
 第1部分，需要时会对标准库类库和方法的各种元素进行介绍。在本书的第2部分，将对类
 库作详细地描述。
 
+        `
+    },
+    {
+        name:'第3章  数据类型、变量、数组',
+        cont:`
+            Java 严格地检查以保证你不会意外地去存储或引用在数组范围以外的值。Java 的运行系
+统会检查以确保所有的数组下标都在正确的范围以内（在这方面，Java 与C/C++ 从根本上不
+同，C/C++ 不提供运行边界检查）。例如，运行系统将检查数组month_days 的每个下标的值
+以保证它包括在0和11之间。如果你企图访问数组边界以外（负数或比数组边界大）的元素，
+你将引起运行错误。
+
+下面的例子运用一维数组来计算一组数字的平均数。
+
+// Average an array of values.
+class Average
+{
+
+
+public static void main(String args[])
+{
+double nums[] = {10.1, 11.2, 12.3, 13.4, 14.5}
+;
+double result = 0;
+int i;
+
+
+for(i=0; i<5; i++
+)
+result = result + nums[i]
+;
+
+
+System.out.println("Average is " + result / 5)
+;
+}
+}
+
+
+3.11.2 多维数组
+在Java 中，多维数组（multidimensional arrays ）实际上是数组的数组。你可能期望，这
+些数组形式上和行动上和一般的多维数组一样。然而，你将看到，有一些微妙的差别。定
+义多维数组变量要将每个维数放在它们各自的方括号中。例如，下面语句定义了一个名为
+twoD 的二维数组变量。
+
+int twoD[][] = new int[4][5];
+
+该语句分配了一个4行5列的数组并把它分配给数组twoD 。实际上这个矩阵表示了int
+类型的数组的数组被实现的过程。概念上，这个数组可以用图3-1 来表示。
+下列程序从左到右，从上到下为数组的每个元素赋值，然后显示数组的值：
+
+
+图3.1 二维数组（4 行5 列）的概念性表示
+
+
+第1 部分Java 语言
+
+// Demonstrate a two-dimensional array.
+class TwoDArray
+{
+
+
+public static void main(String args[])
+{
+int twoD[][]= new int[4][5]
+;
+int i, j, k = 0;
+
+
+for(i=0; i<4; i++)
+
+for(j=0; j<5; j++)
+{
+twoD[i][j] = k;
+k++
+;
+
+
+}
+
+for(i=0; i<4; i++)
+{
+for(j=0; j<5; j++
+)
+System.out.print(twoD[i][j] + " ")
+;
+System.out.println()
+;
+}
+}
+}
+
+
+程序运行的结果如下：
+
+0 1 2 3
+4
+5 6 7 8
+9
+10 11 12 13 14
+15 16 17 18 19
+
+
+当你给多维数组分配内存时，你只需指定第一个（最左边）维数的内存即可。你可以
+单独地给余下的维数分配内存。例如，下面的程序在数组twoD 被定义时给它的第一个维数
+分配内存，对第二维则是手工分配地址。
+
+int twoD[][] = new int[4][]
+;
+twoD[0] = new int[5]
+;
+twoD[1] = new int[5]
+;
+twoD[2] = new int[5]
+;
+twoD[3] = new int[5]
+;
+
+
+尽管在这种情形下单独地给第二维分配内存没有什么优点，但在其他情形下就不同了。
+例如，当你手工分配内存时，你不需要给每个维数相同数量的元素分配内存。如前面所说，
+既然多维数组实际上是数组的数组，每个数组的维数在你的控制之下。例如，下列程序定
+义了一个二维数组，它的第二维的大小是不相等的。
+
+// Manually allocate differing size second dimensions.
+class TwoDAgain
+{
+
+
+public static void main(String args[])
+{
+int twoD[][] = new int[4][]
+;
+twoD[0] = new int[1]
+;
+twoD[1] = new int[2]
+;
+twoD[2] = new int[3]
+;
+twoD[3] = new int[4]
+;
+
+
+int i, j, k = 0;
+
+
+第3 章数据类型、变量、数组
+
+for(i=0; i<4; i++)
+
+for(j=0; j<i+1; j++)
+{
+twoD[i][j] = k;
+k++
+;
+
+
+}
+
+for(i=0; i<4; i++) {
+for(j=0; j<i+1; j++)
+System.out.print(twoD[i][j] + " ");
+System.out.println();
+}
+}
+}
+
+该程序产生的输出如下：
+
+0
+1 2
+3 4 5
+6 7 8 9
+
+该程序定义的数组可以表示如下：
+
+
+对于大多数应用程序，我们不推荐使用不规则多维数组，因为它们的运行与人们期望
+的相反。但是，不规则多维数组在某些情况下使用效率较高。例如，如果你需要一个很大
+的二维数组，而它仅仅被稀疏地占用（即其中一维的元素不是全被使用），这时不规则数
+组可能是一个完美的解决方案。
+
+初始化多维数组是可能的。初始化多维数组只不过是把每一维的初始化列表用它自己
+的大括号括起来即可。下面的程序产生一个矩阵，该矩阵的每个元素包括数组下标的行和
+列的积。同时注意在数组的初始化中你可以像用字面量一样用表达式。
+
+// Initialize a two-dimensional array.
+
+class Matrix {
+
+public static void main(String args[]) {
+
+double m[][] = {
+
+{ 0*0, 1*0, 2*0, 3*0 },
+
+{ 0*1, 1*1, 2*1, 3*1 },
+
+{ 0*2, 1*2, 2*2, 3*2 },
+
+{ 0*3, 1*3, 2*3, 3*3 }
+
+};
+
+int i, j;
+
+
+第1 部分Java 语言
+
+for(i=0; i<4; i++)
+{
+for(j=0; j<4; j++
+)
+System.out.print(m[i][j] + " ")
+;
+System.out.println()
+;
+}
+}
+}
+
+
+当你运行这个程序时，你将得到下面的输出：
+
+0.0 0.0 0.0 0.0
+0.0 1.0 2.0 3.0
+0.0 2.0 4.0 6.0
+0.0 3.0 6.0 9.0
+正如你看到，数组中的每一行就像初始化表指定的那样被初始化。
+让我们再看一个使用多维数组的例子。下面的程序首先产生一个3×4×5的3维数组，
+然后装入用它的下标之积生成的每个元素，最后显示了该数组。
+
+// Demonstrate a three-dimensional array.
+class threeDMatrix
+{
+
+
+public static void main(String args[])
+{
+int threeD[][][] = new int[3][4][5]
+;
+int i, j, k;
+
+
+for(i=0; i<3; i++
+)
+for(j=0; j<4; j++
+)
+for(k=0; k<5; k++
+)
+threeD[i][j][k] = i * j * k;
+
+
+for(i=0; i<3; i++)
+{
+for(j=0; j<4; j++)
+{
+for(k=0; k<5; k++
+)
+System.out.print(threeD[i][j][k] + " ")
+;
+
+
+System.out.println()
+;
+}
+System.out.println()
+;
+
+
+}
+}
+}
+
+
+该程序的输出如下：
+
+0 0 0 0
+0
+0 0 0 0
+0
+0 0 0 0
+0
+0 0 0 0
+0
+
+
+0 0 0 0
+0
+0 1 2 3
+4
+0 2 4 6
+8
+0 3 6 9 12
+
+
+0 0 0 0
+0
+0 2 4 6
+8
+
+
+
+第3 章数据类型、变量、数组
+
+0 4 8 12 16
+0 6 12 18 24
+
+
+3.11.3 另一种数组声明语法
+声明数组还有第二种格式：
+
+type[ ] var-name;
+
+这里，方括号紧跟在类型标识符type 的后面，而不是跟在数组变量名的后面。例如，
+下面的两个定义是等价的：
+
+int al[] = new int[3]
+;
+int[] a2 = new int[3]
+;
+
+
+下面的两个定义也是等价的：
+
+char twod1[][] = new char[3][4]
+;
+char[][] twod2 = new char[3][4]
+;
+
+
+包含这种数组声明格式主要是为了方便。
+
+3.12 字符串的简单介绍
+你可能注意到了，在前面关于数据类型和数组的讨论中没有提到字符串或字符串数据
+类型。这不是因为Java 不支持这样一种类型，它支持。只是因为Java 的字符串类型，叫做字
+符串（String ），它不是一种简单的类型，它也不是简单的字符数组（在C/C++ 中是）。字
+符串（String ）在Java 中被定义为对象，要完全理解它需要理解几个和对象相关的特征。因
+此，有关字符串（String ）的讨论被放到本书的后面，在对象被描述后再讲字符串（String ）。
+但是，为了在例子程序中使用简单的字符串，下面简单的按顺序介绍。
+
+字符串（String ）类型被用来声明字符串变量。你也可以定义字符串数组。一个被引号
+引起来的字符串字面量可以被分配给字符串变量。一个字符串类型的变量可被分配给另一
+个字符串类型的变量。你可以像用方法println() 的参数一样用字符串（String ）类型。例如，
+考虑下面的语句：
+
+String str = "this is a test"
+;
+System.out.println(str)
+;
+
+
+这里，str是字符串（String ）类型的一个对象，它被分配给字符串“this is a test ”，该
+字符串被println( ) 语句显示。
+读者你将会在后面看到，字符串对象有许多特别的特征和属性，这使得它们功能非常
+强大而且易用。然而，在后面的几章中，你只能用它们最简单的形式。
+
+3.13 C/C++程序员请注意指针的用法
+如果你是一个经验丰富的C/C++ 程序员，那么你知道这些语言提供对指针的支持。然
+
+
+第1 部分Java 语言
+
+而，在本章中没有提到指针。这样做的道理很简单：Java 不支持或不允许指针（或者更恰
+当地说，Java 不支持程序员来访问或修改指针）。Java 不允许指针，是因为这样做将允许Java
+applet （小应用程序）突破Java 运行环境和主机之间的防火墙（要知道，指针能放在内存的
+任何地址，即使是Java 运行系统之外的地址）。既然C/C++ 广泛的使用指针，你可能认为损
+失对指针的使用是Java 的一个很重要的不利条件。然而，事实并非如此。Java 以这种方式设
+计，只要你在Java 的执行环境范围内，你决不需要使用指针如何进行处理，指针也不会有
+任何好处。至于将C/C++ 上的程序转化到Java 中来，包括指针，参看第28章。
+        `
+    },
+    {
+        name:'第4章  运算符',
+        cont:`
+            Java 提供了丰富的运算符环境。Java 有4大类运算符：算术运算、位运算、关系运算和
+逻辑运算。Java 还定义了一些附加的运算符用于处理特殊情况。本章将描述Java 所有的运算
+符，而比较运算符instanceof 将在第12章讨论。
+
+注意：如果你对C/C++ 熟悉，你将会高兴，因为Java 的绝大多数运算符和C/C++ 中
+
+的用法一样。但有一些微妙的差别，所以提醒你要仔细阅读。
+
+4.1 算术运算符
+算术运算符用在数学表达式中，其用法和功能与代数学（或其他计算机语言）中一样，
+Java 定义了下列算术运算符（见表4-1）
+：
+
+表4.1 算术运算符及其含义
+
+运算符含义
+
++ 加法
+– 减法（一元减号）
+* 乘法
+/ 除法
+% 模运算
+++ 递增运算
++= 加法赋值
+–= 减法赋值
+*= 乘法赋值
+/= 除法赋值
+%= 模运算赋值
+--递减运算
+算术运算符的运算数必须是数字类型。算术运算符不能用在布尔类型上，但是可以用
+在char类型上，因为实质上在Java 中，char类型是int 类型的一个子集。
+
+4.1.1 基本算术运算符
+基本算术运算符——加、减、乘、除可以对所有的数字类型操作。减运算也用作表示
+单个操作数的负号。记住对整数进行“/”除法运算时，所有的余数都要被舍去。
+下面这个简单例子示范了算术运算符，也说明了浮点型除法和整型除法之间的差别。
+
+
+第1 部分Java 语言
+
+// Demonstrate the basic arithmetic operators.
+class BasicMath
+{
+
+
+public static void main(String args[])
+{
+// arithmetic using integers
+System.out.println("Integer Arithmetic")
+;
+int a = 1 + 1;
+int b = a * 3;
+int c = b / 4;
+int d = c - a;
+int e = -d;
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+System.out.println("c = " + c)
+;
+System.out.println("d = " + d)
+;
+System.out.println("e = " + e)
+;
+
+
+// arithmetic using doubles
+System.out.println("\nFloating Point Arithmetic")
+;
+double da = 1 + 1;
+double db = da * 3;
+double dc = db / 4;
+double dd = dc - a;
+double de = -dd;
+System.out.println("da = " + da)
+;
+System.out.println("db = " + db)
+;
+System.out.println("dc = " + dc)
+;
+System.out.println("dd = " + dd)
+;
+System.out.println("de = " + de)
+;
+
+
+}
+}
+
+
+当你运行这个程序，你会看到输出如下：
+
+Integer Arithmetic
+a =
+2
+b =
+6
+c =
+1
+d = -
+1
+e =
+1
+
+
+Floating Point Arithmetic
+da = 2.0
+db = 6.0
+dc = 1.5
+dd = -0.5
+de = 0.5
+
+
+4.1.2 模运算符
+模运算符%，其运算结果是整数除法的余数。它能像整数类型一样被用于浮点类型（这
+不同于C/C++ ，在C/C++ 中模运算符%仅仅能用于整数类型）。下面的示例程序说明了模运
+算符%的用法：
+
+// Demonstrate the % operator.
+
+
+第4 章运算符
+
+class Modulus {
+
+public static void main(String args[])
+{
+int x = 42;
+double y = 42.25;
+
+
+System.out.println("x mod 10 = " + x % 10)
+;
+System.out.println("y mod 10 = " + y % 10)
+;
+}
+}
+
+
+当你运行这个程序，你会看到输出如下：
+
+x mod 10 =
+2
+y mod 10 = 2.25
+
+
+4.1.3 算术赋值运算符
+Java 提供特殊的算术赋值运算符，该运算符可用来将算术运算符与赋值结合起来。你
+可能知道，像下列这样的语句在编程中是很常见的：
+
+a = a +4;
+
+在Java 中，你可将该语句重写如下：
+
+a += 4;
+
+该语句使用“+=”进行赋值操作。上面两行语句完成的功能是一样的：使变量a的值增
+加4 。下面是另一个例子：
+
+a = a % 2;
+
+该语句可简写为：
+
+a %= 2;
+
+在本例中，%=算术运算符的结果是a/2的余数，并把结果重新赋给变量a。
+这种简写形式对于Java 的二元（即需要两个操作数的）运算符都适用。其语句格式为：
+
+var= var op expression;
+
+可以被重写为：
+
+var op= expression;
+
+这种赋值运算符有两个好处。第一，它们比标准的等式要紧凑。第二，它们有助于提
+高Java 的运行效率。由于这些原因，在Java 的专业程序中，你经常会看见这些简写的赋值运
+算符。
+
+下面的例子显示了几个赋值运算符的作用：
+
+// Demonstrate several assignment operators.
+class OpEquals
+{
+
+
+public static void main(String args[])
+{
+int a = 1;
+int b = 2;
+int c = 3;
+
+
+
+第1 部分Java 语言
+
+a += 5;
+b *= 4;
+c += a * b;
+c %= 6;
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+System.out.println("c = " + c)
+;
+
+
+}
+}
+
+
+该程序的输出如下：
+
+a =
+6
+b =
+8
+c =
+3
+
+
+4.1.4 递增和递减运算
+在第2章中曾经介绍过，“++”和“--”是Java 的递增和递减运算符。下面将对它们做
+详细讨论。它们具有一些特殊的性能，这使它们变得非常有趣。我们先来复习一下递增和
+递减运算符的操作。
+
+递增运算符对其运算数加1，递减运算符对其运算数减1。因此：
+
+x = x + 1;
+
+运用递增运算符可以重写为：
+
+x++;
+
+同样，语句：
+
+x = x - 1;
+
+与下面一句相同：
+
+x--;
+
+在前面的例子中，递增或递减运算符采用前缀（prefix ）或后缀（postfix ）格式都是相
+同的。但是，当递增或递减运算符作为一个较大的表达式的一部分，就会有重要的不同。
+如果递增或递减运算符放在其运算数前面，Java 就会在获得该运算数的值之前执行相应的
+操作，并将其用于表达式的其他部分。如果运算符放在其运算数后面，Java 就会先获得该
+操作数的值再执行递增或递减运算。例如：
+
+x = 42
+;
+y =++x
+;
+
+
+在这个例子中，y将被赋值为43，因为在将x的值赋给y以前，要先执行递增运算。这样，
+语句行y =++x ; 和下面两句是等价的：
+
+x = x + 1;
+y = x;
+
+
+但是，当写成这样时：
+
+
+第4 章运算符
+
+x = 42;
+y = x++
+;
+
+
+在执行递增运算以前，已将x的值赋给了y，因此y的值还是42 。当然，在这两个例子
+中，x都被赋值为43。在本例中，程序行y =x++ ；与下面两个语句等价：
+
+y = x;
+x = x + 1;
+
+
+下面的程序说明了递增运算符的使用：
+
+// Demonstrate ++
+.
+class IncDec
+{
+
+
+public static void main(String args[])
+{
+int a = 1;
+int b = 2;
+int c;
+int d;
+c = ++b;
+d = a++
+;
+c++
+;
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+System.out.println("c = " + c)
+;
+System.out.println("d = " + d)
+;
+
+
+}
+}
+
+
+该程序的输出如下：
+
+a =
+2
+b =
+3
+c =
+4
+d =
+1
+
+
+4.2 位运算符
+Java 定义的位运算（bitwise operators ）直接对整数类型的位进行操作，这些整数类型
+包括long，int，short，char，and byte 。表4-2 列出了位运算：
+
+表4.2 位运算符及其结果
+
+运算符结果
+~ 按位非（NOT）（一元运算）
+& 按位与（AND）
+| 按位或（OR）
+^ 按位异或（XOR）
+>> 右移
+>>> 右移，左边空出的位以0填充
+
+
+第1 部分Java 语言
+
+运算符结果
+<< 左移
+&= 按位与赋值
+|= 按位或赋值
+^= 按位异或赋值
+>>= 右移赋值
+>>>= 右移赋值，左边空出的位以0填充
+<<= 左移赋值
+
+续表
+
+既然位运算符在整数范围内对位操作，因此理解这样的操作会对一个值产生什么效果
+是重要的。具体地说，知道Java 是如何存储整数值并且如何表示负数的是有用的。因此，
+在继续讨论之前，让我们简短概述一下这两个话题。
+
+所有的整数类型以二进制数字位的变化及其宽度来表示。例如，byte 型值42的二进制
+代码是00101010 ，其中每个位置在此代表2的次方，在最右边的位以20开始。向左下一个位
+置将是21，或2，依次向左是22，或4，然后是8，16，32等等，依此类推。因此42在其位置
+1，3，5的值为1（从右边以0开始数）；这样42是21+23+25的和，也即是2+8+32 。
+
+所有的整数类型（除了char 类型之外）都是有符号的整数。这意味着他们既能表示正
+数，又能表示负数。Java 使用大家知道的2的补码（two's complement ）这种编码来表示负数，
+也就是通过将与其对应的正数的二进制代码取反（即将1变成0，将0变成1），然后对其结
+果加1。例如，-42就是通过将42的二进制代码的各个位取反，即对00101010 取反得到
+11010101 ，然后再加1，得到11010110 ，即-42 。要对一个负数解码，首先对其所有的位取
+反，然后加1。例如-42，或11010110 取反后为00101001 ，或41，然后加1，这样就得到了42。
+
+如果考虑到零的交叉（zero crossing ）问题，你就容易理解Java （以及其他绝大多数语
+言）这样用2的补码的原因。假定byte 类型的值零用00000000 代表。它的补码是仅仅将它的
+每一位取反，即生成11111111 ，它代表负零。但问题是负零在整数数学中是无效的。为了
+解决负零的问题，在使用2的补码代表负数的值时，对其值加1。即负零11111111 加1后为
+100000000 。但这样使1位太靠左而不适合返回到byte 类型的值，因此人们规定，-0和0的表
+示方法一样，-1的解码为11111111 。尽管我们在这个例子使用了byte 类型的值，但同样的
+基本的原则也适用于所有Java 的整数类型。
+
+因为Java 使用2的补码来存储负数，并且因为Java 中的所有整数都是有符号的，这样应
+用位运算符可以容易地达到意想不到的结果。例如，不管你如何打算，Java 用高位来代表
+负数。为避免这个讨厌的意外，请记住不管高位的顺序如何，它决定一个整数的符号。
+
+4.2.1 位逻辑运算符
+位逻辑运算符有“与”（AND）、“或”（OR）、“异或（XOR ）”、“非（NOT）”
+，
+分别用“&”、“|”、“^”、“~”表示，4-3 表显示了每个位逻辑运算的结果。在继续讨
+论之前，请记住位运算符应用于每个运算数内的每个单独的位。
+
+
+第4 章运算符 57
+表4-3 位逻辑运算符的结果
+A
+0
+1
+0
+1
+B
+0
+0
+1
+1
+A | B
+0
+1
+1
+1
+A & B
+0
+0
+0
+1
+A ^ B
+0
+1
+1
+0
+~A
+1
+0
+1
+0
+
+按位非（NOT）
+
+按位非也叫做补，一元运算符NOT“~”是对其运算数的每一位取反。例如，数字42，
+它的二进制代码为：
+
+00101010
+
+经过按位非运算成为
+
+11010101
+
+按位与（AND）
+
+按位与运算符“&”，如果两个运算数都是1，则结果为1。其他情况下，结果均为零。
+看下面的例子：
+
+00101010 42
+&00001111 15
+
+
+00001010 10
+
+按位或（OR）
+
+按位或运算符“|”，任何一个运算数为1，则结果为1。如下面的例子所示：
+
+00101010 42
+| 00001111 15
+
+
+00101111 47
+
+按位异或（XOR）
+
+按位异或运算符“^”，只有在两个比较的位不同时其结果是 1。否则，结果是零。下
+面的例子显示了“^”运算符的效果。这个例子也表明了XOR 运算符的一个有用的属性。注
+意第二个运算数有数字1的位，42对应二进制代码的对应位是如何被转换的。第二个运算数
+有数字0的位，第一个运算数对应位的数字不变。当对某些类型进行位运算时，你将会看到
+这个属性的用处。
+
+ 00101010 42
+^ 00001111 15
+
+
+00100101 37
+
+
+第1 部分Java 语言
+
+位逻辑运算符的应用
+
+下面的例子说明了位逻辑运算符：
+
+// Demonstrate the bitwise logical operators.
+class BitLogic
+{
+public static void main(String args[])
+{
+
+
+String binary[] = {
+"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
+"1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"
+
+}
+;
+int a = 3; // 0 + 2 + 1 or 0011 in binary
+int b = 6; // 4 + 2 + 0 or 0110 in binary
+int c = a | b;
+int d = a & b;
+int e = a ^ b;
+int f = (~a & b) | (a & ~b)
+;
+int g = ~a & 0x0f;
+
+
+System.out.println(" a = " + binary[a])
+;
+System.out.println(" b = " + binary[b])
+;
+System.out.println(" a|b = " + binary[c])
+;
+System.out.println(" a&b = " + binary[d])
+;
+System.out.println(" a^b = " + binary[e])
+;
+System.out.println("~a&b|a&~b = " + binary[f])
+;
+System.out.println(" ~a = " + binary[g])
+;
+
+
+}
+}
+
+
+在本例中，变量a与b对应位的组合代表了二进制数所有的 4 种组合模式：0-0，0-1，
+1-0 ，和1-1 。“|”运算符和“&”运算符分别对变量a与b各个对应位的运算得到了变量c和
+变量d的值。对变量e和f的赋值说明了“^”运算符的功能。字符串数组binary 代表了0到15
+对应的二进制的值。在本例中，数组各元素的排列顺序显示了变量对应值的二进制代码。
+数组之所以这样构造是因为变量的值n对应的二进制代码可以被正确的存储在数组对应元
+素binary[n] 中。例如变量a的值为3，则它的二进制代码对应地存储在数组元素binary[3] 中。
+~a的值与数字0x0f （对应二进制为0000 1111 ）进行按位与运算的目的是减小~a的值，保证
+变量g的结果小于16。因此该程序的运行结果可以用数组binary 对应的元素来表示。该程序
+的输出如下：
+
+a = 0011
+b = 0110
+a|b = 0111
+a&b = 0010
+a^b = 0101
+~a&b|a&~b = 0101
+~a = 1100
+
+
+4.2.2 左移运算符
+左移运算符<<使指定值的所有位都左移规定的次数。它的通用格式如下所示：
+
+value << num
+
+
+第4 章运算符
+
+这里，num 指定要移位值value 移动的位数。也就是，左移运算符<<使指定值的所有位
+都左移num位。每左移一个位，高阶位都被移出（并且丢弃），并用0填充右边。这意味着
+当左移的运算数是int 类型时，每移动1位它的第31位就要被移出并且丢弃；当左移的运算数
+是long 类型时，每移动1位它的第63位就要被移出并且丢弃。
+
+在对byte 和short类型的值进行移位运算时，你必须小心。因为你知道Java 在对表达式求
+值时，将自动把这些类型扩大为 int 型，而且，表达式的值也是int 型。对byte 和short类型
+的值进行移位运算的结果是int 型，而且如果左移不超过31位，原来对应各位的值也不会丢
+弃。但是，如果你对一个负的byte 或者short类型的值进行移位运算，它被扩大为int 型后，
+它的符号也被扩展。这样，整数值结果的高位就会被1填充。因此，为了得到正确的结果，
+你就要舍弃得到结果的高位。这样做的最简单办法是将结果转换为byte 型。下面的程序说
+明了这一点：
+
+// Left shifting a byte value.
+class ByteShift
+{
+
+
+public static void main(String args[])
+{
+byte a = 64, b;
+int i;
+
+
+i = a << 2;
+b = (byte) (a << 2)
+;
+
+
+System.out.println("Original value of a: " + a)
+;
+System.out.println("i and b: " + i + " " + b)
+;
+}
+}
+
+
+该程序产生的输出下所示：
+
+Original value of a: 64
+i and b: 256
+0
+
+
+因变量a在赋值表达式中，故被扩大为int 型，64（0100 0000 ）被左移两次生成值256
+（10000 0000 ）被赋给变量i。然而，经过左移后，变量b中惟一的1被移出，低位全部成了0，
+因此b的值也变成了0。
+
+既然每次左移都可以使原来的操作数翻倍，程序员们经常使用这个办法来进行快速的2
+的乘法。但是你要小心，如果你将1移进高阶位（31或63位），那么该值将变为负值。下面
+的程序说明了这一点：
+
+// Left shifting as a quick way to multiply by 2.
+class MultByTwo
+{
+
+
+public static void main(String args[])
+{
+int i;
+int num = 0xFFFFFFE;
+
+
+for(i=0; i<4; i++)
+{
+num = num << 1;
+System.out.println(num)
+;
+
+
+}
+}
+
+
+
+第1 部分Java 语言
+
+}
+
+该程序的输出如下所示：
+
+536870908
+1073741816
+2147483632
+-32
+
+
+初值经过仔细选择，以便在左移 4 位后，它会产生-32。正如你看到的，当1被移进31
+位时，数字被解释为负值。
+
+4.2.3 右移运算符
+右移运算符>>使指定值的所有位都右移规定的次数。它的通用格式如下所示：
+
+value >> num
+
+这里，num 指定要移位值value 移动的位数。也就是，右移运算符>>使指定值的所有位
+都右移num位。
+下面的程序片段将值32右移2次，将结果8赋给变量a:
+
+int a = 32;
+a = a >> 2; // a now contains
+8
+
+
+当值中的某些位被“移出”时，这些位的值将丢弃。例如，下面的程序片段将35右移2
+次，它的2个低位被移出丢弃，也将结果8赋给变量a:
+
+int a = 35;
+a = a >> 2; // a still contains
+8
+
+
+用二进制表示该过程可以更清楚地看到程序的运行过程：
+
+00100011 35
+>>
+2
+00001000
+8
+
+
+将值每右移一次，就相当于将该值除以2并且舍弃了余数。你可以利用这个特点将一个
+整数进行快速的2的除法。当然，你一定要确保你不会将该数原有的任何一位移出。
+
+右移时，被移走的最高位（最左边的位）由原来最高位的数字补充。例如，如果要移
+走的值为负数，每一次右移都在左边补1，如果要移走的值为正数，每一次右移都在左边补
+0，这叫做符号位扩展（保留符号位）（sign extension ），在进行右移操作时用来保持负数
+的符号。例如，–8 >> 1 是–4，用二进制表示如下：
+
+11111000 –
+8
+>>
+1
+11111100 –
+4
+
+
+一个要注意的有趣问题是，由于符号位扩展（保留符号位）每次都会在高位补1，因此
+-1右移的结果总是–1。
+有时你不希望在右移时保留符号。例如，下面的例子将一个byte 型的值转换为用十六
+
+
+第4 章运算符
+
+进制表示。注意右移后的值与0x0f进行按位与运算，这样可以舍弃任何的符号位扩展，以
+便得到的值可以作为定义数组的下标，从而得到对应数组元素代表的十六进制字符。
+
+// Masking sign extension.
+class HexByte
+{
+static public void main(String args[])
+{
+
+
+char hex[] =
+{
+'0', '1', '2', '3', '4', '5', '6', '7'
+,
+'8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+'
+
+
+}
+;
+byte b = (byte) 0xf1;
+
+
+System.out.println("b = 0x" + hex[(b >> 4) & 0x0f] + hex[b & 0x0f]);
+}
+}
+
+该程序的输出如下：
+
+b = 0xf1
+
+4.2.4 无符号右移
+正如上面刚刚看到的，每一次右移，>>运算符总是自动地用它的先前最高位的内容补
+它的最高位。这样做保留了原值的符号。但有时这并不是我们想要的。例如，如果你进行
+移位操作的运算数不是数字值，你就不希望进行符号位扩展（保留符号位）。当你处理像
+素值或图形时，这种情况是相当普遍的。在这种情况下，不管运算数的初值是什么，你希
+望移位后总是在高位（最左边）补0。这就是人们所说的无符号移动（unsigned shift ）。这
+时你可以使用Java 的无符号右移运算符>>> ，它总是在左边补0。
+
+下面的程序段说明了无符号右移运算符>>> 。在本例中，变量a被赋值为-1，用二进制
+表示就是32位全是1。这个值然后被无符号右移24位，当然它忽略了符号位扩展，在它的左
+边总是补0。这样得到的值255被赋给变量a。
+
+int a = -1;
+a = a >>> 24;
+
+
+下面用二进制形式进一步说明该操作：
+
+11111111 11111111 11111111 11111111 int型-1的二进制代
+码
+>>> 24 无符号右移24
+位
+00000000 00000000 00000000 11111111 int型255的二进制代
+码
+
+
+由于无符号右移运算符>>> 只是对32位和64位的值有意义，所以它并不像你想象的那
+样有用。因为你要记住，在表达式中过小的值总是被自动扩大为int 型。这意味着符号位扩
+展和移动总是发生在32位而不是8位或16位。这样，对第7位以0开始的byte 型的值进行无符
+号移动是不可能的，因为在实际移动运算时，是对扩大后的32位值进行操作。下面的例子
+说明了这一点：
+
+// Unsigned shifting a byte value.
+class ByteUShift
+{
+static public void main(String args[])
+{
+
+
+
+第1 部分Java 语言
+
+char hex[] = {
+
+'0', '1', '2', '3', '4', '5', '6', '7',
+
+'8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+
+};
+
+byte b = (byte) 0xf1;
+
+byte c = (byte) (b >> 4);
+
+byte d = (byte) (b >>> 4);
+
+byte e = (byte) ((b & 0xff) >> 4);
+
+System.out.println(" b = 0x"
+
++ hex[(b >> 4) & 0x0f] + hex[b & 0x0f])
+;
+System.out.println(" b >> 4 = 0x"
++ hex[(c >> 4) & 0x0f] + hex[c & 0x0f])
+;
+System.out.println(" b >>> 4 = 0x"
++ hex[(d >> 4) & 0x0f] + hex[d & 0x0f])
+;
+System.out.println("( b & 0xff) >> 4 = 0x"
++ hex[(e >> 4) & 0x0f] + hex[e & 0x0f]);
+}
+}
+
+
+该程序的输出显示了无符号右移运算符>>> 对byte 型值处理时，实际上不是对byte 型值
+直接操作，而是将其扩大到int 型后再处理。在本例中变量b被赋为任意的负byte 型值。对变
+量b右移4位后转换为byte 型，将得到的值赋给变量c，因为有符号位扩展，所以该值为0xff。
+对变量b进行无符号右移4位操作后转换为byte 型，将得到的值赋给变量d，你可能期望该值
+是0x0f，但实际上它是0xff，因为在移动之前变量b就被扩展为int 型，已经有符号扩展位。
+最后一个表达式将变量b的值通过按位与运算将其变为8位，然后右移4位，然后将得到的值
+赋给变量e，这次得到了预想的结果0x0f 。由于对变量d（它的值已经是0xff）进行按位与运
+算后的符号位的状态已经明了，所以注意，对变量d再没有进行无符号右移运算。
+
+B = 0xf1
+b >> 4 = 0xff
+b >>> 4 = 0xff
+(b & 0xff) >> 4 = 0x0f
+
+
+4.2.5 位运算符赋值
+所有的二进制位运算符都有一种将赋值与位运算组合在一起的简写形式。例如，下面
+两个语句都是将变量a右移4位后赋给a：
+
+a = a >> 4;
+a >>= 4;
+
+
+同样，下面两个语句都是将表达式a OR b 运算后的结果赋给a：
+
+a = a | b;
+a |= b;
+
+
+下面的程序定义了几个int 型变量，然后运用位赋值简写的形式将运算后的值赋给相应
+的变量：
+
+class OpBitEquals
+{
+public static void main(String args[])
+{
+int a = 1;
+
+
+
+第4 章运算符
+
+int b = 2;
+int c = 3;
+
+
+a |= 4;
+b >>= 1;
+c <<= 1;
+a ^= c;
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+System.out.println("c = " + c)
+;
+
+
+}
+}
+
+
+该程序的输出如下所示：
+
+a =
+3
+b =
+1
+c =
+6
+
+
+4.3 关系运算符
+关系运算符（relational operators ）决定值和值之间的关系。例如决定相等不相等以及
+排列次序。关系运算符如表4-4 所示：
+
+表4-4 关系运算符及其意义
+
+运算符意义
+
+== 等于
+!= 不等于
+> 大于
+< 小于
+>= 大于等于
+<= 小于等于
+
+这些关系运算符产生的结果是布尔值。关系运算符常常用在if控制语句和各种循环语句
+的表达式中。
+
+Java 中的任何类型，包括整数，浮点数，字符，以及布尔型都可用“==”来比较是否
+相等，用“!=”来测试是否不等。注意Java （就像C和C++ 一样）比较是否相等的运算符是2
+个等号，而不是一个（注意：单等号是赋值运算符）。只有数字类型可以使用排序运算符
+进行比较。也就是，只有整数、浮点数和字符运算数可以用来比较哪个大哪个小。
+
+前面已经说过，关系运算符的结果是布尔（boolean ）类型。例如，下面的程序段对变
+量c的赋值是有效的：
+
+int a = 4;
+int b = 1;
+boolean c = a < b;
+
+
+
+第1 部分Java 语言
+
+在本例中，a<b （其结果是false）的结果存储在变量c中。
+如果你有C/C++ 语言知识的背景，请注意下面的几条语句。在C/C++ 中，这些类型的语
+句是很常见的：
+
+int done;
+// ..
+.
+if(!done) ... // Valid in C/C+
++
+if(done) ... // but not in Java.
+
+
+在Java 中，这些语句必须写成下面这样：
+
+if(done == 0)) ... // This is Java-style.
+if(done != 0) ..
+.
+
+
+这样做的原因是Java 定义真和假的方法和C/C++ 中的不一样。在C/C++ 中，真是任何非
+0的值而假是值0。在Java 中，真值假值是非数字的，它和0或非0联系不到一起。因此，为
+了测试0值或非0值，你必须明确地用一个或多个关系运算符。
+
+4.4 布尔逻辑运算符
+布尔逻辑运算符的运算数只能是布尔型。而且逻辑运算的结果也是布尔类型（见表
+4-5 ）。
+
+表4-5 布尔逻辑运算符及其意义
+
+运算符含义
+& 逻辑与
+| 逻辑或
+^ 异或
+|| 短路或
+&& 短路与
+! 逻辑反
+&= 逻辑与赋值（赋值的简写形式）
+|= 逻辑或赋值（赋值的简写形式）
+^= 异或赋值（赋值的简写形式）
+== 相等
+!= 不相等
+?: 三元运算符（IF-THEN-ELSE）
+
+布尔逻辑运算符“&”、“ |”、“ ^”，对布尔值的运算和它们对整数位的运算一样。
+逻辑运算符“!”的结果表示布尔值的相反状态：!true == false 和!false == true 。各个逻辑
+运算符的运算结果如表4-6 所示：
+
+
+第4 章运算符 65
+表4-6 布尔逻辑运算符的运算
+AFalse
+TrueFalseTrue
+B
+False
+False
+True
+True
+A|B
+False
+True
+True
+True
+A&B
+FalseFalse
+False
+True
+A^B
+FalseTrue
+True
+False
+!A
+True
+False
+True
+False
+
+下面的例子和前面讲的位逻辑运算的几乎一样，只不过本例中的运算数是布尔逻辑值
+而不是二进制的位值：
+
+// Demonstrate the boolean logical operators.
+class BoolLogic
+{
+
+
+public static void main(String args[])
+{
+boolean a = true;
+boolean b = false;
+boolean c = a | b;
+boolean d = a & b;
+boolean e = a ^ b;
+boolean f = (!a & b) | (a & !b)
+;
+boolean g = !a;
+System.out.println(" a = " + a)
+;
+System.out.println(" b = " + b)
+;
+System.out.println(" a|b = " + c)
+;
+System.out.println(" a&b = " + d)
+;
+System.out.println(" a^b = " + e)
+;
+System.out.println("!a&b|a&!b = " + f)
+;
+System.out.println(" !a = " + g)
+;
+
+
+}
+}
+
+
+在你运行该程序后，你会发现逻辑运算符对布尔值和位运算值的逻辑规则一样。而且
+从下面的输出你也可以看出Java 中的布尔值是字符串常量“true ”或“false”
+：
+
+a = true
+
+b = false
+a|b = true
+a&b = false
+a^b = true
+
+
+a&b|a&!b = true
+!a = false
+
+
+4.4.1 短路（short-circuit ）逻辑运算符
+Java 提供了两个在大多数其他计算机语言中没有的有趣的布尔运算符。这就是逻辑
+AND 和逻辑OR的特殊的短路版本。从上表可以看出，在逻辑OR的运算中，如果第一个运
+算数A为真，则不管第二个运算数B是真是假，其运算结果为真。同样，在逻辑AND的运算
+中，如果第一个运算数A为假，则不管第二个运算数是真是假，其运算结果为假。如果运
+用||和&&形式，而不是|和&，那么一个运算数就能决定表达式的值，Java 的短路版本就不
+会对第二个运算数求值，只有在需要时才对第二个运算数求值。为完成正确的功能，当右
+
+
+第1 部分Java 语言
+
+边的运算数取决于左边的运算数是真或是假时，短路版本是很有用的。例如，下面的程序
+语句说明了短路逻辑运算符的优点，用它来防止被0除的错误：
+
+if (denom != 0 && num / denom > 10)
+
+既然用了短路AND 运算符，就不会有当denom为0时产生的意外运行时错误。如果该行
+代码使用标准AND 运算符（&），它将对两个运算数都求值，当出现被0除的情况时，就会
+产生运行时错误。
+
+既然短路运算符在布尔逻辑运算中有效，那么就在布尔逻辑运算中全用它，而标准的
+AND 和OR运算符（只有一个字符）仅在位运算中使用。然而，这条规则也有例外。例如，
+考虑下面的语句：
+
+if(c==1 & e++ < 100) d = 100;
+
+这里，使用标准AND运算符（单个的&）来保证不论c是否等于1，e都被自增量。
+
+4.5 赋值运算符
+在第2章中你已经使用过赋值运算符。下面我们正式讨论它。赋值运算符是一个等号
+“=”。它在Java 中的运算与在其他计算机语言中的运算一样，其通用格式为：
+
+var = expression;
+
+这里，变量var 的类型必须与表达式expression 的类型一致。
+
+赋值运算符有一个有趣的属性，你或许并不熟悉：它允许你对一连串变量赋值。例如，
+请看下面的例子：
+
+int x，y，z;
+x = y = z = 100; // set x，y，and z to 100
+
+
+该例子使用一个赋值语句对变量 x、y、z 都赋值为100。这是因为“=”运算符产生右
+边表达式的值，因此 z = 100 的值是 100，然后该值被赋给 y ，并依次被赋给 x 。使用
+“串赋值”是给一组变量赋同一个值的简单办法。
+
+4.6 ？运算符
+Java 提供一个特别的三元运算符（ternary ）经常用于取代某个类型的if-then-else 语句。
+这个运算符就是?，并且它在Java 中的用法和在C/C++ 中的几乎一样。该符号初看起来有些
+迷惑，但是一旦掌握了它，用？运算符是很方便高效的。？运算符的通用格式如下：
+
+expression1 ? expression2 : expression3
+
+其中，expression1 是一个布尔表达式。如果expression1 为真，那么expression2 被求值；
+否则，expression3 被求值。整个？表达式的值就是被求值表达式（expression2 或expression3）
+的值。expression2 和expression3 是除了void 以外的任何类型的表达式，且它们的类型必须相
+
+
+第4 章运算符
+
+同。
+下面是一个利用？运算符的例子：
+
+ratio = denom == 0 ? 0 : num / denom;
+
+当Java 计算这个表达式时，它首先看问号左边的表达式。如果 denom 等于0，那么在
+问号和冒号之间的表达式被求值，并且该值被作为整个？表达式的值。如果 denom 不等
+于零，那么在冒号之后的表达式被求值，并且该值被作为整个？表达式的值。然后将整个？
+表达式的值赋给变量ratio。
+
+下面的程序说明了？运算符，该程序得到一个变量的绝对值。
+
+// Demonstrate ?
+.
+class Ternary
+{
+
+
+public static void main(String args[])
+{
+int i, k;
+i = 10;
+k = i < 0 ? -i : i; // get absolute value of
+i
+System.out.print("Absolute value of ")
+;
+System.out.println(i + " is " + k)
+;
+i = -10;
+k = i < 0 ? -i : i; // get absolute value of
+i
+System.out.print("Absolute value of ")
+;
+System.out.println(i + " is " + k)
+;
+
+
+}
+}
+
+
+该程序的输出如下所示：
+
+Absolute value of 10 is 10
+Absolute value of -10 is 10
+
+
+4.7 运算符优先级
+表4-7 显示了Java 运算符从最高到最低的优先级。注意第一行显示的项你通常不能把它
+们作为运算符:圆括号，方括号，点运算符。圆括号被用来改变运算的优先级。从前面章节
+我们知道，方括号用来表示数组的下标。点运算符用来将对象名和成员名连接起来，这将
+在本书的后面讨论。
+
+表4-7 Java 运算符优先级
+
+最高
+
+( ) [] .
+++ –– ~!
+
+* /
+%
++
+–
+>> >>> <
+<
+> >= < <
+=
+
+第1 部分Java 语言
+
+续表
+
+== !=
+&
+^
+|
+&&
+||
+?:
+= op=
+最低
+
+4.8 使用圆括号
+圆括号（Parentheses ）提高了括在其中的运算的优先级。这常常对于获得你需要的结
+果是必要的。例如，考虑下列表达式：
+
+a >> b + 3
+
+该表达式首先把 3 加到变量 b，得到一个中间结果，然后将变量a右移该中间结果位。
+该表达式可用添加圆括号的办法重写如下：
+
+a >> (b + 3)
+
+然而，如果你想先将a右移b位，得到一个中间结果，然后对该中间结果加3，你需要对
+表达式加如下的圆括号：
+
+(a >> b) + 3
+
+除了改变一个运算的正常优先级外，括号有时被用来帮助澄清表达式的含义。对于阅
+读你程序代码的人来说，理解一个复杂的表达式是困难的。对复杂表达式增加圆括号能帮
+助防止以后的混乱。例如，下面哪一个表达式更容易读呢？
+
+a | 4 + c >> b &
+7
+(a | (((4 + c) >> b) & 7)
+)
+
+
+另外一点：圆括号（不管是不是多余的）不会降低你程序的运行速度。因此，添加圆
+括号可以减少含糊不清，不会对你的程序产生消极影响。
+        `
+    },
+    {
+        name:'第5章  程序控制语句',
+        cont:`
+            编程语言使用控制（control ）语句来产生执行流，从而完成程序状态的改变，如程序
+顺序执行和分支执行。Java 的程序控制语句分为以下几类:选择，重复和跳转。根据表达式
+结果或变量状态选择（Selection ）语句来使你的程序选择不同的执行路径。重复（Iteration）
+语句使程序能够重复执行一个或一个以上语句（也就是说，重复语句形成循环）。跳转
+（Jump ）语句允许你的程序以非线性的方式执行。下面将分析Java 的所有控制语句。
+
+如果你熟悉C/C++ ，那么掌握Java 的控制语句将很容易。事实上，Java 的控制语句与
+C/C++ 中的语句几乎完全相同。当然它们还是有一些差别的——尤其是break语句与continue
+语句。
+
+5.1 Java 的选择语句
+Java 支持两种选择语句：if语句和switch语句。这些语句允许你只有在程序运行时才能
+知道其状态的情况下，控制程序的执行过程。如果你没有C/C++ 的编程背景，你将会为这
+两个语句的强大功能和灵活性而感到吃惊。
+
+5.1.1 if语句
+if语句曾在第2章中介绍过，我们将在这里对它进行详细讨论。if语句是Java 中的条件分
+支语句。它能将程序的执行路径分为两条。if语句的完整格式如下：
+
+if (condition) statement1;
+else statement2;
+
+
+其中，if和else的对象都是单个语句（statement ），也可以是程序块。条件condition 可
+以是任何返回布尔值的表达式。else子句是可选的。
+
+if语句的执行过程如下:如果条件为真，就执行if的对象（statement1 ）；否则，执行else
+的对象（statement2 ）。任何时候两条语句都不可能同时执行。考虑下面的例子：
+
+int a，b;
+// ..
+.
+if(a < b) a = 0;
+else b = 0;
+
+
+本例中，如果a小于b，那么a被赋值为0；否则，b被赋值为0。任何情况下都不可能使a
+和b都被赋值为0。
+
+通常，用于控制if语句的表达式都包含关系运算符。当然，这在技术上并不是必要的。
+仅用一个布尔值来控制if语句也是可以的，如下面的程序段：
+
+boolean dataAvailable;
+
+
+第1 部分Java 语言
+
+// ..
+.
+if (dataAvailable)
+ProcessData()
+;
+else
+waitForMoreData()
+;
+
+
+记住，直接跟在if 或else语句后的语句只能有一句。如果你想包含更多的语句，你需
+要建一个程序块，如下面的例子：
+
+int bytesAvailable;
+// ..
+.
+if (bytesAvailable > 0)
+{
+
+
+ProcessData()
+;
+bytesAvailable -= n;
+} else
+waitForMoreData()
+;
+
+
+这里，如果变量bytesAvailable 大于0，则if块内的所有语句都会执行。
+
+一些程序员觉得在使用if语句时在其后跟一个大括号是很方便的，甚至在只有一条语句
+的时侯也使用大括号。这使得在日后添加别的语句变得容易，并且你也不必担心忘记括号。
+事实上，当需要定义块时而未对其进行定义是一个导致错误的普遍原因。例如，考虑下面
+的程序段：
+
+int bytesAvailable;
+// ..
+.
+if (bytesAvailable > 0)
+{
+
+
+ProcessData()
+;
+bytesAvailable -= n;
+
+
+} else
+waitForMoreData()
+;
+bytesAvailable = n;
+
+
+由于编排的原因，看起来似乎bytesAvailable = n 语句应该在else子句中执行。然而，当
+你调用时，空白对Java 无关紧要，编译器无法知道你的意图。这段程序会通过编译，但运
+用时会出错。上述例子应修改如下：
+
+int bytesAvailable;
+// ..
+.
+if (bytesAvailable > 0)
+{
+
+
+ProcessData()
+;
+bytesAvailable -= n;
+
+
+} else
+{
+waitForMoreData()
+;
+bytesAvailable = n;
+
+
+}
+
+嵌套if 语句
+
+嵌套（nested）if语句是指该if语句为另一个if或者else 语句的对象。在编程时经常要用
+到嵌套if语句。当你使用嵌套if语句时，需记住的要点就是：一个else语句总是对应着和它
+在同一个块中的最近的if语句，而且该if语句没有与其他else语句相关联。下面是一个例子：
+
+
+第5 章程序控制语句
+
+if(i == 10)
+{
+if(j < 20) a = b;
+if(k > 100) c = d; // this if is
+else a = c; // associated with this else
+
+
+}
+else a = d; // this else refers to if(i == 10)
+
+
+如注释所示，最后一个else语句没有与if（j <20 ）相对应，因为它们不在同一个块（尽
+管if（j <20 ）语句是没有与else配对最近的if语句）。最后一个else语句对应着if（i==10 ）。
+内部的else语句对应着if（k>100 ），因为它是同一个块中最近的if语句。
+
+if-else-if 阶梯
+
+基于嵌套if语句的通用编程结构被称为 if-else-if 阶梯。它的语法如下：
+
+if(condition)
+statement;
+else if(condition)
+statement;
+else if(condition)
+
+
+statement;
+.
+.
+.
+else
+
+
+statement;
+
+条件表达式从上到下被求值。一旦找到为真的条件，就执行与它关联的语句，该阶梯
+的其他部分就被忽略了。如果所有的条件都不为真，则执行最后的else语句。最后的else语
+句经常被作为默认的条件，即如果所有其他条件测试失败，就执行最后的else语句。如果没
+有最后的else语句，而且所有其他的条件都失败，那程序就不做任何动作。
+
+下面的程序通过使用if-else-if 阶梯来确定某个月是什么季节。
+
+// Demonstrate if-else-if statements.
+class IfElse
+{
+
+
+public static void main(String args[])
+{
+int month = 4; // April
+String season;
+
+
+if(month == 12 || month == 1 || month == 2)
+season = "Winter"
+;
+else if(month == 3 || month == 4 || month == 5)
+season = "Spring"
+;
+else if(month == 6 || month == 7 || month == 8)
+season = "Summer"
+;
+else if(month == 9 || month == 10 || month == 11)
+season = "Autumn"
+;
+else
+season = "Bogus Month"
+;
+
+
+System.out.println("April is in the " + season + ".")
+;
+}
+}
+
+
+
+第1 部分Java 语言
+
+该程序产生如下输出：
+
+April is in the Spring.
+
+在往下继续讲之前，你可能想要先试验这个程序。你将看到，不管你给month 什么值，
+该阶梯中有而且只有一个语句执行。
+
+5.1.2 switch 语句
+switch语句是Java 的多路分支语句。它提供了一种基于一个表达式的值来使程序执行不
+同部分的简单方法。因此，它提供了一个比一系列if-else-if 语句更好的选择。switch 语句的
+通用形式如下：
+
+switch (expression) {
+
+case value1:
+
+// statement sequence
+
+break;
+
+case value2:
+
+// statement sequence
+
+break;
+
+.
+
+.
+
+.
+
+case valueN:
+
+// statement sequence
+
+break;
+
+default:
+
+// default statement sequence
+
+}
+
+表达式expression 必须为byte，short，int 或char类型。每个case语句后的值value 必须是
+与表达式类型兼容的特定的一个常量（它必须为一个常量，而不是变量）。重复的case值
+是不允许的。
+
+switch语句的执行过程如下：表达式的值与每个case语句中的常量作比较。如果发现了
+一个与之相匹配的，则执行该case语句后的代码。如果没有一个case常量与表达式的值相匹
+配，则执行default 语句。当然，default 语句是可选的。如果没有相匹配的case 语句，也没有
+default 语句，则什么也不执行。
+
+在case语句序列中的break 语句将引起程序流从整个switch 语句退出。当遇到一个break
+语句时，程序将从整个switch 语句后的第一行代码开始继续执行。这有一种“跳出” switch
+语句的效果。
+
+下面是一个使用switch语句的简单例子：
+
+// A simple example of the switch.
+
+class SampleSwitch {
+
+public static void main(String args[]) {
+
+for(int i=0; i<6; i++)
+
+switch(i) {
+
+case 0:
+
+System.out.println("i is zero.");
+
+break;
+
+
+第5 章程序控制语句
+
+case 1:
+System.out.println("i is one.")
+;
+break;
+
+
+case 2:
+System.out.println("i is two.")
+;
+break;
+
+
+case 3:
+System.out.println("i is three.")
+;
+break;
+
+
+default:
+System.out.println("i is greater than 3.")
+;
+}
+}
+}
+
+
+该程序的输出如下：
+
+i is zero.
+i is one.
+i is two.
+i is three.
+i is greater than 3.
+i is greater than 3.
+
+
+从中可以看出，每一次循环，与i值相配的case常量后的相关语句就被执行。其他语句
+则被忽略。当i大于3时，没有可以匹配的case语句，因此执行default 语句。
+break语句是可选的。如果你省略了break 语句，程序将继续执行下一个case语句。有时
+需要在多个case语句之间没有break 语句。例如下面的程序：
+
+// In a switch, break statements are optional.
+class MissingBreak
+{
+public static void main(String args[])
+{
+for(int i=0; i<12; i++
+)
+
+
+switch(i)
+{
+case 0:
+case 1:
+case 2:
+case 3:
+case 4:
+
+
+System.out.println("i is less than 5");
+
+break;
+case 5:
+case 6:
+case 7:
+case 8:
+case 9:
+
+
+System.out.println("i is less than 10")
+;
+break;
+default:
+System.out.println("i is 10 or more")
+;
+}
+}
+}
+
+
+
+第1 部分Java 语言
+
+该程序产生的输出如下：
+
+i is less than
+5
+i is less than
+5
+i is less than
+5
+i is less than
+5
+i is less than
+5
+i is less than 10
+i is less than 10
+i is less than 10
+i is less than 10
+i is less than 10
+i is 10 or more
+i is 10 or more
+
+
+正如该程序所演示的那样，如果没有break语句，程序将继续执行下面的每一个case语
+
+句，直到遇到break 语句（或switch语句的末尾）。
+当然该例子是为了示例而人为构造的，省略break语句在真实的程序中有许多实际的应
+
+用。为了说明它更现实的用法，让我们考虑下例对以前显示季节例子的重写。这个重写的
+
+版本使用switch语句来使程序的执行更高效。
+
+// An improved version of the season program.
+class Switch
+{
+
+
+public static void main(String args[])
+{
+int month = 4;
+String season;
+switch (month)
+{
+
+
+case 12:
+case 1:
+case 2:
+
+
+season = "Winter";
+
+break;
+case 3:
+case 4:
+case 5:
+
+
+season = "Spring";
+
+break;
+case 6:
+case 7:
+case 8:
+
+
+season = "Summer";
+
+break;
+case 9:
+case 10:
+case 11:
+
+
+season = "Autumn"
+;
+break;
+default:
+
+
+season = "Bogus Month";
+}
+System.out.println("April is in the " + season + ".");
+
+}
+}
+
+
+
+第5 章程序控制语句
+
+嵌套switch 语句
+
+可以将一个switch语句作为一个外部switch语句的语句序列的一部分，这称为嵌套
+switch语句。因为一个switch语句定义了自己的块，外部switch语句和内部switch语句的case
+常量不会产生冲突。例如，下面的程序段是完全正确的：
+
+switch(count) {
+
+case 1:
+
+switch(target) { // nested switch
+
+case 0:
+
+System.out.println("target is zero");
+
+break;
+
+case 1: // no conflicts with outer switch
+
+System.out.println("target is one");
+
+break;
+
+}
+
+break;
+
+case 2: // ...
+
+本例中，内部switch语句中的 case 1 ：语句与外部switch语句中的case 1：语句不冲突。
+变量count仅与外层的case语句相比较。如果变量count 为1，则变量target 与内层的case语句
+相比较。
+
+概括起来说，switch语句有3个重要的特性需注意：
+
+·
+switch语句不同于if语句的是switch语句仅能测试相等的情况，而if语句可计算任何
+类型的布尔表达式。也就是switch语句只能寻找case常量间某个值与表达式的值相
+匹配。
+·
+在同一个switch语句中没有两个相同的case常量。当然，外部switch语句中的case常
+量可以和内部switch语句中的case常量相同。
+·
+switch语句通常比一系列嵌套if语句更有效。
+最后一点尤其有趣，因为它使我们知道Java 编译器如何工作。当编译一个switch语句时，
+Java 编译器将检查每个case常量并且创造一个“跳转表”，这个表将用来在表达式值的基础
+上选择执行路径。因此，如果你需要在一组值中做出选择，switch语句将比与之等效的if-else
+语句快得多。编译器可以这样做是因为它知道case常量都是同类型的，所要做的只是将它
+与switch表达式相比较看是否相等。对于一系列的if表达式，编译器就无此功能。
+
+5.2 循环语句
+Java 的循环语句有for，while 和 do-while 。这些语句创造了我们通常所称的循环（loops）。
+你可能知道，一个循环重复执行同一套指令直到一个结束条件出现。你将看到，Java 有适
+合任何编程所需要的循环结构。
+
+
+第1 部分Java 语言
+
+5.2.1 while 语句
+while 语句是Java 最基本的循环语句。当它的控制表达式是真时，while 语句重复执行一
+个语句或语句块。它的通用格式如下：
+
+while(condition)
+{
+// body of loop
+}
+
+
+条件condition 可以是任何布尔表达式。只要条件表达式为真，循环体就被执行。当条
+件condition 为假时，程序控制就传递到循环后面紧跟的语句行。如果只有单个语句需要重
+复，大括号是不必要的。
+
+下面的while 循环从10开始进行减计数，打印出10行“tick”。
+
+// Demonstrate the while loop.
+class While
+{
+public static void main(String args[])
+{
+int n = 10;
+
+
+while(n > 0)
+{
+System.out.println("tick " + n)
+;
+n--
+;
+
+
+}
+}
+}
+
+
+当你运行这个程序，它将“tick”10次：
+
+tick 10
+tick
+9
+tick
+8
+tick
+7
+tick
+6
+tick
+5
+tick
+4
+tick
+3
+tick
+2
+tick
+1
+
+
+因为while 语句在循环一开始就计算条件表达式，若开始时条件为假，则循环体一次也
+不会执行。例如，下面的程序中，对println( ) 的调用从未被执行过：
+
+int a = 10, b = 20;
+
+while(a > b)
+System.out.println("This will not be displayed")
+;
+
+
+while 循环（或Java 的其他任何循环）的循环体可以为空。这是因为一个空语句（null
+statement) （仅由一个分号组成的语句）在Java 的语法上是合法的。例如，下面的程序：
+
+// The target of a loop can be empty.
+class NoBody
+{
+public static void main(String args[])
+{
+
+
+
+第5 章程序控制语句
+
+int i, j;
+
+i = 100;
+j = 200;
+
+
+// find midpoint between i and
+j
+while(++i < --j) ; // no body in this loop
+
+
+System.out.println("Midpoint is " + i)
+;
+}
+}
+
+
+该程序找出变量i和变量j的中间点。它产生的输出如下：
+
+Midpoint is 150
+
+该程序中的while 循环是这样执行的。值i自增，而值j自减，然后比较这两个值。如果
+新的值i仍比新的值j小，则进行循环。如果i等于或大于j，则循环停止。在退出循环前，i
+将保存原始i和j的中间值（当然，这个程序只有在开始时i比j小的情况下才执行）。正如你
+看到的，这里不需要循环体。所有的行为都出现在条件表达式自身内部。在专业化的Java
+代码中，一些可以由控制表达式本身处理的短循环通常都没有循环体。
+
+5.2.2 do-while 循环
+如你刚才所见，如果while 循环一开始条件表达式就是假的，那么循环体就根本不被执
+行。然而，有时需要在开始时条件表达式即使是假的情况下，while 循环至少也要执行一次。
+换句话说，有时你需要在一次循环结束后再测试中止表达式，而不是在循环开始时。幸运
+的是，Java 就提供了这样的循环：do-while 循环。do-while 循环总是执行它的循环体至少一
+次，因为它的条件表达式在循环的结尾。它的通用格式如下：
+
+do
+{
+// body of loop
+} while (condition)
+;
+
+
+do-while 循环总是先执行循环体，然后再计算条件表达式。如果表达式为真，则循环继
+续。否则，循环结束。对所有的Java 循环都一样，条件condition 必须是一个布尔表达式。
+下面是一个重写的“tick”程序，用来演示do-while 循环。它的输出与先前程序的输出
+相同。
+
+// Demonstrate the do-while loop.
+class DoWhile
+{
+public static void main(String args[])
+{
+int n = 10;
+
+
+do
+{
+System.out.println("tick " + n)
+;
+n--
+;
+
+
+} while(n > 0)
+;
+}
+}
+
+
+
+第1 部分Java 语言
+
+该程序中的循环虽然在技术上是正确的，但可以像如下这样编写更为高效：
+
+do
+{
+System.out.println("tick " + n)
+;
+} while(--n > 0)
+;
+
+
+在本例中，表达式“-- n > 0 ”将n值的递减与测试n是否为0组合在一个表达式中。它
+的执行过程是这样的。首先，执行-- n 语句，将变量n递减，然后返回n的新值。这个值再
+与0比较，如果比0大，则循环继续。否则结束。
+
+do-while 循环在你编制菜单选择时尤为有用，因为通常都想让菜单循环体至少执行一
+次。下面的程序是一个实现Java 选择和重复语句的很简单的帮助系统：
+
+// Using a do-while to process a menu selection
+class Menu
+{
+
+
+public static void main(String args[]
+)
+throws java.io.IOException
+{
+char choice;
+
+
+do
+{
+System.out.println("Help on:")
+;
+System.out.println(" 1. if")
+;
+System.out.println(" 2. switch")
+;
+System.out.println(" 3. while")
+;
+System.out.println(" 4. do-while")
+;
+System.out.println(" 5. for\n")
+;
+System.out.println("Choose one:")
+;
+choice = (char) System.in.read()
+;
+
+
+} while( choice < '1' || choice > '5');
+
+System.out.println("\n");
+
+switch(choice) {
+
+case '1'
+:
+System.out.println("The if:\n")
+;
+System.out.println("if(condition) statement;")
+;
+System.out.println("else statement;")
+;
+
+
+break;
+
+case '2'
+:
+System.out.println("The switch:\n")
+;
+System.out.println("switch(expression) {")
+;
+System.out.println(" case constant:")
+;
+System.out.println(" statement sequence")
+;
+System.out.println(" break;")
+;
+System.out.println(" // ...")
+;
+System.out.println("}")
+;
+break;
+
+
+case '3'
+:
+System.out.println("The while:\n")
+;
+System.out.println("while(condition) statement;")
+;
+break;
+
+
+case '4'
+:
+System.out.println("The do-while:\n")
+;
+System.out.println("do {")
+;
+
+
+
+第5 章程序控制语句
+
+System.out.println(" statement;")
+;
+System.out.println("} while (condition);")
+;
+break;
+
+
+case '5'
+:
+System.out.println("The for:\n")
+;
+System.out.print("for(init; condition; iteration)")
+;
+System.out.println(" statement;")
+;
+break;
+
+
+}
+}
+}
+
+
+下面是这个程序执行的一个样本输出：
+
+Help on:
+
+1. if
+2. switch
+3. while
+4. do-while
+5. for
+Choose one:
+4
+The do-while:
+do
+{
+statement;
+} while (condition)
+;
+
+
+在程序中，do-while 循环用来验证用户是否输入了有效的选择。如果没有，则要求用户
+重新输入。因为菜单至少要显示一次，do-while 循环是完成此任务的合适语句。
+
+关于此例的其他几点：注意从键盘输入字符通过调用System.in.read( ) 来读入。这是一
+个Java 的控制台输入函数。尽管Java 的终端 I/O （输入/输出)方法将在第12章中详细讨论，
+在这里使用System.in.read ( ) 来读入用户的选择。它从标准的输入读取字符（返回整数，因
+此将返回值choice 定义为字符型）。默认地，标准输入是按行进入缓冲区的，因此在你输入
+的任何字符被送到你的程序以前，必须按回车键。
+
+Java 的终端输入功能相当有限且不好使用。进一步说，大多数现实的Java 程序和applets
+（小应用程序）都具有图形界面并且是基于窗口的。因此，这本书使用终端的输入并不多。
+然而，它在本例中是有用的。另外一点:因为使用System.in.read ( ) ，程序必须指定throws
+java.io.IOException 子句。这行代码对于处理输入错误是必要的。这是Java 的异常处理的一
+部分，将在第10章讨论。
+
+5.2.3 for 循环
+在第2章曾使用过一个for循环的简单格式。你将看到，for循环是一个功能强大且形式
+灵活的结构。下面是for 循环的通用格式：
+
+for(initialization; condition; iteration)
+{
+// body
+}
+
+
+如只有一条语句需要重复，大括号就没有必要。
+
+
+第1 部分Java 语言
+
+for循环的执行过程如下。第一步，当循环启动时，先执行其初始化部分。通常，这是
+设置循环控制变量值的一个表达式，作为控制循环的计数器。重要的是你要理解初始化表
+达式仅被执行一次。下一步，计算条件condition 的值。条件condition 必须是布尔表达式。它
+通常将循环控制变量与目标值相比较。如果这个表达式为真，则执行循环体；如果为假，
+则循环终止。再下一步执行循环体的反复部分。这部分通常是增加或减少循环控制变量的
+一个表达式。接下来重复循环，首先计算条件表达式的值，然后执行循环体，接着执行反
+复表达式。这个过程不断重复直到控制表达式变为假。
+
+下面是使用for 循环的“tick”程序：
+
+// Demonstrate the for loop.
+class ForTick
+{
+public static void main(String args[])
+{
+int n;
+
+
+for(n=10; n>0; n--
+)
+System.out.println("tick " + n)
+;
+}
+}
+
+
+在for 循环中声明循环控制变量
+
+控制for循环的变量经常只是用于该循环，而不用在程序的其他地方。在这种情况下，
+可以在循环的初始化部分中声明变量。例如，下面重写了前面的程序，使变量 n 在for循
+环中被声明为整型：
+
+// Declare a loop control variable inside the for.
+class ForTick
+{
+public static void main(String args[])
+{
+
+
+// here, n is declared inside of the for loop
+for(int n=10; n>0; n--
+)
+System.out.println("tick " + n)
+;
+}
+}
+
+
+当你在for 循环内声明变量时，必须记住重要的一点:该变量的作用域在for语句执行后就
+结束了（因此，该变量的作用域就局限于for 循环内）。在for循环外，变量就不存在了。如
+果你在程序的其他地方需要使用循环控制变量，你就不能在for循环中声明它。
+
+由于循环控制变量不会在程序的其他地方使用，大多数程序员都在for循环中来声明
+它。例如，以下为测试素数的一个简单程序。注意由于其他地方不需要i，所以循环控制变
+量i在for循环中声明。
+
+// Test for primes.
+class FindPrime
+{
+
+
+public static void main(String args[])
+{
+int num;
+boolean isPrime = true;
+
+
+num = 14;
+
+
+第5 章程序控制语句
+
+for(int i=2; i <= num/2; i++) {
+
+if((num % i) == 0)
+{
+isPrime = false;
+break;
+
+
+}
+}
+if(isPrime) System.out.println("Prime")
+;
+else System.out.println("Not Prime")
+;
+
+
+}
+}
+
+
+使用逗号
+
+你可能经常需要在初始化和for循环的反复部分包括超过一个变量的声明。例如，考虑
+下面程序的循环部分：
+
+class Sample {
+
+public static void main(String args[])
+{
+int a, b;
+b = 4;
+for(a=1; a<b; a++)
+{
+
+
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+b--
+;
+
+
+}
+}
+}
+
+
+如你所看到的，循环被两个相互作用的变量控制。由于循环被两个变量控制，如果两
+个变量都能被定义在for 循环中，而变量b不需要通过人工处理将是很有用的。幸好，Java
+提供了一个完成此任务的方法。为了允许两个或两个以上的变量控制循环，Java 允许你在for
+循环的初始化部分和反复部分声明多个变量，每个变量之间用逗号分开。
+
+使用逗号，前面的for循环将更高效，改写后的程序如下：
+
+// Using the comma.
+class Comma
+{
+public static void main(String args[])
+{
+int a, b;
+
+
+for(a=1, b=4; a<b; a++, b--)
+{
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+
+
+}
+}
+}
+
+
+在本例中，初始化部分把两个变量a和 b都定义了。在循环的反复部分，用两个逗号分
+开的语句在每次循环重复时都执行。程序输出如下：
+
+a =
+1
+b =
+4
+a =
+2
+b =
+3
+
+
+
+第1 部分Java 语言
+
+注意：如果你对C/C++ 熟悉，你就会知道逗号是一个运算符，能在任何有效的表达
+
+式中使用。然而，在Java 中不是这样。在 Java 中，逗号仅仅是一个分隔符，只
+
+适用于for循环。
+
+5.2.4 for 循环的一些变化
+for循环支持一些变化，这增加了它的功能和灵活性。for循环这样灵活是因为它的3部
+分（初始化部分，条件测试部分和反复部分）并不仅用于它们所限定的那些目的。事实上，
+for 循环的3部分能被用于你需要的任何目的。让我们看一些例子。
+
+最普通的变化之一包含在条件表达式中。具体地说，条件表达式可以不需要用循环变
+量和目标值的比较来测试循环条件。事实上，控制for 循环的条件可以是任何布尔表达式。
+例如，考虑下列程序片段：
+
+boolean done = false;
+
+for(int i=1; !done; i++) {
+
+// ...
+
+if(interrupted()) done = true;
+
+}
+
+在本例中，for循环将一直运行，直到布尔型变量done 被设置为真。for循环的条件部分
+不测试值i。
+
+下面是for循环的另外一个有趣的变化。在Java 中可以使for循环的初始化、条件或者反
+复部分中的任何或者全部都为空，如下面的程序：
+
+// Parts of the for loop can be empty.
+
+class ForVar {
+
+public static void main(String args[]) {
+
+int i;
+
+boolean done = false;
+
+i = 0;
+
+for( ; !done; ) {
+
+System.out.println("i is " + i);
+
+if(i == 10) done = true;
+
+i++;
+
+}
+
+}
+
+}
+
+本例中，初始化部分和反复部分被移到了for 循环以外。这样，for循环的初始化部分和
+反复部分是空的。当这个简单的例子中，for循环中没有值，确实，这种风格被认为是相当
+差的，有时这种风格也是有用的。例如，如果初始条件由程序中其他部分的复杂表达式来
+定义，或者循环控制变量的改变由发生在循环体内的行为决定，而且这种改变是一种非顺
+序的方式，这种情况下，可以使for 循环的这些部分为空。
+
+下面是for 循环变化的又一种方式。如果for循环的三个部分全为空，你就可以创建一个
+无限循环（从来不停止的循环）。例如：
+
+
+第5 章程序控制语句
+
+for( ; ; )
+{
+// ..
+.
+}
+
+
+这个循环将始终运行，因为没有使它终止的条件。尽管有一些程序，例如操作系统命
+令处理器，需要无限循环，但大多数“无限循环”实际上是具有特殊终止要求的循环。在
+不久你将看到如何不用正常的条件表达式来终止这种类型的循环。
+
+5.2.5 循环嵌套
+和其他编程语言一样，Java 允许循环嵌套。也就是，一个循环在另一个循环之内。例
+如，下面的程序就是循环嵌套：
+
+// Loops may be nested.
+class Nested
+{
+public static void main(String args[])
+{
+int i, j;
+
+
+for(i=0; i<10; i++)
+{
+for(j=i; j<10; j++
+)
+System.out.print(".")
+;
+System.out.println()
+;
+}
+}
+}
+
+
+该程序产生的输出如下所示：
+
+. . . . . . . . .
+.
+. . . . . . . .
+.
+. . . . . . .
+.
+. . . . . .
+.
+. . . . .
+.
+. . . .
+.
+. . .
+.
+. .
+.
+.
+.
+.
+
+
+5.3 跳转语句
+Java 支持 3 种跳转语句：break，continue 和return 。这些语句把控制转移到程序的其
+他部分。下面对每一种语句进行讨论。
+
+注意：除了这里讨论的跳转语句，Java 还支持另一种能改变你程序执行流程的方
+法:通过异常处理。异常处理提供了一种结构化的方法，通过该方法可以使你的程
+序捕获并处理运行时刻错误。它由下列五个关键字来控制：try，catch，throw，
+throws，和 finally 。实质上，异常处理机制允许你的程序完成一个非局部的分
+支跳转。由于异常处理是一个大话题，我们将在第 10 章专门讨论。
+
+
+第1 部分Java 语言
+
+5.3.1 使用break 语句
+在Java 中，break语句有3种作用。第一，你已经看到，在switch语句中，它被用来终止
+一个语句序列。第二，它能被用来退出一个循环。第三，它能作为一种“先进”的goto 语
+句来使用。下面对最后 2种用法进行解释。
+
+使用break 退出循环
+
+可以使用break 语句直接强行退出循环，忽略循环体中的任何其他语句和循环的条件测
+试。在循环中遇到break语句时，循环被终止，程序控制在循环后面的语句重新开始。下面
+是一个简单的例子：
+
+// Using break to exit a loop.
+class BreakLoop
+{
+public static void main(String args[])
+{
+
+
+for(int i=0; i<100; i++)
+{
+if(i == 10) break; // terminate loop if i is 10
+System.out.println("i: " + i)
+;
+
+
+}
+System.out.println("Loop complete.")
+;
+}
+}
+
+
+该程序产生如下的输出：
+
+i: 0
+i: 1
+i: 2
+i: 3
+i: 4
+i: 5
+i: 6
+i: 7
+i: 8
+i:
+9
+Loop complete.
+正如你看到的那样，尽管for 循环被设计为从 0执行到99，但是当i等于10时，break语
+句终止了程序。
+break语句能用于任何 Java 循环中，包括人们有意设置的无限循环。例如，将上一个程
+序用while 循环改写如下。该程序的输出和刚才看到的输出一样。
+
+// Using break to exit a while loop.
+class BreakLoop2
+{
+public static void main(String args[])
+{
+int i = 0;
+
+
+while(i < 100)
+{
+if(i == 10) break; // terminate loop if i is 10
+System.out.println("i: " + i)
+;
+i++
+;
+
+
+}
+
+
+第5 章程序控制语句
+
+System.out.println("Loop complete.")
+;
+}
+}
+
+
+在一系列嵌套循环中使用break 语句时，它将仅仅终止最里面的循环。例如：
+
+// Using break with nested loops.
+class BreakLoop3
+{
+public static void main(String args[])
+{
+
+
+for(int i=0; i<3; i++)
+{
+System.out.print("Pass " + i + ": ")
+;
+for(int j=0; j<100; j++)
+{
+
+
+if(j == 10) break; // terminate loop if j is 10
+
+System.out.print(j + " ")
+;
+}
+System.out.println()
+;
+
+
+}
+System.out.println("Loops complete.")
+;
+}
+}
+
+
+该程序产生如下的输出：
+
+Pass 0: 0 1 2 3 4 5 6 7 8
+9
+Pass 1: 0 1 2 3 4 5 6 7 8
+9
+Pass 2: 0 1 2 3 4 5 6 7 8
+9
+Loops complete.
+
+
+从中可以看出，在内部循环中的break语句仅仅终止了该循环，外部的循环不受影响。
+
+关于break ，在这里要记住两点。首先，一个循环中可以有一个以上的break 语句。但要
+小心，太多的break 语句会破坏你的代码结构。其次，switch语句中的break仅仅影响该switch
+语句，而不会影响其中的任何循环。
+
+注意：break 不是被设计来提供一种正常的循环终止的方法。循环的条件语句是专
+门用来终止循环的。只有在某类特殊的情况下，才用break 语句来取消一个循环。
+
+把break 当作goto 的一种形式来用
+
+break语句除了在switch语句和循环中使用之外，它还能作为goto 语句的一种“文明”
+形式来使用。Java 中没有 goto 语句，因为goto 语句提供了一种改变程序运行流程的非结构
+化方式。这通常使程序难以理解和难于维护。它也阻止了某些编译器的优化。但是，有些
+地方goto 语句对于构造流程控制是有用的而且是合法的。例如，从嵌套很深的循环中退出
+时， goto 语句就很有帮助。因此，Java 定义了break 语句的一种扩展形式来处理这种情况。
+通过使用这种形式的break，你可以终止一个或者几个代码块。这些代码块不必是一个循环
+或一个switch语句的一部分，它们可以是任何的块。而且，由于这种形式的break 语句带有
+标签，你可以明确指定执行从何处重新开始。你将看到，break带给你的是goto 的益处，并
+舍弃了goto 语句带来的麻烦。
+
+标签break 语句的通用格式如下所示：
+
+break label;
+
+
+第1 部分Java 语言
+
+这里，标签label 是标识代码块的标签。当这种形式的break执行时，控制被传递出指定
+的代码块。被加标签的代码块必须包围break 语句，但是它不需要是直接的包围break的块。
+这意味着你可以使用一个加标签的break 语句退出一系列的嵌套块。但是你不能使用break
+语句将控制传递到不包含break 语句的代码块。
+
+要指定一个代码块，在其开头加一个标签即可。标签（label ）可以是任何合法有效的
+Java 标识符后跟一个冒号。一旦你给一个块加上标签后，你就可以使用这个标签作为break
+语句的对象了。这样做会使执行在加标签的块的结尾重新开始。例如，下面的程序示例了 3
+个嵌套块，每一个都有它自己的标签。break语句使执行向前跳，调过了定义为标签second
+的代码块结尾，跳过了2个println ( ) 语句。
+
+// Using break as a civilized form of goto.
+class Break
+{
+public static void main(String args[])
+{
+boolean t = true;
+
+
+first:
+{
+second:
+{
+
+
+third: {
+System.out.println("Before the break.");
+if(t) break second; // break out of second blockSystem.out.println("This won't execute");
+
+}
+
+System.out.println("This won't execute");
+}
+System.out.println("This is after second block.");
+
+}
+}
+}
+
+
+运行该程序，产生如下的输出：
+
+Before the break.
+This is after second block.
+
+
+标签break 语句的一个最普遍的用法是退出循环嵌套。例如，下面的程序中，外层的循
+环只执行了一次：
+
+// Using break to exit from nested loops
+class BreakLoop4
+{
+public static void main(String args[])
+{
+
+
+outer: for(int i=0; i<3; i++)
+{
+System.out.print("Pass " + i + ": ")
+;
+for(int j=0; j<100; j++)
+{
+
+
+if(j == 10) break outer; // exit both loops
+System.out.print(j + " ")
+;
+}
+
+
+System.out.println("This will not print")
+;
+}
+System.out.println("Loops complete.")
+;
+
+
+}
+}
+
+
+
+第5 章程序控制语句
+
+该程序产生如下的输出：
+
+Pass 0: 0 1 2 3 4 5 6 7 8 9 Loops complete.
+
+你可以看到，当内部循环退到外部循环时，两个循环都被终止了。
+记住如果一个标签不在包围break的块中定义，你就不能break 到该标签。例如，下面的
+程序就是非法的，且不会被编译：
+
+// This program contains an error.
+class BreakErr
+{
+public static void main(String args[])
+{
+
+
+one: for(int i=0; i<3; i++)
+{
+System.out.print("Pass " + i + ": ")
+;
+}
+
+
+for(int j=0; j<100; j++)
+{
+if(j == 10) break one; // WRONG
+System.out.print(j + " ")
+;
+
+
+}
+}
+}
+
+
+因为标签为one的循环没有包围break 语句，所以不能将控制传递到该块。
+
+5.3.2 使用continue 语句
+有时强迫一个循环提早反复是有用的。也就是，你可能想要继续运行循环，但是要忽
+略这次重复剩余的循环体的语句。实际上，goto 只不过是跳过循环体，到达循环的尾部。
+continue 语句是break语句的补充。在while 和do while 循环中，continue 语句使控制直接转移
+给控制循环的条件表达式，然后继续循环过程。在for 循环中，循环的反复表达式被求值，
+然后执行条件表达式，循环继续执行。对于这3种循环，任何中间的代码将被旁路。
+
+下例使用continue 语句，使每行打印2个数字：
+
+// Demonstrate continue.
+class Continue
+{
+public static void main(String args[])
+{
+
+
+for(int i=0; i<10; i++)
+{
+System.out.print(i + " ")
+;
+if (i%2 == 0) continue;
+System.out.println("")
+;
+
+
+}
+}
+}
+
+
+该程序使用%（模）运算符来检验变量i是否为偶数，如果是，循环继续执行而不输出
+一个新行。该程序的结果如下：
+
+0
+1
+2
+3
+4
+5
+
+
+
+第1 部分Java 语言
+
+6
+7
+8
+9
+
+
+对于break语句，continue 可以指定一个标签来说明继续哪个包围的循环。下面的例子
+运用continue 语句来打印0到9的三角形乘法表：
+
+// Using continue with a label.
+
+class ContinueLabel {
+
+public static void main(String args[]) {
+
+outer: for (int i=0; i<10; i++) {
+
+ for(int j=0; j<10; j++) {
+
+ if(j > i) {
+
+ System.out.println();
+
+ continue outer;
+
+}
+
+ System.out.print(" " + (i * j));
+
+}
+
+}
+
+ System.out.println();
+
+}
+
+}
+
+在本例中的continue 语句终止了计数j的循环而继续计数i的下一次循环反复。该程序的
+输出如下：
+
+0
+0
+1
+0 2
+4
+0 3 6
+9
+0 4 8 12 16
+0 5 10 15 20 25
+0 6 12 18 24 30 36
+0 7 14 21 28 35 42 49
+0 8 16 24 32 40 48 56 64
+0 9 18 27 36 45 54 63 72 81
+
+
+很好的利用continue 语句的情况很少，一个原因是Java 提供了一系列丰富的循环语句，
+可以适用于绝大多数应用程序。但是，对于那些需要提早反复的特殊情形，continue 语句提
+供了一个结构化的方法来实现。
+
+5.3.3 使用return语句
+最后一个控制语句是return。return语句用来明确地从一个方法返回。也就是，return 语
+句使程序控制返回到调用它的方法。因此，将它分类为跳转语句。尽管对return 语句的详细
+讨论在第 7 章开始，这里对其作简要地介绍。
+
+在一个方法的任何时间，return 语句可被用来使正在执行的分支程序返回到调用它的方
+法。下面的例子说明这一点。下例中，由于是Java 运行系统调用main() ，因此，return语句
+使程序执行返回到Java 运行系统。
+
+// Demonstrate return.
+class Return
+{
+
+
+
+第5 章程序控制语句
+
+public static void main(String args[])
+{
+boolean t = true;
+
+
+System.out.println("Before the return.");
+
+if(t) return; // return to caller
+
+System.out.println("This won't execute.")
+;
+}
+}
+
+
+该程序的结果如下：
+
+Before the return.
+
+正如你看到的一样，最后的println( ) 语句没有被执行。一旦return语句被执行，程序控
+制传递到它的调用者。
+
+最后一点：在上面的程序中，if(t)语句是必要的。没有它，Java 编译器将标记“执行不
+到的代码”（unreachable code ）错误，因为编译器知道最后的println （）语句将永远不会被
+执行。为阻止这个错误，为了这个例子能够执行，在这里使用if语句来“蒙骗”编译器。
+
+
+第6 章介绍类
+
+类是Java 的核心和本质。它是Java 语言的基础，因为类定义了对象的本性。既然类是面
+向对象程序设计Java 语言的基础，因此，你想要在Java 程序中实现的每一个概念都必须封装
+在类以内。
+
+因为类是Java 的基础，所以在本章和以后几章中对其进行介绍。本章将介绍类的基本
+元素，并学习如何运用类来创建对象。同时也将学习方法、构造函数及this 这个关键字。
+
+6.1 类基础
+从本书的开始我们就使用类了。当然，使用的都是非常简单的类。在前面几章中创造
+的类主要都包含在main( ) 方法中，用它来表明Java 句法的基础。你将看到，类的功能实质
+上比你到目前为止看到的要强大得多。
+
+也许理解类的最重要的事情就是它定义了一种新的数据类型。一旦定义后，就可以用
+这种新类型来创建该类型的对象。这样，类就是对象的模板（template ），而对象就是类的
+一个实例（instance）。既然一个对象就是一个类的实例，所以你经常看到object 和instance
+这两个词可以互换使用。
+
+6.1.1 类的通用格式
+当你定义一个类时，你要声明它准确的格式和属性。你可以通过指定它包含的数据和
+操作数据的代码来定义类。尽管非常简单的类可能只包含代码或者只包含数据，但绝大多
+数实际的类都包含上述两者。你将看到，类的代码定义了该类数据的接口。
+
+使用关键字class来创建类。在这一点上，类实际上被限制在它的完全格式中。类可以
+（并且常常）是一个组合体。类定义的通用格式如下所示：
+
+class classname {
+
+ type instance-variable1;
+
+type instance-variable2;
+
+// ...
+
+ type instance-variableN;
+
+type methodname1(parameter-list) {
+
+// body of method
+
+}
+
+type methodname2(parameter-list) {
+
+// body of method
+
+}
+
+// ...
+
+ type methodnameN(parameter-list) {
+
+// body of method
+        `
+    },
+    {
+        name:'第6章  介绍类',
+        cont:`
+            在类中，数据或变量被称为实例变量（instance variables ），代码包含在方法（methods）
+内。定义在类中的方法和实例变量被称为类的成员（members ）。在大多数类中，实例变
+量被定义在该类中的方法操作和存取。这样，方法决定该类中的数据如何使用。
+
+定义在类中的变量被称为实例变量，这是因为类中的每个实例(也就是类的每个对象)
+都包含它自己对这些变量的拷贝。这样，一个对象的数据是独立的且是惟一的。关于这一
+点我们将马上讨论，但是这是一个重要的概念，因此要早一点学习。
+
+所有的方法和我们到目前为止用过的方法main() 的形式一样。但是，以后讲到的方法
+将不仅仅是被指定为static或public 。注意类的通用格式中并没有指定main() 方法。Java 类不
+需要main( ) 方法。main() 方法只是在定义您程序的起点时用到。而且，Java 小应用程序也不
+要求main( ) 方法。
+
+注意：如果你有C++编程经验请注意，类的声明和方法的实现要存储在同一个地方
+并且不能被单独定义。由于所有类的定义必须全部定义在一个单个的源文件中，
+这有时会生成很大的.java 文件。在Java 中设计这个特征是因为从长远来说，在一
+个地方指明，定义以及实现将使代码更易于维护。
+
+6.1.2 一个简单的类
+让我们先从一个简单的例子来开始对类的研究。下面定义了一个名为box 的类，它定义
+了3个实例变量：width，height 和depth 。当前，box类不包含任何方法（但是随后将增加一
+些）。
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+}
+
+前面已经说过，一个类定义一个新的数据类型。在本例中，新的数据类型名为Box。
+你可以使用这个名字来声明Box 类型的对象。记住类声明只是创建一个模板（或类型描述）
+，
+它并不会创建一个实际的对象。因此，上述代码不会生成任何Box 类型的对象实体。
+
+要真正创建一个Box 对象，你必须使用下面的语句：
+
+Box mybox = new Box(); // create a Box object called mybox
+
+这个语句执行后，mybox 就是Box的一个实例了。因此，它将具有“物理的”真实性。
+现在，先不必考虑这个语句的一些细节问题。
+
+每次你创建类的一个实例时，你是在创建一个对象，该对象包含它自己的由类定义的
+每个实例变量的拷贝。因此，每个Box对象都将包含它自己的实例变量拷贝，这些变量即
+width，height，和 depth 。要访问这些变量，你要使用点号“.”运算符。点号运算符（dot operator）
+将对象名和成员名连接起来。例如，要将mybox 的width 变量赋值为100，使用下面的语句：
+
+mybox.width = 100;
+
+
+第1 部分Java 语言
+
+该语句告诉编译器对mybox 对象内包含的width 变量拷贝的值赋为100 。通常情况下，你
+可以使用点号运算符来访问一个对象内的实例变量和方法。
+下面是使用Box 类的完整程序：
+
+/* A program that uses the Box class.
+
+Call this file BoxDemo.java
+*
+/
+class Box
+{
+
+
+ double width;
+double height;
+double depth;
+
+
+}
+
+// This class declares an object of type Box.
+class BoxDemo
+{
+
+
+public static void main(String args[])
+{
+Box mybox = new Box()
+;
+double vol;
+
+
+// assign values to mybox's instance variables
+mybox.width = 10;
+mybox.height = 20;
+mybox.depth = 15;
+
+
+// compute volume of box
+vol = mybox.width * mybox.height * mybox.depth;
+
+
+System.out.println("Volume is " + vol)
+;
+}
+}
+
+
+你应该把包含该程序的的文件命名为BoxDemo.java，因为main( ) 方法在名为 BoxDemo
+的类中，而不是名为Box 的类中。当你编译这个程序时，你会发现生成了两个“.class ”文
+件，一个属于box，另一个属于BoxDemo 。Java 编译器自动将每个类保存在它自己的“ .class
+”
+文件中。没有必要分别将Box 类和Boxdemo 类放在同一个源文件中。你可以分别将它们放在
+各自的文件中，并分别命名为Box.Java 和 BoxDemo.java 。
+
+要运行这个程序，你必须执行BoxDemo.class 。运行该程序后，你会看见如下输出：
+
+Volume is 3000.0
+
+前面已经讲过，每个对象都含有它自己的、由它的类定义的实例变量的拷贝。因此，
+假设你有两个Box对象，每个对象都有其自己的depth，width 和height 拷贝。改变一个对象
+的实例变量对另外一个对象的实例变量没有任何影响，理解这一点是很重要的。例如，下
+面的程序定义了两个Box 对象：
+
+// This program declares two Box objects.
+
+class Box
+{
+double width;
+double height;
+
+
+
+第6 章介绍类
+
+ double depth;
+}
+
+
+class BoxDemo2 {
+
+public static void main(String args[])
+{
+Box mybox1 = new Box()
+;
+Box mybox2 = new Box()
+;
+double vol;
+
+
+// assign values to mybox1's instance variables
+mybox1.width = 10;
+mybox1.height = 20;
+mybox1.depth = 15;
+
+
+/* assign different values to mybox2's
+
+ instance variables *
+/
+mybox2.width = 3;
+mybox2.height = 6;
+mybox2.depth = 9;
+
+
+// compute volume of first box
+vol = mybox1.width * mybox1.height * mybox1.depth;
+System.out.println("Volume is " + vol)
+;
+
+
+// compute volume of second box
+vol = mybox2.width * mybox2.height * mybox2.depth;
+System.out.println("Volume is " + vol)
+;
+
+
+}
+}
+
+
+该程序产生的输出如下所示：
+
+Volume is 3000.0
+Volume is 162.0
+
+
+你可以看到，mybox1 的数据与mybox2 的数据完全分离。
+
+6.2 声明对象
+正如刚才讲过的，当你创建一个类时，你创建了一种新的数据类型。你可以使用这种
+类型来声明该种类型的对象。然而，要获得一个类的对象需要两步。第一步，你必须声明
+该类类型的一个变量，这个变量没有定义一个对象。实际上，它只是一个能够引用对象的
+简单变量。第二步，该声明要创建一个对象的实际的物理拷贝，并把对于该对象的引用赋
+给该变量。这是通过使用new 运算符实现的。new运算符为对象动态分配（即在运行时分配）
+内存空间，并返回对它的一个引用。这个引用或多或少的是new分配给对象的内存地址。
+然后这个引用被存储在该变量中。这样，在Java 中，所有的类对象都必须动态分配。让我
+们详细看一下该过程。
+
+在前面的例子中，用下面的语句来声明一个Box类型的对象：
+
+Box mybox = new Box();
+
+
+第1 部分Java 语言
+
+本例将上面讲到的两步组合到了一起，可以将该语句改写为下面的形式，以便将每一
+步讲的更清楚：
+
+Box mybox; // declare reference to object
+mybox = new Box(); // allocate a Box object
+
+
+第一行声明了mybox ，把它作为对于Box类型的对象的引用。当本句执行后，mybox 包
+含的值为null ，表示它没有引用对象。这时任何引用mybox 的尝试都将导致一个编译错误。
+第二行创建了一个实际的对象，并把对于它的引用赋给mybox 。现在，你可以把mybox 作
+为Box的对象来使用。但实际上，mybox 仅仅保存实际的Box 对象的内存地址。这两行语句
+的效果如图6-1 所示。
+
+
+图6-1 声明Box 类型的对象
+
+注意：那些熟悉C/C++ 语言的读者，可能已经注意到了对象的引用看起来和指针类
+似。这种怀疑实质上是正确的。一个对象引用和内存指针类似。主要的差别（也
+就是Java安全的关键）是你不能像实际的指针那样来操作它。这样，对于对象引
+用，你就不能像指针那样任意分配内存地址，或像整数一样操作它。
+
+6.2.1 深入研究new 运算符
+刚才已经解释过，new运算符动态地为一个对象分配地址。它的通用格式如下：
+
+class-var = new classname( );
+
+其中，class-var 是所创建类类型的变量。classname 是被实例化的类的名字。类的后
+面跟的圆括号指定了类的构造函数。构造函数定义当创建一个类的对象时将发生什么。构
+造函数是所有类的重要组成部分，并有许多重要的属性。大多数类在他们自己的内部显式
+地定义构造函数。如果一个类没有显式的定义它自己的构造函数，那么Java 将自动地提供
+一个默认的构造函数。对类Box 的定义就是这种情况。现在，我们将使用默认的构造函数。
+不久，你将看到如何定义自己的构造函数。
+
+这时，你可能想知道为什么对整数或字符这样的简单变量不使用new 运算符。答案是
+Java 的简单类型不是作为对象实现的。出于效率的考虑，它们是作为“常规”变量实现的。
+你将看到，对象有许多特性和属性，使Java 对对象的处理不同于简单类型。由于对处理对
+
+
+第6 章介绍类
+
+象和处理简单类型的开销不同，Java 能更高效地实现简单类型。后面，你将看见，对于那
+些需要完全对象类型的情况下，简单类型的对象版本也是可用的。
+
+理解new运算符是在运行期间为对象分配内存的是很重要的。这样做的好处是你的程
+序在运行期间可以创建它所需要的内存。但是，内存是有限的，因此new有可能由于内存
+不足而无法给一个对象分配内存。如果出现这种情况，就会发生运行时异常（你将在第10
+章学习如何处理这种异常以及其他异常情况）。对于本书中的示例程序，你不必担心内存
+不足的情况，但是在实际的编程中你必须考虑这种可能性。
+
+让我们再次复习类和对象之间的区别。类创建一种新的数据类型，该种类型能被用来
+创建对象。也就是，类创建了一个逻辑的框架，该框架定义了它的成员之间的关系。当你
+声明类的对象时，你正在创造该类的实例。因此，类是一个逻辑构造，对象有物理的真实
+性（也就是对象占用内存空间）。弄清楚这个区别是很重要的。
+
+6.3 给对象引用变量赋值
+对象变量的赋值和你直觉期望的不同。例如，你认为下面的程序段是做什么呢？
+
+Box b1 = new Box()
+;
+Box b2 = b1;
+
+
+你可能认为，变量b2被赋值为变量b1对象引用的一个拷贝。也就是，你可能认为b1和
+b2引用的是不同的对象，但实际情况却相反，b1和b2将引用同样的对象。将b1赋值给b2并
+没有分配任何内存或对原对象做任何部分的拷贝。由于它们是同一个对象，因此通过变量
+b2对对象的改变也将影响b1所对应的对象。
+
+这种情况描绘如下：
+
+
+尽管b1和b2都引用同一个对象，但是他们之间没有任何其他的关系。例如，接下来对
+b1的赋值仅仅使b1脱离（unhook ）初始对象，而没有影响对象或影响b2。
+
+Box b1 = new Box()
+;
+Box b2 = b1;
+// ..
+.
+b1 = null;
+
+
+这里，b1被设置为空，但是b2仍然指向原来的对象。
+
+注意：当你将一个对象引用赋值给另一个对象引用时，你并没有创建该对象的一
+个拷贝，而是仅仅对引用的一个拷贝。
+
+
+第1 部分Java 语言
+
+6.4 方法
+在本章的开始提到，类通常由两个要素组成:实例变量和方法。方法是个很大的话题，
+因为Java 给他们如此大的功能和灵活性。事实上，下一章的大部分都用来介绍方法。然而，
+你现在需要学习一些基础以便你能开始把方法加到你的类中。
+
+这是方法一般的形式：
+
+type name(parameter-list)
+{
+// body of method
+}
+
+
+其中，type 指定了方法返回的数据类型。这可以是任何合法有效的类型，包括你创建
+的类的类型。如果该方法不返回任何值，则它的返回值type 必须为void 。方法名由name 指
+定。除了被当前作用域中的其他项使用的标识符以外，方法名可以是任何合法的标识符。
+parameter-list （自变量列表）是一系列类型和标识符对，用逗号分开。自变量本质上是变
+量，它接收方法被调用时传递给方法的参数值。如果方法没有自变量，那么自变量列表就
+为空。
+
+对于不返回void 类型的方法，使用下面格式的return语句，方法返回值到它的调用程序：
+
+return value;
+
+其中，value 是返回的值。
+接下来，你将看到怎样创建多种类型的方法，包括带参数的和那些有返回值的方法。
+
+6.4.1 为Box类添加一个方法
+尽管创建一个仅包含数据的类是相当不错的事情，但这样的情况很少发生。大部分情
+况是你将使用方法存取由类定义的实例变量。事实上，方法定义大多数类的接口。这允许
+类实现函数可以把内部数据结构的特定布局隐蔽到方法抽象后面。除了定义提供数据的存
+取的方法，你也可以定义被类的内部自己所使用的方法。
+
+让我们由对Box 类增加一个方法开始。回顾一下前面计算盒子体积的例子，你会发现
+用Box 类有时会比使用BoxDemo 类能更好地处理这个问题。不管怎么说，一个盒子的体积
+依赖于盒子的大小，这就是我们想到用Box类来计算盒子的体积。为了做到这一点，你必
+须对Box类增加一个方法，示例如下：
+
+// This program includes a method inside the box class.
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+// display volume of a box
+void volume()
+{
+System.out.print("Volume is ")
+;
+
+
+
+第6 章介绍类
+
+System.out.println(width * height * depth)
+;
+}
+}
+
+
+class BoxDemo3 {
+
+public static void main(String args[])
+{
+Box mybox1 = new Box()
+;
+Box mybox2 = new Box()
+;
+
+
+// assign values to mybox1's instance variables
+mybox1.width = 10;
+mybox1.height = 20;
+mybox1.depth = 15;
+
+
+/* assign different values to mybox2's
+
+ instance variables *
+/
+mybox2.width = 3;
+mybox2.height = 6;
+mybox2.depth = 9;
+
+
+// display volume of first box
+mybox1.volume()
+;
+
+
+// display volume of second box
+mybox2.volume()
+;
+}
+}
+
+
+该程序产生的输出如下，与先前版本程序的输出一样。
+
+Volume is 3000.0
+Volume is 162.0
+
+
+注意看下面两行程序：
+
+mybox1.volume ()
+;
+mybox2.volume ()
+;
+
+
+该例的第一行调用mybox1 的volume() 方法。也就是，它使用对象名加点号运算符调用
+mybox1 对象的volume() 方法。这样，调用mybox1.volume( ) 显示mybox1 定义的盒子的体积，
+调用mybox2.volume （）将显示mybox2 定义的盒子的体积。每次调用volume() ，它都会显
+示指定对象的体积。
+
+如果你对方法调用的概念比较陌生，下列的讨论将有助于澄清该概念。当
+mybox1.volume ( ) 被执行时，Java 运行系统将程序控制转移到volume( ) 定义内的代码。当
+volume( ) 内的语句执行后，程序控制返回调用者，然后执行程序调用的下一行语句。Java
+执行方法的过程类似于子程序的运行。
+
+在volume() 方法中有一些需要注意的地方：实例变量width，height 和depth 被直接引用，
+并没有在它们前面加对象名或点号运算符。当一个方法使用由它的类定义的实例变量时，
+它可以直接这样做，而不必使用显式的对象引用和使用点号运算符。这是很容易理解的。
+一个方法总是被它的类的对象调用。只要这个调用过程一发生，对象就是可见的。因此，
+在方法中就没有必要二次指定对象了。这意味着，volume() 中的width，height 和depth 已经
+
+
+第1 部分Java 语言
+
+隐含地引用了调用volume() 方法中的这些变量的拷贝。
+
+让我们复习一下:当一个实例变量不是被该实例变量所在类的部分代码访问时，它必须
+通过该对象加点运算符来访问。但是当一个实例变量被定义该变量的类的代码访问时，该
+变量可以被直接引用。同样的规则也适用于方法。
+
+6.4.2 返回值
+执行volume() 方法确实将计算盒子体积的值返回到Box类，但这并不是最好的方法。例
+如，你的程序的其他部分如何知道一个盒子的体积，而不显示它的值？一个更好地实现
+volume() 的方法是将它计算的盒子体积的结果返回给它的调用者。下面的例子是对前面程
+序的改进，它正是这样做的：
+
+// Now，volume() returns the volume of a box.
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+class BoxDemo4 {
+
+public static void main(String args[])
+{
+Box mybox1 = new Box()
+;
+Box mybox2 = new Box()
+;
+double vol;
+
+
+// assign values to mybox1's instance variables
+mybox1.width = 10;
+mybox1.height = 20;
+mybox1.depth = 15;
+
+
+/* assign different values to mybox2's
+
+ instance variables *
+/
+mybox2.width = 3;
+mybox2.height = 6;
+mybox2.depth = 9;
+
+
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+}
+}
+
+
+
+第6 章介绍类
+
+在这个程序中，当volume() 被调用时，它被放在赋值语句的右边。左边是接收volume()
+返回值的变量。因此，当下面的语句执行后，
+
+vol = mybox1.volume();
+
+变量mybox1.volume ( ) 的值是 3，000，且该值被保存在vol 中。
+
+对于返回值的理解，要注意下面两件重要的事情：
+
+·
+方法返回的数据类型必须与该方法指定的返回类型相兼容。例如，如果一个方法的
+返回值是布尔型，就不可能返回整数。
+·接收方法返回值的变
+量
+(例如本例中的变量 vol) 也必须与指定方法返回值的类型相
+兼容。
+另外一点：因为实际上不需要vol 变量，前面的程序可以被写得更高效一些。对volume( )
+方法的调用可以直接用在println ( ) 语句中，如下面的语句：
+
+System.out.println("Volume is " + mybox1.volume());
+
+在本例中，当println ( ) 被执行时，mybox1.volume ( ) 将自动地被调用，而且它的值会被
+传递给println ( ) 。
+
+6.4.3 加入带自变量的方法
+大多数方法不需要自变量。自变量对方法没有特殊要求。也就是说，带自变量的方法，
+可以完成各种数据操作，它还可以用在很多有微妙差别的情况。为了说明这一点，让我们
+举一个非常简单的例子。下面的方法返回数字10的平方：
+
+int square()
+
+{
+
+return 10 * 10;
+
+}
+
+运行该方法，确实返回了10 的平方的值，但它的使用是很有限的。然而，如下所示，
+如果你修改该方法，以便它带一个自变量，这样square( ) 就更有用了。
+
+int square(int i)
+
+{
+
+return i * i;
+
+}
+
+现在，square() 可以返回任何调用它的值的平方。也就是说，square() 现在是可以计算任
+何整数值的平方的一个通用方法，而不单纯是数字10 。
+
+下面是一个例子：
+
+int x，y;
+x = square(5); // x equals 25
+x = square(9); // x equals 81
+y = 2;
+x = square(y); // x equals
+4
+
+
+
+100 第1 部分Java 语言
+
+在第一次调用square( ) 时，值5被传递给自变量i。在第二次调用时，i接收到值9。第三
+次调用时，将值传递给y，在本例中是 2 。如这些例子所示，square ( ) 可以返回传递给它
+的任何数据的平方。
+
+区分自变量（parameter ）和参数（argument ）这两个术语是很重要的。自变量是方法
+定义的一个变量，当方法被调用时，它接收一个值。例如在square() 中，i就是一个自变量。
+参数是当一个方法被调用时，传递给该方法的值。例如，square(100) 把100 作为参数传递。
+在square()中，自变量i接收该值。
+
+可以使用一个带自变量的方法来改进Box 类。在前面的例子中，每个盒子的尺寸不得
+不用单独的语句顺序的来设置，例如：
+
+mybox1.width = 10;
+mybox1.height = 20;
+mybox1.depth = 15;
+
+
+本例中的代码在执行时，它在两个方面比较麻烦。首先，它笨拙且容易发生错误。例
+如，很容易忘记设置其中的一个尺寸。其次，在设计的很好的Java 程序中，实例变量应该
+仅仅由定义类的方法来存取。在后面，你可以改变一个方法的行为，但是你不能改变一个
+暴露的实例变量的行为。
+
+这样，设置一个盒子尺寸的更好的途径是创建一个自变量代表盒子尺寸的方法，而且
+适当地设置每个实例变量。下面的例子实现了这个想法。
+
+// This program uses a parameterized method.
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+
+
+// sets dimensions of box
+
+ void setDim(double w，double h，double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+}
+
+
+class BoxDemo5 {
+
+public static void main(String args[])
+{
+Box mybox1 = new Box()
+;
+Box mybox2 = new Box()
+;
+double vol;
+
+
+// initialize each box
+mybox1.setDim(10，20，15)
+;
+mybox2.setDim(3，6，9)
+;
+
+
+
+第6 章介绍类
+
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+}
+}
+
+
+正如你看到的，setDim 方法用来设置每个盒子的尺寸，例如，当下面的语句执行后：
+mybox1.setDim(10，20，15);
+
+10被拷贝进参数w，20被拷贝进h，15被拷贝进d。在setDim( ) 内的w、h、d的值分别赋
+给width 、height 和depth 。
+
+许多读者，特别是那些有C/C++ 经验的读者，对前面章节中的概念会比较熟悉。但是，
+如果像方法调用、参数、自变量这些概念对你来说比较新的话，在继续学习以前，你要花
+些时间来练习。方法调用，自变量，返回值这些概念是Java 编程的基础。
+
+6.5 构造函数
+每次在创建实例变量，对类中的所有变量都要初始化是很乏味的。即使你对setDim ( )
+这样的方法增加有用的功能时，你也不得不这样做。如果在一个对象最初被创建时就把对
+它的设置做好，那样的话，程序将更简单并且更简明。因为对初始化的要求是共同的，Java
+允许对象在他们被创造时初始化自己。这种自动的初始化是通过使用构造函数来完成的。
+
+构造函数（constructor ）在对象创建时初始化。它与它的类同名，它的语法与方法类似。
+一旦定义了构造函数，在对象创建后，在new运算符完成前，构造函数立即自动调用。构
+造函数看起来有点奇怪，因为它没有任何返回值，即使是void 型的值也不返回。这是因为
+一个类的构造函数内隐藏的类型是它自己类的类型。构造函数的任务就是初始化一个对象
+的内部状态，以便使创建的实例变量能够完全初始化，可以被对象马上使用。
+
+你可以重写Box 例子程序，以便当对象创建时盒子的尺寸能被自动地初始化。为了达
+到这个目的，用构造函数代替setDim 。让我们由定义仅仅将每个盒子的尺寸设置为同样值
+的一个简单的构造函数开始。示例如下：
+
+/* Here，Box uses a constructor to initialize the
+
+dimensions of a box.
+*
+/
+class Box
+{
+
+
+ double width;
+double height;
+double depth;
+
+
+// This is the constructor for Box.
+Box()
+{
+System.out.println("Constructing Box")
+;
+
+
+
+102 第1 部分Java 语言
+
+width = 10;
+height = 10;
+depth = 10;
+
+
+}
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+class BoxDemo6 {
+
+public static void main(String args[])
+{
+// declare，allocate，and initialize Box objects
+Box mybox1 = new Box()
+;
+Box mybox2 = new Box()
+;
+
+
+double vol;
+
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+}
+}
+
+
+运行该程序，产生如下的结果：
+
+Constructing Box
+Constructing Box
+Volume is 1000.0
+Volume is 1000.0
+
+
+正如你能看到的一样，当mybox1 和mybox2 被创建时，它们两个都被Box 构造函数初始
+化。因为构造函数将所有的盒子赋为一样的尺寸，长、宽、高都是10，mybox1 和 mybox2
+将有一样的体积。在Box( )内的println( ) 语句仅仅是为说明的缘故。大多数构造函数的功能
+不显示任何东西，他们仅简单地初始化一个对象。
+
+在继续学习前，让我们再考察new运算符。你已经知道，当分配一个对象时，使用下
+面的通用格式：
+
+class-var = new classname( );
+
+现在你可以理解为什么在类的名字后面需要圆括号。圆括号的作用是调用该类的构造
+函数。这样，在下面的这行中
+
+Box mybox1 = new Box();
+
+new Box( ) 调用Box( )构造函数。如果你不显式为类定义一个构造函数，Java 将为该类
+创建一个默认的构造函数。这就是本行程序在Box早期版本没有定义构造函数工作的原因。
+
+
+第6 章介绍类
+
+默认构造函数自动地将所有的实例变量初始化为零。默认构造函数对简单的类是足够的，
+但是对更复杂的类它就不能满足要求了。一旦你定义了你自己的构造函数，默认构造函数
+将不再被使用。
+
+6.5.1 带自变量的构造函数
+虽然在前面的例子中，Box构造函数确实初始化了Box对象，但它不是很有用，因为所
+有的盒子都是一样的尺寸。我们所需要的是一种能够构造各种各样尺寸盒子对象的方法。
+比较容易的解决办法是对构造函数增加自变量。你可能已经猜到，这将使他们更有用。例
+如，下面版本的Box程序定义了一个自变量构造函数，它根据自变量设置每个指定盒子的
+尺寸。特别注意Box 对象是如何被创建的。
+
+/* Here，Box uses a parameterized constructor to
+
+initialize the dimensions of a box.
+*
+/
+class Box
+{
+
+
+ double width;
+double height;
+double depth;
+
+
+// This is the constructor for Box.
+
+ Box(double w，double h，double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+class BoxDemo7 {
+
+public static void main(String args[])
+{
+// declare，allocate，and initialize Box objects
+Box mybox1 = new Box(10，20，15)
+;
+Box mybox2 = new Box(3，6，9)
+;
+
+
+double vol;
+
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume is " + vol)
+;
+
+
+}
+}
+
+
+该程序的输出如下：
+
+
+104 第1 部分Java 语言
+
+Volume is 3000.0
+Volume is 162.0
+
+
+正如你看到的，每个对象被它的构造函数指定的参数初始化。例如，在下行中，
+
+Box mybox1 = new Box(10，20，15);
+
+当new创建对象时，值10，20，15传递到Box() 构造函数。这样，mybox1 的拷贝width 、
+height 、depth 将分别包含值10、20、15。
+
+6.6 this关键字
+有时一个方法需要引用调用它的对象。为此，Java 定义了this 这个关键字。this 可以在
+引用当前对象的所有方法内使用。也就是，this 总是调用该方法对象的一个引用。你可以在
+当前类的类型所允许对象的任何地方将this 作为一个引用。
+
+为了更好理解this 引用什么，考虑下面版本的Box()
+：
+
+// A redundant use of this.
+
+Box(double w，double h，double d) {
+
+ this.width = w;
+
+ this.height = h;
+
+ this.depth = d;
+
+}
+
+本例中的box( ) 和它的更早版本完成同样的操作。使用this 是冗余的，但是完全正确。
+在Box( ) 内，this 总是引用调用的对象。虽然在本例中它是冗余的，但在另外的环境中，它
+是有用的，其中的一种用法在下一小节解释。
+
+6.6.1 隐藏的实例变量
+你知道，在同一个范围或一个封装范围内，定义二个重名的局部变量在Java 中是不合
+法的。有趣的是，局部变量，包括传递到方法的正式的自变量，可以与类的实例变量的名
+字重叠。在这种情况下，局部变量名就隐藏（hide ）了实例变量名。这就是在Box 类中，width 、
+height 、depth 没有作为Box() 构造函数自变量名字的原因。如果它们是，那么width 将正式的
+引用自变量，而隐蔽实例变量width 。由于通常简单地使用不同的名字更容易，对这种状况
+还有其他的解决办法。因为this 可以使你直接引用对象，你能用它来解决可能在实例变量和
+局部变量之间发生的任何同名的冲突。例如，下面的例子是另外一个版本的Box （）程序，
+它用width 、height 、depth 作为自变量的名字，然后使用this 关键字来存取同名的实例变量：
+
+// Use this to resolve name-space collisions.
+
+Box(double width，double height，double depth) {
+
+ this.width = width;
+
+ this.height = height;
+
+ this.depth = depth;
+
+}
+
+注意，在这样的环境下使用this 有时会引起混淆。有些程序员比较小心，不使用和局部
+
+
+第6 章介绍类
+
+变量、正式的自变量同名的隐藏的实例变量。当然，另外的程序员则相反，相信用this 来“揭
+开”与局部变量、自变量同名的实例变量是一个好习惯。这取决于你的爱好。
+
+尽管在上面的例子中，this 没有有什么意义，但它在某种状况下是很有用的。
+
+6.7 垃圾回收
+由于使用new运算符来为对象动态地分配内存，你可能想知道这些对象是如何撤消的
+以及他们的内存在以后的重新分配时是如何被释放的。在一些语言，例如C++ 中，用delete
+运算符来手工地释放动态分配的对象的内存。Java 使用一种不同的、自动地处理重新分配
+内存的办法：垃圾回收( garbage collection) 技术，它是这样工作的：当一个对象的引用不存
+在时，则该对象被认为是不再需要的，它所占用的内存就被释放掉。它不像C++ 那样需要
+显式撤消对象。垃圾回收只在你的程序执行过程中偶尔发生。它不会因为一个或几个存在
+的对象不再被使用而发生。况且，Java 不同的运行时刻会产生各种不同的垃圾回收办法，
+但是对你编写的大多数程序，你不必须考虑垃圾回收问题。
+
+6.8 finalize( ) 方法
+有时当撤消一个对象时，需要完成一些操作。例如，如果一个对象正在处理的是非Java
+资源，如文件句柄或window 字符字体，这时你要确认在一个对象被撤消以前要保证这些资
+源被释放。为处理这样的状况，Java 提供了被称为收尾（finalization ）的机制。使用该机制
+你可以定义一些特殊的操作，这些操作在一个对象将要被垃圾回收程序释放时执行。
+
+要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一
+个对象时，就会调用这个方法。在finalize ( )方法中，你要指定在一个对象被撤消前必须执
+行的操作。垃圾回收周期性地运行，检查对象不再被运行状态引用或间接地通过其他对象
+引用。就在对象被释放之前，Java 运行系统调用该对象的finalize( ) 方法。
+
+finalize()方法的通用格式如下：
+
+protected void finalize(
+)
+{
+// finalization code here
+}
+
+
+其中，关键字protected是防止在该类之外定义的代码访问finalize()标识符。该标识符和
+其他标识符将在第7章中解释。
+
+理解finalize( ) 正好在垃圾回收以前被调用非常重要。例如当一个对象超出了它的作用
+域时，finalize( ) 并不被调用。这意味着你不可能知道何时——甚至是否——finalize( ) 被调
+用。因此，你的程序应该提供其他的方法来释放由对象使用的系统资源，而不能依靠finalize( )
+来完成程序的正常操作。
+
+注意：如果你熟悉C++，那你知道C++允许你为一个类定义一个撤消函数
+（destructor ），它在对象正好出作用域之前被调用。Java不支持这个想法也不
+
+
+106 第1 部分Java 语言
+
+提供撤消函数。finalize() 方法只和撤消函数的功能接近。当你对Java 有丰富经
+验时，你将看到因为Java使用垃圾回收子系统，几乎没有必要使用撤消函数。
+
+6.9 一个堆栈类
+尽管Box 类在说明一个类的必要的元素时是有用的，但它实际应用的价值并不大。为
+了显示出类的真实的功能，本章将用一个更复杂的例子来说明类的强大功能。如果你回忆
+起在第2章中讲过的面向对象编程的讨论，你就会想起对象编程的最重要的好处之一是对数
+据和操作该数据的代码的封装。你已经知道，在Java 中，就是通过类这样的机制来完成封
+装性。在创建一个类时，你正在创建一种新的数据类型，不但要定义数据的属性，也要定
+义操作数据的代码。进一步，方法定义了对该类数据相一致的控制接口。因此，你可以通
+过类的方法来使用类，而没有必要担心它的实现细节或在类的内部数据实际上是如何被管
+理的。在某种意义上，一个类像“一台数据引擎”。你可以通过操纵杆来控制使用引擎，
+而不需要知道引擎内是如何工作的。事实上，既然细节被隐蔽，当需要时，它的内部工作
+可以被改变。只要你的代码通过类的方法来使用它，内部的细节可以改变而不会对类的外
+部带来负面影响。
+
+为了看看前面讨论概念的一个实际的应用，让我们开发一个封装的典型例子：堆栈
+（stack）。堆栈用先进后出的顺序存储数据。堆栈通过两个传统的操作来控制：压栈（push）
+和出栈（pop）。在堆栈的上面加入一项，用压栈，从堆栈中取出一项，用出栈。你将看到，
+将整个堆栈机制封装是很容易的。
+
+下面是一个叫做Stack的类，实现整数的堆栈。
+
+// This class defines an integer stack that can hold 10 values.
+
+class Stack
+{
+int stck[] = new int[10]
+;
+int tos;
+
+
+ // Initialize top-of-stack
+Stack()
+{
+tos = -1;
+}
+
+
+// Push an item onto the stack
+void push(int item)
+{
+if(tos==9)
+System.out.println("Stack is full.")
+;
+else
+stck[++tos] = item;
+}
+
+
+// Pop an item from the stack
+int pop()
+{
+
+
+if(tos < 0)
+{
+System.out.println("Stack underflow.")
+;
+return 0;
+
+
+}
+
+
+第6 章介绍类
+
+else
+return stck[tos--]
+;
+}
+}
+
+
+正如你看到的，Stack类定义了两个数据项、三个方法。整数堆栈由数组stck存储。该
+数组的下标由变量tos 控制，该变量总是包含堆栈顶层的下标。Stack()构造函数将tos 初始化
+为-1，它指向一个空堆栈。方法push() 将一个项目压入堆栈。为了重新取回压入堆栈的项目，
+调用pop()。既然存取数据通过push()和pop() ，数组中存储堆栈的事实实际上和使用的堆栈
+不相关。例如，堆栈可以被存储在一个更复杂的数据结构中，例如一个链表，但push()和pop()
+定义的接口仍然是一样的。
+
+下面示例的类TestStack，验证了Stack类。该类产生两个整数堆栈，将一些值存入，然
+后将它们取出。
+
+class TestStack {
+
+public static void main(String args[])
+{
+Stack mystack1 = new Stack()
+;
+Stack mystack2 = new Stack()
+;
+
+
+// push some numbers onto the stack
+for(int i=0; i<10; i++) mystack1.push(i)
+;
+for(int i=10; i<20; i++) mystack2.push(i)
+;
+
+
+// pop those numbers off the stack
+System.out.println("Stack in mystack1:")
+;
+for(int i=0; i<10; i++
+)
+
+
+ System.out.println(mystack1.pop());
+
+System.out.println("Stack in mystack2:")
+;
+for(int i=0; i<10; i++
+)
+System.out.println(mystack2.pop())
+;
+}
+}
+
+
+该程序产生的输出如下：
+
+Stack in mystack1:
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+Stack in mystack2:
+19
+18
+17
+16
+
+
+
+108 第1 部分Java 语言
+
+15
+14
+13
+12
+11
+10
+
+
+你已经看到，每个堆栈中的内容是分离的。
+
+关于Stack 类的最后一点。正如它现在执行的一样，通过Stack 类外面的代码可以改变保
+存堆栈的数组stck 。这样的Stack 是开放的，容易误用或损坏。在下一章中，你将会看到如
+何补救这种情况。
+        `
+    },
+    {
+        name:'第7章  进一步研究方法和类',
+        cont:`
+            在本章中我们接着上一章继续研究方法和类。我们先研究几个有关方法的主题，包括
+方法重载、参数传递和递归。然后研究类，讨论存取控制，关键字static的用法，以及Java
+最重要的内置类之一：String 。
+
+7.1 方法重载
+在Java 中，同一个类中的2个或2个以上的方法可以有同一个名字，只要它们的参数声
+明不同即可。在这种情况下，该方法就被称为重载（overloaded ），这个过程称为方法重载
+（method overloading ）。方法重载是Java 实现多态性的一种方式。如果你以前从来没有使
+用过一种允许方法重载的语言，这个概念最初可能有点奇怪。但是你将看到，方法重载是
+Java 最激动人心和最有用的特性之一。
+
+当一个重载方法被调用时，Java 用参数的类型和（或）数量来表明实际调用的重载方
+法的版本。因此，每个重载方法的参数的类型和（或）数量必须是不同的。虽然每个重载
+方法可以有不同的返回类型，但返回类型并不足以区分所使用的是哪个方法。当Java 调用
+一个重载方法时，参数与调用参数匹配的方法被执行。
+
+下面是一个说明方法重载的简单例子：
+
+// Demonstrate method overloading.
+class OverloadDemo
+{
+void test()
+{
+System.out.println("No parameters")
+;
+}
+
+
+// Overload test for one integer parameter.
+void test(int a)
+{
+System.out.println("a: " + a)
+;
+}
+
+
+// Overload test for two integer parameters.
+void test(int a，int b)
+{
+System.out.println("a and b: " + a + " " + b)
+;
+}
+
+
+// overload test for a double parameter
+
+double test(double a) {
+
+System.out.println("double a: " + a);
+
+return a*a;
+
+}
+
+}
+
+class Overload {
+
+
+110 第1 部分Java 语言
+
+public static void main(String args[])
+{
+OverloadDemo ob = new OverloadDemo()
+;
+double result;
+
+
+// call all versions of test(
+)
+ob.test()
+;
+ob.test(10)
+;
+ob.test(10，20)
+;
+result = ob.test(123.25)
+;
+System.out.println("Result of ob.test(123.25): " + result)
+;
+
+
+}
+}
+
+
+该程序产生如下输出：
+
+No parameters
+
+a: 10
+a and b: 10 20
+double a: 123.25
+Result of ob.test(123.25): 15190.5625
+从上述程序可见，test()被重载了四次。第一个版本没有参数，第二个版本有一个整型
+参数，第三个版本有两个整型参数，第四个版本有一个double 型参数。由于重载不受方法
+的返回类型的影响，test()第四个版本也返回了一个和重载没有因果关系的值。
+
+当一个重载的方法被调用时，Java 在调用方法的参数和方法的自变量之间寻找匹配。
+但是，这种匹配并不总是精确的。在一些情况下，Java 的自动类型转换也适用于重载方法
+的自变量。例如，看下面的程序：
+
+// Automatic type conversions apply to overloading.
+class OverloadDemo
+{
+void test()
+{
+System.out.println("No parameters")
+;
+}
+
+
+// Overload test for two integer parameters.
+void test(int a，int b)
+{
+System.out.println("a and b: " + a + " " + b)
+;
+}
+
+
+// overload test for a double parameter
+void test(double a)
+{
+System.out.println("Inside test(double) a: " + a)
+;
+}
+}
+
+
+class Overload {
+
+public static void main(String args[])
+{
+OverloadDemo ob = new OverloadDemo()
+;
+int i = 88;
+
+
+ob.test()
+;
+ob.test(10，20)
+;
+
+
+
+第7 章进一步研究方法和类
+
+ob.test(i); // this will invoke test(double)
+ob.test(123.2); // this will invoke test(double)
+}
+}
+
+
+该程序产生如下输出：
+
+No parameters
+a and b: 10 20
+Inside test(double) a: 88
+Inside test(double) a: 123.2
+
+
+在本例中，OverloadDemo 的这个版本没有定义test(int) 。因此当在Overload 内带整数参
+数调用test()时，找不到和它匹配的方法。但是，Java 可以自动地将整数转换为double 型，这
+种转换就可以解决这个问题。因此，在test(int) 找不到以后，Java 将i扩大到double 型，然后
+调用test(double) 。当然，如果定义了test(int) ，当然先调用test(int) 而不会调用test(double) 。
+只有在找不到精确匹配时，Java 的自动转换才会起作用。
+
+方法重载支持多态性，因为它是Java 实现“一个接口，多个方法”范型的一种方式。
+要理解这一点，考虑下面这段话：在不支持方法重载的语言中，每个方法必须有一个惟一
+的名字。但是，你经常希望实现数据类型不同但本质上相同的方法。可以参考绝对值函数
+的例子。在不支持重载的语言中，通常会含有这个函数的三个及三个以上的版本，每个版
+本都有一个差别甚微的名字。例如，在C语言中，函数abs( )返回整数的绝对值，labs( ) 返
+回long 型整数的绝对值( )，而fabs( )返回浮点值的绝对值。尽管这三个函数的功能实质上是
+一样的，但是因为C语言不支持重载，每个函数都要有它自己的名字。这样就使得概念情
+况复杂许多。尽管每一个函数潜在的概念是相同的，你仍然不得不记住这三个名字。在Java
+中就不会发生这种情况，因为所有的绝对值函数可以使用同一个名字。确实,Java 的标准的
+类库包含一个绝对值方法，叫做abs ( )。这个方法被Java 的math 类重载，用于处理数字类型。
+Java 根据参数类型决定调用的abs()的版本。
+
+重载的价值在于它允许相关的方法可以使用同一个名字来访问。因此，abs这个名字代
+表了它执行的通用动作（general action ）。为特定环境选择正确的指定（specific ）版本是
+编译器要做的事情。作为程序员的你，只需要记住执行的通用操作就行了。通过多态性的
+应用，几个名字减少为一个。尽管这个例子相当简单，但如果你将这个概念扩展一下，你
+就会理解重载能够帮助你解决更复杂的问题。
+
+当你重载一个方法时,该方法的每个版本都能够执行你想要的任何动作。没有什么规定
+要求重载方法之间必须互相关联。但是，从风格上来说，方法重载还是暗示了一种关系。
+这就是当你能够使用同一个名字重载无关的方法时，你不应该这么做。例如，你可以使用
+sqr这个名字来创建一种方法，该方法返回一个整数的平方和一个浮点数值的平方根。但是
+这两种操作在功能上是不同的。按照这种方式应用方法就违背了它的初衷。在实际的编程
+中，你应该只重载相互之间关系紧密的操作。
+
+7.1.1 构造函数重载
+除了重载正常的方法外，构造函数也能够重载。实际上，对于大多数你创建的现实的
+
+
+112 第1 部分Java 语言
+
+类，重载构造函数是很常见的，并不是什么例外。为了理解为什么会这样，让我们回想上
+一章中举过的Box类例子。下面是最新版本的Box类的例子：
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+// This is the constructor for Box.
+
+ Box(double w，double h，double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+在本例中，Box() 构造函数需要三个自变量，这意味着定义的所有Box对象必须给Box()
+构造函数传递三个参数。例如，下面的语句在当前情况下是无效的：
+
+Box ob = new Box();
+
+因为Box( )要求有三个参数，因此如果不带参数的调用它则是一个错误。这会引起一些
+重要的问题。如果你只想要一个盒子而不在乎 (或知道)它的原始的尺寸该怎么办？或，如
+果你想用仅仅一个值来初始化一个立方体，而该值可以被用作它的所有的三个尺寸又该怎
+么办？如果Box 类是像现在这样写的，与此类似的其他问题你都没有办法解决，因为你只
+能带三个参数而没有别的选择权。
+
+幸好，解决这些问题的方案是相当容易的：重载Box 构造函数，使它能处理刚才描述
+的情况。下面程序是Box 的一个改进版本，它就是运用对Box构造函数的重载来解决这些问
+题的：
+
+/* Here，Box defines three constructors to initialize
+
+the dimensions of a box various ways.
+*
+/
+class Box
+{
+
+
+ double width;
+double height;
+double depth;
+// constructor used when all dimensions specified
+Box(double w，double h，double d)
+{
+
+
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// constructor used when no dimensions specified
+Box()
+{
+width = -1; // use -1 to indicate
+
+
+
+第7 章进一步研究方法和类
+
+height = -1; // an uninitialized
+depth = -1; // box
+}
+
+
+// constructor used when cube is created
+Box(double len)
+{
+width = height = depth = len;
+}
+
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+class OverloadCons {
+
+public static void main(String args[])
+{
+// create boxes using the various constructors
+Box mybox1 = new Box(10，20，15)
+;
+Box mybox2 = new Box()
+;
+Box mycube = new Box(7)
+;
+
+
+double vol;
+
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume of mybox1 is " + vol)
+;
+
+
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume of mybox2 is " + vol)
+;
+// get volume of cube
+vol = mycube.volume()
+;
+System.out.println("Volume of mycube is " + vol)
+;
+
+
+}
+}
+
+
+该程序产生的输出如下所示：
+
+Volume of mybox1 is 3000.0
+Volume of mybox2 is -1.0
+Volume of mycube is 343.0
+
+
+在本例中，当new执行时，根据指定的自变量调用适当的构造函数。
+
+7.2 把对象作为参数
+到目前为止，我们都使用简单类型作为方法的参数。但是，给方法传递对象是正确的，
+也是常用的。例如，考虑下面的简单程序：
+
+// Objects may be passed to methods.
+class Test
+{
+int a，b;
+
+
+
+114 第1 部分Java 语言
+
+ Test(int i，int j)
+{
+a = i;
+b = j;
+
+
+}
+
+// return true if o is equal to the invoking object
+
+boolean equals(Test o)
+{
+if(o.a == a && o.b == b) return true;
+else return false;
+
+
+}
+}
+
+
+class PassOb {
+
+public static void main(String args[])
+{
+Test ob1 = new Test(100，22)
+;
+Test ob2 = new Test(100，22)
+;
+Test ob3 = new Test(-1，-1)
+;
+
+
+System.out.println("ob1 == ob2: " + ob1.equals(ob2));
+
+System.out.println("ob1 == ob3: " + ob1.equals(ob3))
+;
+}
+}
+
+
+该程序产生如下输出：
+
+ob1 == ob2: true
+ob1 == ob3: false
+
+
+在本程序中，在Test 中的equals() 方法比较两个对象的相等性，并返回比较的结果。也
+就是，它把调用的对象与被传递的对象作比较。如果它们包含相同的值，则该方法返回值
+为真，否则返回值为假。注意equals 中的自变量o指定Test 作为它的类型。尽管Test 是程序中
+创建的类的类型，但是它的使用与Java 的内置类型相同。
+
+对象参数的最普通的使用涉及到构造函数。你经常想要构造一个新对象，并且使它的
+初始状态与一些已经存在的对象一样。为了做到这一点，你必须定义一个构造函数，该构
+造函数将一个对象作为它的类的一个参数。例如，下面版本的Box 允许一个对象初始化另
+外一个对象：
+
+// Here，Box allows one object to initialize another.
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+// construct clone of an object
+
+Box(Box ob) { // pass object to constructor
+width = ob.width;
+height = ob.height;
+depth = ob.depth;
+
+
+}
+
+
+第7 章进一步研究方法和类
+
+// constructor used when all dimensions specified
+
+ Box(double w，double h，double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// constructor used when no dimensions specified
+
+ Box()
+{
+width = -1; // use -1 to indicate
+height = -1; // an uninitialized
+depth = -1; // box
+
+
+}
+
+// constructor used when cube is created
+Box(double len)
+{
+width = height = depth = len;
+}
+
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+}
+
+
+class OverloadCons2 {
+
+public static void main(String args[])
+{
+// create boxes using the various constructors
+Box mybox1 = new Box(10，20，15)
+;
+Box mybox2 = new Box()
+;
+Box mycube = new Box(7)
+;
+
+
+Box myclone = new Box(mybox1);
+
+double vol;
+// get volume of first box
+vol = mybox1.volume()
+;
+System.out.println("Volume of mybox1 is " + vol)
+;
+// get volume of second box
+vol = mybox2.volume()
+;
+System.out.println("Volume of mybox2 is " + vol)
+;
+
+
+// get volume of cube
+vol = mycube.volume()
+;
+System.out.println("Volume of cube is " + vol)
+;
+
+
+// get volume of clone
+vol = myclone.volume()
+;
+System.out.println("Volume of clone is " + vol)
+;
+
+
+}
+}
+
+
+在本程序中你能看到，当你开始创建你自己的类的时候，为了方便高效的构造对象，
+必须为同一构造函数方法提供多种形式。
+
+
+116 第1 部分Java 语言
+
+7.3 参数是如何传递的
+总的来说，计算机语言给子程序传递参数的方法有两种。第一种方法是按值传递
+（call-by-value ）。这种方法将一个参数值（value ）复制成为子程序的正式参数。这样，对
+子程序的参数的改变不影响调用它的参数。第二种传递参数的方法是引用调用
+（call-by-reference ）。在这种方法中，参数的引用（而不是参数值）被传递给子程序参数。
+在子程序中，该引用用来访问调用中指定的实际参数。这样，对子程序参数的改变将会影
+响调用子程序的参数。你将看到，根据传递的对象不同，Java 将使用这两种不同的方法。
+
+在Java 中，当你给方法传递一个简单类型时，它是按值传递的。因此，接收参数的子
+程序参数的改变不会影响到该方法之外。例如，看下面的程序：
+
+// Simple types are passed by value.
+class Test
+{
+
+
+ void meth(int i，int j)
+{
+i *= 2;
+j /= 2;
+
+
+}
+}
+class CallByValue
+{
+
+
+public static void main(String args[])
+{
+Test ob = new Test()
+;
+
+
+int a = 15，b = 20;
+
+System.out.println("a and b before call: "
++
+a + " " + b)
+;
+
+
+ob.meth(a，b);
+
+System.out.println("a and b after call: "
++
+a + " " + b)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+a and b before call: 15 20
+a and b after call: 15 20
+
+
+可以看出，在meth( ) 内部发生的操作不影响调用中a和b的值。它们的值没在本例中没
+有变为30和10。
+
+当你给方法传递一个对象时，这种情形就会发生戏剧性的变化，因为对象是通过引用
+传递的。记住，当你创建一个类类型的变量时，你仅仅创建了一个类的引用。因此，当你
+将这个引用传递给一个方法时，接收它的参数将会指向该参数指向的同一个对象。这有力
+地证明了对象是通过引用调用传递给方法的。该方法中对象的改变确实影响了作为参数的
+对象。例如，考虑下面的程序：
+
+
+第7 章进一步研究方法和类
+
+// Objects are passed by reference.
+
+class Test
+{
+int a，b;
+
+
+ Test(int i，int j)
+{
+a = i;
+b = j;
+
+
+}
+// pass an object
+void meth(Test o)
+{
+
+
+o.a *= 2;
+o.b /= 2;
+}
+}
+
+
+class CallByRef
+{
+public static void main(String args[])
+{
+Test ob = new Test(15，20)
+;
+
+
+System.out.println("ob.a and ob.b before call: "
++
+ob.a + " " + ob.b)
+;
+
+
+ob.meth(ob);
+
+System.out.println("ob.a and ob.b after call: "
++
+ob.a + " " + ob.b)
+;
+}
+}
+
+
+该程序产生下面的输出：
+
+ob.a and ob.b before call: 15 20
+ob.a and ob.b after call: 30 10
+
+
+正如你所看到的，在这个例子中，在meth ( ) 中的操作影响了作为参数的对象。
+
+有趣的一点是，当一个对象引用被传递给方法时，引用本身使用按值调用被传递。但
+是，因为被传递的值指向一个对象，该值的拷贝仍然指向它相应的参数所指向的同一个对
+象。
+
+注意：当一个简单类型传递给一个方法时，使用按值传递。对象传递则按引用传
+递。
+
+7.4 返回对象
+方法能够返回任何类型的数据，包括你创建的类的类型。例如，在下面的程序中，
+incrByTen() 方法返回一个对象，在该对象中的值a比调用对象中的值a大10。
+
+// Returning an object.
+class Test
+{
+
+
+
+118 第1 部分Java 语言
+
+ int a;
+
+ Test(int i)
+{
+a = i;
+}
+
+
+ Test incrByTen()
+{
+Test temp = new Test(a+10)
+;
+return temp;
+
+
+}
+}
+
+
+class RetOb {
+
+public static void main(String args[])
+{
+Test ob1 = new Test(2)
+;
+Test ob2;
+
+
+ob2 = ob1.incrByTen()
+;
+System.out.println("ob1.a: " + ob1.a)
+;
+System.out.println("ob2.a: " + ob2.a)
+;
+
+
+ob2 = ob2.incrByTen()
+;
+System.out.println("ob2.a after second increase:
+"
++ ob2.a)
+;
+}
+}
+
+
+该程序产生的输出如下所示：
+
+ob1.a:
+2
+ob2.a: 12
+ob2.a after second increase: 22
+
+
+正如你看到的，每次调用incrByTen() ，就产生一个新对象，同时将它的引用返回到调
+用子程序。
+
+上面的程序还有另外重要的一点:既然所有的对象用关键字new动态地分配内存，你不
+必担心一个对象会出范围，因为它被其创建的方法终止。只要你程序中有它的一个引用，
+该对象将会继续存在。当没有该对象的引用时，在下一次垃圾回收发生时该对象将被回收。
+
+7.5 递归
+Java 支持递归（recursion）。递归就是依照自身定义事物的过程。在Java 编程中，递归
+是允许方法调用自身调用的属性。调用自身的方法称为是递归的（recursive ）。
+递归的典型例子是数字的阶乘。数字N的阶乘是1到N之间所有整数的乘积。例如3的阶
+乘就是1× 2×3，或者是6。下面的程序使用递归来计算数字的阶乘。
+
+// A simple example of recursion.
+
+class Factorial
+{
+// this is a recursive function
+int fact(int n)
+{
+
+
+
+第7 章进一步研究方法和类
+
+int result;
+
+if(n==1) return 1;
+result = fact(n-1) * n;
+return result;
+
+
+}
+}
+
+
+class Recursion
+{
+public static void main(String args[])
+{
+Factorial f = new Factorial()
+;
+
+
+System.out.println("Factorial of 3 is " + f.fact(3))
+;
+System.out.println("Factorial of 4 is " + f.fact(4))
+;
+System.out.println("Factorial of 5 is " + f.fact(5))
+;
+
+
+}
+}
+
+
+该程序产生的输出如下所示：
+
+Factorial of 3 is
+6
+Factorial of 4 is 24
+Factorial of 5 is 120
+
+
+如果你对递归的方法比较陌生，那么fact( )的操作可能看起来似乎有点糊涂。它是这样
+工作的：当fact( ) 带着参数1被调用时，该方法返回1；否则它返回fact( n-1 ) 与n的乘积。为
+了对这个表达式求值，fact() 带着参数n-1 被调用。重复这个过程直到 n 等于 1，且对该方
+法的调用开始返回。
+
+为了更好地理解fact( )方法是如何工作的,让我们通过一个短例子来说明。例如当计算
+3 的阶乘时，对fact() 的第一次调用引起参数2的第二次调用。这个调用将引起fact 以参数1
+的第三次调用，这个调用返回1，这个值接着与2（第二次调用时n的值）相乘。然后该结果
+（现为2）返回到fact()的最初的调用，并将该结果与3（n的初始值）相乘。这时得到答案，
+6。如果你在fact()中插入println() 语句，显示每次调用的阶数以及中间结果，你会觉得很有
+意思。
+
+当一个方法调用它自身的时候，堆栈就会给新的局部变量和自变量分配内存，方法代
+码就带着这些新的变量从头执行。递归调用并不产生方法新的拷贝。只有参数是新的。每
+当递归调用返回时，旧的局部变量和自变量就从堆栈中清除，运行从方法中的调用点重新
+开始。递归方法可以说是像“望远镜”一样，可以自由伸缩。
+
+许多子程序的递归版本执行时会比它们的迭代版本要慢一点,因为它们增加了额外的
+方法调用的消耗。对一个方法太多的递归调用会引起堆栈崩溃。因为自变量和局部变量的
+存储都在堆栈中，每次调用都创建这些变量新的拷贝，堆栈有可能被耗尽。如果发生这种
+情况，Java 的运行时系统就会产生异常。但是，除非递归子程序疯狂运行，否则你大概不
+会担心这种情况。
+
+递归的主要优点在于：某些类型的算法采用递归比采用迭代算法要更加清晰和简单。
+例如快速排序算法按照迭代方法是很难实现的。还有其他一些问题，特别是人工智能问题，
+就依赖于递归提供解决方案。最后，有些人认为递归要比迭代简单。
+
+
+120 第1 部分Java 语言
+
+当编写递归方法时，你必须使用if条件语句在递归调用不执行时来强制方法返回。如果
+你不这么做，一旦你调用方法，它将永远不会返回。这类错误在使用递归时是很常见的。
+尽量多地使用println() 语句，使你可以了解程序的进程；如果发现错误，立即中止程序运行。
+
+下面是递归的又一个例子。递归方法printArray ( ) 打印数组values 中的前i个元素。
+
+// Another example that uses recursion.
+
+class RecTest
+{
+int values[]
+;
+
+
+ RecTest(int i)
+{
+values = new int[i]
+;
+}
+
+
+// display array – recursively
+
+void printArray(int i)
+{
+if(i==0) return;
+else printArray(i-1)
+;
+System.out.println("[" + (i-1) + "] " + values[i-1])
+;
+
+
+}
+}
+
+
+class Recursion2 {
+
+public static void main(String args[])
+{
+RecTest ob = new RecTest(10)
+;
+int i;
+
+
+for(i=0; i<10; i++) ob.values[i] = i;
+
+ob.printArray(10)
+;
+}
+}
+
+
+该程序产生如下的输出：
+
+[0] 0
+[1] 1
+[2] 2
+[3] 3
+[4] 4
+[5] 5
+[6] 6
+[7] 7
+[8] 8
+[9] 9
+7.6 介绍访问控制
+我们知道，封装将数据和处理数据的代码连接起来。同时，封装也提供另一个重要属
+性：访问控制（access control ）。通过封装你可以控制程序的哪一部分可以访问类的成员。
+通过控制访问，可以阻止对象的滥用。例如，通过只允许适当定义的一套方法来访问数据，
+
+
+第7 章进一步研究方法和类
+
+你能阻止该数据的误用。因此，如果使用得当，可以把类创建一个“黑盒子”，虽然可以
+使用该类，但是它的内部机制是不公开的，不能修改。但是，本书前面创建的类可能不会
+完全适合这个目标。例如，考虑在第6章末尾示例的Stack类。方法push( ) 和pop() 确实为堆
+栈提供一个可控制的接口，这是事实，但这个接口并没被强制执行。也就是说，程序的其
+他部分可以绕过这些方法而直接存取堆栈，这是可能的。当然，如果使用不当，这可能导
+致麻烦。本节将介绍能精确控制一个类各种各样成员的访问的机制。
+
+一个成员如何被访问取决于修改它的声明的访问指示符（access specifier ）。Java 提供
+一套丰富的访问指示符。存取控制的某些方面主要和继承或包联系在一起（包，package，
+本质上是一组类）。Java 的这些访问控制机制将在以后讨论。现在，让我们从访问控制一
+个简单的类开始。一旦你理解了访问控制的基本原理，其他部分就比较容易了。
+
+Java 的访问指示符有public （公共的，全局的）、private （私有的，局部的）、和protected
+（受保护的）。Java 也定义了一个默认访问级别。指示符protected仅用于继承情况中。下面
+我们描述其他两个访问指示符。
+
+让我们从定义public 和private 开始。当一个类成员被public 指示符修饰时，该成员可以
+被你的程序中的任何其他代码访问。当一个类成员被指定为private 时，该成员只能被它的
+类中的其他成员访问。现在你能理解为什么main( ) 总是被public 指示符修饰。它被在程序外
+面的代码调用，也就是由Java 运行系统调用。如果不使用访问指示符，该类成员的默认访
+问设置为在它自己的包内为public ，但是在它的包以外不能被存取（包将在以后的章节中讨
+论）。
+
+到目前为止，我们开发的类的所有成员都使用了默认访问模式，它实质上是public 。然
+而，这并不是你想要的典型的方式。通常，你想要对类数据成员的访问加以限制，只允许
+通过方法来访问它。另外，有时你想把一个方法定义为类的一个私有的方法。
+
+访问指示符位于成员类型的其他说明的前面。也就是说，成员声明语句必须以访问指
+示符开头。下面是一个例子：
+
+public int i;
+private double j;
+
+
+private int myMethod(int a，char b) { // ...
+
+要理解public 和private 对访问的作用，看下面的程序：
+
+/* This program demonstrates the difference between
+
+ public and private.
+
+*/
+
+class Test {
+
+int a; // default access
+
+public int b; // public access
+
+private int c; // private access
+
+// methods to access c
+
+void setc(int i) { // set c's value
+
+c = i;
+
+}
+
+int getc() { // get c's value
+
+
+122 第1 部分Java 语言
+
+return c;
+}
+}
+
+
+class AccessTest
+{
+public static void main(String args[])
+{
+Test ob = new Test()
+;
+
+
+// These are OK，a and b may be accessed directly
+ob.a = 10;
+ob.b = 20;
+
+
+// This is not OK and will cause an error
+// ob.c = 100; // Error!
+
+
+// You must access c through its methods
+ob.setc(100); // OK
+System.out.println("a，b，and c: " + ob.a + " "
++
+
+
+ob.b + " " + ob.getc())
+;
+}
+}
+
+
+可以看出，在Test 类中，a使用默认访问指示符，在本例中与public 相同。b被显式地指
+定为public 。成员c被指定为private ，因此它不能被它的类之外的代码访问。所以，在
+AccessTest 类中不能直接使用c。对它的访问只能通过它的public 方法：setc()和getc() 。如果
+你将下面语句开头的注释符号去掉，
+
+// ob.c = 100; // Error!
+
+则由于违规，你不能编译这个程序。
+为了理解访问控制在实际中的应用，我们来看在第6章末尾所示的Stack 类的改进版本。
+
+// This class defines an integer stack that can hold 10 values.
+class Stack
+{
+
+
+ /* Now，both stck and tos are private. This means
+that they cannot be accidentally or maliciously
+altered in a way that would be harmful to the stack.
+
+
+*
+/
+private int stck[] = new int[10]
+;
+private int tos;
+
+
+ // Initialize top-of-stack
+Stack()
+{
+tos = -1;
+}
+
+
+// Push an item onto the stack
+void push(int item)
+{
+if(tos==9)
+System.out.println("Stack is full.")
+;
+else
+
+
+ stck[++tos] = item;
+}
+// Pop an item from the stack
+
+
+
+第7 章进一步研究方法和类
+ int pop() {
+
+if(tos < 0)
+{
+System.out.println("Stack underflow.")
+;
+return 0;
+
+
+}
+else
+return stck[tos--]
+;
+}
+}
+
+
+在本例中，现在存储堆栈的stck和指向堆栈顶部的下标tos ，都被指定为private 。这意味
+着除了通过push() 或pop()，它们不能够被访问或改变。例如，将tos 指定为private ，阻止你
+程序的其他部分无意中将它的值设置为超过stck 数组下标界的值。
+
+下面的程序表明了改进的Stack 类。试着删去注释前面的线条来证明stck和tos 成员确实
+是不能访问的。
+
+class TestStack {
+
+public static void main(String args[])
+{
+Stack mystack1 = new Stack()
+;
+Stack mystack2 = new Stack()
+;
+
+
+// push some numbers onto the stack
+for(int i=0; i<10; i++) mystack1.push(i)
+;
+for(int i=10; i<20; i++) mystack2.push(i)
+;
+
+
+// pop those numbers off the stack
+System.out.println("Stack in mystack1:")
+;
+for(int i=0; i<10; i++
+)
+
+
+ System.out.println(mystack1.pop());
+
+System.out.println("Stack in mystack2:")
+;
+for(int i=0; i<10; i++
+)
+System.out.println(mystack2.pop())
+;
+
+
+// these statements are not legal
+// mystack1.tos = -2;
+// mystack2.stck[3] = 100;
+
+
+}
+}
+
+
+尽管由类定义的方法通常提供对数据的访问，但情况并不总是这样。当需要时允许一
+个实例变量为public 是完全合适的。例如,为简单起见，本书中大多数的简单类在创建时不
+关心实例变量的存取。然而，在大多数实际应用的类中，你将有必要仅仅允许通过方法来
+对数据操作。下一章将回到访问控制的话题。你将看到，在继承中访问控制是至关重要的。
+
+7.7 理解static
+有时你希望定义一个类成员，使它的使用完全独立于该类的任何对象。通常情况下，
+类成员必须通过它的类的对象访问，但是可以创建这样一个成员，它能够被它自己使用，
+
+
+124 第1 部分Java 语言
+
+而不必引用特定的实例。在成员的声明前面加上关键字static(静态的)就能创建这样的成员。
+如果一个成员被声明为static，它就能够在它的类的任何对象创建之前被访问，而不必引用
+任何对象。你可以将方法和变量都声明为static。static 成员的最常见的例子是main( ) 。因为
+在程序开始执行时必须调用main() ，所以它被声明为static。
+
+声明为static的变量实质上就是全局变量。当声明一个对象时，并不产生static变量的拷
+贝，而是该类所有的实例变量共用同一个static变量。
+声明为static的方法有以下几条限制：
+
+·
+它们仅能调用其他的static 方法。
+·
+它们只能访问static数据。
+·
+它们不能以任何方式引用this 或super（关键字super 与继承有关，在下一章中描述）。
+如果你需要通过计算来初始化你的static变量，你可以声明一个static块，Static 块仅在该
+类被加载时执行一次。下面的例子显示的类有一个static方法，一些static变量，以及一个static
+初始化块：
+
+// Demonstrate static variables，methods，and blocks.
+
+class UseStatic
+{
+static int a = 3;
+static int b;
+
+
+static void meth(int x)
+{
+System.out.println("x = " + x)
+;
+System.out.println("a = " + a)
+;
+System.out.println("b = " + b)
+;
+
+
+}
+
+ static
+{
+System.out.println("Static block initialized.")
+;
+b = a * 4;
+
+
+}
+
+public static void main(String args[])
+{
+meth(42)
+;
+}
+}
+
+
+一旦UseStatic 类被装载，所有的static语句被运行。首先，a被设置为3，接着static 块执
+行(打印一条消息)，最后，b被初始化为a*4 或12。然后调用main()，main() 调用meth() ，把值
+42传递给x。3个println ( ) 语句引用两个static变量a和b，以及局部变量x 。
+
+注意：在一个static 方法中引用任何实例变量都是非法的。
+
+下面是该程序的输出：
+
+Static block initialized.
+x = 42
+a =
+3
+b = 12
+
+
+
+第7 章进一步研究方法和类
+
+在定义它们的类的外面，static 方法和变量能独立于任何对象而被使用。这样，你只要
+在类的名字后面加点号运算符即可。例如，如果你希望从类外面调用一个static方法，你可
+以使用下面通用的格式：
+
+classname.method( )
+
+这里，classname 是类的名字，在该类中定义static方法。可以看到，这种格式与通过
+对象引用变量调用非static方法的格式类似。一个static变量可以以同样的格式来访问——类
+名加点号运算符。这就是Java 如何实现全局功能和全局变量的一个控制版本。
+
+下面是一个例子。在main() 中，static方法callme() 和static 变量b在它们的类之外被访问。
+
+class StaticDemo
+{
+static int a = 42;
+static int b = 99;
+static void callme()
+{
+
+
+System.out.println("a = " + a)
+;
+}
+}
+
+
+class StaticByName {
+
+public static void main(String args[])
+{
+StaticDemo.callme()
+;
+System.out.println("b = " + StaticDemo.b)
+;
+
+
+}
+}
+
+
+下面是该程序的输出：
+
+a = 42
+b = 99
+
+
+7.8 介绍final
+一个变量可以声明为final，这样做的目的是阻止它的内容被修改。这意味着在声明final
+变量的时候，你必须初始化它（在这种用法上，final 类似于C/C++ 中的const）。例如：
+
+final int FILE_NEW = 1;
+final int FILE_OPEN = 2;
+final int FILE_SAVE = 3;
+final int FILE_SAVEAS = 4;
+final int FILE_QUIT = 5;
+
+
+你的程序的随后部分现在可以使用 FILE_OPEN 等等，就好像它们是常数，不必担心
+它们的值会被改变。
+为final 变量的所有的字符选择大写是一个普遍的编码约定。声明为final 的变量在实例
+中不占用内存。这样，一个final 变量实质上是一个常数。
+关键字final 也可以被应用于方法，但是它的意思和它被用于变量实质上是不同的。final
+的第二种用法将在下一章描述继承时解释。
+
+
+126 第1 部分Java 语言
+
+7.9 重新温习数组
+在此之前已经在本书中介绍过数组了。现在既然你已了解了类，可以介绍关于数组的
+重要的一点：数组是作为对象来实现的。因此，你可能想要利用数组的一种特别的属性，
+具体地说，就是一个数组的大小——也就是，一个数组能保存的元素的数目——可以在它
+的length 实例变量中找到。所有的数组都有这个变量，并且它总是保存数组的大小。下面的
+程序示例了这个性质：
+
+// This program demonstrates the length array member.
+class Length
+{
+
+
+public static void main(String args[])
+{
+int a1[] = new int[10]
+;
+int a2[] = {3，5，7，1，8，99，44，-10}
+;
+int a3[] = {4，3，2，1}
+;
+
+
+System.out.println("length of a1 is " + a1.length)
+;
+System.out.println("length of a2 is " + a2.length)
+;
+System.out.println("length of a3 is " + a3.length)
+;
+
+
+}
+}
+
+
+该程序显示如下输出：
+
+length of a1 is 10
+length of a2 is
+8
+length of a3 is
+4
+
+
+可以看出，每个数组的大小都被显示。要记住length 的值和数组实际使用的元素的个数
+没有关系。length 仅反映了数组能够包含的元素的数目。
+
+在许多情况下，你可以好好利用length 。例如，下面的程序是Stack类的改进版本。你
+可能回忆起，该类的早期的版本总是要产生一个10个元素的堆栈。下面的版本可以让你产
+生任意长度的堆栈。stck.length 的值用来防止堆栈溢出。
+
+// Improved Stack class that uses the length array member.
+
+class Stack
+{
+private int stck[]
+;
+private int tos;
+
+
+// allocate and initialize stack
+
+ Stack(int size)
+{
+stck = new int[size]
+;
+tos = -1;
+
+
+}
+
+// Push an item onto the stack
+void push(int item)
+{
+if(tos==stck.length-1) // use length member
+System.out.println("Stack is full.")
+;
+
+
+
+第7 章进一步研究方法和类
+
+else
+stck[++tos] = item;
+}
+
+
+// Pop an item from the stack
+int pop()
+{
+
+
+if(tos < 0)
+{
+System.out.println("Stack underflow.")
+;
+return 0;
+
+
+}
+else
+return stck[tos--]
+;
+}
+}
+
+
+class TestStack2 {
+
+public static void main(String args[])
+{
+Stack mystack1 = new Stack(5)
+;
+Stack mystack2 = new Stack(8)
+;
+// push some numbers onto the stack
+for(int i=0; i<5; i++) mystack1.push(i)
+;
+for(int i=0; i<8; i++) mystack2.push(i)
+;
+
+
+// pop those numbers off the stack
+System.out.println("Stack in mystack1:")
+;
+for(int i=0; i<5; i++
+)
+
+
+ System.out.println(mystack1.pop());
+
+System.out.println("Stack in mystack2:")
+;
+for(int i=0; i<8; i++
+)
+System.out.println(mystack2.pop())
+;
+}
+}
+
+
+注意，该程序创建了两个堆栈：一个有5个元素，另一个有8个元素。可以看出，数组
+保持它们自己长度信息的事实使创建任何大小的堆栈很容易。
+
+7.10 介绍嵌套类和内部类
+在另一个类中定义的类就是嵌套类（nested classes）。嵌套类的范围由装入它的类的范
+围限制。这样，如果类B被定义在类A之内，那么B为A所知，然而不被A的外面所知。嵌套
+类可以访问嵌套它的类的成员，包括private 成员。但是，包围类不能访问嵌套类的成员。
+
+嵌套类一般有2种类型：前面加static标识符的和不加static 标识符的。一个static的嵌套
+类有static修饰符。因为它是static，所以只能通过对象来访问它包围类的成员。也就是说，
+它不能直接引用它包围类的成员。因为有这个限制，所以static嵌套类很少使用。
+
+嵌套类最重要的类型是内部类（inner class）。内部类是非static的嵌套类。它可以访问
+它的外部类的所有变量和方法，它可以直接引用它们，就像外部类中的其他非static成员的
+功能一样。这样，一个内部类完全在它的包围类的范围之内。
+
+
+128 第1 部分Java 语言
+
+下面的程序示例了如何定义和使用一个内部类。名为Outer 的类有一个名为outer_x 的示
+例变量，一个名为test()的实例方法，并且定义了一个名为Inner 的内部类。
+
+// Demonstrate an inner class.
+class Outer
+{
+int outer_x = 100;
+
+
+ void test()
+{
+Inner inner = new Inner()
+;
+inner.display()
+;
+
+
+}
+
+// this is an inner class
+class Inner
+{
+void display()
+{
+System.out.println("display: outer_x = " + outer_x)
+;
+}
+}
+}
+
+
+class InnerClassDemo {
+
+public static void main(String args[])
+{
+Outer outer = new Outer()
+;
+outer.test()
+;
+
+
+}
+}
+
+
+该程序的输出如下所示：
+
+display: outer_x = 100
+
+在本程序中，内部类Inner 定义在Outer 类的范围之内。因此，在Inner 类之内的任何代码
+可以直接访问变量outer_x 。实例方法display() 定义在Inner 的内部，该方法以标准的输出流
+显示 outer_x 。InnerClassDemo 的main( ) 方法创建类Outer 的一个实例并调用它的test( )方法。
+创建类Inner 和display() 方法的一个实例的方法被调用。
+
+认识到Inner 类只有在类Outer 的范围内才是可知的是很重要的。如果在类Outer 之外的
+任何代码试图实例化Inner 类，Java 编译器会产生一条错误消息。总体来说，一个嵌套类和
+其他任何另外的编程元素没有什么不同：它仅仅在它的包围范围内是可知的。
+
+我们解释过，一个内部类可以访问它的包围类的成员，但是反过来就不成立了。内部
+类的成员只有在内部类的范围之内是可知的，而且不能被外部类使用。例如：
+
+// This program will not compile.
+class Outer
+{
+int outer_x = 100;
+
+
+ void test()
+{
+Inner inner = new Inner()
+;
+inner.display()
+;
+
+
+}
+
+// this is an inner class
+
+
+第7 章进一步研究方法和类
+
+ class Inner
+{
+int y = 10; // y is local to Inner
+void display()
+{
+
+
+System.out.println("display: outer_x = " + outer_x)
+;
+}
+}
+
+
+ void showy()
+{
+System.out.println(y); // error，y not known here!
+}
+}
+
+
+class InnerClassDemo {
+
+public static void main(String args[])
+{
+Outer outer = new Outer()
+;
+outer.test()
+;
+
+
+}
+}
+
+
+这里，y是作为Inner 的一个实例变量来声明的。这样对于该类的外部它就是不可知的，
+因此不能被showy() 使用。
+
+尽管我们强调嵌套类在它的外部类的范围之内声明，但在几个程序块的范围之内定义
+内部类是可能的。例如，在由方法定义的块中，或甚至在for 循环体内部，你也可以定义嵌
+套类，如下面的程序所示：
+
+// Define an inner class within a for loop.
+class Outer
+{
+int outer_x = 100;
+
+
+ void test()
+{
+for(int i=0; i<10; i++)
+{
+class Inner
+{
+void display()
+{
+System.out.println("display: outer_x = " + outer_x)
+;
+
+
+}
+}
+Inner inner = new Inner()
+;
+inner.display()
+;
+
+
+}
+}
+}
+
+
+class InnerClassDemo {
+
+public static void main(String args[])
+{
+Outer outer = new Outer()
+;
+outer.test()
+;
+
+
+}
+}
+
+
+该程序的这个版本的输出如下所示。
+
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+
+
+
+130
+第1 部分Java 语言
+
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+display: outer_x = 100
+
+
+尽管嵌套类在日常的大多数编程中不使用，但当处理applet （小应用程序）时是特别有
+帮助的。在第20章中我们将继续嵌套类的话题。在那里你将看到对于某些类型的事件内部
+类如何被用来简化代码。你也将了解匿名内部类（anonymous inner classes）,它是一个没有
+名字的内部类。
+
+最后一点：嵌套类在Java 的最初的1.0版本中是不允许的。直到Java 1.1 中才添加了嵌套
+类。
+
+7.11 探索String 类
+尽管String 类将在本书的第2部分深入地研究，但因为我们将在第1部分末尾的一些例子
+程序中使用字符串，因此，现在应该对它做一个简单的探索。String 类是Java 类库中最常用
+的类，其中最明显的原因是字符串在编程语言中是很重要的部分。
+
+有关字符串的最重要一点是，你创建的每一个字符串实际上都是String 类型的一个对
+象，即使是字符串常量实际上也是String 对象。
+System.out.println("This is a String，too");
+
+字符串“This is a String，too ”是一个字符串常数。幸好，Java 处理字符串常数和其他
+计算机语言处理“正常”的字符串的方法一样，因此你不必担心这个。
+
+字符串的另一个特点是，String 类型的对象是不可改变的；一旦创建了一个字符串对象，
+它的内容是不能被改变的。这看起来是一个严格的限制，但实际上不是，因为这有两个原
+因：
+
+·
+如果你需要改变一个字符串，你可以创建一个新的字符串，其中包含修改后的字符
+串即可。
+·
+Java 定义了一个和String 类同等的类叫StringBuffer ，它允许字符串改变，因此所有
+正常的字符串操作在Java 中还是可用的（StringBuffer 在本书的第2部分描述）。
+字符串可以通过多种方法构造。最容易的一种用如下的语句：
+
+String myString = "this is a test";
+
+一旦你创建了一个字符串对象，你可以在任何允许字符串的地方使用它，例如下面这
+条语句显示myString
+：
+
+System.out.println(myString);
+
+Java 定义了一个String 对象的运算符：“+”。它用来连接两个字符串。例如，下面这
+
+
+第7 章进一步研究方法和类
+
+条语句：
+
+String myString = "I" + " like " + "Java.";
+
+的结果是myString 包含“I like Java.
+”
+下面的程序表明了前面的概念：
+
+// Demonstrating Strings.
+class StringDemo
+{
+
+
+public static void main(String args[])
+{
+String strOb1 = "First String"
+;
+String strOb2 = "Second String"
+;
+String strOb3 = strOb1 + " and " + strOb2;
+
+
+System.out.println(strOb1)
+;
+System.out.println(strOb2)
+;
+System.out.println(strOb3)
+;
+
+
+}
+}
+
+
+该程序产生的输出如下所示：
+
+First String
+Second String
+First String and Second String
+
+
+String 类包含许多操作字符串的方法。例如下面就是其中一些。你可以用equals() 来检
+验两个字符串是否相等。你可以调用方法length() 来获得一个字符串的长度。你可以调用
+charAt() 来获得一个字符串指定索引的字符。这三个方法的通用格式如下所示：
+
+boolean equals(String object)
+int length(
+)
+char charAt(int index)
+
+
+下面的程序示例了这些方法：
+
+// Demonstrating some String methods.
+class StringDemo2
+{
+
+
+public static void main(String args[])
+{
+String strOb1 = "First String"
+;
+String strOb2 = "Second String"
+;
+String strOb3 = strOb1;
+
+
+System.out.println("Length of strOb1: "
++
+strOb1.length())
+;
+
+
+System.out.println("Char at index 3 in strOb1: "
++
+strOb1.charAt(3))
+;
+
+
+if(strOb1.equals(strOb2)
+)
+System.out.println("strOb1 == strOb2")
+;
+else
+System.out.println("strOb1 != strOb2")
+;
+
+
+
+132 第1 部分Java 语言
+
+if(strOb1.equals(strOb3)
+)
+System.out.println("strOb1 == strOb3")
+;
+else
+System.out.println("strOb1 != strOb3")
+;
+}
+}
+
+
+该程序产生如下的输出：
+
+Length of strOb1: 12
+Char at index 3 in strOb1:
+s
+strOb1 != strOb2
+strOb1 == strOb3
+
+
+当然，与其他对象类型一样，strings 也可以组成数组，例如：
+
+// Demonstrate String arrays.
+class StringDemo3
+{
+public static void main(String args[])
+{
+String str[] = { "one"，"two"，"three" }
+;
+
+
+for(int i=0; i<str.length; i++
+)
+System.out.println("str[" + i + "]: "
++
+str[i])
+;
+}
+}
+
+
+下面是该程序产生的输出：
+
+str[0]: one
+str[1]: two
+str[2]: three
+
+
+在下节里你将看到，字符串数组在许多Java 程序中起重要的作用。
+
+7.12 使用命令行参数
+有时你想在运行程序时将信息传递到一个程序中。这通过将命令行参数（command-line
+arguments ）传递给main() 来实现。命令行参数是程序执行时在命令行中紧跟在程序名后的
+信息。在Java 程序中访问命令行参数是相当容易的——它们作为字符串存储在传递给main()
+的String 数组中。例如,下面的程序显示了调用的所有的命令行参数：
+
+// Display all command-line arguments.
+class CommandLine
+{
+public static void main(String args[])
+{
+
+
+for(int i=0; i<args.length; i++
+)
+System.out.println("args[" + i + "]: "
++
+args[i])
+;
+
+
+}
+}
+
+
+尝试执行这个程序，命令如下所示：
+
+
+第7 章进一步研究方法和类
+
+java Commandline this is a test 100 -1
+
+执行后，你会看到如下输出：
+
+args[0]: thisargs[1]: isargs[2]: aargs[3]: testargs[4]: 100args[5]: -1
+
+注意：所有的命令行参数都是以字符串的形式传递的。你必须手工把数字值变换
+到它们的内部形式,这将在第14章解释。
+
+
+第8 章继承
+
+继承是面向对象编程技术的一块基石，因为它允许创建分等级层次的类。运用继承，
+你能够创建一个通用类，它定义了一系列相关项目的一般特性。该类可以被更具体的类继
+承，每个具体的类都增加一些自己特有的东西。在Java 术语学中，被继承的类叫超类
+（superclass ），继承超类的类叫子类（subclass ）。因此，子类是超类的一个专门用途的版
+本，它继承了超类定义的所有实例变量和方法，并且为它自己增添了独特的元素。
+
+8.1 继承的基础
+继承一个类，只要用extends 关键字把一个类的定义合并到另一个中就可以了。为了理
+解怎样继承，让我们从简短的程序开始。下面的例子创建了一个超类A和一个名为B的子类。
+注意怎样用关键字extends 来创建A的一个子类。
+
+// A simple example of inheritance.
+
+// Create a superclass.
+class A
+{
+int i, j;
+
+
+ void showij()
+{
+System.out.println("i and j: " + i + " " + j)
+;
+}
+}
+
+
+// Create a subclass by extending class A.
+class B extends A
+{
+int k;
+
+
+ void showk() {
+
+ System.out.println("k: " + k)
+;
+}
+void sum()
+{
+
+
+System.out.println("i+j+k: " + (i+j+k))
+;
+}
+}
+
+
+class SimpleInheritance {
+
+public static void main(String args[])
+{
+A superOb = new A()
+;
+B subOb = new B()
+;
+
+
+// The superclass may be used by itself.
+superOb.i = 10;
+superOb.j = 20;
+        `
+    },
+    {
+        name:'第8章  继承 135',
+        cont:`
+            System.out.println("Contents of superOb: ")
+;
+superOb.showij()
+;
+System.out.println()
+;
+
+
+/* The subclass has access to all public members of
+
+ its superclass. *
+/
+subOb.i = 7;
+subOb.j = 8;
+subOb.k = 9;
+System.out.println("Contents of subOb: ")
+;
+subOb.showij()
+;
+subOb.showk()
+;
+System.out.println()
+;
+
+
+System.out.println("Sum of i, j and k in subOb:")
+;
+subOb.sum()
+;
+}
+}
+
+
+该程序的输出如下：
+
+Contents of superOb:
+i and j: 10 20
+
+
+Contents of subOb:
+i and j: 7
+8
+
+
+k: 9
+Sum of i, j and k in subOb:
+i+j+k: 24
+
+
+像你所看到的，子类B包括它的超类A中的所有成员。这是为什么subOb 可以获取i和j
+以及调用showij( ) 方法的原因。同样，sum( ) 内部，i和j可以被直接引用，就像它们是B的一
+部分。
+
+尽管A是B的超类，它也是一个完全独立的类。作为一个子类的超类并不意味着超类不
+能被自己使用。而且，一个子类可以是另一个类的超类。
+声明一个继承超类的类的通常形式如下：
+
+class subclass-name extends superclass-name
+{
+// body of class
+}
+
+
+你只能给你所创建的每个子类定义一个超类。Java 不支持多超类的继承（这与C++ 不同，
+在C++中，你可以继承多个基础类）。你可以按照规定创建一个继承的层次。该层次中，
+一个子类成为另一个子类的超类。然而，没有类可以成为它自己的超类。
+
+8.1.1 成员的访问和继承
+尽管子类包括超类的所有成员，它不能访问超类中被声明成private 的成员。例如，考
+虑下面简单的类层次结构：
+
+/* In a class hierarchy, private members remain
+
+
+136 第1 部分Java 语言
+
+private to their class.
+
+This program contains an error and will not
+compile.
+*
+/
+
+
+// Create a superclass.
+
+class A
+{
+int i; // public by default
+private int j; // private to
+A
+
+
+void setij(int x, int y)
+{
+i = x;
+j = y;
+
+
+}
+}
+
+
+// A's j is not accessible here.
+
+class B extends A
+{
+int total;
+void sum()
+{
+
+
+total = i + j; // ERROR, j is not accessible here
+}
+}
+
+
+class Access
+{
+public static void main(String args[])
+{
+B subOb = new B()
+;
+
+
+ subOb.setij(10, 12);
+
+subOb.sum()
+;
+System.out.println("Total is " + subOb.total)
+;
+}
+}
+
+
+该程序不会编译，因为B中sum( ) 方法内部对j的引用是不合法的。既然j被声明成private，
+它只能被它自己类中的其他成员访问。子类没权访问它。
+
+注意：一个被定义成private 的类成员为此类私有，它不能被该类外的所有代码访
+问，包括子类。
+
+8.1.2 更实际的例子
+让我们看一个更实际的例子，该例子有助于阐述继承的作用。这里，前面章节改进的
+Box类的最后版本将被扩展。它包括第四成员名为weight 。这样，新的类将包含一个盒子的
+宽度、高度、深度和重量。
+
+// This program uses inheritance to extend Box.
+
+class Box
+{
+double width;
+double height;
+double depth;
+
+
+
+第8 章继承 137
+
+// construct clone of an object
+
+Box(Box ob) { // pass object to constructor
+width = ob.width;
+height = ob.height;
+depth = ob.depth;
+
+
+}
+
+// constructor used when all dimensions specified
+
+Box(double w, double h, double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// constructor used when no dimensions specified
+
+ Box()
+{
+width = -1; // use -1 to indicate
+height = -1; // an uninitialized
+depth = -1; // box
+
+
+}
+
+// constructor used when cube is created
+Box(double len)
+{
+width = height = depth = len;
+}
+
+
+// compute and return volume
+double volume() {
+return width * height * depth;
+}
+}
+
+// Here, Box is extended to include weight.
+class BoxWeight extends Box {
+double weight; // weight of box
+
+// constructor for BoxWeight
+
+BoxWeight(double w, double h, double d, double m)
+{
+width = w;
+height = h;
+depth = d;
+weight = m;
+
+
+}
+}
+class DemoBoxWeight {
+
+public static void main(String args[])
+{
+BoxWeight mybox1 = new BoxWeight(10, 20, 15, 34.3)
+;
+BoxWeight mybox2 = new BoxWeight(2, 3, 4, 0.076)
+;
+double vol;
+
+
+ vol = mybox1.volume()
+;
+System.out.println("Volume of mybox1 is " + vol)
+;
+System.out.println("Weight of mybox1 is " + mybox1.weight)
+;
+System.out.println()
+;
+
+
+
+138 第1 部分Java 语言
+
+ vol = mybox2.volume()
+;
+System.out.println("Volume of mybox2 is " + vol)
+;
+System.out.println("Weight of mybox2 is " + mybox2.weight)
+;
+
+
+}
+}
+
+
+该程序的输出显示如下：
+
+Volume of mybox1 is 3000.0
+Weight of mybox1 is 34.3
+
+
+Volume of mybox2 is 24.0
+Weight of mybox2 is 0.076
+
+
+BoxWeight 继承了Box 的所有特征并为自己增添了一个weight 成员。没有必要让
+BoxWeight 重新创建Box 中的所有特征。为满足需要我们只要扩展Box就可以了。
+
+继承的一个主要优势在于一旦你已经创建了一个超类，而该超类定义了适用于一组对
+象的属性，它可用来创建任何数量的说明更多细节的子类。每一个子类能够正好制作它自
+己的分类。例如，下面的类继承了Box并增加了一个颜色属性：
+
+// Here, Box is extended to include color.
+class ColorBox extends Box
+{
+int color; // color of box
+
+
+ColorBox(double w, double h, double d, int c)
+{
+width = w;
+height = h;
+depth = d;
+color = c;
+
+
+}
+}
+
+
+记住，一旦你已经创建了一个定义了对象一般属性的超类，该超类可以被继承以生成
+特殊用途的类。每一个子类只增添它自己独特的属性。这是继承的本质。
+
+8.1.3 超类变量可以引用子类对象
+超类的一个引用变量可以被任何从该超类派生的子类的引用赋值。你将发现继承的这
+个方面在很多条件下是很有用的。例如，考虑下面的程序：
+
+class RefDemo {
+
+public static void main(String args[])
+{
+BoxWeight weightbox = new BoxWeight(3, 5, 7, 8.37)
+;
+Box plainbox = new Box()
+;
+double vol;
+
+
+ vol = weightbox.volume()
+;
+System.out.println("Volume of weightbox is " + vol)
+;
+System.out.println("Weight of weightbox is "
++
+
+
+ weightbox.weight)
+;
+System.out.println()
+;
+
+
+
+第8 章继承 139
+
+// assign BoxWeight reference to Box reference
+
+ plainbox = weightbox;
+
+vol = plainbox.volume(); // OK, volume() defined in Box
+
+System.out.println("Volume of plainbox is " + vol);
+
+/* The following statement is invalid because plainbox
+does not define a weight member. */
+// System.out.println("Weight of plainbox is " + plainbox.weight);
+}
+}
+
+这里，weightbox 是BoxWeight 对象的一个引用，plainbox 是Box对象的一个引用。既然
+BoxWeight 是Box的一个子类，允许用一个weightbox 对象的引用给plainbox 赋值。
+
+理解是引用变量的类型——而不是引用对象的类型——决定了什么成员可以被访问。
+也就是说，当一个子类对象的引用被赋给一个超类引用变量时，你只能访问超类定义的对
+象的那一部分。这是为什么plainbox 不能访问weight 的原因，甚至是它引用了一个BoxWeight
+对象也不行。仔细想一想，这是有道理的，因为超类不知道子类增加的属性。这就是本程
+序中的最后一行被注释掉的原因。Box的引用访问weight 域是不可能的，因为它没有定义。
+
+尽管前面部分看起来有一点深奥，它是很重要的实际应用——本章后面将讨论的两种
+应用之一。
+
+8.2 使用super
+在前面的例子中，从Box派生的类并没有体现出它们的实际上是多么有效和强大。例
+如，BoxWeight 构造函数明确的初始化了Box( )的width 、height 和depth 成员。这些重复的代
+码在它的超类中已经存在，这样做效率很低，而且，这意味着子类必须被同意具有访问这
+些成员的权力。然而，有时你希望创建一个超类，该超类可以保持它自己实现的细节（也
+就是说，它保持私有的数据成员）。这种情况下，子类没有办法直接访问或初始化它自己
+的这些变量。既然封装是面向对象的基本属性，Java 提供了该问题的解决方案是不值得奇
+怪的。任何时候一个子类需要引用它直接的超类，它可以用关键字super 来实现。
+
+super有两种通用形式。第一种调用超类的构造函数。第二种用来访问被子类的成员隐
+藏的超类成员。下面分别介绍每一种用法。
+
+8.2.1 使用super调用超类构造函数
+子类可以调用超类中定义的构造函数方法，用super 的下面形式：
+
+super(parameter-list);
+
+这里，parameter-list 定义了超类中构造函数所用到的所有参数。super( )必须是在子类
+构造函数中的第一个执行语句。
+
+为了了解怎样运用super( ) ，考虑下面BoxWeight( ) 的改进版本：
+
+// BoxWeight now uses super to initialize its Box attributes.
+
+
+140 第1 部分Java 语言
+
+class BoxWeight extends Box
+{
+double weight; // weight of box
+
+
+// initialize width, height, and depth using super()
+
+BoxWeight(double w, double h, double d, double m)
+{
+super(w, h, d); // call superclass constructor
+weight = m;
+
+
+}
+}
+
+
+这里，BoxWeight( ) 调用带w、h和d参数的super( )方法。这使Box( ) 构造函数被调用，
+用w、h和d来初始化width, height, 和 depth 。BoxWeight 不再自己初始化这些值。它只需初
+始化它自己的特殊值：weight 。这种方法使Box 可以自由的根据需要把这些值声明成private 。
+
+上面的例子，调用super( ) 用了三个参数。既然构造函数可以被重载，可以用超类定义
+的任何形式调用super( ) ，执行的构造函数将是与所传参数相匹配的那一个。例如，下面是
+BoxWeight 一个完整的实现，BoxWeight 具有以不同方法构造盒子的构造函数。在每种情况
+下，用适当的参数调用super( ) 。注意width, height, and depth 在Box 是私有的。
+
+// A complete implementation of BoxWeight.
+
+class Box
+{
+private double width;
+private double height;
+private double depth;
+
+
+// construct clone of an object
+
+Box(Box ob) { // pass object to constructor
+width = ob.width;
+height = ob.height;
+depth = ob.depth;
+
+
+}
+// constructor used when all dimensions specified
+Box(double w, double h, double d)
+{
+
+
+ width = w;
+height = h;
+depth = d;
+
+
+}
+
+// constructor used when no dimensions specified
+
+ Box()
+{
+width = -1; // use -1 to indicate
+height = -1; // an uninitialized
+depth = -1; // box
+
+
+}
+
+// constructor used when cube is created
+Box(double len)
+{
+width = height = depth = len;
+}
+
+
+// compute and return volume
+double volume()
+{
+return width * height * depth;
+}
+
+
+
+第8 章继承 141
+
+}
+
+// BoxWeight now fully implements all constructors.
+class BoxWeight extends Box {
+double weight; // weight of box
+
+// construct clone of an object
+
+BoxWeight(BoxWeight ob) { // pass object to constructor
+super(ob)
+;
+weight = ob.weight;
+
+
+}
+
+// constructor when all parameters are specified
+
+BoxWeight(double w, double h, double d, double m)
+{
+super(w, h, d); // call superclass constructor
+weight = m;
+
+
+}
+// default constructor
+BoxWeight()
+{
+
+
+super()
+;
+weight = -1;
+}
+
+
+// constructor used when cube is created
+
+BoxWeight(double len, double m)
+{
+super(len)
+;
+weight = m;
+
+
+}
+}
+
+class DemoSuper {
+
+public static void main(String args[])
+{
+BoxWeight mybox1 = new BoxWeight(10, 20, 15, 34.3)
+;
+BoxWeight mybox2 = new BoxWeight(2, 3, 4, 0.076)
+;
+BoxWeight mybox3 = new BoxWeight(); // default
+BoxWeight mycube = new BoxWeight(3, 2)
+;
+BoxWeight myclone = new BoxWeight(mybox1)
+;
+double vol;
+
+
+ vol = mybox1.volume()
+;
+System.out.println("Volume of mybox1 is " + vol)
+;
+System.out.println("Weight of mybox1 is " + mybox1.weight)
+;
+System.out.println()
+;
+
+
+ vol = mybox2.volume()
+;
+System.out.println("Volume of mybox2 is " + vol)
+;
+System.out.println("Weight of mybox2 is " + mybox2.weight)
+;
+System.out.println()
+;
+
+
+ vol = mybox3.volume()
+;
+System.out.println("Volume of mybox3 is " + vol)
+;
+System.out.println("Weight of mybox3 is " + mybox3.weight)
+;
+System.out.println()
+;
+
+
+ vol = myclone.volume()
+;
+
+
+
+142 第1 部分Java 语言
+
+System.out.println("Volume of myclone is " + vol)
+;
+System.out.println("Weight of myclone is " + myclone.weight)
+;
+System.out.println()
+;
+vol = mycube.volume()
+;
+System.out.println("Volume of mycube is " + vol)
+;
+System.out.println("Weight of mycube is " + mycube.weight)
+;
+System.out.println()
+;
+
+
+}
+}
+
+
+该程序产生下面的输出：
+
+Volume of mybox1 is 3000.0
+Weight of mybox1 is 34.3
+Volume of mybox2 is 24.0
+Weight of mybox2 is 0.076
+Volume of mybox3 is -1.0
+Weight of mybox3 is -1.0
+Volume of myclone is 3000.0
+Weight of myclone is 34.3
+Volume of mycube is 27.0
+Weight of mycube is 2.0
+
+
+特别注意BoxWeight( ) 中的这个构造函数：
+
+// construct clone of an object
+
+BoxWeight(BoxWeight ob) { // pass object to constructor
+super(ob)
+;
+weight = ob.weight;
+
+
+}
+
+注意super( ) 被用一个BoxWeight 类型而不是Box 类型的对象调用。这仍然调用了构造函
+数Box(Box ob) 。前面已经提醒过，一个超类变量可以引用作为任何一个从它派生的对象。
+因此，我们可以传递一个BoxWeight 对象给Box构造函数。当然，Box 只知道它自己成员的
+信息。
+
+让我们复习super( ) 中的关键概念。当一个子类调用super( ) ，它调用它的直接超类的构
+造函数。这样，super( ) 总是引用调用类直接的超类。这甚至在多层次结构中也是成立的。
+还有，super( ) 必须是子类构造函数中的第一个执行语句。
+
+8.2.2 Super的第2种用法
+Super的第2种形式，除了总是引用它所在子类的超类，它的行为有点像this 。这种用法
+有下面的通用形式：
+
+super.member
+
+这里，member 既可以是1个方法也可以是1个实例变量。
+Super的第2种形式多数是用于超类成员名被子类中同样的成员名隐藏的情况。思考下
+面简单的层次：
+
+// Using super to overcome name hiding.
+class A
+{
+
+
+
+第8 章继承 143
+
+ int i;
+}
+
+
+// Create a subclass by extending class A.
+class B extends A
+{
+int i; // this i hides the i in
+A
+
+
+B(int a, int b)
+{
+super.i = a; // i in
+A
+i = b; // i in
+B
+
+
+}
+
+ void show()
+{
+System.out.println("i in superclass: " + super.i)
+;
+System.out.println("i in subclass: " + i)
+;
+
+
+}
+}
+
+
+class UseSuper
+{
+public static void main(String args[])
+{
+B subOb = new B(1, 2)
+;
+
+
+subOb.show()
+;
+}
+}
+
+
+该程序输出如下：
+
+i in superclass:
+1
+i in subclass:
+2
+
+
+尽管B中的实例变量i隐藏了A中的i，使用super 就可以访问超类中定义的i。你将会看到，
+super也可以用来调用超类中被子类隐藏的方法。
+
+8.3 创建多级类层次
+到目前为止，我们已经用到了只含有一个超类和一个子类的简单类层次结构。然而，
+你可以如你所愿的建立包含任意多层继承的类层次。前面提到，用一个子类作为另一个类
+的超类是完全可以接受的。例如，给定三个类A，B和C。C是B的一个子类，而B又是A的
+一个子类。当这种类型的情形发生时，每个子类继承它的所有超类的属性。这种情况下，
+C继承B和A的所有方面。为了理解多级层次的用途，考虑下面的程序。该程序中，子类
+BoxWeight 用作超类来创建一个名为Shipment 的子类。Shipment 继承了BoxWeight 和Box 的所
+有特征，并且增加了一个名为cost的成员，该成员记录了运送这样一个小包的费用。
+
+// Extend BoxWeight to include shipping costs.
+
+// Start with Box.
+
+class Box
+{
+private double width;
+private double height;
+
+
+
+144 第1 部分Java 语言
+
+ private double depth;
+
+// construct clone of an object
+
+Box(Box ob) { // pass object to constructor
+width = ob.width;
+height = ob.height;
+depth = ob.depth;
+
+
+}
+
+// constructor used when all dimensions specified
+
+Box(double w, double h, double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+// constructor used when no dimensions specified
+
+ Box()
+{
+width = -1; // use -1 to indicate
+height = -1; // an uninitialized
+depth = -1; // box
+
+
+}
+
+// constructor used when cube is created
+Box(double len)
+{
+width = height = depth = len;
+}
+
+
+// compute and return volume
+double volume() {
+return width * height * depth;
+}
+}
+
+// Add weight.
+class BoxWeight extends Box {
+double weight; // weight of box
+
+// construct clone of an object
+
+BoxWeight(BoxWeight ob) { // pass object to constructor
+super(ob);
+weight = ob.weight;
+
+}
+// constructor when all parameters are specified
+BoxWeight(double w, double h, double d, double m)
+{
+
+
+super(w, h, d); // call superclass constructor
+weight = m;
+}
+
+
+ // default constructor
+
+ BoxWeight()
+{
+super()
+;
+weight = -1;
+
+
+}
+// constructor used when cube is created
+
+
+
+第8 章继承 145
+
+BoxWeight(double len, double m)
+{
+super(len)
+;
+weight = m;
+
+
+}
+}
+
+// Add shipping costsclass Shipment extends BoxWeight {
+double cost;
+
+// construct clone of an object
+
+Shipment(Shipment ob) { // pass object to constructor
+super(ob)
+;
+cost = ob.cost;
+
+
+}
+
+// constructor when all parameters are specified
+Shipment(double w, double h, double d,
+
+
+ double m, double c)
+{
+super(w, h, d, m); // call superclass constructor
+cost = c;
+
+
+}
+
+ // default constructor
+
+ Shipment()
+{
+super()
+;
+cost = -1;
+
+
+}
+
+// constructor used when cube is created
+
+Shipment(double len, double m, double c)
+{
+super(len, m)
+;
+cost = c;
+
+
+}
+}
+
+class DemoShipment {
+public static void main(String args[]) {
+Shipment shipment1 =
+new Shipment(10, 20, 15, 10, 3.41);
+Shipment shipment2 =
+new Shipment(2, 3, 4, 0.76, 1.28);
+
+ double vol;
+
+ vol = shipment1.volume();
+System.out.println("Volume of shipment1 is " + vol);
+System.out.println("Weight of shipment1 is "
+
+ + shipment1.weight);
+System.out.println("Shipping cost: $" + shipment1.cost);
+System.out.println();
+vol = shipment2.volume();
+System.out.println("Volume of shipment2 is " + vol);
+System.out.println("Weight of shipment2 is "
+
+
+146 第1 部分Java 语言
+
+ + shipment2.weight);
+System.out.println("Shipping cost: $" + shipment2.cost);
+}
+}
+
+
+下面是该程序的输出：
+
+Volume of shipment1 is 3000.0
+Weight of shipment1 is 10.0
+Shipping cost: $3.41
+Volume of shipment2 is 24.0
+Weight of shipment2 is 0.76
+Shipping cost: $1.28
+
+
+因为继承关系，Shipment 可以利用原先定义好的Box 和BoxWeight 类，仅为自己增加特
+殊用途的其他信息。这体现了继承的部分价值；它允许代码重用。
+
+该例阐述了另一个重要的知识点：super( ) 总是引用子类最接近的超类的构造函数。
+Shipment 中super( )调用了BoxWeight 的构造函数。BoxWeight 中的super( ) 调用了Box中的构
+造函数。在类层次结构中，如果超类构造函数需要参数，那么不论子类它自己需不需要参
+数，所有子类必须向上传递这些参数。
+
+注意：在前面的例子中，整个类层次，包括Box，BoxWeight 和Shipment ，在一个
+文件中显示。这仅仅根据简便程度而定。Java中所有三个类可以被放置在它们自
+己的文件中且可以独立编译。实际上，在创建类层次结构的时候，使用分离的文
+件是常见的，不是罕见的。
+
+8.4 何时调用构造函数
+类层次结构创建以后，组成层次结构的类的构造函数以怎样的顺序被调用？举个例子
+来说，给定一个名为B的子类和超类A，是A的构造函数在B的构造函数之前调用，还是情
+况相反？回答是在类层次结构中，构造函数以派生的次序调用，从超类到子类。而且，尽
+管super( )必须是子类构造函数的第一个执行语句，无论你用到了super( ) 没有，这个次序不
+变。如果super( ) 没有被用到，每个超类的默认的或无参数的构造函数将执行。下面的例子
+阐述了何时执行构造函数：
+
+// Demonstrate when constructors are called.
+
+// Create a super class.
+class A
+{
+A()
+{
+System.out.println("Inside A's constructor.")
+;
+}
+}
+
+
+// Create a subclass by extending class A.
+class B extends A
+{
+B()
+{
+System.out.println("Inside B's constructor.")
+;
+
+
+
+第8 章继承 147
+
+}
+}
+
+
+// Create another subclass by extending B.
+class C extends B
+{
+C()
+{
+System.out.println("Inside C's constructor.")
+;
+}
+}
+
+
+class CallingCons
+{
+public static void main(String args[])
+{
+C c = new C()
+;
+}
+}
+
+
+该程序输出如下：
+
+Inside A’s constructor
+Inside B’s constructor
+Inside C’s constructor
+
+
+如你所见，构造函数以派生的顺序被调用。
+
+仔细考虑，构造函数以派生的顺序执行是很有意义的。因为超类不知道任何子类的信
+息，任何它需要完成的初始化是与子类的初始化分离的，而且它可能是完成子类初始化的
+先决条件。因此，它必须最先执行。
+
+8.5 方法重载
+类层次结构中，如果子类中的一个方法与它超类中的方法有相同的方法名和类型声明，
+称子类中的方法重载（override ）超类中的方法。从子类中调用重载方法时，它总是引用子
+类定义的方法。而超类中定义的方法将被隐藏。考虑下面程序：
+
+// Method overriding.
+
+class A
+{
+int i, j;
+A(int a, int b)
+{
+
+
+ i = a;
+j = b;
+}
+
+
+// display i and
+j
+void show()
+{
+System.out.println("i and j: " + i + " " + j)
+;
+}
+}
+
+
+class B extends A
+{
+int k;
+
+
+B(int a, int b, int c) {
+
+
+148 第1 部分Java 语言
+
+ super(a, b)
+;
+k = c;
+}
+
+
+// display k – this overrides show() in
+A
+void show()
+{
+System.out.println("k: " + k)
+;
+}
+}
+
+
+class Override
+{
+public static void main(String args[])
+{
+B subOb = new B(1, 2, 3)
+;
+
+
+subOb.show(); // this calls show() in
+B
+}
+}
+
+
+程序输出如下：
+
+k: 3
+当一个B类的对象调用show( ) 时，调用的是在B中定义的show( ) 版本。也就是说，B中
+的show( ) 方法重载了A中声明的show( ) 方法。
+如果你希望访问被重载的超类的方法，可以用super 。例如，在下面的B的版本中，在
+子类中超类的show( ) 方法被调用。这使所有的实例变量被显示。
+
+class B extends A
+{
+int k;
+
+
+B(int a, int b, int c)
+{
+super(a, b)
+;
+k = c;
+
+
+}
+
+ void show()
+{
+super.show(); // this calls A's show(
+)
+System.out.println("k: " + k)
+;
+
+
+}
+}
+
+
+如果你用该版本的A代替先前的版本形式，将会得出下面输出：
+
+i and j: 1 2
+
+k: 3
+这里，super.show( ) 调用了超类的show( ) 方法。
+方法覆盖仅在两个方法的名称和类型声明都相同时才发生。如果它们不同，那么两个
+方法就只是重载。例如，考虑下面的程序，它修改了前面的例子：
+
+// Methods with differing type signatures are overloaded – not
+// overridden.
+class A
+{
+
+
+ int i, j;
+
+
+第8 章继承 149
+
+A(int a, int b)
+{
+i = a;
+j = b;
+
+
+}
+
+// display i and
+j
+void show()
+{
+System.out.println("i and j: " + i + " " + j)
+;
+}
+}
+
+
+// Create a subclass by extending class A.
+class B extends A
+{
+int k;
+
+
+B(int a, int b, int c)
+{
+super(a, b)
+;
+k = c;
+
+
+}
+
+ // overload show(
+)
+void show(String msg)
+{
+System.out.println(msg + k)
+;
+}
+}
+
+
+class Override
+{
+public static void main(String args[])
+{
+B subOb = new B(1, 2, 3)
+;
+
+
+subOb.show("This is k: "); // this calls show() in
+B
+subOb.show(); // this calls show() in
+A
+}
+}
+
+
+该程序的输出显示如下：
+
+This is k:
+3
+i and j: 1
+2
+
+
+B中show( ) 带有一个字符串参数。这是它的类型标签与A中的不同，A中的show( ) 没有
+带参数。因此没有覆盖（或名称隐藏）发生。
+
+8.6 动态方法调度
+前面的例题说明了方法重载机制，但并没有显示它们的作用。实际上，如果方法重载
+只是一个名字空间的约定，那么它最多是有趣的，但是没有实际价值的。然而，情况并不
+如此。方法重载构成Java 的一个最强大的概念的基础：动态方法调度（dynamic method
+dispatch）。动态方法调度是一种在运行时而不是编译时调用重载方法的机制。动态方法调
+度是很重要的，因为这也是Java 实现运行时多态性的基础。
+
+
+150 第1 部分Java 语言
+
+让我们从重述一个重要的原则开始：超类的引用变量可以引用子类对象。Java 用这一
+事实来解决在运行期间对重载方法的调用。过程如下：当一个重载方法通过超类引用被调
+用，Java 根据当前被引用对象的类型来决定执行哪个版本的方法。如果引用的对象类型不
+同，就会调用一个重载方法的不同版本。换句话说，是被引用对象的类型（而不是引用变
+量的类型）决定执行哪个版本的重载方法。因此，如果超类包含一个被子类重载的方法，
+那么当通过超类引用变量引用不同对象类型时，就会执行该方法的不同版本。
+
+下面是阐述动态方法调度的例子：
+
+// Dynamic Method Dispatch
+class A
+{
+void callme()
+{
+System.out.println("Inside A's callme method")
+;
+}
+}
+
+
+class B extends A
+{
+// override callme(
+)
+void callme()
+{
+
+
+ System.out.println("Inside B's callme method")
+;
+}
+}
+
+
+class C extends A
+{
+// override callme(
+)
+void callme()
+{
+
+
+ System.out.println("Inside C's callme method")
+;
+}
+}
+
+
+class Dispatch {
+
+public static void main(String args[])
+{
+A a = new A(); // object of type
+A
+B b = new B(); // object of type
+B
+C c = new C(); // object of type
+C
+A r; // obtain a reference of type
+A
+
+
+r = a; // r refers to an A object
+r.callme(); // calls A's version of callme
+
+
+r = b; // r refers to a B object
+r.callme(); // calls B's version of callme
+r = c; // r refers to a C object
+r.callme(); // calls C's version of callme
+
+
+}
+}
+
+
+该程序的输出如下：
+
+Inside A’s callme method
+Inside B’s callme method
+Inside C’s callme method
+
+
+
+第8 章继承 151
+
+程序创建了一个名为A的超类以及它的两个子类B和C。子类B和C重载A中定义的
+callme( ) 方法。main( ) 主函数中，声明了A、B和C类的对象。而且，一个A类型的引用r也被
+声明。就像输出所显示的，所执行的callme( ) 版本由调用时引用对象的类型决定。如果它是
+由引用变量r的类型决定的，你将会看到对A的callme( ) 方法的三次调用。
+
+熟悉C++ 的读者会认同Java 中的重载方法与C++ 中的虚函数类似。
+
+8.6.1 为什么要重载方法
+前面声明过，重载方法允许Java 支持运行时多态性。多态性是面向对象编程的本质，
+原因如下：它允许通用类指定方法，这些方法对该类的所有派生类都是公用的。同时该方
+法允许子类定义这些方法中的某些或全部的特殊实现。重载方法是Java 实现它的多态性—
+—“一个接口，多个方法”的另一种方式。
+
+成功应用多态的关键部分是理解超类和子类形成了一个从简单到复杂类层次。正确应
+用多态，超类提供子类可以直接运用的所有元素。多态也定义了这些派生类必须自己实现
+的方法。这允许子类在加强一致接口的同时，灵活的定义它们自己的方法。这样，通过继
+承和重载方法的联合，超类可以定义供它的所有子类使用的方法的通用形式。
+
+动态的运行时多态是面向对象设计代码重用的一个最强大的机制。现有代码库在维持
+抽象接口同时不重新编译的情况下调用新类实例的能力是一个极其强大的工具。
+
+8.6.2 应用方法重载
+让我们看一个运用方法重载的更实际的例子。下面的程序创建了一个名为Figure 的超
+类，它存储不同二维对象的大小。它还定义了一个方法area( )，该方法计算对象的面积。程
+序从Figure 派生了两个子类。第一个是Rectangle ，第二个是Triangle 。每个子类重载area( )
+方法，它们分别返回一个矩形和一个三角形的面积。
+
+// Using run-time polymorphism.
+
+class Figure
+{
+double dim1;
+double dim2;
+
+
+Figure(double a, double b)
+{
+dim1 = a;
+dim2 = b;
+
+
+}
+
+ double area()
+{
+System.out.println("Area for Figure is undefined.")
+;
+return 0;
+
+
+}
+}
+
+
+class Rectangle extends Figure
+{
+Rectangle(double a, double b)
+{
+super(a, b)
+;
+}
+
+
+// override area for rectangle
+
+
+152 第1 部分Java 语言
+
+ double area()
+{
+System.out.println("Inside Area for Rectangle.")
+;
+return dim1 * dim2;
+
+
+
+}
+}
+
+
+class Triangle extends Figure
+{
+Triangle(double a, double b)
+{
+super(a, b)
+;
+}
+
+
+// override area for right triangle
+
+ double area()
+{
+System.out.println("Inside Area for Triangle.")
+;
+return dim1 * dim2 / 2;
+
+
+}
+}
+
+
+class FindAreas {
+
+public static void main(String args[])
+{
+Figure f = new Figure(10, 10)
+;
+Rectangle r = new Rectangle(9, 5)
+;
+Triangle t = new Triangle(10, 8)
+;
+
+
+ Figure figref;
+
+ figref = r;
+System.out.println("Area is " + figref.area())
+;
+
+
+ figref = t;
+System.out.println("Area is " + figref.area())
+;
+
+
+ figref = f;
+System.out.println("Area is " + figref.area())
+;
+}
+}
+
+
+该程序输出如下：
+
+Inside Area for Rectangle.
+Area is 45
+Inside Area for Triangle.
+Area is 40
+Area for Figure is undefined.
+Area is
+0
+
+
+通过继承和运行时多态的双重机制，可以定义一个被很多不同却有关的对象类型运用
+的一致的接口。这种情况下，如果一个对象是从Figure 派生，那么它的面积可以由调用area( )
+来获得。无论用到哪种图形的类型，该操作的接口是相同的。
+
+
+第8 章继承 153
+
+8.7 使用抽象类
+有些情况下，你希望定义一个超类，该超类定义了一种给定结构的抽象但是不提供任
+何完整的方法实现。也就是说，有时你希望创建一个只定义一个被它的所有子类共享的通
+用形式，由每个子类自己去填写细节。这样的类决定了子类所必须实现的方法的本性。这
+类情形下一种可能发生的情况是超类不能创建一个方法的有意义的实现。前面的例子中用
+到的类Figure 就属于这种情况。area( )的定义仅是一个占位符。它不会计算和显示任何类型
+对象的面积。
+
+当创建自己的类库时你会看到，超类中的方法没有实际意义并不罕见。你有两种方法
+可以处理这种情况。第一种，如前面的例子所示，仅仅是报告一个出错消息。尽管这种方
+式在某些场合是有用的——例如调试——但是它不是很适用的。你还有一种方法就是通过
+子类重载该方法以使它对子类有意义。考虑Triangle 类，如果不定义area( )它是毫无意义的。
+这种情况下，你希望有方法确保子类真正重载了所有必须的方法。Java 对于这个问题的解
+决是用抽象方法(abstract method) 。
+
+你可以通过指定abstract 类型修饰符由子类重载某些方法。这些方法有时被作为子类责
+任（subclasser responsibility）引用，因为它们没有在超类中指定的实现。这样子类必须重
+载它们——它们不能简单地使用超类中定义的版本。声明一个抽象方法，用下面的通用形
+式：
+
+abstract type name(parameter-list);
+
+正如你所看到的，不存在方法体。
+
+任何含有一个或多个抽象方法的类都必须声明成抽象类。声明一个抽象类，只需在类
+声明开始时在关键字class前使用关键字abstract。抽象类没有对象。也就是说，一个抽象类
+不能通过new操作符直接实例化。这样的对象是无用的，因为抽象类是不完全定义的。而
+且，你不能定义抽象构造函数或抽象静态方法。所有抽象类的子类都必须执行超类中的所
+有抽象方法或者是它自己也声明成abstract。
+
+下面是具有一个抽象方法类的简单例题。该类后面是一个执行抽象方法的类：
+
+// A Simple demonstration of abstract.
+
+abstract class A {
+
+ abstract void callme();
+
+// concrete methods are still allowed in abstract classes
+void callmetoo()
+{
+System.out.println("This is a concrete method.")
+;
+}
+}
+
+
+class B extends A
+{
+void callme()
+{
+System.out.println("B's implementation of callme.")
+;
+}
+
+
+
+154 第1 部分Java 语言
+
+}
+
+class AbstractDemo
+{
+public static void main(String args[])
+{
+B b = new B()
+;
+
+
+b.callme()
+;
+b.callmetoo()
+;
+}
+}
+
+
+注意程序中声明A的对象。刚刚讲过，实例化一个抽象类是不可能的。另外一点要注
+意：类A实现一个具体的方法callmetoo( ) 。这是完全可接受的，抽象类可以包括它们合适的
+很多实现。
+
+因为Java 的运行时多态是通过使用超类引用实现的，所以尽管抽象类不能用来实例化，
+它们可以用来创建对象引用。这样，创建一个抽象类的引用是可行的，这样它可以用来指
+向一个子类对象。在下面的程序中你将会看到这种特性的运用。
+
+运用抽象类，你可以改善前面所显示的Figure 类。因为对于一个未定义的二维图形，面
+积的概念是没有意义的，下面的程序在Figure 内将area( )定义成抽象方法。这样当然意味着
+从Figure 派生的所有类都必须重载area( )方法。
+
+// Using abstract methods and classes.
+
+abstract class Figure
+{
+double dim1;
+double dim2;
+
+
+Figure(double a, double b)
+{
+dim1 = a;
+dim2 = b;
+
+
+}
+
+// area is now an abstract method
+abstract double area()
+;
+}
+
+
+class Rectangle extends Figure
+{
+Rectangle(double a, double b)
+{
+super(a, b)
+;
+}
+
+
+// override area for rectangle
+
+ double area()
+{
+System.out.println("Inside Area for Rectangle.")
+;
+return dim1 * dim2;
+
+
+
+}
+}
+
+
+
+第8 章继承 155
+
+class Triangle extends Figure
+{
+Triangle(double a, double b)
+{
+super(a, b)
+;
+}
+
+
+// override area for right triangle
+
+ double area()
+{
+System.out.println("Inside Area for Triangle.")
+;
+return dim1 * dim2 / 2;
+
+
+}
+}
+
+
+class AbstractAreas
+{
+public static void main(String args[])
+{
+// Figure f = new Figure(10, 10); // illegal now
+
+
+Rectangle r = new Rectangle(9, 5)
+;
+Triangle t = new Triangle(10, 8)
+;
+Figure figref; // this is OK, no object is created
+
+
+ figref = r;
+System.out.println("Area is " + figref.area())
+;
+
+
+ figref = t;
+System.out.println("Area is " + figref.area())
+;
+}
+}
+
+
+Main（）内的注释暗示，定义Figure 类型的对象不再是可能的了，因为现在它是抽象
+类。而且，所有Figure 的子类都必须重载area( )方法。为证明这点，试着创建不重载area( )
+的子类。你会收到一个编译时错误。
+
+尽管不可能创建一个Figure 类型的对象，你可以创建一个Figure 类型的引用变量。变量
+figref声明成Figure 的一个引用，意思是说它可以用来引用任何从Figure 派生的对象。刚才解
+释过的，通过超类引用变量重载方法在运行时解决。
+
+8.8 继承中使用final
+Final 关键字有三个用途。第一，它可以用来创建一个已命名常量的等价物。这个用法
+在前面的章节中已有描述。Final 的其他两个用法是应用于继承的，这两种用法都会在下面
+阐述。
+
+8.8.1 使用final 阻止重载
+尽管方法重载是Java 的一个最强大的特性，有些时候你希望防止它的发生。不接受方
+法被重载，在方法前定义final 修饰符。声明成final 的方法不能被重载。下面的程序段阐述
+
+
+156 第1 部分Java 语言
+
+了final 的用法：
+
+class A
+{
+final void meth()
+{
+System.out.println("This is a final method.")
+;
+}
+}
+
+
+class B extends A
+{
+void meth() { // ERROR! Can't override.
+System.out.println("Illegal!")
+;
+}
+}
+
+
+因为meth( ) 被声明成final ，它不能被B重载，如果你试图这样做，将会生成一个编译时
+错误。
+
+定义成final 的方法有时可以提高程序性能：编译器可以自由的内嵌调用final 方法因为
+它知道这些方法不能被子类重载。当一个小的final 函数被调用，通常Java 编译器可以通过调
+用方法的编译代码直接内嵌来备份子程序的字节码，这样减小了与方法调用有关的昂贵开
+销。内嵌仅仅是final 方法的一个可选项。通常，Java 在运行时动态的调用方法，这叫做后期
+绑定（late binding ）。然而既然final 方法不能被重载，对方法的调用可以在编译时解决，这
+叫做早期绑定（early binding ）。
+
+8.8.2 使用final 阻止继承
+有时你希望防止一个类被继承。做到这点只需在类声明前加final 。声明一个final 类含
+蓄的宣告了它的所有方法也都是final 。你可能会想到，声明一个既是abstract 的又是final 的
+类是不合法的，因为抽象类本身是不完整的，它依靠它的子类提供完整的实现。
+
+下面是一个final 类的例子：
+
+final class A
+{
+// ..
+.
+}
+
+
+// The following class is illegal.
+class B extends A { // ERROR! Can't subclass
+A
+// ..
+.
+}
+
+
+像注释暗示的，B继承A是不合法的，因为A声明成final 。
+
+8.9 Object类
+有一种由Java 定义的特殊的类Object 。所有其他的类都是Object 的子类。也就是说，
+Object 是所有其他类的超类。这意味着一个Object 类型的引用变量可以引用其他任何一个类
+的对象。同样，因为数组像类一样执行，Object 类型变量可以引用任何数组。
+
+
+第8 章继承 157
+
+Object 定义了下面的方法，意味着它们可以被用于任何对象，如表8-1 所示。
+
+表8-1 Object 类定义的方法及其用途
+
+方法用途
+Object clone( ) 创建一个和被复制的对象完全一样的新对象
+boolean equals(Object object) 判定对象是否相等
+void finalize( ) 在一个不常用的对象被使用前调用
+Class getClass( ) 获取运行时一个对象的类
+int hashCode( ) 返回调用对象有关的散列值
+void notify( ) 恢复一个等待调用对象线程的执行
+void notifyAll( ) 恢复所有等待调用对象线程的执行
+String toString( ) 返回描述对象的一个字符串
+void wait( ) 等待另一个线程的执行
+void wait(long milliseconds)
+void wait(long milliseconds,
+int nanoseconds)
+
+getClass( )，notify( )，notifyAll( ) 和wait( )方法被定义成final 。你可以重载除这些方法
+以外的其他方法。这些方法在本书的其他地方有所描述。然而，现在注意两个方法：equals( )
+和toString( ) 。equals( ) 方法比较两个对象的内容。如果对象是相等的，它返回true ，否则返
+回false。toString( ) 方法返回一个包含调用它的对象描述的字符串。而且，该方法在对象用
+println( ) 输出时自动调用。很多类重载该方法。这样做使它们生成它们创建对象类型的一个
+特殊描述。要了解更多toString( ) 信息请参看第13章。
+
+
+第9 章包和接口
+
+本章我们讲述Java 最具有革新性的两个特点：包和接口。包（package ）是类的容器，
+用来保存划分的类名空间。例如，一个包允许你创建一个名为List 的类，你可以把它保存在
+你自己的包中而不用考虑和其他地方的某个名为List 的类相冲突。包以分层方式保存并被明
+确的引入新的类定义。
+
+在前面的章节你已经了解了怎样在类中定义数据接口的方法。通过运用关键字
+interface，Java 允许你充分抽象它实现的接口。用接口，你可以定义一系列的被一个类或多
+个类执行的方法。接口自己不定义任何实现。尽管它们与抽象类相似，接口有一个特殊的
+功能：类可以实现多个接口。与之相反，类只能继承一个超类（抽象类或其他）。
+
+包和接口是Java 程序的两个基本组成。一般来说，Java 源程序可以包含下面的四个内部
+部分的任何一个（或所有）。
+
+·
+单个接口声明（可选）
+·
+任意数目的引入语句（可选）
+·
+单个公共类声明（必须）
+·
+对包来说是私有的任意数目的类（可选）
+其中只有一个——单个公共类声明——在前面的程序中被用到。本章将探究剩下的三
+个部分。
+
+9.1 包
+在前面的章节，每个例题类名从相同的名称空间获得。意思是说为避免名称冲突每个
+类都必须用惟一的名称。下面，没有管理名称空间的办法，你可能觉得不方便，因为每个
+单独的类都有描述性的名称。你还需要有确保你选用的类名是独特的且不和其他程序员选
+择的类名相冲突的方法（假想一小组程序员为用“Foobar ”作类名而争斗。或者，设想整
+个Internet 团体为谁最先为类取名为“Espresso ”而争论）。感谢上帝，Java 提供了把类名空
+间划分为更多易管理的块的机制。这种机制就是包。包既是命名机制也是可见度控制机制。
+你可以在包内定义类，而且在包外的代码不能访问该类。这使你的类相互之间有隐私，但
+不被其他世界所知。
+
+9.1.1 定义包
+创建一个包是很简单的：只要包含一个package 命令作为一个Java 源文件的第一句就可
+以了。该文件中定义的任何类将属于指定的包。package 语句定义了一个存储类的名字空间。
+如果你省略package 语句，类名被输入一个默认的没有名称的包（这是为什么在以前你不
+
+
+第9 章包和接口
+
+用担心包的问题的原因）。尽管默认包对于短的例子程序很好用，但对于实际的应用程序
+它是不适当的。多数情况，需要为自己的代码定义一个包。
+
+下面是package 声明的通用形式：
+
+package pkg;
+
+这里，pkg 是包名。例如，下面的声明创建了一个名为MyPackage 的包。
+
+package MyPackage;
+
+Java 用文件系统目录来存储包。例如，任何你声明的MyPackage 中的一部分的类的.class
+文件被存储在一个MyPackage 目录中。记住这种情况是很重要的，目录名必须和包名严格
+匹配。
+
+多个文件可以包含相同package 声明。package 声明仅仅指定了文件中定义的文件属于哪
+一个包。它不拒绝其他文件的其他方法成为相同包的一部分。多数实际的包伸展到很多文
+件。
+
+你可以创建包层次。为做到这点，只要将每个包名与它的上层包名用点号“.”分隔开
+就可以了。一个多级包的声明的通用形式如下：
+
+package pkg1[.pkg2[.pkg3]];
+
+包层次一定要在Java 开发系统的文件系统中有所反映。例如，一个由下面语句定义的
+包：
+
+package java.awt.image;
+
+需要在你的UNIX 、Windows 或Macintosh 文件系统的 java/awt/image, java\awt\image 或
+java:awt:image 中分别保存。一定要仔细选用包名。你不能在没有对保存类的目录重命名的
+情况下重命名一个包。
+
+9.1.2 理解类路径（CLASSPATH）
+在介绍运用包的例子之前，关于类路径环境变量的简单讨论是必要的。当包从访问控
+制和名称-空间-冲突中解决很多问题时，在编译和运行程序时它们导致某些古怪的难点。
+这是因为Java 编译器考虑的特定位置作为包层次的根被类路径(CLASSPATH) 控制。直到现
+在，你在同样的未命名的默认包中保存所有的类。这样做允许你仅仅通过在命令行键入类
+名编译源文件和运行Java 解释器，并得到结果。这种情况下它还会工作是因为默认的当前
+工作目录（.）通常在类路径环境变量中为Java 运行时间默认定义。然而，当有包参与时，
+事情就不这么简单。下面是原因。
+
+假设你在一个test包中创建了一个名为PackTest 的类。因为你的目录结构必须与包相匹
+配，你创建一个名为test的目录并把PackTest.java 装入该目录。然后使test 成为当前目录并
+编译PackTest.java 。这导致PackTest.class 被存放在test目录下。当你试图运行PackTest 时，java
+解释器报告一个与“不能发现PackTest 类”相似的错误消息。这是因为该类现在被保存在test
+包中。不再能简单用PackTest 来引用。必须通过列举包层次来引用该类。引用包层次时用
+逗号将包名隔开。该类现在必须叫做test.PackTest 。然而，如果你试图用test.PackTest ，你将
+
+
+第1 部分Java 语言
+
+仍然收到一个与“不能发现test/PackTest 类”相似的出错消息。
+仍然收到错误消息的原因隐藏在类路径变量中。记住，类路径设置顶层类层次。问题
+在于在当前工作目录下不存在test子目录，因为你是工作在test目录本身。
+
+在这个问题上你有两个选择：改变目录到上一级然后用java test.PackTest ，或者在类路
+径环境变量增加你的开发类层次结构的顶层。然后可以用java test.PackTest，Java 将发现正
+确的.class 文件。例如，如果你的源代码在目录C:\myjava 下，那么设置类路径为：
+
+.;C:\myjava;C:\java\classes
+
+9.1.3 一个简短的包的例子
+记住前面的讨论，试试下面简单的包：
+
+// A simple package
+package MyPack;
+
+
+class Balance
+{
+String name;
+double bal;
+
+
+Balance(String n, double b)
+{
+name = n;
+bal = b;
+
+
+}
+
+ void show()
+{
+if(bal<0)
+System.out.print("--> ")
+;
+System.out.println(name + ": $" + bal)
+;
+}
+}
+
+
+class AccountBalance
+{
+public static void main(String args[])
+{
+Balance current[] = new Balance[3]
+;
+
+
+current[0] = new Balance("K. J. Fielding", 123.23)
+;
+current[1] = new Balance("Will Tell", 157.02)
+;
+current[2] = new Balance("Tom Jackson", -12.33)
+;
+
+
+for(int i=0; i<3; i++) current[i].show()
+;
+}
+}
+
+
+称该文件名为 AccountBalance.java ，把它存放在MyPack 目录中。
+接着，编译文件。确信结果文件.class 同样在MyPack 目录中。然后用下面的命令行执
+行AccountBalance 类：
+
+java MyPack.AccountBalance
+
+记住，当你执行该命令时你必须在MyPack 的上级目录，或者把类路径环境变量设置成
+合适的值。
+
+
+第9 章包和接口
+
+如上所述，AccountBalance 现在是MyPack 包的一部分。这意味着它不能自己执行。也
+就是说你不能用下面的命令行：
+
+java AccountBalance
+
+AccountBalance 必须和它的包名一起使用。
+
+9.2 访问保护
+前面已经学习了Java 的访问控制机制的很多方面和它的访问说明符。例如，你已经知
+道一个类的private 成员仅可以被该类的其他成员访问。包增加了访问控制的另一个维度。
+如你所看到的，Java 提供很多级别的保护以使在类、子类和包中有完善的访问控制。
+
+类和包都是封装和容纳名称空间和变量及方法范围的方法。包就像盛装类和下级包的
+容器。类就像是数据和代码的容器。类是Java 的最小的抽象单元。因为类和包的相互影响，
+Java 将类成员的可见度分为四个种类：
+
+·
+相同包中的子类
+·
+相同包中的非子类
+·
+不同包中的子类
+·
+既不在相同包又不在相同子类中的类
+三个访问控制符，private 、public 和protected，提供了多种方法来产生这些种类所需访
+问的多个级别，表9-1 总结了它们之间的相互作用。
+
+表9-1 类成员访问
+
+Private 成员默认的成员 Protected 成员 Public 成员
+
+同一类中可见是是是是
+同一个包中对子类可见否是是是
+同一个包中对非子类可见否是是是
+不同包中对子类可见否否是是
+不同的包中对非子类可见否否否是
+
+Java 的访问控制机制看上去很复杂，我们可以按下面方法简化它。任何声明为public 的
+内容可以被从任何地方访问。被声明成private 的成员不能被该类外看到。如果一个成员不
+含有一个明确的访问说明，它对于子类或该包中的其他类是可见的。这是默认访问。如果
+你希望一个元素在当前包外可见，但仅仅是元素所在类的子类直接可见，把元素定义成
+protected。
+
+表9-1 仅适用于类成员。一个类只可能有两个访问级别：默认的或是公共的。如果一个
+类声明成public ，它可以被任何其他代码访问。如果该类默认访问控制符，它仅可以被相同
+包中的其他代码访问。
+
+
+第1 部分Java 语言
+
+9.2.1 一个访问的例子
+下面的例子显示了访问修饰符的所有组合。该例有两个包和五个类。记住这两个不同
+包中的类需要被存储在以它们的包p1、p2命名的目录下。
+
+第一个包定义了三个类： Protection, Derived, 和 SamePackage 。第一个类以合法的保
+护模式定义了四个int 变量。变量n声明成默认受保护型。n_pri是private 型，n_pro是protected，
+n_pub是public 的。
+
+该例中每一个后来的类试图访问该类一个实例中的变量。根据访问权限不编译的行用
+单行注释//。在每个这样的行之前都是列举该级保护将允许访问的地点的注释。
+
+第二个类，Derived 是同样包p1中Protection 类的子类。这允许Derived 访问Protection 中
+的除n_pri 以外的所有变量，因为它是private 。第三个类，SamePackage ，不是Protection 的子
+类，但是是在相同的包中，也可以访问除n_pri以外的所有变量。
+
+下面是Protection.java 文件：
+
+package p1;
+
+public class Protection
+{
+int n = 1;
+private int n_pri = 2;
+protected int n_pro = 3;
+public int n_pub = 4;
+
+
+ public Protection()
+{
+System.out.println("base constructor")
+;
+System.out.println("n = " + n)
+;
+System.out.println("n_pri = " + n_pri)
+;
+System.out.println("n_pro = " + n_pro)
+;
+System.out.println("n_pub = " + n_pub)
+;
+
+
+}
+}
+
+
+下面是Derived.java 文件：
+
+package p1;
+
+class Derived extends Protection {
+
+ Derived()
+{
+System.out.println("derived constructor")
+;
+System.out.println("n = " + n)
+;
+
+
+// class only
+// System.out.println("n_pri = " + n_pri)
+;
+
+
+System.out.println("n_pro = " + n_pro)
+;
+System.out.println("n_pub = " + n_pub)
+;
+}
+}
+
+
+下面是SamePackage.java 文件：
+
+package p1;
+        `
+    },
+    {
+        name:'第9章  包和接口',
+        cont:`
+            class SamePackage {
+
+ SamePackage()
+{
+Protection p = new Protection()
+;
+System.out.println("same package constructor")
+;
+System.out.println("n = " + p.n)
+;
+
+
+// class only
+
+// System.out.println("n_pri = " + p.n_pri)
+;
+System.out.println("n_pro = " + p.n_pro)
+;
+System.out.println("n_pub = " + p.n_pub)
+;
+
+
+}
+}
+
+
+下面是另一个包p2的源代码。p2中定义的两个类重载了另两种受访问控制影响的情况。
+第一个类Protection2 是p1.Protection 的子类。这允许访问p1.Protection 中除n_pri （因为它是
+private 的）和n之外的所有变量，n是定义成默认保护型的。记住，默认型的只能允许类中
+或包中的代码访问。最后，OtherPackage 类只访问了一个变量n_pub，它是定义成public 型的。
+
+下面是Protection2.java 文件：
+
+package p2;
+
+class Protection2 extends p1.Protection
+{
+Protection2()
+{
+System.out.println("derived other package constructor")
+;
+
+
+// class or package only
+// System.out.println("n = " + n)
+;
+
+
+// class only
+// System.out.println("n_pri = " + n_pri)
+;
+
+
+System.out.println("n_pro = " + n_pro)
+;
+System.out.println("n_pub = " + n_pub)
+;
+}
+}
+
+
+下面是OtherPackage.java 文件：
+
+package p2;
+
+class OtherPackage {
+
+ OtherPackage()
+{
+p1.Protection p = new p1.Protection()
+;
+System.out.println("other package constructor")
+;
+
+
+// class or package only
+// System.out.println("n = " + p.n)
+;
+
+
+// class only
+// System.out.println("n_pri = " + p.n_pri)
+;
+
+
+// class, subclass or package only
+// System.out.println("n_pro = " + p.n_pro)
+;
+
+
+
+第1 部分Java 语言
+
+System.out.println("n_pub = " + p.n_pub)
+;
+}
+}
+
+
+如果你希望试试这两个包，下面是两个可以用的测试文件。包p1的测试文件如下：
+
+// Demo package p1.
+package p1;
+
+
+// Instantiate the various classes in p1.
+public class Demo
+{
+
+
+public static void main(String args[])
+{
+Protection ob1 = new Protection()
+;
+Derived ob2 = new Derived()
+;
+SamePackage ob3 = new SamePackage()
+;
+
+
+}
+}
+
+
+p2的测试文件如下：
+
+// Demo package p2.
+package p2;
+// Instantiate the various classes in p2.
+public class Demo
+{
+
+
+public static void main(String args[])
+{
+Protection2 ob1 = new Protection2()
+;
+OtherPackage ob2 = new OtherPackage()
+;
+
+
+}
+}
+
+
+9.3 引入包
+包的存在是划分不同类的好的机制，了解为什么所有Java 内部的类都存在包中是很简
+单的。在未命名的默认包中是没有核心Java 类的；所有的标准类都存储在相同的包中。既
+然包中的类必须包含它们的包名才能完全有效，为每个你想用的包写一个长的逗点分离的
+包路径名是枯燥的。因为这点，Java 包含了import 语句来引入特定的类甚至是整个包。一旦
+被引入，类可以被直呼其名的引用。import 语句对于程序员是很方便的而且在技术上并不
+需要编写完整的Java 程序。如果你在程序中将要引用若干个类，那么用import 语句将会节
+省很多打字时间。
+
+在Java 源程序文件中，import 语句紧接着package 语句（如果package 语句存在），它存
+在于任何类定义之前，下面是import 声明的通用形式：
+
+import pkg1[.pkg2].(classname|*);
+
+这里，pkg1 是顶层包名，pkg2 是在外部包中的用逗点（.）隔离的下级包名。除非是文
+件系统的限制，不存在对于包层次深度的实际限制。最后，你要么指定一个清楚的类名，
+要么指定一个星号（*），该星号表明Java 编译器应该引入整个包。下面的代码段显示了所
+用的两种形式：
+
+
+第9 章包和接口
+
+import java.util.Date;
+import java.io.*
+;
+
+
+警告：星号形式可能会增加编译时间——特别是在你引入多个大包时。因为这个
+原因，明确的命名你想要用到的类而不是引入整个包是一个好的方法。然而，星
+号形式对运行时间性能和类的大小绝对没有影响。
+
+所有Java 包含的标准Java 类都存储在名为java 的包中。基本语言功能被存储在java 包中
+的java.lang 包中。通常，你必须引入你所要用到的每个包或类，但是，既然Java 在没有java.lang
+中的很多函数时是无用的，因此通过编译器为所有程序隐式引入java.lang 是有必要的。这与
+下面的在你所有程序开头的一行是一样的：
+
+import java.lang.*;
+
+如果在你用星号形式引用的两个不同包中存在具有相同类名的类，编译器将保持沉默，
+除非你试图运用其中的一个。这种情况下，你会得到一个编译时错误并且必须明确的命名
+指定包中的类。
+
+任何你用到类名的地方，你可以使用它的全名，全名包括它所有的包层次。例如，下
+面的程序使用了一个引入语句：
+
+import java.util.*
+;
+class MyDate extends Date
+{
+}
+
+
+没有import 语句的例子如下：
+
+class MyDate extends java.util.Date
+{
+}
+
+
+如表9-1 种所示，当一个包被引入，仅仅是该包中声明成public 的项目可以在引入代码
+中对非子类可用。例如，如果你希望前面显示的MyPack 包中的Balance 类在MyPack 外可以
+被独立的类运用，那么你需要声明它为public 型，并把它存在自己的文件中，如下：
+
+package MyPack;
+
+/* Now, the Balance class, its constructor, and its
+show() method are public. This means that they can
+be used by non-subclass code outside their package.
+
+
+*/
+
+public class Balance
+{
+String name;
+double bal;
+
+
+public Balance(String n, double b)
+{
+name = n;
+bal = b;
+
+
+}
+
+public void show()
+{
+if(bal<0)
+System.out.print("--> ")
+;
+System.out.println(name + ": $" + bal)
+;
+
+
+
+第1 部分Java 语言
+
+
+}
+}
+
+
+如你所见，Balance 类现在是public 。而且，它的构造函数和show( ) 方法也是public 。这
+意味着它们可以被任何类型的MyPack 包之外的代码访问。例如下面TestBalance 引入了
+MyPack ，那么它可以利用Balance 类：
+
+import MyPack.*;
+
+class TestBalance
+{
+public static void main(String args[])
+{
+
+
+/* Because Balance is public, you may use Balance
+class and call its constructor. *
+/
+Balance test = new Balance("J. J. Jaspers", 99.88)
+;
+
+
+test.show(); // you may also call show(
+)
+}
+}
+
+
+作为一个试验，从Balance 类移去public 修饰符，然后编译TestBalance ，和分析得到
+的结论一样，将会产生错误。
+
+9.4 接口(interface)
+用关键字interface ，你可以从类的实现中抽象一个类的接口。也就是说，用interface，
+你可以指定一个类必须做什么，而不是规定它如何去做。接口在语句构成上与类相似，但
+是它们缺少实例变量，而且它们定义的方法是不含方法体的。实际上，这意味着你可以定
+义不用假设它们怎样实现的接口。一旦接口被定义，任何类成员可以实现一个接口。而且，
+一个类可以实现多个接口。
+
+要实现一个接口，接口定义的类必须创建完整的一套方法。然而，每个类都可以自由
+的决定它们自己实现的细节。通过提供interface 关键字，Java 允许你充分利用多态性的“一
+个接口，多个方法”。
+
+接口是为支持运行时动态方法解决而设计的。通常，为使一个方法可以在类间调用，
+两个类都必须出现在编译时间里，以便Java 编译器可以检查以确保方法特殊是兼容的。这
+个需求导致了一个静态的不可扩展的类环境。在一个系统中不可避免会出现这类情况，函
+数在类层次中越堆越高以致该机制可以为越来越多的子类可用。接口的设计避免了这个问
+题。它们把方法或方法系列的定义从类层次中分开。因为接口是在和类不同的层次中，与
+类层次无关的类实现相同的接口是可行的。这是实现接口的真正原因所在。
+
+注意：接口增添了很多应用程序所需的功能。在一种语言例如C++中这些应用程序
+通常借助于多重继承来完成。
+
+
+第9 章包和接口
+
+9.4.1 接口定义
+接口定义很像类定义。下面是一个接口的通用形式：
+
+access interface name
+{
+return-type method-name1(parameter-list)
+;
+return-type method-name2(parameter-list)
+;
+type final-varname1 = value;
+type final-varname2 = value;
+// ..
+.
+return-type method-nameN(parameter-list)
+;
+type final-varnameN = value;
+
+
+}
+
+这里，access 要么是public ，要么就没有用修饰符。当没有访问修饰符时，则是默认访
+问范围，而接口是包中定义的惟一的可以用于其他成员的东西。当它声明为public 时，则接
+口可以被任何代码使用。name 是接口名，它可以是任何合法的标识符。注意定义的方法没
+有方法体。它们以参数列表后面的分号作为结束。它们本质上是抽象方法；在接口中指定
+的方法没有默认的实现。每个包含接口的类必需实现所有的方法。
+
+接口声明中可以声明变量。它们一般是final 和static型的，意思是它们的值不能通过实
+现类而改变。它们还必须以常量值初始化。如果接口本身定义成public ，所有方法和变量
+都是public 的。
+
+下面是一个接口定义的例子。它声明了一个简单的接口，该接口包含一个带单个整型
+参数的callback( )方法。
+
+interface Callback
+{
+void callback(int param)
+;
+}
+
+
+9.4.2 实现接口
+一旦接口被定义，一个或多个类可以实现该接口。为实现一个接口，在类定义中包括
+implements 子句，然后创建接口定义的方法。一个包括implements 子句的类的一般形式如
+下：
+
+access class classname [extends superclass]
+[implements interface [,interface...]] {
+// class-body}
+
+这里，access 要么是public 的，要么是没有修饰符的。如果一个类实现多个接口，这些
+接口被逗号分隔。如果一个类实现两个声明了同样方法的接口，那么相同的方法将被其中
+任一个接口客户使用。实现接口的方法必须声明成public 。而且，实现方法的类型必须严格
+与接口定义中指定的类型相匹配。
+
+下面是一个小的实现Callback 接口的例子程序：
+
+class Client implements Callback
+{
+// Implement Callback's interface
+public void callback(int p)
+{
+
+
+
+第1 部分Java 语言
+
+System.out.println("callback called with " + p)
+;
+}
+}
+
+
+注意callback( )用public 访问修饰符声明。
+
+注意：当实现一个接口方法时，它必须声明成public 。
+
+类在实现接口时定义它自己的附加的成员，既是允许的，也是常见的。例如，下面的
+Client 版本实现了callback( )方法，并且增加了nonIfaceMeth( ) 方法。
+
+class Client implements Callback
+{
+// Implement Callback’s interface
+public void callback(int p)
+{
+
+
+System.out.println(“callback called with “ + p)
+;
+}
+
+
+ void nonIfaceMeth()
+{
+System.out.println(“Classes that implement interfaces “
++
+“may also define other members, too.”)
+;
+}
+}
+
+
+通过接口引用实现接口
+
+你可以把变量定义成使用接口的对象引用而不是类的类型。任何实现了所声明接口的
+类的实例都可以被这样的一个变量引用。当你通过这些引用调用方法时，在实际引用接口
+的实例的基础上，方法被正确调用。这是接口的最显著特性之一。被执行的方法在运行时
+动态操作，允许在调用方法代码后创建类。调用代码在完全不知“调用者”的情况下可以
+通过接口来调度。这个过程和第8章描述的用超类引用来访问子类对象很相似。
+
+警告：因为Java 中在运行时动态查询方法与通常的方法调用相比会有一个非常庞
+大的花费，所以在对性能要求高的代码中不应该随意的使用接口。
+
+下面的例子通过接口引用变量调用callback( )方法：
+
+class TestIface {
+
+public static void main(String args[])
+{
+Callback c = new Client()
+;
+c.callback(42)
+;
+
+
+}
+}
+
+
+该程序的输出如下：
+
+callback called with 42
+
+注意变量c被定义成接口类型Callback ，而且被一个Client 实例赋值。尽管c可以用来访
+问Callback （）方法，它不能访问Client 类中的任何其他成员。一个接口引用变量仅仅知道
+被它的接口定义声明的方法。因此，c不能用来访问nonIfaceMeth( ) ，因为它是被Client 定义
+的，而不是由Callback 定义。
+
+
+第9 章包和接口
+
+前面的例子机械的显示了一个接口引用变量怎样访问一个实现对象，它没有说明这样
+的引用的多态功能。为演示这个用途，首先创建Callback 的第二个实现，如下：
+
+// Another implementation of Callback.
+
+class AnotherClient implements Callback
+{
+// Implement Callback's interface
+public void callback(int p)
+{
+
+
+ System.out.println("Another version of callback")
+;
+System.out.println("p squared is " + (p*p))
+;
+}
+}
+
+
+现在，试试下面的类：
+
+class TestIface2 {
+
+public static void main(String args[])
+{
+Callback c = new Client()
+;
+AnotherClient ob = new AnotherClient()
+;
+
+
+c.callback(42);
+
+c = ob; // c now refers to AnotherClient object
+c.callback(42)
+;
+}
+}
+
+
+程序输出如下：
+
+callback called with 42
+Another version of callback
+p squared is 1764
+
+
+如你所见，被调用的callback( ) 的形式由在运行时c引用的对象类型决定。这是一个非
+常简单的例子，下面你将会看到另一个例子，它更实用。
+
+局部实现
+
+如果一个类包含一个接口但是不完全实现接口定义的方法，那么该类必须定义成
+abstract型。例如：
+
+abstract class Incomplete implements Callback
+{
+int a, b;
+void show()
+{
+
+
+System.out.println(a + " " + b)
+;
+}
+// ..
+.
+
+
+}
+
+这里，类Incomplete 没有实现callback( )方法，必须定义成抽象类。任何继承Incomplete
+的类都必须实现callback( )方法或者它自己定义成abstract 类。
+
+
+第1 部分Java 语言
+
+9.4.3 应用接口
+为理解接口的功能，让我们看一个更实际的例子。我们曾开发过一个名为Stack 的类，
+该类实现了一个简单的固定大小的堆栈。然而，有很多方法可以实现堆栈。例如，堆栈的
+大小可以固定也可以不固定。堆栈还可以保存在数组、链表和二进制树中等。无论堆栈怎
+样实现，堆栈的接口保持不变。也就是说，push( ) 和pop( )方法定义了独立实现细节的堆栈
+的接口。因为堆栈的接口与它的实现是分离的，很容易定义堆栈接口，而不用管每个定义
+实现细节。让我们看下面的两个例子。
+
+首先，下面定义了一个整数堆栈接口，把它保存在一个IntStack.java 文件中。该接口将
+被两个堆栈实现使用。
+
+// Define an integer stack interface.
+
+interface IntStack
+{
+void push(int item); // store an item
+int pop(); // retrieve an item
+
+
+}
+
+下面的程序创建了一个名为FixedStack 的类，该类实现一个固定长度的整数堆栈：
+
+// An implementation of IntStack that uses fixed storage.
+
+class FixedStack implements IntStack
+{
+private int stck[]
+;
+private int tos;
+
+
+// allocate and initialize stack
+
+ FixedStack(int size)
+{
+stck = new int[size]
+;
+tos = -1;
+
+
+}
+
+// Push an item onto the stack
+public void push(int item)
+{
+if(tos==stck.length-1) // use length member
+System.out.println("Stack is full.")
+;
+else
+
+
+ stck[++tos] = item;
+}
+// Pop an item from the stack
+public int pop()
+{
+
+
+ if(tos < 0)
+{
+System.out.println("Stack underflow.")
+;
+return 0;
+
+
+}
+else
+return stck[tos--]
+;
+}
+}
+
+
+class IFTest {
+
+public static void main(String args[])
+{
+FixedStack mystack1 = new FixedStack(5)
+;
+FixedStack mystack2 = new FixedStack(8)
+;
+
+
+
+第9 章包和接口
+
+// push some numbers onto the stack
+for(int i=0; i<5; i++) mystack1.push(i)
+;
+for(int i=0; i<8; i++) mystack2.push(i)
+;
+
+
+// pop those numbers off the stack
+System.out.println("Stack in mystack1:")
+;
+for(int i=0; i<5; i++
+)
+
+
+ System.out.println(mystack1.pop());
+
+ System.out.println("Stack in mystack2:")
+;
+for(int i=0; i<8; i++
+)
+System.out.println(mystack2.pop())
+;
+}
+}
+
+
+下面是IntStack 的另一个实现。通过运用相同的接口定义IntStack 创建了一个动态堆
+栈。这种实现中，每一个栈都以一个初始长度建造。如果初始化长度被超出，那么堆栈的
+大小将增加。每一次需要更多的空间，堆栈的大小成倍增长。
+
+// Implement a "growable" stack.
+
+class DynStack implements IntStack
+{
+private int stck[]
+;
+private int tos;
+// allocate and initialize stack
+DynStack(int size)
+{
+
+
+ stck = new int[size]
+;
+tos = -1;
+}
+
+
+// Push an item onto the stack
+
+public void push(int item)
+{
+// if stack is full, allocate a larger stack
+if(tos==stck.length-1)
+{
+
+
+int temp[] = new int[stck.length * 2]; // double size
+for(int i=0; i<stck.length; i++) temp[i] = stck[i]
+;
+stck = temp;
+stck[++tos] = item;
+
+
+}
+else
+stck[++tos] = item;
+}
+
+
+// Pop an item from the stack
+public int pop()
+{
+
+
+ if(tos < 0)
+{
+System.out.println("Stack underflow.")
+;
+return 0;
+
+
+}
+else
+return stck[tos--]
+;
+}
+}
+
+
+
+第1 部分Java 语言
+
+class IFTest2 {
+
+public static void main(String args[])
+{
+DynStack mystack1 = new DynStack(5)
+;
+DynStack mystack2 = new DynStack(8)
+;
+
+
+// these loops cause each stack to grow
+for(int i=0; i<12; i++) mystack1.push(i)
+;
+for(int i=0; i<20; i++) mystack2.push(i)
+;
+
+
+ System.out.println("Stack in mystack1:")
+;
+for(int i=0; i<12; i++
+)
+
+
+ System.out.println(mystack1.pop())
+;
+System.out.println("Stack in mystack2:")
+;
+for(int i=0; i<20; i++
+)
+
+
+ System.out.println(mystack2.pop())
+;
+}
+}
+
+
+下面的类运用了FixedStack 和DynStack 实现。它通过一个接口引用完成。意思是说对
+push( ) 和 pop( ) 的调用在运行时解决而不是在编译时解决。
+
+/* Create an interface variable and
+
+access stacks through it.
+*
+/
+class IFTest3
+{
+
+
+public static void main(String args[]) {
+IntStack mystack; // create an interface reference variable
+DynStack ds = new DynStack(5);
+FixedStack fs = new FixedStack(8);
+
+mystack = ds; // load dynamic stack
+// push some numbers onto the stack
+for(int i=0; i<12; i++) mystack.push(i)
+;
+
+
+mystack = fs; // load fixed stack
+for(int i=0; i<8; i++) mystack.push(i)
+;
+
+
+ mystack = ds;
+System.out.println("Values in dynamic stack:")
+;
+for(int i=0; i<12; i++
+)
+
+
+ System.out.println(mystack.pop());
+
+ mystack = fs;
+System.out.println("Values in fixed stack:")
+;
+for(int i=0; i<8; i++
+)
+
+
+ System.out.println(mystack.pop())
+;
+}
+}
+
+
+该程序中，mystack 是IntStack 接口的一个引用。因此，当它引用ds时，它使用DynStack
+实现所定义的push( ) 和pop( ) 方法。当它引用fs时，它使用FixedStack 定义的push( ) 和pop( )
+方法。已经解释过，这些决定是在运行时做出的。通过接口引用变量获得接口的多重实现
+
+
+第9 章包和接口
+
+是Java 完成运行时多态的最有力的方法。
+
+9.4.4 接口中的变量
+你可以使用接口来引入多个类的共享常量，这样做只需要简单的声明包含变量初始化
+想要的值的接口就可以了。如果你的一个类中包含那个接口（就是说当你实现了接口时），
+所有的这些变量名都将作为常量看待。这与在C/C++ 中用头文件来创建大量的 #defined 常
+量或const 声明相似。如果接口不包含方法，那么任何包含这样接口的类实际并不实现什么。
+这就像类在类名字空间引入这些常量作final 变量。下面的例子运用了这种技术来实现一个
+自动的“作决策者”：
+
+import java.util.Random;
+
+interface SharedConstants
+{
+int NO = 0;
+int YES = 1;
+int MAYBE = 2;
+int LATER = 3;
+int SOON = 4;
+int NEVER = 5;
+
+
+}
+
+class Question implements SharedConstants
+{
+Random rand = new Random()
+;
+int ask()
+{
+
+
+int prob = (int) (100 * rand.nextDouble())
+;
+if (prob < 30)
+return NO; // 30%
+else if (prob < 60)
+return YES; // 30%
+else if (prob < 75)
+return LATER; // 15%
+else if (prob < 98)
+return SOON; // 13%
+else
+return NEVER; // 2%
+}
+}
+
+
+class AskMe implements SharedConstants
+{
+static void answer(int result)
+{
+switch(result)
+{
+
+
+ case NO:
+System.out.println("No")
+;
+break;
+
+
+ case YES:
+System.out.println("Yes")
+;
+break;
+
+
+ case MAYBE:
+System.out.println("Maybe")
+;
+break;
+
+
+ case LATER:
+
+
+第1 部分Java 语言
+
+ System.out.println("Later")
+;
+break;
+
+
+ case SOON:
+System.out.println("Soon")
+;
+break;
+
+
+ case NEVER:
+System.out.println("Never")
+;
+break;
+
+
+}
+}
+
+
+public static void main(String args[])
+{
+Question q = new Question()
+;
+answer(q.ask())
+;
+answer(q.ask())
+;
+answer(q.ask())
+;
+answer(q.ask())
+;
+
+
+}
+}
+
+
+注意该程序利用了Java 的一个标准类：Random ，该类提供伪随机数。它包含若干个方
+法。通过这些方法你可以获得你程序所需形式的随机数。该例中，用到了nextDouble( ) 方法。
+它返回0.0到1.0之间的随机数。
+
+该例子程序中，定义了两个类Question 和AskMe 。这两个类都实现了SharedConstants 接
+口。该接口中定义了NO、YES、MAYBE 、SOON 、LATER 和 NEVER 。每个类中，代码
+就像自己定义或继承了它们一样直接引用了这些变量。下面是该程序的输出示例。注意每
+次运行结果不同。
+
+Later
+Soon
+No
+Yes
+
+
+9.4.5 接口可以扩展
+接口可以通过运用关键字extends 被其他接口继承。语法与继承类是一样的。当一个类
+实现一个继承了另一个接口的接口时，它必须实现接口继承链表中定义的所有方法。下面
+是一个例子：
+
+// One interface can extend another.
+
+interface A
+{
+void meth1()
+;
+void meth2()
+;
+
+
+}
+
+// B now includes meth1() and meth2() -- it adds meth3()
+.
+interface B extends A
+{
+void meth3()
+;
+}
+
+
+// This class must implement all of A and
+B
+class MyClass implements B
+{
+
+
+
+第9 章包和接口
+
+public void meth1()
+{
+System.out.println("Implement meth1().")
+;
+}
+
+
+public void meth2()
+{
+System.out.println("Implement meth2().")
+;
+}
+
+
+public void meth3()
+{
+System.out.println("Implement meth3().")
+;
+}
+
+
+}
+
+class IFExtend
+{
+public static void main(String arg[])
+{
+MyClass ob = new MyClass()
+;
+
+
+ob.meth1()
+;
+ob.meth2()
+;
+ob.meth3()
+;
+
+
+}
+}
+
+
+作为一个实验你也许希望移走MyClass 中meth1( ) 的实现。这将导致编译时错误。前面
+讲过，任何实现接口的类必须实现该接口定义的所有方法，包括从其他接口继承的任何方
+法。
+
+尽管我们在本书中包括的例子没有很频繁的用到包和接口，这两个工具是Java 编程环
+境中的重要部分。实质上所有用Java 编写的实际的程序和小应用程序都被包含在包中。一
+个数字也可能实现接口。因此，游刃有余的运用这些工具是非常有用的。
+
+
+第10 章异常处理
+
+本章介绍Java 的异常处理机制。异常(exception) 是在运行时代码序列中产生一种异常情
+况。换句话说，异常是一个运行时错误。在不支持异常处理的计算机语言中，错误必须被
+手工的检查和处理——典型的是通过错误代码的运用等等。这种方法既很笨拙也很麻烦。
+Java 的异常处理避免了这些问题，而且在处理过程中，把运行时错误的管理带到了面向对
+象的世界。
+
+10.1 异常处理基础
+Java 异常是一个描述在代码段中发生的异常（也就是出错）情况的对象。当异常情况
+发生，一个代表该异常的对象被创建并且在导致该错误的方法中被引发（throw ）。该方法
+可以选择自己处理异常或传递该异常。两种情况下，该异常被捕获（caught ）并处理。异
+常可能是由Java 运行时系统产生，或者是由你的手工代码产生。被Java 引发的异常与违反语
+言规范或超出Java 执行环境限制的基本错误有关。手工编码产生的异常基本上用于报告方
+法调用程序的出错状况。
+
+Java 异常处理通过5个关键字控制：try 、catch、throw 、throws 和 finally 。下面讲述它
+们如何工作的。程序声明了你想要的异常监控包含在一个try块中。如果在try块中发生异常，
+它被抛出。你的代码可以捕捉这个异常（用catch ）并且用某种合理的方法处理该异常。系
+统产生的异常被Java 运行时系统自动引发。手动引发一个异常，用关键字throw 。任何被引
+发方法的异常都必须通过throws 子句定义。任何在方法返回前绝对被执行的代码被放置在
+finally 块中。
+
+下面是一个异常处理块的通常形式：
+
+try {
+
+ // block of code to monitor for errors
+
+}
+
+catch (ExceptionType1 exOb) {
+
+ // exception handler for ExceptionType1
+
+}
+
+catch (ExceptionType2 exOb) {
+
+ // exception handler for ExceptionType2
+
+}
+
+// ...
+
+finally {
+
+ // block of code to be executed before try block ends
+
+}
+
+这里，ExceptionType 是发生异常的类型。下面将介绍怎样应用这个框架。
+
+
+第10 章异常处理
+
+10.2 异常类型
+所有异常类型都是内置类Throwable 的子类。因此，Throwable 在异常类层次结构的顶
+层。紧接着Throwable 下面的是两个把异常分成两个不同分支的子类。一个分支是Exception 。
+该类用于用户程序可能捕捉的异常情况。它也是你可以用来创建你自己用户异常类型子类
+的类。在Exception 分支中有一个重要子类RuntimeException 。该类型的异常自动为你所编写
+的程序定义并且包括被零除和非法数组索引这样的错误。
+
+另一类分支由Error 作为顶层，Error 定义了在通常环境下不希望被程序捕获的异常。
+Error 类型的异常用于Java 运行时系统来显示与运行时系统本身有关的错误。堆栈溢出是这
+种错误的一例。本章将不讨论关于Error 类型的异常处理，因为它们通常是灾难性的致命错
+误，不是你的程序可以控制的。
+
+10.3 未被捕获的异常
+在你学习在程序中处理异常之前，看一看如果你不处理它们会有什么情况发生是很有
+好处的。下面的小程序包括一个故意导致被零除错误的表达式。
+
+class Exc0 {
+
+public static void main(String args[]) {
+
+ int d = 0;
+
+int a = 42 / d;
+
+}
+
+}
+
+当Java 运行时系统检查到被零除的情况，它构造一个新的异常对象然后引发该异常。
+这导致Exc0 的执行停止，因为一旦一个异常被引发，它必须被一个异常处理程序捕获并且
+被立即处理。该例中，我们没有提供任何我们自己的异常处理程序，所以异常被Java 运行
+时系统的默认处理程序捕获。任何不是被你程序捕获的异常最终都会被该默认处理程序处
+理。默认处理程序显示一个描述异常的字符串，打印异常发生处的堆栈轨迹并且终止程序。
+
+下面是由标准javaJDK 运行时解释器执行该程序所产生的输出：
+
+java.lang.ArithmeticException: / by zero
+at Exc0.main(Exc0.java:4)
+
+
+注意，类名Exc0，方法名main ，文件名Exc0.java 和行数4是怎样被包括在一个简单的堆
+栈使用轨迹中的。还有，注意引发的异常类型是Exception 的一个名为ArithmeticException
+的子类，该子类更明确的描述了何种类型的错误方法。本章后面部分将讨论，Java 提供多
+个内置的与可能产生的不同种类运行时错误相匹配的异常类型。
+
+堆栈轨迹将显示导致错误产生的方法调用序列。例如，下面是前面程序的另一个版本，
+它介绍了相同的错误，但是错误是在main( ) 方法之外的另一个方法中产生的：
+
+class Exc1 {
+
+
+178 第1 部分Java 语言
+
+static void subroutine()
+{
+int d = 0;
+int a = 10 / d;
+
+
+}
+public static void main(String args[])
+{
+Exc1.subroutine()
+;
+}
+}
+
+
+默认异常处理器的堆栈轨迹结果表明了整个调用栈是怎样显示的：
+
+java.lang.ArithmeticException: / by zero
+at Exc1.subroutine(Exc1.java:4)
+at Exc1.main(Exc1.java:7)
+
+
+如你所见，栈底是main 的第7行，该行调用了subroutine( ) 方法。该方法在第4行导致了
+异常。调用堆栈对于调试来说是很重要的，因为它查明了导致错误的精确的步骤。
+
+10.4 使用try和catch
+尽管由Java 运行时系统提供的默认异常处理程序对于调试是很有用的，但通常你希望
+自己处理异常。这样做有两个好处。第一，它允许你修正错误。第二，它防止程序自动终
+止。大多数用户对于在程序终止运行和在无论何时错误发生都会打印堆栈轨迹感到很烦恼
+（至少可以这么说）。幸运的是，这很容易避免。
+
+为防止和处理一个运行时错误，只需要把你所要监控的代码放进一个try 块就可以了。
+紧跟着try块的，包括一个说明你希望捕获的错误类型的catch子句。完成这个任务很简单，
+下面的程序包含一个处理因为被零除而产生的ArithmeticException 异常的try块和一个catch
+子句。
+
+class Exc2
+{
+public static void main(String args[])
+{
+int d, a;
+
+
+try { // monitor a block of code.
+d = 0;
+a = 42 / d;
+System.out.println("This will not be printed.")
+;
+
+
+} catch (ArithmeticException e) { // catch divide-by-zero error
+
+ System.out.println("Division by zero.")
+;
+}
+System.out.println("After catch statement.")
+;
+
+
+}
+}
+
+
+该程序输出如下：
+
+Division by zero.
+After catch statement.
+
+
+注意在try块中的对println( ) 的调用是永远不会执行的。一旦异常被引发，程序控制由try
+        `
+    },
+    {
+        name:'第10章  异常处理',
+        cont:`
+            块转到catch块。执行永远不会从catch块“返回”到try块。因此，“This will not be printed 。”
+将不会被显示。一旦执行了catch语句，程序控制从整个try/catch 机制的下面一行继续。
+
+一个try和它的catch语句形成了一个单元。catch 子句的范围限制于try语句前面所定义的
+语句。一个catch语句不能捕获另一个try声明所引发的异常（除非是嵌套的try语句情况）。
+被try 保护的语句声明必须在一个大括号之内（也就是说，它们必须在一个块中）。你不能
+单独使用try。
+
+构造catch子句的目的是解决异常情况并且像错误没有发生一样继续运行。例如，下面
+的程序中，每一个for 循环的反复得到两个随机整数。这两个整数分别被对方除，结果用来
+除12345 。最后的结果存在a中。如果一个除法操作导致被零除错误，它将被捕获，a的值设
+为零，程序继续运行。
+
+// Handle an exception and move on.
+import java.util.Random;
+
+
+class HandleError {
+
+public static void main(String args[])
+{
+int a=0, b=0, c=0;
+Random r = new Random()
+;
+
+
+for(int i=0; i<32000; i++) {
+
+ try
+{
+b = r.nextInt()
+;
+c = r.nextInt()
+;
+a = 12345 / (b/c)
+;
+
+
+ } catch (ArithmeticException e)
+{
+System.out.println("Division by zero.")
+;
+a = 0; // set a to zero and continue
+
+
+}
+System.out.println("a: " + a)
+;
+}
+}
+}
+
+
+10.4.1 显示一个异常的描述
+Throwable 重载toString( ) 方法（由Object 定义），所以它返回一个包含异常描述的字符
+串。你可以通过在println( ) 中传给异常一个参数来显示该异常的描述。例如，前面程序的
+catch块可以被重写成
+
+catch (ArithmeticException e)
+{
+System.out.println("Exception: " + e)
+;
+a = 0; // set a to zero and continue
+
+
+}
+
+当这个版本代替原程序中的版本，程序在标准javaJDK 解释器下运行，每一个被零除错
+误显示下面的消息：
+
+Exception: java.lang.ArithmeticException: / by zero
+
+尽管在上下文中没有特殊的值，显示一个异常描述的能力在其他情况下是很有价值的
+
+
+180 第1 部分Java 语言
+
+——特别是当你对异常进行实验和调试时。
+
+10.5 使用多重catch 语句
+某些情况，由单个代码段可能引起多个异常。处理这种情况，你可以定义两个或更多
+的catch子句，每个子句捕获一种类型的异常。当异常被引发时，每一个catch子句被依次检
+查，第一个匹配异常类型的子句执行。当一个catch语句执行以后，其他的子句被旁路，执
+行从try/catch 块以后的代码开始继续。下面的例子设计了两种不同的异常类型：
+
+// Demonstrate multiple catch statements.
+class MultiCatch
+{
+public static void main(String args[])
+{
+
+
+ try
+{
+int a = args.length;
+System.out.println("a = " + a)
+;
+int b = 42 / a;
+int c[] = { 1 }
+;
+c[42] = 99;
+
+
+ } catch(ArithmeticException e)
+{
+System.out.println("Divide by 0: " + e)
+;
+} catch(ArrayIndexOutOfBoundsException e)
+{
+
+
+System.out.println("Array index oob: " + e)
+;
+}
+System.out.println("After try/catch blocks.")
+;
+
+
+}
+}
+
+
+该程序在没有命令行参数的起始条件下运行导致被零除异常，因为a为0。如果你提供
+一个命令行参数，它将幸免于难，把a设成大于零的数值。但是它将导致ArrayIndexOutOf
+BoundsException 异常，因为整型数组c的长度为1，而程序试图给c[42]赋值。
+
+下面是运行在两种不同情况下程序的输出：
+
+C:\>java MultiCatch
+a =
+0
+Divide by 0: java.lang.ArithmeticException: / by zero
+After try/catch blocks.
+C:\>java MultiCatch TestArg
+a =
+1
+Array index oob: java.lang.ArrayIndexOutOfBoundsException
+After try/catch blocks.
+
+
+当你用多catch语句时，记住异常子类必须在它们任何父类之前使用是很重要的。这是
+因为运用父类的catch语句将捕获该类型及其所有子类类型的异常。这样，如果子类在父类
+后面，子类将永远不会到达。而且，Java 中不能到达的代码是一个错误。例如，考虑下面
+的程序：
+
+/* This program contains an error.
+
+A subclass must come before its superclass in
+
+
+第10 章异常处理
+
+a series of catch statements. If not,
+unreachable code will be created and
+a
+compile-time error will result.
+
+
+*
+/
+class SuperSubCatch
+{
+public static void main(String args[])
+{
+
+
+ try
+{
+int a = 0;
+int b = 42 / a;
+
+
+ } catch(Exception e) {
+
+ System.out.println("Generic Exception catch.")
+;
+}
+/* This catch is never reached because
+
+
+ArithmeticException is a subclass of Exception. *
+/
+catch(ArithmeticException e) { // ERROR - unreachable
+System.out.println("This is never reached.")
+;
+}
+}
+}
+
+
+如果你试着编译该程序，你会收到一个错误消息，该错误消息说明第二个catch 语句不
+会到达，因为该异常已经被捕获。因为ArithmeticException 是Exception的子类，第一个catch
+语句将处理所有的面向Exception 的错误，包括ArithmeticException 。这意味着第二个catch
+语句永远不会执行。为修改程序，颠倒两个catch语句的次序。
+
+10.6 嵌套try语句
+Try 语句可以被嵌套。也就是说，一个try语句可以在另一个try块内部。每次进入try语
+句，异常的前后关系都会被推入堆栈。如果一个内部的try语句不含特殊异常的catch处理程
+序，堆栈将弹出，下一个try语句的catch处理程序将检查是否与之匹配。这个过程将继续直
+到一个catch语句匹配成功，或者是直到所有的嵌套try 语句被检查耗尽。如果没有catch语句
+匹配，Java 的运行时系统将处理这个异常。下面是运用嵌套try语句的一个例子：
+
+// An example of nested try statements.
+class NestTry
+{
+public static void main(String args[])
+{
+try
+{
+int a = args.length;
+
+
+/* If no command-line args are present,
+the following statement will generate
+a divide-by-zero exception. *
+/
+
+
+int b = 42 / a;
+
+ System.out.println("a = " + a);
+
+try { // nested try block
+
+
+182 第1 部分Java 语言
+
+/* If one command-line arg is used,
+
+ then a divide-by-zero exception
+
+will be generated by the following code. */
+
+if(a==1) a = a/(a-a); // division by zero
+
+/* If two command-line args are used,
+
+ then generate an out-of-bounds exception. */
+
+ if(a==2) {
+
+ int c[] = { 1 };
+
+c[42] = 99; // generate an out-of-bounds exception
+
+}
+
+ } catch(ArrayIndexOutOfBoundsException e) {
+
+ System.out.println("Array index out-of-bounds: " + e);
+
+}
+
+ } catch(ArithmeticException e)
+{
+System.out.println("Divide by 0: " + e)
+;
+}
+}
+}
+
+
+如你所见，该程序在一个try 块中嵌套了另一个try块。程序工作如下：当你在没有命令
+行参数的情况下执行该程序，外面的try块将产生一个被零除的异常。程序在有一个命令行
+参数条件下执行，由嵌套的try 块产生一个被零除的错误。因为内部的块不匹配这个异常，
+它将把异常传给外部的try块，在那里异常被处理。如果你在具有两个命令行参数的条件下
+执行该程序，由内部try块产生一个数组边界异常。下面的结果阐述了每一种情况：
+
+C:\>java NestTryDivide by 0: java.lang.ArithmeticException: / by zeroC:\>java NestTry Onea = 1
+Divide by 0: java.lang.ArithmeticException: / by zeroC:\>java NestTry One Twoa = 2
+Array index out-of-bounds: java.lang.ArrayIndexOutOfBoundsException
+
+当有方法调用时，try 语句的嵌套可以很隐蔽的发生。例如，你可以把对方法的调用放
+在一个try块中。在该方法内部，有另一个try语句。这种情况下，方法内部的try 仍然是嵌套
+在外部调用该方法的try块中的。下面是前面例子的修改，嵌套的try块移到了方法nesttry( )
+的内部：
+
+/* Try statements can be implicitly nested via
+calls to methods. *
+/
+class MethNestTry
+{
+static void nesttry(int a)
+{
+try { // nested try block
+/* If one command-line arg is used,
+
+
+
+第10 章异常处理
+
+ then a divide-by-zero exception
+will be generated by the following code. *
+/
+if(a==1) a = a/(a-a); // division by zero
+
+
+/* If two command-line args are used,
+then generate an out-of-bounds exception. *
+/
+
+
+ if(a==2) {
+int c[] = { 1 };
+c[42] = 99; // generate an out-of-bounds exception
+
+}
+} catch(ArrayIndexOutOfBoundsException e)
+{
+System.out.println("Array index out-of-bounds: " + e)
+;
+}
+}
+
+
+public static void main(String args[])
+{
+try
+{
+int a = args.length;
+
+
+/* If no command-line args are present,
+the following statement will generate
+a divide-by-zero exception. *
+/
+
+
+int b = 42 / a;
+System.out.println("a = " + a)
+;
+
+
+nesttry(a)
+;
+} catch(ArithmeticException e)
+{
+System.out.println("Divide by 0: " + e)
+;
+}
+}
+}
+
+
+该程序的输出与前面的例子相同。
+
+10.7 引发（throw）
+到目前为止，你只是获取了被Java 运行时系统引发的异常。然而，程序可以用throw 语
+句引发明确的异常。Throw 语句的通常形式如下：
+
+throw ThrowableInstance;
+
+这里，ThrowableInstance 一定是Throwable 类类型或Throwable 子类类型的一个对象。简
+单类型，例如int 或char ，以及非Throwable 类，例如String 或Object ，不能用作异常。有两种
+可以获得Throwable 对象的方法：在catch子句中使用参数或者用new操作符创建。
+
+
+184 第1 部分Java 语言
+
+程序执行在throw 语句之后立即停止；后面的任何语句不被执行。最紧紧包围的try 块用
+来检查它是否含有一个与异常类型匹配的catch语句。如果发现了匹配的块，控制转向该语
+句；如果没有发现，次包围的try块来检查，以此类推。如果没有发现匹配的catch 块，默认
+异常处理程序中断程序的执行并且打印堆栈轨迹。
+
+下面是一个创建并引发异常的例子程序，与异常匹配的处理程序再把它引发给外层的
+处理程序。
+
+// Demonstrate throw.
+class ThrowDemo
+{
+static void demoproc()
+{
+try
+{
+throw new NullPointerException("demo")
+;
+
+
+ } catch(NullPointerException e)
+{
+System.out.println("Caught inside demoproc.")
+;
+throw e; // rethrow the exception
+
+
+}
+}
+
+
+public static void main(String args[])
+{
+try
+{
+demoproc()
+;
+} catch(NullPointerException e)
+{
+System.out.println("Recaught: " + e)
+;
+}
+}
+}
+
+
+该程序有两个机会处理相同的错误。首先，main （）设立了一个异常关系然后调用
+demoproc( ) 。demoproc( ) 方法然后设立了另一个异常处理关系并且立即引发一个新的
+NullPointerException 实例，NullPointerException 在下一行被捕获。异常于是被再次引发。下
+面是输出结果：
+
+Caught inside demoproc.
+Recaught: java.lang.NullPointerException: demo
+
+
+该程序还阐述了怎样创建Java 的标准异常对象，特别注意下面这一行：
+
+throw new NullPointerException("demo");
+
+这里，new 用来构造一个NullPointerException 实例。所有的Java 内置的运行时异常有两
+个构造函数：一个没有参数，一个带有一个字符串参数。当用到第二种形式时，参数指定
+描述异常的字符串。如果对象用作 print( ) 或println( ) 的参数时，该字符串被显示。这同样
+可以通过调用getMessage( ) 来实现，getMessage( ) 是由Throwable 定义的。
+
+10.8 throws
+如果一个方法可以导致一个异常但不处理它，它必须指定这种行为以使方法的调用者
+可以保护它们自己而不发生异常。做到这点你可以在方法声明中包含一个throws 子句。一
+
+
+第10 章异常处理
+
+个throws 子句列举了一个方法可能引发的所有异常类型。这对于除Error 或
+RuntimeException 及它们子类以外类型的所有异常是必要的。一个方法可以引发的所有其他
+类型的异常必须在throws 子句中声明。如果不这样做，将会导致编译错误。
+
+下面是包含一个throws 子句的方法声明的通用形式：
+
+type method-name(parameter-list) throws exception-list
+{
+// body of method
+}
+
+
+这里，exception-list 是该方法可以引发的以有逗号分割的异常列表。
+下面是一个不正确的例子。该例试图引发一个它不能捕获的异常。因为程序没有指定
+一个throws 子句来声明这一事实，程序将不会编译。
+
+// This program contains an error and will not compile.
+class ThrowsDemo
+{
+
+
+static void throwOne()
+{
+System.out.println("Inside throwOne.")
+;
+throw new IllegalAccessException("demo")
+;
+
+
+}
+public static void main(String args[])
+{
+throwOne()
+;
+}
+}
+
+
+为编译该程序，需要改变两个地方。第一，需要声明throwOne( ) 引发IllegalAccess
+Exception异常。第二，main( ) 必须定义一个try/catch 语句来捕获该异常。
+正确的例子如下:
+
+// This is now correct.
+class ThrowsDemo
+{
+
+
+static void throwOne() throws IllegalAccessException
+{
+System.out.println("Inside throwOne.")
+;
+throw new IllegalAccessException("demo")
+;
+
+
+}
+public static void main(String args[])
+{
+try
+{
+throwOne()
+;
+} catch (IllegalAccessException e)
+{
+System.out.println("Caught " + e)
+;
+}
+}
+}
+
+
+下面是例题的输出结果：
+
+inside throwOne
+caught java.lang.IllegalAccessException: demo
+
+
+
+186 第1 部分Java 语言
+
+10.9 finally
+当异常被引发，通常方法的执行将作一个陡峭的非线性的转向。依赖于方法是怎样编
+码的，异常甚至可以导致方法过早返回。这在一些方法中是一个问题。例如，如果一个方
+法打开一个文件项并关闭，然后退出，你不希望关闭文件的代码被异常处理机制旁路。finally
+关键字为处理这种意外而设计。
+
+finally 创建一个代码块。该代码块在一个try/catch 块完成之后另一个try/catch 出现之前
+执行。finally 块无论有没有异常引发都会执行。如果异常被引发，finally 甚至是在没有与该
+异常相匹配的catch子句情况下也将执行。一个方法将从一个try/catch 块返回到调用程序的任
+何时候，经过一个未捕获的异常或者是一个明确的返回语句，finally 子句在方法返回之前仍
+将执行。这在关闭文件句柄和释放任何在方法开始时被分配的其他资源是很有用的。finally
+子句是可选项，可以有也可以无。然而每一个try语句至少需要一个catch或finally 子句。
+
+下面的例子显示了3种不同的退出方法。每一个都执行了finally 子句：
+
+// Demonstrate finally.
+
+class FinallyDemo
+{
+// Through an exception out of the method.
+static void procA()
+{
+
+
+ try
+{
+System.out.println("inside procA")
+;
+throw new RuntimeException("demo")
+;
+
+
+ } finally
+{
+System.out.println("procA's finally")
+;
+}
+}
+
+
+// Return from within a try block.
+static void procB()
+{
+
+
+ try
+{
+System.out.println("inside procB")
+;
+return;
+
+
+ } finally
+{
+System.out.println("procB's finally")
+;
+}
+}
+// Execute a try block normally.
+static void procC()
+{
+try
+{
+System.out.println("inside procC")
+;
+} finally
+{
+System.out.println("procC's finally")
+;
+}
+
+
+
+第10 章异常处理
+
+ }
+
+public static void main(String args[])
+{
+try
+{
+procA()
+;
+} catch (Exception e)
+{
+
+
+ System.out.println("Exception caught")
+;
+}
+procB()
+;
+procC()
+;
+
+
+}
+}
+
+
+该例中，procA( ) 过早地通过引发一个异常中断了try。Finally 子句在退出时执行。procB( )
+的try语句通过一个return语句退出。在procB( ) 返回之前finally 子句执行。在procC （）中，
+try 语句正常执行，没有错误。然而，finally 块仍将执行。
+
+注意：如果finally 块与一个try联合使用，finally 块将在try 结束之前执行。
+
+下面是上述程序产生的输出：
+
+inside procA
+procA’s finally
+Exception caught
+inside procB
+procB’s finally
+inside procC
+procC’s finally
+
+
+10.10 Java 的内置异常
+在标准包java.lang 中，Java 定义了若干个异常类。前面的例子曾用到其中一些。这些异
+常一般是标准类RuntimeException 的子类。因为java.lang 实际上被所有的Java 程序引入，多
+数从RuntimeException 派生的异常都自动可用。而且，它们不需要被包含在任何方法的
+throws 列表中。Java 语言中，这被叫做未经检查的异常（unchecked exceptions ）。因为编
+译器不检查它来看一个方法是否处理或引发了这些异常。 java.lang 中定义的未经检查的异
+常列于表10-1 。表10-2 列出了由 java.lang 定义的必须在方法的throws 列表中包括的异常，如
+果这些方法能产生其中的某个异常但是不能自己处理它。这些叫做受检查的异常（checked
+exceptions）。Java 定义了几种与不同类库相关的其他的异常类型。
+
+表10-1 Java 的java.lang 中定义的未检查异常子类
+
+异常说明
+ArithmeticException 算术错误，如被0除
+ArrayIndexOutOfBoundsException 数组下标出界
+
+
+188 第1 部分Java 语言
+
+异常说明
+ArrayStoreException 数组元素赋值类型不兼容
+ClassCastException 非法强制转换类型
+IllegalArgumentException 调用方法的参数非法
+IllegalMonitorStateException 非法监控操作，如等待一个未锁定线程
+IllegalStateException 环境或应用状态不正确
+IllegalThreadStateException 请求操作与当前线程状态不兼容
+IndexOutOfBoundsException 某些类型索引越界
+NullPointerException 非法使用空引用
+NumberFormatException 字符串到数字格式非法转换
+SecurityException 试图违反安全性
+StringIndexOutOfBounds 试图在字符串边界之外索引
+UnsupportedOperationException 遇到不支持的操作
+
+续表
+
+表10-2 java.lang 中定义的检查异常
+
+异常意义
+ClassNotFoundException 找不到类
+CloneNotSupportedException 试图克隆一个不能实现Cloneable 接口的对象
+IllegalAccessException 对一个类的访问被拒绝
+InstantiationException 试图创建一个抽象类或者抽象接口的对象
+InterruptedException 一个线程被另一个线程中断
+NoSuchFieldException 请求的字段不存在
+NoSuchMethodException 请求的方法不存在
+
+10.11 创建自己的异常子类
+尽管Java 的内置异常处理大多数常见错误，你也许希望建立你自己的异常类型来处理
+你所应用的特殊情况。这是非常简单的：只要定义Exception 的一个子类就可以了（Exception
+当然是Throwable 的一个子类）。你的子类不需要实际执行什么——它们在类型系统中的存
+在允许你把它们当成异常使用。
+
+Exception类自己没有定义任何方法。当然，它继承了Throwable 提供的一些方法。因此，
+所有异常，包括你创建的，都可以获得Throwable 定义的方法。这些方法显示在表10-3 中。
+你还可以在你创建的异常类中覆盖一个或多个这样的方法。
+
+表10-3 Throwable 定义的方法
+
+方法描述
+Throwable fillInStackTrace( ) 返回一个包含完整堆栈轨迹的Throwable 对象，该对象可能
+被再次引发
+
+
+第10 章异常处理
+
+续表
+
+方法描述
+String getLocalizedMessage( )
+String getMessage( )
+void printStackTrace( )
+void printStackTrace(PrintStreamstream)
+void printStackTrace(PrintWriterstream)
+String toString( )
+返回一个异常的局部描述
+返回一个异常的描述
+显示堆栈轨迹
+把堆栈轨迹送到指定的流
+把堆栈轨迹送到指定的流
+返回一个包含异常描述的String对象。当输出一个Throwable
+对象时，该方法被println( ) 调用
+
+下面的例子声明了Exception 的一个新子类，然后该子类当作方法中出错情形的信号。
+它重载了toString( ) 方法，这样可以用println( ) 显示异常的描述。
+
+// This program creates a custom exception type.
+class MyException extends Exception
+{
+private int detail;
+
+
+ MyException(int a)
+{
+detail = a;
+}
+
+
+public String toString()
+{
+return "MyException[" + detail + "]"
+;
+}
+}
+
+
+class ExceptionDemo {
+
+static void compute(int a) throws MyException
+{
+System.out.println("Called compute(" + a + ")")
+;
+if(a > 10)
+
+
+ throw new MyException(a)
+;
+System.out.println("Normal exit")
+;
+}
+
+
+public static void main(String args[]) {
+
+ try
+{
+compute(1)
+;
+compute(20)
+;
+
+
+} catch (MyException e)
+{
+System.out.println("Caught " + e)
+;
+}
+}
+}
+
+
+该例题定义了Exception的一个子类MyException 。该子类非常简单：它只含有一个构造
+函数和一个重载的显示异常值的toString( ) 方法。ExceptionDemo 类定义了一个compute( ) 方
+法。该方法引发一个MyException 对象。当compute( ) 的整型参数比10大时该异常被引发。
+main( ) 方法为MyException 设立了一个异常处理程序，然后用一个合法的值和不合法的值调
+用compute( ) 来显示执行经过代码的不同路径。下面是结果：
+
+
+190 第1 部分Java 语言
+
+Called compute(1)
+Normal exit
+Called compute(20)
+Caught MyException[20]
+
+
+10.12 使用异常
+异常处理为控制具有很多动态运行时特性的复杂程序提供了一个强大的机制。把try，
+throw ，和catch当成处理错误简洁及程序逻辑上的反常边界条件是很重要的。如果你像多数
+程序员一样，那么你可能习惯于在方法失败时返回一个错误代码。在你用Java 编程时，你
+应该打破这个习惯。当方法可能失败时，引发一个异常。这是处理失败模式的一个更简洁
+的方法。
+
+最后说明一点：Java 的异常处理语句不应该被当作是一个非本地分支的通常机制，如
+果你这样认为，它将困扰你的代码并使代码难于维护。
+        `
+    },
+    {
+        name:'第11章  多线程编程',
+        cont:`
+            和其他多数计算机语言不同，Java 内置支持多线程编程（multithreaded programming 。
+多线程程序包含两条或两条以上并发运行的部分。程序中每个这样的部分都叫一个线程
+（thread），每个线程都有独立的执行路径。因此，多线程是多任务处理的一种特殊形式。
+
+你一定知道多任务处理，因为它实际上被所有的现代操作系统所支持。然而，多任务
+处理有两种截然不同的类型：基于进程的和基于线程的。认识两者的不同是十分重要的。
+对很多读者，基于进程的多任务处理是更熟悉的形式。进程(process) 本质上是一个执行的
+程序。因此，基于进程(process-based) 的多任务处理的特点是允许你的计算机同时运行两
+个或更多的程序。举例来说，基于进程的多任务处理使你在运用文本编辑器的时候可以同
+时运行Java 编译器。在基于进程的多任务处理中，程序是调度程序所分派的最小代码单位。
+
+在基于线程(thread-based) 的多任务处理环境中，线程是最小的执行单位。这意味着一
+个程序可以同时执行两个或者多个任务的功能。例如，一个文本编辑器可以在打印的同时
+格式化文本。所以，多进程程序处理“大图片”，而多线程程序处理细节问题。
+
+多线程程序比多进程程序需要更少的管理费用。进程是重量级的任务，需要分配它们
+自己独立的地址空间。进程间通信是昂贵和受限的。进程间的转换也是很需要花费的。另
+一方面，线程是轻量级的选手。它们共享相同的地址空间并且共同分享同一个进程。线程
+间通信是便宜的，线程间的转换也是低成本的。当Java 程序使用多进程任务处理环境时，
+多进程程序不受Java 的控制，而多线程则受Java 控制。
+
+多线程帮助你写出CPU 最大利用率的高效程序，因为空闲时间保持最低。这对Java 运
+行的交互式的网络互连环境是至关重要的，因为空闲时间是公共的。举个例子来说，网络
+的数据传输速率远低于计算机处理能力，本地文件系统资源的读写速度远低于CPU 的处理
+能力，当然，用户输入也比计算机慢很多。在传统的单线程环境中，你的程序必须等待每
+一个这样的任务完成以后才能执行下一步——尽管CPU 有很多空闲时间。多线程使你能够
+获得并充分利用这些空闲时间。
+
+如果你在Windows 98 或Windows 2000 这样的操作系统下有编程经验，那么你已经熟
+悉了多线程。然而，Java 管理线程使多线程处理尤其方便，因为很多细节对你来说是易于
+处理的。
+
+11.1 Java 线程模型
+Java 运行系统在很多方面依赖于线程，所有的类库设计都考虑到多线程。实际上，Java
+使用线程来使整个环境异步。这有利于通过防止CPU 循环的浪费来减少无效部分。
+
+为更好的理解多线程环境的优势可以将它与它的对照物相比较。单线程系统的处理途
+径是使用一种叫作轮询的事件循环方法。在该模型中，单线程控制在一无限循环中运行，
+
+
+第1 部分Java 语言
+
+轮询一个事件序列来决定下一步做什么。一旦轮询装置返回信号表明，已准备好读取网络
+文件，事件循环调度控制管理到适当的事件处理程序。直到事件处理程序返回，系统中没
+有其他事件发生。这就浪费了CPU 时间。这导致了程序的一部分独占了系统，阻止了其他
+事件的执行。总的来说，单线程环境，当一个线程因为等待资源时阻塞（block，挂起执行）
+，
+整个程序停止运行。
+
+Java 多线程的优点在于取消了主循环/轮询机制。一个线程可以暂停而不影响程序的其
+他部分。例如，当一个线程从网络读取数据或等待用户输入时产生的空闲时间可以被利用
+到其他地方。多线程允许活的循环在每一帧间隙中沉睡一秒而不暂停整个系统。在Java 程
+序中出现线程阻塞，仅有一个线程暂停，其他线程继续运行。
+
+线程存在于好几种状态。线程可以正在运行（running ）。只要获得CPU 时间它就可以
+运行。运行的线程可以被挂起（suspend ），并临时中断它的执行。一个挂起的线程可以被
+恢复（resume，允许它从停止的地方继续运行。一个线程可以在等待资源时被阻塞（block ）。
+在任何时候，线程可以终止（terminate ），这立即中断了它的运行。一旦终止，线程不能
+被恢复。
+
+11.1.1 线程优先级
+Java 给每个线程安排优先级以决定与其他线程比较时该如何对待该线程。线程优先级
+是详细说明线程间优先关系的整数。作为绝对值，优先级是毫无意义的；当只有一个线程
+时，优先级高的线程并不比优先权低的线程运行的快。相反，线程的优先级是用来决定何
+时从一个运行的线程切换到另一个。这叫“上下文转换”(context switch) 。决定上下文转换
+发生的规则很简单：
+
+·
+线程可以自动放弃控制。在I/O 未决定的情况下，睡眠或阻塞由明确的让步来完成。
+在这种假定下，所有其他的线程被检测，准备运行的最高优先级线程被授予CPU 。
+·
+线程可以被高优先级的线程抢占。在这种情况下，低优先级线程不主动放弃，处理
+器只是被先占——无论它正在干什么——处理器被高优先级的线程占据。基本上，
+一旦高优先级线程要运行，它就执行。这叫做有优先权的多任务处理。
+当两个相同优先级的线程竞争CPU 周期时，情形有一点复杂。对于Windows98 这样的
+操作系统，等优先级的线程是在循环模式下自动划分时间的。对于其他操作系统，例如
+Solaris 2.x ，等优先级线程相对于它们的对等体自动放弃。如果不这样，其他的线程就不会
+运行。
+
+警告：不同的操作系统下等优先级线程的上下文转换可能会产生错误。
+
+11.1.2 同步性
+因为多线程在你的程序中引入了一个异步行为，所以在你需要的时候必须有加强同步
+性的方法。举例来说，如果你希望两个线程相互通信并共享一个复杂的数据结构，例如链
+表序列，你需要某些方法来确保它们没有相互冲突。也就是说，你必须防止一个线程写入
+数据而另一个线程正在读取链表中的数据。为此目的，Java 在进程间同步性的老模式基础
+
+
+第11 章多线程编程
+
+上实行了另一种方法：管程（monitor ）。管程是一种由C.A.R.Hoare 首先定义的控制机制。
+你可以把管程想象成一个仅控制一个线程的小盒子。一旦线程进入管程，所有线程必须等
+待直到该线程退出了管程。用这种方法，管程可以用来防止共享的资源被多个线程操纵。
+
+很多多线程系统把管程作为程序必须明确的引用和操作的对象。Java 提供一个清晰的
+解决方案。没有“Monitor ”类；相反，每个对象都拥有自己的隐式管程，当对象的同步方
+法被调用时管程自动载入。一旦一个线程包含在一个同步方法中，没有其他线程可以调用
+相同对象的同步方法。这就使你可以编写非常清晰和简洁的多线程代码，因为同步支持是
+语言内置的。
+
+11.1.3 消息传递
+在你把程序分成若干线程后，你就要定义各线程之间的联系。用大多数其他语言规划
+时，你必须依赖于操作系统来确立线程间通信。这样当然增加花费。然而，Java 提供了多
+线程间谈话清洁的、低成本的途径——通过调用所有对象都有的预先确定的方法。Java 的
+消息传递系统允许一个线程进入一个对象的一个同步方法，然后在那里等待，直到其他线
+程明确通知它出来。
+
+11.1.4 Thread 类和Runnable 接口
+Java 的多线程系统建立于Thread 类，它的方法，它的共伴接口Runnable 基础上。Thread
+类封装了线程的执行。既然你不能直接引用运行着的线程的状态，你要通过它的代理处理
+它，于是Thread 实例产生了。为创建一个新的线程，你的程序必须扩展Thread 或实现
+Runnable 接口。
+
+Thread类定义了好几种方法来帮助管理线程。本章用到的方法如表11-1 所示：
+
+表11-1 管理线程的方法
+
+方法意义
+getName 获得线程名称
+getPriority 获得线程优先级
+jsAlive 判定线程是否仍在运行
+join 等待一个线程终止
+run 线程的入口点.
+sleep 在一段时间内挂起线程
+start 通过调用运行方法来启动线程
+
+到目前为止，本书所应用的例子都是用单线程的。本章剩余部分解释如何用Thread 和
+Runnable 来创建、管理线程。让我们从所有Java 程序都有的线程：主线程开始。
+
+11.2 主线程
+当Java 程序启动时，一个线程立刻运行，该线程通常叫做程序的主线程（main thread）
+，
+
+第1 部分Java 语言
+
+因为它是程序开始时就执行的。主线程的重要性体现在两方面：
+
+·
+它是产生其他子线程的线程
+·
+通常它必须最后完成执行，因为它执行各种关闭动作。
+尽管主线程在程序启动时自动创建，但它可以由一个Thread 对象控制。为此，你必须
+调用方法currentThread() 获得它的一个引用，currentThread() 是Thread 类的公有的静态成员。
+它的通常形式如下：
+
+static Thread currentThread( )
+
+该方法返回一个调用它的线程的引用。一旦你获得主线程的引用，你就可以像控制其
+他线程那样控制主线程。
+让我们从复习下面例题开始：
+
+// Controlling the main Thread.
+class CurrentThreadDemo
+{
+public static void main(String args[])
+{
+Thread t = Thread.currentThread()
+;
+
+
+System.out.println("Current thread: " + t);
+
+// change the name of the thread
+t.setName("My Thread")
+;
+System.out.println("After name change: " + t)
+;
+
+
+ try {
+
+for(int n = 5; n > 0; n--)
+{
+System.out.println(n)
+;
+Thread.sleep(1000)
+;
+
+
+}
+} catch (InterruptedException e)
+{
+System.out.println("Main thread interrupted")
+;
+}
+}
+}
+
+
+在本程序中，当前线程（自然是主线程）的引用通过调用currentThread() 获得，该引用
+保存在局部变量t中。然后，程序显示了线程的信息。接着程序调用setName() 改变线程的内
+部名称。线程信息又被显示。然后，一个循环数从5开始递减，每数一次暂停一秒。暂停是
+由sleep()方法来完成的。Sleep() 语句明确规定延迟时间是1毫秒。注意循环外的try/catch 块。
+Thread类的sleep()方法可能引发一个InterruptedException 异常。这种情形会在其他线程想要
+打搅沉睡线程时发生。本例只是打印了它是否被打断的消息。在实际的程序中，你必须灵
+活处理此类问题。下面是本程序的输出：
+
+Current thread: Thread[main,5,main]
+After name change: Thread[My Thread,5,main]
+5
+4
+3
+
+
+
+第11 章多线程编程
+
+2
+1
+
+
+注意t作为语句println() 中参数运用时输出的产生。该显示顺序：线程名称，优先级以及
+组的名称。默认情况下，主线程的名称是main 。它的优先级是5，这也是默认值，main 也是
+所属线程组的名称。一个线程组（thread group ）是一种将线程作为一个整体集合的状态控
+制的数据结构。这个过程由专有的运行时环境来处理，在此就不赘述了。线程名改变后，t
+又被输出。这次，显示了新的线程名。
+
+让我们更仔细的研究程序中Thread 类定义的方法。sleep()方法按照毫秒级的时间指示使
+线程从被调用到挂起。它的通常形式如下：
+
+static void sleep(long milliseconds) throws InterruptedException
+
+挂起的时间被明确定义为毫秒。该方法可能引发InterruptedException 异常。
+
+sleep()方法还有第二种形式，显示如下，该方法允许你指定时间是以毫秒还是以纳秒
+为周期。
+
+static void sleep(long milliseconds, int nanoseconds) throws
+InterruptedException
+
+
+第二种形式仅当允许以纳秒为时间周期时可用。
+
+如上述程序所示，你可以用setName() 设置线程名称，用getName() 来获得线程名称（该
+过程在程序中没有体现）。这些方法都是Thread 类的成员，声明如下：
+
+final void setName(String threadName)
+final String getName(
+)
+
+
+这里，threadName 特指线程名称。
+
+11.3 创建线程
+大多数情况，通过实例化一个Thread对象来创建一个线程。Java 定义了两种方式：
+
+·
+实现Runnable 接口。
+·
+可以继承Thread 类。
+下面的两小节依次介绍了每一种方式。
+
+11.3.1 实现Runnable 接口
+创建线程的最简单的方法就是创建一个实现Runnable 接口的类。Runnable 抽象了一个
+执行代码单元。你可以通过实现Runnable 接口的方法创建每一个对象的线程。为实现
+Runnable 接口，一个类仅需实现一个run() 的简单方法，该方法声明如下：
+
+public void run( )
+
+在run()中可以定义代码来构建新的线程。理解下面内容是至关重要的：run()方法能够
+
+
+第1 部分Java 语言
+
+像主线程那样调用其他方法，引用其他类，声明变量。仅有的不同是run()在程序中确立另
+一个并发的线程执行入口。当run()返回时，该线程结束。
+在你已经创建了实现Runnable 接口的类以后，你要在类内部实例化一个Thread 类的对
+象。Thread 类定义了好几种构造函数。我们会用到的如下：
+
+Thread(Runnable threadOb, String threadName)
+
+该构造函数中，threadOb 是一个实现Runnable 接口类的实例。这定义了线程执行的起点。
+新线程的名称由threadName 定义。
+建立新的线程后，它并不运行直到调用了它的start()方法，该方法在Thread 类中定义。
+本质上，start() 执行的是一个对run() 的调用。 Start （）方法声明如下：
+
+void start( )
+
+下面的例子是创建一个新的线程并启动它运行：
+
+// Create a second thread.
+class NewThread implements Runnable
+{
+Thread t;
+
+
+ NewThread()
+{
+// Create a new, second thread
+t = new Thread(this, "Demo Thread")
+;
+System.out.println("Child thread: " + t)
+;
+t.start(); // Start the thread
+
+
+}
+
+// This is the entry point for the second thread.
+public void run()
+{
+try
+{
+
+
+for(int i = 5; i > 0; i--)
+{
+System.out.println("Child Thread: " + i)
+;
+Thread.sleep(500)
+;
+
+
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println("Child interrupted.")
+;
+}
+System.out.println("Exiting child thread.")
+;
+
+
+}
+}
+
+
+class ThreadDemo
+{
+public static void main(String args[])
+{
+new NewThread(); // create a new thread
+
+
+ try {
+
+for(int i = 5; i > 0; i--)
+{
+System.out.println("Main Thread: " + i)
+;
+Thread.sleep(1000)
+;
+
+
+}
+} catch (InterruptedException e)
+{
+System.out.println("Main thread interrupted.")
+;
+}
+
+
+
+第11 章多线程编程
+
+ System.out.println("Main thread exiting.")
+;
+}
+}
+
+
+在NewThread 构造函数中，新的Thread 对象由下面的语句创建：:
+
+t = new Thread(this, "Demo Thread");
+
+通过前面的语句this 表明在this 对象中你想要新的线程调用run() 方法。然后，start() 被
+调用，以run()方法为开始启动了线程的执行。这使子线程for 循环开始执行。调用start()之
+后，NewThread 的构造函数返回到main() 。当主线程被恢复，它到达for 循环。两个线程继
+续运行，共享CPU ，直到它们的循环结束。该程序的输出如下：
+
+Child thread: Thread[Demo Thread,5,main]
+Main Thread:
+5
+Child Thread:
+5
+Child Thread:
+4
+Main Thread:
+4
+Child Thread:
+3
+Child Thread:
+2
+Main Thread:
+3
+Child Thread:
+1
+Exiting child thread.
+Main Thread:
+2
+Main Thread:
+1
+Main thread exiting.
+
+
+如前面提到的，在多线程程序中，通常主线程必须是结束运行的最后一个线程。实际
+上，一些老的JVM，如果主线程先于子线程结束，Java 的运行时间系统就可能“挂起”。
+前述程序保证了主线程最后结束，因为主线程沉睡周期1000 毫秒，而子线程仅为500 毫秒。
+这就使子线程在主线程结束之前先结束。简而言之，你将看到等待线程结束的更好途径。
+
+11.3.2 扩展Thread
+创建线程的另一个途径是创建一个新类来扩展Thread 类，然后创建该类的实例。当一
+个类继承Thread 时，它必须重载run()方法，这个run() 方法是新线程的入口。它也必须调用
+start()方法去启动新线程执行。下面用扩展thread 类重写前面的程序：
+
+// Create a second thread by extending Thread
+class NewThread extends Thread
+{
+
+
+ NewThread() {
+
+// Create a new, second thread
+
+ super("Demo Thread");
+
+System.out.println("Child thread: " + this);
+
+start(); // Start the thread
+
+}
+
+// This is the entry point for the second thread.
+public void run()
+{
+try
+{
+for(int i = 5; i > 0; i--)
+{
+System.out.println("Child Thread: " + i)
+;
+
+
+
+第1 部分Java 语言
+
+ Thread.sleep(500)
+;
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println("Child interrupted.")
+;
+}
+System.out.println("Exiting child thread.")
+;
+
+
+}
+}
+
+
+class ExtendThread
+{
+public static void main(String args[])
+{
+new NewThread(); // create a new thread
+
+
+ try {
+
+for(int i = 5; i > 0; i--)
+{
+System.out.println("Main Thread: " + i)
+;
+Thread.sleep(1000)
+;
+
+
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println("Main thread interrupted.")
+;
+}
+System.out.println("Main thread exiting.")
+;
+
+
+}
+}
+
+
+该程序生成和前述版本相同的输出。子线程是由实例化NewThread 对象生成的，该对
+象从Thread类派生。注意NewThread 中super() 的调用。该方法调用了下列形式的Thread构
+造函数：
+
+public Thread(String threadName)
+
+这里，threadName 指定线程名称。
+
+11.3.3 选择合适方法
+到这里，你一定会奇怪为什么Java 有两种创建子线程的方法，哪一种更好呢。所有的
+问题都归于一点。Thread 类定义了多种方法可以被派生类重载。对于所有的方法，惟一的
+必须被重载的是run() 方法。这当然是实现Runnable 接口所需的同样的方法。很多Java 程序员
+认为类仅在它们被加强或修改时应该被扩展。因此，如果你不重载Thread 的其他方法时，
+最好只实现Runnable 接口。这当然由你决定。然而，在本章的其他部分，我们应用实现
+runnable 接口的类来创建线程。
+
+11.4 创建多线程
+到目前为止，我们仅用到两个线程：主线程和一个子线程。然而，你的程序可以创建
+所需的更多线程。例如，下面的程序创建了三个子线程：
+
+// Create multiple threads.
+class NewThread implements Runnable
+{
+
+
+
+第11 章多线程编程
+
+String name; // name of thread
+Thread t;
+
+
+ NewThread(String threadname)
+{
+name = threadname;
+t = new Thread(this, name)
+;
+System.out.println("New thread: " + t)
+;
+t.start(); // Start the thread
+
+
+}
+
+// This is the entry point for thread.
+public void run()
+{
+try
+{
+
+
+for(int i = 5; i > 0; i--) {
+System.out.println(name + ": " + i);
+Thread.sleep(1000);
+
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println(name + "Interrupted");
+}
+System.out.println(name + " exiting.");
+
+}
+}
+
+class MultiThreadDemo {
+
+public static void main(String args[])
+{
+new NewThread("One"); // start threads
+new NewThread("Two")
+;
+new NewThread("Three")
+;
+
+
+ try
+{
+// wait for other threads to end
+Thread.sleep(10000)
+;
+
+
+} catch (InterruptedException e) {
+System.out.println("Main thread Interrupted");
+}
+
+ System.out.println("Main thread exiting.");
+}
+}
+
+程序输出如下所示：
+
+New thread: Thread[One,5,main]
+New thread: Thread[Two,5,main]
+New thread: Thread[Three,5,main]
+One: 5
+Two: 5
+Three: 5
+One: 4
+Two: 4
+Three: 4
+One: 3
+Three: 3
+Two: 3
+
+
+第1 部分Java 语言
+
+One:
+2
+Three:
+2
+Two:
+2
+One:
+1
+Three:
+1
+Two:
+1
+One exiting.
+Two exiting.
+Three exiting.
+Main thread exiting.
+
+
+如你所见，一旦启动，所有三个子线程共享CPU 。注意main() 中对sleep(10000) 的调用。
+这使主线程沉睡十秒确保它最后结束。
+
+11.5 使用isAlive() 和join()
+如前所述，通常你希望主线程最后结束。在前面的例子中，这点是通过在main() 中调
+用sleep()来实现的，经过足够长时间的延迟以确保所有子线程都先于主线程结束。然而，
+这不是一个令人满意的解决方法，它也带来一个大问题：一个线程如何知道另一线程已经
+结束？幸运的是，Thread 类提供了回答此问题的方法。
+
+有两种方法可以判定一个线程是否结束。第一，可以在线程中调用isAlive() 。这种方法
+由Thread 定义，它的通常形式如下：
+
+final boolean isAlive( )
+
+如果所调用线程仍在运行，isAlive() 方法返回true ，如果不是则返回false。
+但isAlive （）很少用到，等待线程结束的更常用的方法是调用join() ，描述如下：
+
+final void join( ) throws InterruptedException
+
+该方法等待所调用线程结束。该名字来自于要求线程等待直到指定线程参与的概念。
+join() 的附加形式允许给等待指定线程结束定义一个最大时间。
+下面是前面例子的改进版本。运用join() 以确保主线程最后结束。同样，它也演示了
+isAlive() 方法。
+
+// Using join() to wait for threads to finish.
+
+class NewThread implements Runnable
+{
+String name; // name of thread
+Thread t;
+
+
+ NewThread(String threadname)
+{
+name = threadname;
+t = new Thread(this, name)
+;
+System.out.println("New thread: " + t)
+;
+t.start(); // Start the thread
+
+
+}
+
+// This is the entry point for thread.
+public void run()
+{
+
+
+
+第11 章多线程编程
+
+ try {
+
+for(int i = 5; i > 0; i--)
+{
+System.out.println(name + ": " + i)
+;
+Thread.sleep(1000)
+;
+
+
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println(name + " interrupted.")
+;
+}
+System.out.println(name + " exiting.")
+;
+
+
+}
+}
+
+class DemoJoin {
+
+public static void main(String args[])
+{
+NewThread ob1 = new NewThread("One")
+;
+NewThread ob2 = new NewThread("Two")
+;
+NewThread ob3 = new NewThread("Three")
+;
+
+
+System.out.println("Thread One is alive:
+"
++ ob1.t.isAlive())
+;
+System.out.println("Thread Two is alive:
+"
++ ob2.t.isAlive())
+;
+System.out.println("Thread Three is alive:
+"
++ ob3.t.isAlive())
+;
+// wait for threads to finish
+
+
+ try {
+System.out.println("Waiting for threads to finish.");
+ob1.t.join();
+ob2.t.join();
+ob3.t.join();
+
+} catch (InterruptedException e)
+{
+System.out.println("Main thread Interrupted")
+;
+}
+
+
+System.out.println("Thread One is alive:
+"
++ ob1.t.isAlive())
+;
+System.out.println("Thread Two is alive:
+"
++ ob2.t.isAlive())
+;
+System.out.println("Thread Three is alive:
+"
++ ob3.t.isAlive())
+;
+
+
+ System.out.println("Main thread exiting.");
+}
+}
+
+程序输出如下所示:
+
+New thread: Thread[One,5,main]
+New thread: Thread[Two,5,main]
+New thread: Thread[Three,5,main]
+Thread One is alive: true
+Thread Two is alive: true
+Thread Three is alive: true
+Waiting for threads to finish.
+One: 5
+
+
+第1 部分Java 语言
+
+Two:
+5
+Three:
+5
+One:
+4
+Two:
+4
+Three:
+4
+One:
+3
+Two:
+3
+Three:
+3
+One:
+2
+Two:
+2
+Three:
+2
+One:
+1
+Two:
+1
+Three:
+1
+Two exiting.
+Three exiting.
+One exiting.
+Thread One is alive: false
+Thread Two is alive: false
+Thread Three is alive: false
+Main thread exiting.
+
+
+如你所见，调用join() 后返回，线程终止执行。
+
+11.6 线程优先级
+线程优先级被线程调度用来判定何时每个线程允许运行。理论上，优先级高的线程比
+优先级低的线程获得更多的CPU 时间。实际上，线程获得的CPU 时间通常由包括优先级在
+内的多个因素决定（例如，一个实行多任务处理的操作系统如何更有效的利用CPU 时间）。
+一个优先级高的线程自然比优先级低的线程优先。举例来说，当低优先级线程正在运行，
+而一个高优先级的线程被恢复（例如从沉睡中或等待I/O 中），它将抢占低优先级线程所使
+用的CPU 。
+
+理论上，等优先级线程有同等的权利使用CPU 。但你必须小心了。记住，Java 是被设
+计成能在很多环境下工作的。一些环境下实现多任务处理从本质上与其他环境不同。为安
+全起见，等优先级线程偶尔也受控制。这保证了所有线程在无优先级的操作系统下都有机
+会运行。实际上，在无优先级的环境下，多数线程仍然有机会运行，因为很多线程不可避
+免的会遭遇阻塞，例如等待输入输出。遇到这种情形，阻塞的线程挂起，其他线程运行。
+但是如果你希望多线程执行的顺利的话，最好不要采用这种方法。同样，有些类型的任务
+是占CPU 的。对于这些支配CPU 类型的线程，有时你希望能够支配它们，以便使其他线程
+可以运行。
+
+设置线程的优先级，用setPriority() 方法，该方法也是Tread 的成员。它的通常形式为：
+
+final void setPriority(int level)
+
+这里，level 指定了对所调用的线程的新的优先权的设置。Level 的值必须在
+MIN_PRIORITY 到MAX_PRIORITY 范围内。通常，它们的值分别是1和10。要返回一个线
+
+
+第11 章多线程编程
+
+程为默认的优先级，指定NORM_PRIORITY ，通常值为5。这些优先级在Thread 中都被定义
+为final 型变量。
+你可以通过调用Thread 的getPriority() 方法来获得当前的优先级设置。该方法如下：
+
+final int getPriority( )
+
+当涉及调度时，Java 的执行可以有本质上不同的行为。Windows 95/98/NT/2000 的工作
+或多或少如你所愿。但其他版本可能工作的完全不同。大多数矛盾发生在你使用有优先级
+行为的线程，而不是协同的腾出CPU 时间。最安全的办法是获得可预先性的优先权，Java
+获得跨平台的线程行为的方法是自动放弃对CPU 的控制。
+
+下面的例子阐述了两个不同优先级的线程，运行于具有优先权的平台，这与运行于无
+优先级的平台不同。一个线程通过Thread.NORM_PRIORITY 设置了高于普通优先级两级的
+级数，另一线程设置的优先级则低于普通级两级。两线程被启动并允许运行10秒。每个线
+程执行一个循环，记录反复的次数。10秒后，主线程终止了两线程。每个线程经过循环的
+次数被显示。
+
+// Demonstrate thread priorities.
+
+class clicker implements Runnable
+{
+int click = 0;
+Thread t;
+private volatile boolean running = true;
+
+
+public clicker(int p)
+{
+t = new Thread(this)
+;
+t.setPriority(p)
+;
+
+
+}
+
+public void run()
+{
+while (running)
+{
+click++
+;
+}
+}
+
+
+public void stop()
+{
+running = false;
+}
+
+
+public void start()
+{
+t.start()
+;
+}
+}
+
+
+class HiLoPri {
+
+public static void main(String args[])
+{
+Thread.currentThread().setPriority(Thread.MAX_PRIORITY)
+;
+clicker hi = new clicker(Thread.NORM_PRIORITY + 2)
+;
+clicker lo = new clicker(Thread.NORM_PRIORITY - 2)
+;
+
+
+lo.start()
+;
+hi.start()
+;
+try
+{
+
+
+
+第1 部分Java 语言
+
+ Thread.sleep(10000)
+;
+} catch (InterruptedException e)
+{
+System.out.println("Main thread interrupted.")
+;
+}
+
+
+ lo.stop()
+;
+hi.stop()
+;
+
+
+// Wait for child threads to terminate.
+
+ try
+{
+hi.t.join()
+;
+lo.t.join()
+;
+
+
+} catch (InterruptedException e)
+{
+System.out.println("InterruptedException caught")
+;
+}
+
+
+System.out.println("Low-priority thread: " + lo.click)
+;
+System.out.println("High-priority thread: " + hi.click)
+;
+}
+}
+
+
+该程序在Windows 98 下运行的输出，表明线程确实上下转换，甚至既不屈从于CPU，
+也不被输入输出阻塞。优先级高的线程获得大约90% 的CPU 时间。
+
+Low-priority thread: 4408112
+High-priority thread: 589626904
+
+
+当然，该程序的精确的输出结果依赖于你的CPU 的速度和运行的其他任务的数量。当
+同样的程序运行于无优先级的系统，将会有不同的结果。
+上述程序还有个值得注意的地方。注意running 前的关键字volatile 。尽管volatile 在下章
+会被很仔细的讨论，用在此处以确保running 的值在下面的循环中每次都得到验证。
+
+while (running)
+{
+click++
+;
+}
+
+
+如果不用volatile，Java 可以自由的优化循环：running 的值被存在CPU 的一个寄存器中，
+每次重复不一定需要复检。volatile 的运用阻止了该优化，告知Java running 可以改变，改变
+方式并不以直接代码形式显示。
+
+11.7 线程同步
+当两个或两个以上的线程需要共享资源，它们需要某种方法来确定资源在某一刻仅被
+一个线程占用。达到此目的的过程叫做同步（synchronization ）。像你所看到的，Java 为此
+提供了独特的，语言水平上的支持。
+
+同步的关键是管程（也叫信号量semaphore ）的概念。管程是一个互斥独占锁定的对象，
+或称互斥体（mutex ）。在给定的时间，仅有一个线程可以获得管程。当一个线程需要锁定，
+它必须进入管程。所有其他的试图进入已经锁定的管程的线程必须挂起直到第一个线程退
+
+
+第11 章多线程编程
+
+出管程。这些其他的线程被称为等待管程。一个拥有管程的线程如果愿意的话可以再次进
+入相同的管程。
+
+如果你用其他语言例如C或C++ 时用到过同步，你会知道它用起来有一点诡异。这是因
+为很多语言它们自己不支持同步。相反，对同步线程，程序必须利用操作系统源语。幸运
+的是Java 通过语言元素实现同步，大多数的与同步相关的复杂性都被消除。
+
+你可以用两种方法同步化代码。两者都包括synchronized 关键字的运用，下面分别说明
+这两种方法。
+
+11.7.1 使用同步方法
+Java 中同步是简单的，因为所有对象都有它们与之对应的隐式管程。进入某一对象的
+管程，就是调用被synchronized 关键字修饰的方法。当一个线程在一个同步方法内部，所有
+试图调用该方法（或其他同步方法）的同实例的其他线程必须等待。为了退出管程，并放
+弃对对象的控制权给其他等待的线程，拥有管程的线程仅需从同步方法中返回。
+
+为理解同步的必要性，让我们从一个应该使用同步却没有用的简单例子开始。下面的
+程序有三个简单类。首先是Callme ，它有一个简单的方法call( )。call( )方法有一个名为msg
+的String 参数。该方法试图在方括号内打印msg 字符串。有趣的事是在调用call( ) 打印左括
+号和msg 字符串后，调用Thread.sleep(1000) ，该方法使当前线程暂停1秒。
+
+下一个类的构造函数Caller ，引用了Callme 的一个实例以及一个String ，它们被分别存
+在target 和 msg 中。构造函数也创建了一个调用该对象的run( )方法的新线程。该线程立
+即启动。Caller 类的run( ) 方法通过参数msg 字符串调用Callme 实例target 的call( ) 方法。最后，
+Synch 类由创建Callme 的一个简单实例和Caller 的三个具有不同消息字符串的实例开始。
+Callme 的同一实例传给每个Caller 实例。
+
+// This program is not synchronized.
+class Callme
+{
+
+
+void call(String msg)
+{
+System.out.print("[" + msg)
+;
+try
+{
+
+
+ Thread.sleep(1000)
+;
+} catch(InterruptedException e)
+{
+
+
+ System.out.println("Interrupted")
+;
+}
+System.out.println("]")
+;
+
+
+}
+}
+
+
+class Caller implements Runnable
+{
+String msg;
+Callme target;
+Thread t;
+
+
+public Caller(Callme targ, String s)
+{
+target = targ;
+msg = s;
+t = new Thread(this)
+;
+t.start()
+;
+
+
+
+第1 部分Java 语言
+
+ }
+
+public void run()
+{
+target.call(msg)
+;
+}
+}
+
+
+class Synch {
+
+public static void main(String args[])
+{
+Callme target = new Callme()
+;
+Caller ob1 = new Caller(target, "Hello")
+;
+Caller ob2 = new Caller(target, "Synchronized")
+;
+
+
+Caller ob3 = new Caller(target, "World");
+
+// wait for threads to end
+
+ try
+{
+ob1.t.join()
+;
+ob2.t.join()
+;
+ob3.t.join()
+;
+
+
+ } catch(InterruptedException e)
+{
+System.out.println("Interrupted")
+;
+}
+}
+}
+
+
+该程序的输出如下：
+
+Hello[Synchronized[World]
+]
+]
+
+
+在本例中，通过调用sleep( )，call( )方法允许执行转换到另一个线程。该结果是三个消
+息字符串的混合输出。该程序中，没有阻止三个线程同时调用同一对象的同一方法的方法
+存在。这是一种竞争，因为三个线程争着完成方法。例题用sleep( )使该影响重复和明显。
+在大多数情况，竞争是更为复杂和不可预知的，因为你不能确定何时上下文转换会发生。
+这使程序时而运行正常时而出错。
+
+为达到上例所想达到的目的，必须有权连续的使用call( ) 。也就是说，在某一时刻，必
+须限制只有一个线程可以支配它。为此，你只需在call( ) 定义前加上关键字synchronized，
+如下：
+
+class Callme
+{
+synchronized void call(String msg)
+{
+..
+.
+
+
+这防止了在一个线程使用call( ) 时其他线程进入call( )。在synchronized 加到call( )前面以
+后，程序输出如下：
+
+[Hello]
+[Synchronized]
+[World]
+
+
+任何时候在多线程情况下，你有一个方法或多个方法操纵对象的内部状态，都必须用
+
+
+第11 章多线程编程
+
+synchronized 关键字来防止状态出现竞争。记住，一旦线程进入实例的同步方法，没有其
+他线程可以进入相同实例的同步方法。然而，该实例的其他不同步方法却仍然可以被调用。
+
+11.7.2 同步语句
+尽管在创建的类的内部创建同步方法是获得同步的简单和有效的方法，但它并非在任
+何时候都有效。这其中的原因，请跟着思考。假设你想获得不为多线程访问设计的类对象
+的同步访问，也就是，该类没有用到synchronized 方法。而且，该类不是你自己，而是第三
+方创建的，你不能获得它的源代码。这样，你不能在相关方法前加synchronized 修饰符。怎
+样才能使该类的一个对象同步化呢？很幸运，解决方法很简单：你只需将对这个类定义的
+方法的调用放入一个synchronized 块内就可以了。
+
+下面是synchronized 语句的普通形式：
+
+synchronized(object)
+{
+// statements to be synchronized
+}
+
+
+其中，object 是被同步对象的引用。如果你想要同步的只是一个语句，那么不需要花括
+号。一个同步块确保对object 成员方法的调用仅在当前线程成功进入object 管程后发生。
+下面是前面程序的修改版本，在run( ) 方法内用了同步块：
+
+// This program uses a synchronized block.
+class Callme
+{
+
+
+void call(String msg)
+{
+System.out.print("[" + msg)
+;
+try
+{
+
+
+ Thread.sleep(1000)
+;
+} catch (InterruptedException e)
+{
+
+
+ System.out.println("Interrupted")
+;
+}
+System.out.println("]")
+;
+
+
+}
+}
+
+
+class Caller implements Runnable
+{
+String msg;
+Callme target;
+Thread t;
+
+
+public Caller(Callme targ, String s)
+{
+target = targ;
+msg = s;
+t = new Thread(this)
+;
+t.start()
+;
+
+
+}
+
+// synchronize calls to call(
+)
+public void run()
+{
+synchronized(target) { // synchronized block
+target.call(msg)
+;
+}
+
+
+
+第1 部分Java 语言
+
+
+}
+}
+
+
+class Synch1 {
+
+public static void main(String args[])
+{
+Callme target = new Callme()
+;
+Caller ob1 = new Caller(target, "Hello")
+;
+Caller ob2 = new Caller(target, "Synchronized")
+;
+Caller ob3 = new Caller(target, "World")
+;
+
+
+// wait for threads to end
+
+ try
+{
+ob1.t.join()
+;
+ob2.t.join()
+;
+ob3.t.join()
+;
+
+
+ } catch(InterruptedException e)
+{
+System.out.println("Interrupted")
+;
+}
+}
+}
+
+
+这里，call( )方法没有被synchronized 修饰。而synchronized 是在Caller 类的run( )方法中
+声明的。这可以得到上例中同样正确的结果，因为每个线程运行前都等待先前的一个线程
+结束。
+
+11.8 线程间通信
+上述例题无条件的阻塞了其他线程异步访问某个方法。Java 对象中隐式管程的应用是
+很强大的，但是你可以通过进程间通信达到更微妙的境界。这在Java 中是尤为简单的。
+
+像前面所讨论过的，多线程通过把任务分成离散的和合乎逻辑的单元代替了事件循环
+程序。线程还有第二优点：它远离了轮询。轮询通常由重复监测条件的循环实现。一旦条
+件成立，就要采取适当的行动。这浪费了CPU 时间。举例来说，考虑经典的序列问题，当
+一个线程正在产生数据而另一个程序正在消费它。为使问题变得更有趣，假设数据产生器
+必须等待消费者完成工作才能产生新的数据。在轮询系统，消费者在等待生产者产生数据
+时会浪费很多CPU 周期。一旦生产者完成工作，它将启动轮询，浪费更多的CPU 时间等待
+消费者的工作结束，如此下去。很明显，这种情形不受欢迎。
+
+为避免轮询，Java 包含了通过wait( )，notify( ) 和notifyAll( ) 方法实现的一个进程间通信
+机制。这些方法在对象中是用final 方法实现的，所以所有的类都含有它们。这三个方法仅
+在synchronized 方法中才能被调用。尽管这些方法从计算机科学远景方向上来说具有概念的
+高度先进性，实际中用起来是很简单的：
+
+·
+wait( ) 告知被调用的线程放弃管程进入睡眠直到其他线程进入相同管程并且调用
+notify( ) 。
+·
+notify( ) 恢复相同对象中第一个调用 wait( ) 的线程。
+·
+notifyAll( ) 恢复相同对象中所有调用 wait( ) 的线程。具有最高优先级的线程最先
+
+第11 章多线程编程
+
+运行。
+
+这些方法在Object 中被声明，如下所示：
+
+final void wait( ) throws InterruptedException
+final void notify(
+)
+final void notifyAll(
+)
+
+
+wait( )存在的另外的形式允许你定义等待时间。
+
+下面的例子程序错误的实行了一个简单生产者/消费者的问题。它由四个类组成：Q，
+设法获得同步的序列；Producer ，产生排队的线程对象；Consumer ，消费序列的线程对象；
+以及PC，创建单个Q，Producer ，和Consumer 的小类。
+
+// An incorrect implementation of a producer and consumer.
+class Q
+{
+int n;
+
+
+synchronized int get()
+{
+System.out.println("Got: " + n)
+;
+return n;
+
+
+}
+
+synchronized void put(int n)
+{
+this.n = n;
+System.out.println("Put: " + n)
+;
+
+
+}
+}
+
+
+class Producer implements Runnable
+{
+Q q;
+
+
+ Producer(Q q)
+{
+this.q = q;
+new Thread(this, "Producer").start()
+;
+
+
+}
+
+public void run()
+{
+int i = 0;
+
+
+ while(true)
+{
+q.put(i++)
+;
+}
+}
+}
+
+
+class Consumer implements Runnable
+{
+Q q;
+
+
+ Consumer(Q q)
+{
+this.q = q;
+new Thread(this, "Consumer").start()
+;
+
+
+}
+
+public void run() {
+
+
+第1 部分Java 语言
+
+ while(true)
+{
+q.get()
+;
+}
+}
+}
+
+
+class PC {
+
+public static void main(String args[])
+{
+Q q = new Q()
+;
+new Producer(q)
+;
+new Consumer(q)
+;
+
+
+ System.out.println("Press Control-C to stop.")
+;
+}
+}
+
+
+尽管Q类中的put( ) 和get( ) 方法是同步的，没有东西阻止生产者超越消费者，也没有东
+西阻止消费者消费同样的序列两次。这样，你就得到下面的错误输出（输出将随处理器速
+度和装载的任务而改变）：
+
+Put:
+1
+Got:
+1
+Got:
+1
+Got:
+1
+Got:
+1
+Got:
+1
+Put:
+2
+Put:
+3
+Put:
+4
+Put:
+5
+Put:
+6
+Put:
+7
+Got:
+7
+
+
+生产者生成1后，消费者依次获得同样的1五次。生产者在继续生成2到7，消费者没有
+机会获得它们。
+用Java 正确的编写该程序是用wait( )和notify( ) 来对两个方向进行标志，如下所示：
+
+// A correct implementation of a producer and consumer.
+
+class Q
+{
+int n;
+boolean valueSet = false;
+
+
+synchronized int get()
+{
+if(!valueSet)
+try
+{
+wait()
+;
+
+
+ } catch(InterruptedException e) {
+System.out.println("InterruptedException caught");
+}
+
+ System.out.println("Got: " + n)
+;
+valueSet = false;
+
+
+
+第11 章多线程编程
+
+ notify()
+;
+return n;
+}
+
+
+synchronized void put(int n) {
+if(valueSet)
+try {
+wait();
+} catch(InterruptedException e) {
+System.out.println("InterruptedException caught");
+}
+
+ this.n = n;
+valueSet = true;
+System.out.println("Put: " + n)
+;
+notify()
+;
+
+
+}
+}
+
+class Producer implements Runnable {
+Q q;
+
+ Producer(Q q)
+{
+this.q = q;
+new Thread(this, "Producer").start()
+;
+
+
+}
+
+public void run()
+{
+int i = 0;
+
+
+ while(true) {
+q.put(i++);
+}
+}
+}
+
+class Consumer implements Runnable {
+Q q;
+
+ Consumer(Q q)
+{
+this.q = q;
+new Thread(this, "Consumer").start()
+;
+
+
+}
+
+public void run() {
+while(true) {
+q.get();
+}
+}
+}
+
+class PCFixed {
+
+public static void main(String args[])
+{
+Q q = new Q()
+;
+new Producer(q)
+;
+
+
+
+第1 部分Java 语言
+
+ new Consumer(q);
+
+ System.out.println("Press Control-C to stop.")
+;
+}
+}
+
+
+内部get( ), wait( ) 被调用。这使执行挂起直到Producer 告知数据已经预备好。这时，内
+部get( ) 被恢复执行。获取数据后，get( ) 调用notify( ) 。这告诉Producer 可以向序列中输入
+更多数据。在put( ) 内，wait( ) 挂起执行直到Consumer 取走了序列中的项目。当执行再继续，
+下一个数据项目被放入序列，notify( ) 被调用，这通知Consumer 它应该移走该数据。
+
+下面是该程序的输出，它清楚的显示了同步行为：
+
+Put:
+1
+Got:
+1
+Put:
+2
+Got:
+2
+Put:
+3
+Got:
+3
+Put:
+4
+Got:
+4
+Put:
+5
+Got:
+5
+
+
+11.8.1 死锁
+需要避免的与多任务处理有关的特殊错误类型是死锁（deadlock ）。死锁发生在当两个
+线程对一对同步对象有循环依赖关系时。例如，假定一个线程进入了对象X的管程而另一
+个线程进入了对象Y的管程。如果X的线程试图调用Y的同步方法，它将像预料的一样被锁
+定。而Y的线程同样希望调用X的一些同步方法，线程永远等待，因为为到达X，必须释放
+自己的Y的锁定以使第一个线程可以完成。死锁是很难调试的错误，因为：
+
+·
+通常，它极少发生，只有到两线程的时间段刚好符合时才能发生。
+·
+它可能包含多于两个的线程和同步对象（也就是说，死锁在比刚讲述的例子有更多
+复杂的事件序列的时候可以发生）。
+为充分理解死锁，观察它的行为是很有用的。下面的例子生成了两个类，A和B，分别
+有foo( )和bar( )方法。这两种方法在调用其他类的方法前有一个短暂的停顿。主类，名为
+Deadlock ，创建了A和B的实例，然后启动第二个线程去设置死锁环境。foo( )和bar( )方法
+使用sleep( )强迫死锁现象发生。
+
+// An example of deadlock.
+class A
+{
+synchronized void foo(B b)
+{
+String name = Thread.currentThread().getName()
+;
+
+
+System.out.println(name + " entered A.foo");
+
+ try
+{
+Thread.sleep(1000)
+;
+
+
+
+第11 章多线程编程
+
+ } catch(Exception e)
+{
+System.out.println("A Interrupted")
+;
+}
+
+
+System.out.println(name + " trying to call B.last()");
+b.last();
+}
+
+synchronized void last() {
+System.out.println("Inside A.last");
+}
+}
+
+class B {
+synchronized void bar(A a) {
+String name = Thread.currentThread().getName();
+System.out.println(name + " entered B.bar");
+
+ try
+{
+Thread.sleep(1000)
+;
+} catch(Exception e)
+{
+System.out.println("B Interrupted")
+;
+}
+
+
+System.out.println(name + " trying to call A.last()");
+a.last();
+}
+
+synchronized void last() {
+System.out.println("Inside A.last");
+}
+}
+
+class Deadlock implements Runnable {
+A a = new A();
+B b = new B();
+
+ Deadlock()
+{
+Thread.currentThread().setName("MainThread")
+;
+Thread t = new Thread(this, "RacingThread")
+;
+t.start()
+;
+
+
+a.foo(b); // get lock on a in this thread.
+System.out.println("Back in main thread")
+;
+}
+
+
+public void run()
+{
+b.bar(a); // get lock on b in other thread.
+System.out.println("Back in other thread")
+;
+
+
+}
+
+public static void main(String args[]) {
+new Deadlock();
+}
+}
+
+
+第1 部分Java 语言
+
+运行程序后，输出如下：
+
+MainThread entered A.foo
+RacingThread entered B.bar
+MainThread trying to call B.last(
+)
+RacingThread trying to call A.last(
+)
+
+
+因为程序死锁，你需要按CTRL-C 来结束程序。在PC机上按CTRL-BREAK （或在Solaris
+下按CTRL-\ ）你可以看到全线程和管程缓冲堆。你会看到RacingThread 在等待管程a时占用
+管程b，同时，MainThread 占用a等待b。该程序永远都不会结束。像该例阐明的，你的多线
+程程序经常被锁定，死锁是你首先应检查的问题。
+
+11.9 挂起、恢复和终止线程
+有时，线程的挂起是很有用的。例如，一个独立的线程可以用来显示当日的时间。如
+果用户不希望用时钟，线程被挂起。在任何情形下，挂起线程是很简单的，一旦挂起，重
+新启动线程也是一件简单的事。
+
+挂起，终止和恢复线程机制在Java 2 和早期版本中有所不同。尽管你运用Java 2 的途径
+编写代码，你仍需了解这些操作在早期Java 环境下是如何完成的。例如，你也许需要更新
+或维护老的代码。你也需要了解为什么Java 2 会有这样的变化。因为这些原因，下面内容描
+述了执行线程控制的原始方法，接着是Java 2 的方法。
+
+11.9.1 Java 1.1 或更早版本的线程的挂起、恢复和终止
+先于Java2 的版本，程序用Thread 定义的suspend() 和 resume() 来暂停和再启动线程。
+它们的形式如下：
+
+final void suspend(
+)
+final void resume(
+)
+
+
+下面的程序描述了这些方法：
+
+// Using suspend() and resume().
+
+class NewThread implements Runnable
+{
+String name; // name of thread
+Thread t;
+
+
+ NewThread(String threadname)
+{
+name = threadname;
+t = new Thread(this, name)
+;
+System.out.println("New thread: " + t)
+;
+t.start(); // Start the thread
+
+
+}
+
+// This is the entry point for thread.
+public void run()
+{
+try
+{
+for(int i = 15; i > 0; i--)
+{
+System.out.println(name + ": " + i)
+;
+
+
+
+第11 章多线程编程
+
+ Thread.sleep(200)
+;
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println(name + " interrupted.")
+;
+}
+System.out.println(name + " exiting.")
+;
+
+
+}
+}
+
+class SuspendResume {
+
+public static void main(String args[])
+{
+NewThread ob1 = new NewThread("One")
+;
+NewThread ob2 = new NewThread("Two")
+;
+
+
+ try
+{
+Thread.sleep(1000)
+;
+ob1.t.suspend()
+;
+System.out.println("Suspending thread One")
+;
+Thread.sleep(1000)
+;
+ob1.t.resume()
+;
+System.out.println("Resuming thread One")
+;
+ob2.t.suspend()
+;
+System.out.println("Suspending thread Two")
+;
+Thread.sleep(1000)
+;
+ob2.t.resume()
+;
+System.out.println("Resuming thread Two")
+;
+
+
+} catch (InterruptedException e)
+{
+System.out.println("Main thread Interrupted")
+;
+}
+
+
+// wait for threads to finish
+
+ try {
+System.out.println("Waiting for threads to finish.");
+ob1.t.join();
+ob2.t.join();
+
+} catch (InterruptedException e) {
+
+ System.out.println("Main thread Interrupted")
+;
+}
+System.out.println("Main thread exiting.")
+;
+
+
+}
+}
+
+程序的部分输出如下：
+
+New thread: Thread[One,5,main]
+One: 15
+New thread: Thread[Two,5,main]
+Two: 15
+One: 14
+Two: 14
+One: 13
+Two: 13
+One: 12
+Two: 12
+One: 11
+
+
+第1 部分Java 语言
+
+Two: 11
+Suspending thread One
+Two: 10
+Two:
+9
+Two:
+8
+Two:
+7
+Two:
+6
+Resuming thread One
+Suspending thread Two
+One: 10
+One:
+9
+One:
+8
+One:
+7
+One:
+6
+Resuming thread Two
+Waiting for threads to finish.
+Two:
+5
+One:
+5
+Two:
+4
+One:
+4
+Two:
+3
+One:
+3
+Two:
+2
+One:
+2
+Two:
+1
+One:
+1
+Two exiting.
+One exiting.
+Main thread exiting.
+
+
+Thread类同样定义了stop() 来终止线程。它的形式如下：
+
+void stop( )
+
+一旦线程被终止，它不能被resume() 恢复继续运行。
+
+11.9.2 Java 2 中挂起、恢复和终止线程
+Thread 定义的suspend()，resume() 和stop() 方法看起来是管理线程的完美的和方便的方
+法，它们不能用于新Java 版本的程序。下面是其中的原因。Thread 类的suspend() 方法在Java
+2中不被赞成，因为suspend() 有时会造成严重的系统故障。假定对关键的数据结构的一个线
+程被锁定的情况，如果该线程在那里挂起，这些锁定的线程并没有放弃对资源的控制。其
+他的等待这些资源的线程可能死锁。
+
+Resume() 方法同样不被赞同。它不引起问题，但不能离开suspend() 方法而独立使用。
+
+Thread 类的stop() 方法同样在Java 2 中受到反对。这是因为该方法可能导致严重的系统
+故障。设想一个线程正在写一个精密的重要的数据结构且仅完成一个零头。如果该线程在
+此刻终止，则数据结构可能会停留在崩溃状态。
+
+因为在Java 2 中不能使用suspend()，resume() 和stop() 方法来控制线程，你也许会想那
+就没有办法来停止，恢复和结束线程。其实不然。相反，线程必须被设计以使run() 方法定
+期检查以来判定线程是否应该被挂起，恢复或终止它自己的执行。有代表性的，这由建立
+
+
+第11 章多线程编程
+
+一个指示线程状态的标志变量来完成。只要该标志设为“running”，run()方法必须继续让
+线程执行。如果标志设为“suspend ”，线程必须暂停。若设为“stop ”，线程必须终止。
+当然，编写这样的代码有很多方法，但中心主题对所有的程序应该是相同的。
+
+下面的例题阐述了从Object 继承的wait()和notify() 方法怎样控制线程的执行。该例与前
+面讲过的程序很像。然而，不被赞同的方法都没有用到。让我们思考程序的执行。
+
+NewTread 类包含了用来控制线程执行的布尔型的实例变量suspendFlag 。它被构造函
+数初始化为false。Run() 方法包含一个监测suspendFlag 的同步声明的块。如果变量是true，
+wait()方法被调用以挂起线程。Mysuspend() 方法设置suspendFlag 为true 。Myresume() 方法设
+置suspendFlag 为false并且调用notify() 方法来唤起线程。最后，main() 方法被修改以调用
+mysuspend() 和myresume() 方法。
+
+// Suspending and resuming a thread for Java2
+
+class NewThread implements Runnable
+{
+String name; // name of thread
+Thread t;
+boolean suspendFlag;
+
+
+ NewThread(String threadname)
+{
+name = threadname;
+t = new Thread(this, name)
+;
+System.out.println("New thread: " + t)
+;
+suspendFlag = false;
+t.start(); // Start the thread
+
+
+}
+
+// This is the entry point for thread.
+public void run()
+{
+try
+{
+
+
+for(int i = 15; i > 0; i--)
+{
+System.out.println(name + ": " + i)
+;
+Thread.sleep(200)
+;
+synchronized(this)
+{
+
+
+ while(suspendFlag)
+{
+wait()
+;
+}
+}
+}
+} catch (InterruptedException e)
+{
+
+
+ System.out.println(name + " interrupted.")
+;
+}
+System.out.println(name + " exiting.")
+;
+
+
+}
+
+ void mysuspend()
+{
+suspendFlag = true;
+}
+
+
+synchronized void myresume()
+{
+suspendFlag = false;
+notify()
+;
+
+
+}
+
+
+第1 部分Java 语言
+
+}
+
+class SuspendResume {
+
+public static void main(String args[])
+{
+NewThread ob1 = new NewThread("One")
+;
+NewThread ob2 = new NewThread("Two")
+;
+
+
+ try
+{
+Thread.sleep(1000)
+;
+ob1.mysuspend()
+;
+System.out.println("Suspending thread One")
+;
+Thread.sleep(1000)
+;
+ob1.myresume()
+;
+System.out.println("Resuming thread One")
+;
+ob2.mysuspend()
+;
+System.out.println("Suspending thread Two")
+;
+Thread.sleep(1000)
+;
+ob2.myresume()
+;
+System.out.println("Resuming thread Two")
+;
+
+
+} catch (InterruptedException e)
+{
+System.out.println("Main thread Interrupted")
+;
+}
+
+
+// wait for threads to finish
+
+ try
+{
+System.out.println("Waiting for threads to finish.")
+;
+ob1.t.join()
+;
+ob2.t.join()
+;
+
+
+} catch (InterruptedException e)
+{
+System.out.println("Main thread Interrupted")
+;
+}
+
+
+ System.out.println("Main thread exiting.")
+;
+}
+}
+
+
+该程序的输出与前面的程序相同。此书的后面部分，你将看到用Java 2 机制控制线程的
+更多例子。尽管这种机制不像老方法那样“干净”，然而，它是确保运行时不发生错误的
+方法。它是所有新的代码必须采用的方法。
+
+11.10 使用多线程机制
+如果你和大多数程序员一样，那么在语言中加入多线程支持对你来说是很新鲜的事物。
+有效运用这种支持的关键是并发思考而不是连续思考。例如，当你的程序有两个可以并行
+执行的子系统，创建它们各自的线程。仔细的运用多线程，你能编写出非常有效的程序。
+然而要注意：如果你创建太多的线程，你可能会减弱而不是加强程序的性能。记住，上下
+文转换是需要开销的。如果你创建了太多的线程，更多的CPU 时间会用于上下文转换而不
+是用来执行程序。
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+本章介绍Java 的两个重要的包：io和applet 。io包支持Java 的基本I/O （输入/输出）系
+统，包括文件的输入/输出。applet 包支持applet （小应用程序）。对输入/输出和applet 的支
+持是来源于Java 的内核API 库，而不是语言关键字。因为这个原因，关于这些主题的深入讨
+论在本书的第2部分可以见到，这些讨论验证了Java 的API 类。本章讨论这两个子系统的基
+础部分，这样你可以看到它们怎样融入Java 语言，怎样符合Java 编程和执行环境的大量内容。
+本章同样介绍了Java 的最后的关键字：transient，volatile，instanceof，native 以及strictfp。
+
+12.1 输入/输出基础
+在阅读前面的第11章时你也许注意到在例题中输入/输出没有很多的应用。实际上，除
+了print() 和println() ，基本没有运用输入/输出方法。原因很简单：很多实际的Java 应用程序
+不是基于文本的控制台程序。相反，它们是与用户交流的依赖于抽象窗口工具集（AWT）
+的用于绘图的小应用程序。尽管基于文本的程序作为教学实例是很出色的，它们无法胜任
+JAVA 在实际中的重要应用。同样Java 对外设输入/输出的支持也是有限的，并且用起来有些
+笨拙——甚至是在简单的例子程序中。基于文本的控制台输入/输出对于Java 程序并不是十
+分重要。
+
+尽管在前面的章节中Java 没有提供与文件和网络相关的强大的和灵活的输入/输出支
+持，Java 的输入/输出系统是紧密相连并且是具有一致性的。实际上，一旦你理解了它的基
+本原理，输入/输出系统的其他部分就变得易于掌握了。
+
+12.1.1 流的概念
+Java 程序通过流来完成输入/输出。流是生产或消费信息的抽象。流通过Java 的输入/输
+出系统与物理设备链接。尽管与它们链接的物理设备不尽相同，所有流的行为具有同样的
+方式。这样，相同的输入/输出类和方法适用于所有类型的外部设备。这意味着一个输入流
+能够抽象多种不同类型的输入：从磁盘文件，从键盘或从网络套接字。同样，一个输出流
+可以输出到控制台，磁盘文件或相连的网络。流是处理输入/输出的一个洁净的方法，例如
+它不需要代码理解键盘和网络的不同。Java 中流的实现是在java.io 包定义的类层次结构内部
+的。
+
+注意：如果你熟悉C/C++, 你已经对流的概念很熟悉了。JAVA 中流的实现跟C/C++
+中有些相似。
+
+12.1.2 字节流和字符流
+Java 2 定义了两种类型的流：字节类和字符类。字节流（byte stream ）为处理字节的
+
+
+220 第1 部分Java 语言
+
+输入和输出提供了方便的方法。例如使用字节流读取或书写二进制数据。字符流（character
+stream）为字符的输入和输出处理提供了方便。它们采用了统一的编码标准，因而可以国
+际化。当然，在某些场合，字符流比字节流更有效。
+
+Java 的原始版本（Java 1.0 ）不包括字符流，因此所有的输入和输出都是以字节为单位
+的。Java 1.1 中加入了字符流，某些字节形式的类和方法不受欢迎。这也是为什么没用字符
+流的老代码在适当的地方需要更新的原因。
+
+需要声明：在最底层，所有的输入/输出都是字节形式的。基于字符的流只为处理字符
+提供方便有效的方法。
+
+下面是对字节流和字符流的概述。
+
+字节流类
+
+字节流由两个类层次结构定义。在顶层有两个抽象类：InputStream 和 OutputStream 。
+每个抽象类都有多个具体的子类，这些子类对不同的外设进行处理，例如磁盘文件，网络
+连接，甚至是内存缓冲区。字节流类显示于表12-1 中。本章的后面将讨论一些这样的类。
+其他的类的描述在第2部分。记住，要使用流类，必须导入Java.io 包。
+
+表12-1 字节流类
+
+流类含义
+
+BufferedInputStream 缓冲输入流
+BufferedOutputStream 缓冲输出流
+ByteArrayInputStream 从字节数组读取的输入流
+ByteArrayOutputStream 向字节数组写入的输出流
+DataInputStream 包含读取Java标准数据类型方法的输入流
+DataOutputStream 包含编写Java 标准数据类型方法的输出流
+FileInputStream 读取文件的输入流
+FileOutputStream 写文件的输出流
+FilterInputStream 实现 InputStream
+FilterOutputStream 实现 OutputStream
+InputStream 描述流输入的抽象类
+OutputStream 描述流输出的抽象类
+PipedInputStream 输入管道
+PipedOutputStream 输出管道
+PrintStream 包含print( ) 和 println( ) 的输出流
+PushbackInputStream 支持向输入流返回一个字节的单字节的“unget ”的输入流
+RandomAccessFile 支持随机文件输入/输出
+SequenceInputStream 两个或两个以上顺序读取的输入流组成的输入流
+
+抽象类InputStream 和 OutputStream 定义了实现其他流类的关键方法。最重要的两种方
+法是read()和write()，它们分别对数据的字节进行读写。两种方法都在InputStream 和
+        `
+    },
+    {
+        name:'第12章  输入/输出、小应用程序和其他主题',
+        cont:`
+            OutputStream 中被定义为抽象方法。它们被派生的流类重载。
+
+字符流类
+
+字符流类由两个类层次结构定义。顶层有两个抽象类：Reader 和Writer。这些抽象类处
+理统一编码的字符流。Java 中这些类含有多个具体的子类。字符流类如表12-2 所示。
+
+表12-2 字符流的输入/输出类
+
+流类含义
+BufferedReader 缓冲输入字符流
+BufferedWriter 缓冲输出字符流
+CharArrayReader 从字符数组读取数据的输入流
+CharArrayWriter 向字符数组写数据的输出流
+FileReader 读取文件的输入流
+FileWriter 写文件的输出流
+FilterReader 过滤读
+FilterWriter 过滤写
+InputStreamReader 把字节转换成字符的输入流
+LineNumberReader 计算行数的输入流
+OutputStreamWriter 把字符转换成字节的输出流
+PipedReader 输入管道
+PipedWriter 输出管道
+PrintWriter 包含print( ) 和println( ) 的输出流
+PushbackReader 允许字符返回到输入流的输入流
+Reader 描述字符流输入的抽象类
+StringReader 读取字符串的输入流
+StringWriter 写字符串的输出流
+Writer 描述字符流输出的抽象类
+
+抽象类Reader 和Writer定义了几个实现其他流类的关键方法。其中两个最重要的是read()
+和write()，它们分别进行字符数据的读和写。这些方法被派生流类重载。
+
+12.1.3 预定义流
+所有的Java 程序自动导入java.lang 包。该包定义了一个名为System 的类，该类封装了运
+行时环境的多个方面。例如，使用它的某些方法，你能获得当前时间和与系统有关的不同
+属性。System 同时包含三个预定义的流变量，in，out 和err。这些成员在System 中是被定义
+成public 和static型的，这意味着它们可以不引用特定的System 对象而被用于程序的其他部
+分。
+
+System.out 是标准的输出流。默认情况下，它是一个控制台。System.in 是标准输入，默
+认情况下，它指的是键盘。System.err 指的是标准错误流，它默认是控制台。然而，这些流
+
+
+222 第1 部分Java 语言
+
+可以重定向到任何兼容的输入/输出设备。
+
+System.in 是inputStream 的对象；System.out 和System.err 是PrintStream 的对象。它们都
+是字节流，尽管它们用来读写外设的字符。如果愿意，你可以用基于字符的流来包装它们。
+
+前面的章节在例题中已经用到过System.out 。你可以以同样的方式使用System.err 。下
+面对此进行解释，你会看到使用System.in 有一点复杂。
+
+12.2 读取控制台输入
+在Java 1.0 中，完成控制台输入的惟一途径是字节流，使用该方法的老代码依然存在。
+今天，运用字节流读取控制台输入在技术上仍是可行的，但这样做需要用到不被赞成的方
+法，这种做法不值得推荐。Java 2 中读取控制台输入的首选方法是字符流，它使程序容易符
+合国际标准并且易于维护。
+
+注意：Java没有像标准C的函数scanf() 或C++ 输入操作符那样的统一的控制台输入
+
+方法。
+
+Java 中，控制台输入由从System.in 读取数据来完成。为获得属于控制台的字符流，在
+BufferedReader 对象中包装System.in 。BufferedReader 支持缓冲输入流。它最常见的构造函
+数如下：
+
+BufferedReader(Reader inputReader)
+
+这里，inputReader 是链接被创建的BufferedReader实例的流。Reader 是一个抽象类。它
+的一个具体的子类是InputStreamReader ，该子类把字节转换成字符。为获得链接System.in
+的一个InputStreamReader 的对象，用下面的构造函数：
+
+InputStreamReader(InputStream inputStream)
+
+因为System .in 引用了InputStream 类型的对象，它可以用于inputStream 。综上所述，下
+面的一行代码创建了与键盘相连的BufferedReader 对象。
+
+BufferedReader br = new BufferedReader(new
+InputStreamReader(System.in))
+;
+
+
+当该语句执行后，br是通过System.in 生成的链接控制台的字符流。
+
+12.2.1 读取字符
+从BufferedReader 读取字符，用read()。我们所用的read() 版本如下：
+
+int read( ) throws IOException
+
+该方法每次执行都从输入流读取一个字符然后以整型返回。当遇到流的末尾时它返回
+-1。你可以看到，它要引发一个IOException 异常。
+
+下面的例子程序演示了read() 方法，从控制台读取字符直到用户键入“q”
+：
+
+// Use a BufferedReader to read characters from the console.
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+import java.io.*;
+
+class BRRead
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+char c;
+BufferedReader br = new
+
+
+ BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter characters, 'q' to quit.");
+
+ // read characters
+
+ do
+{
+c = (char) br.read()
+;
+System.out.println(c)
+;
+
+
+ } while(c != 'q')
+;
+}
+}
+
+
+下面是程序运行：
+
+Enter characters, 'q' to quit.
+123abcq
+1
+2
+3
+a
+b
+c
+q
+
+
+程序的输出看起来与预想的略有不同，因为System.in 在默认情况下是以行来缓冲的。
+这意味着在你键入ENTER 以前实际上是没有输入的。你能猜想，这不能充分体现交互式控
+制台输入条件下read() 的独特价值。
+
+12.2.2 读取字符串
+从键盘读取字符串，使用readLine() 。它是BufferedReader 类的成员。它的通常形式如
+下：
+
+String readLine( ) throws IOException
+
+它返回一个String 对象。
+下面的例子阐述了BufferedReader 类和readLine() 方法；程序读取和显示文本的行直到键
+入“stop”
+：
+
+// Read a string from console using a BufferedReader.
+import java.io.*
+;
+
+
+class BRReadLines
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+
+224 第1 部分Java 语言
+
+
+{
+// create a BufferedReader using System.in
+BufferedReader br = new BufferedReader(new
+
+
+InputStreamReader(System.in))
+;
+String str;
+
+
+ System.out.println("Enter lines of text.")
+;
+System.out.println("Enter 'stop' to quit.")
+;
+do
+{
+
+
+ str = br.readLine()
+;
+System.out.println(str)
+;
+} while(!str.equals("stop"))
+;
+}
+}
+
+
+下面的例题生成了一个小文本编辑器。它创建了一个String 对象的数组，然后依行读取
+文本，把文本每一行存入数组。它将读取到100行或直到你按“stop”才停止。该例运用一
+个BufferedReader 类来从控制台读取数据。
+
+// A tiny editor.
+import java.io.*
+;
+
+
+class TinyEdit
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+// create a BufferedReader using System.in
+BufferedReader br = new BufferedReader(new
+
+
+InputStreamReader(System.in))
+;
+String str[] = new String[100]
+;
+
+
+ System.out.println("Enter lines of text.")
+;
+System.out.println("Enter 'stop' to quit.")
+;
+for(int i=0; i<100; i++)
+{
+
+
+ str[i] = br.readLine()
+;
+if(str[i].equals("stop")) break;
+}
+
+
+ System.out.println("\nHere is your file:");
+
+ // display the lines
+
+for(int i=0; i<100; i++)
+{
+if(str[i].equals("stop")) break;
+System.out.println(str[i])
+;
+
+
+}
+}
+}
+
+
+下面是输出部分：
+
+Enter lines of text.
+Enter ‘stop’ to quit.
+This is line one.
+This is line two.
+
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+Java makes working with strings easy.
+Just create String objects.
+stop
+Here is your file:
+This is line one.
+This is line two.
+Java makes working with strings easy.
+Just create String objects.
+
+
+12.3 向控制台写输出
+控制台输出由前面描述过的print( ) 和 println( ) 来完成最为简单，它们被用在本书的大
+多数例题中。这两种方法由PrintStream(System.out 引用的对象类型)定义。尽管System.out
+是一个字节流，用它作为简单程序的输出是可行的。字符流输出在下节介绍。
+
+因为PrintStream 是从OutputStream 派生的输出流，它同样实现低级方法write( )，write( )
+可用来向控制台写数据。PrintStream 定义的write( )的最简单的形式如下：
+
+void write(int byteval)
+
+该方法按照byteval 指定的数向文件写字节。尽管byteval 定义成整数，但只有低位的8
+个字节被写入。下面的短例用 write( ) 向屏幕输出字符“A”，然后是新的行。
+
+// Demonstrate System.out.write()
+.
+class WriteDemo
+{
+public static void main(String args[])
+{
+int b;
+
+
+ b = 'A'
+;
+System.out.write(b)
+;
+System.out.write('\n')
+;
+
+
+}
+}
+
+
+一般不常用write( )来完成向控制台的输出（尽管这样做在某些场合非常有用），因为
+print( ) 和println( ) 更容易用。
+
+12.4 PrintWriter 类
+尽管Java 允许用System.out 向控制台写数据，但建议仅用在调试程序时或在例题中，这
+在本书中得到充分体现。对于实际的程序，Java 推荐的向控制台写数据的方法是用
+PrintWriter 流。PrintWriter 是基于字符的类。用基于字符类向控制台写数据使程序更为国际
+化。
+
+PrintWriter 定义了多个构造函数，我们所用到的一个如下：
+
+PrintWriter(OutputStream outputStream, boolean flushOnNewline)
+
+这里，outputStream 是OutputStream 类的对象，flushOnNewline 控制Java 是否在println( )
+
+
+226 第1 部分Java 语言
+
+方法被调用时刷新输出流。如果flushOnNewline 为true ，刷新自动发生，若为false ，则不发
+生。
+
+PrintWriter 支持所有类型（包括Object ）的print( ) 和println( ) 方法，这样，你就可以像用
+System.out 那样用这些方法。如果遇到不同类型的情况，PrintWriter 方法调用对象的toString( )
+方法并打印结果。
+
+用PrintWriter 向外设写数据，指定输出流为System.out 并在每一新行后刷新流。例如这
+行代码创建了与控制台输出相连的PrintWriter 类。
+
+PrintWriter pw = new PrintWriter(System.out, true);
+
+下面的应用程序说明了用PrintWriter 处理控制台输出的方法：
+
+// Demonstrate PrintWriter
+import java.io.*
+;
+
+
+public class PrintWriterDemo {
+
+public static void main(String args[]) {
+
+PrintWriter pw = new PrintWriter(System.out, true);
+
+ pw.println("This is a string");
+
+ int i = -7;
+
+pw.println(i);
+
+ double d = 4.5e-7;
+
+ pw.println(d);
+
+}
+
+}
+
+该程序的输出如下：
+
+This is a string
+
+-7
+
+4.5E-7
+
+记住，在你学习Java 或调试程序时用System.out 向控制台写简单文本输出是没有错的。
+但是使用PrintWriter 使实际的应用程序更容易国际化。因为在本书所示的例题程序中用
+PrintWriter 并没有多大的优势，所以我们继续用System.out 来向控制台输出。
+
+12.5 文件的读写
+Java 为你提供了一系列的读写文件的类和方法。在Java 中，所有的文件都是字节形式的。
+Java 提供从文件读写字节的方法。而且，Java 允许在字符形式的对象中使用字节文件流。这
+项技术在第2部分描述。本章说明基本的文件输入/输出。
+
+两个最常用的流类是FileInputStream 和FileOutputStream ，它们生成与文件链接的字节
+流。为打开文件，你只需创建这些类中某一个类的一个对象，在构造函数中以参数形式指
+定文件的名称。这两个类都支持其他形式的重载构造函数。下面是我们将要用到的形式：
+
+FileInputStream(String fileName) throws FileNotFoundException
+FileOutputStream(String fileName) throws FileNotFoundException
+
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+这里，fileName 指定需要打开的文件名。当你创建了一个输入流而文件不存在时，引
+发FileNotFoundException 异常。对于输出流，如果文件不能生成，则引发FileNotFound
+Exception异常。如果一个输出文件被打开，所有原先存在的同名的文件被破坏。
+
+注意：在早期的Java版本中，当输出文件不能创建时FileOutputStream() 引发一
+个IOException 异常。这在Java 2中有所修改。
+
+当你对文件的操作结束后，需要调用close( )来关闭文件。该方法在FileInputStream 和
+FileOutputStream 中都有定义。如下：
+
+void close( ) throws IOException
+
+为读文件，可以使用在FileInputStream 中定义的read( ) 方法。我们用到的如下：
+
+int read( ) throws IOException
+
+该方法每次被调用，它仅从文件中读取一个字节并将该字节以整数形式返回。当读到
+文件尾时，read( ) 返回-1。该方法可以引发IOException 异常。
+
+下面的程序用read()来输入和显示文本文件的内容，该文件名以命令行形式指定。注意
+try/catch 块处理程序运行时可能发生的两个错误——未找到指定的文件或用户忘记包括文
+件名了。当你用命令行时也可以用这样的方法。
+
+/* Display a text file.
+
+To use this program, specify the name
+of the file that you want to see.
+For example, to see a file called TEST.TXT,
+use the following command line.
+
+
+ Java ShowFile TEST.TXT
+
+*/
+
+import java.io.*;
+
+class ShowFile
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+int i;
+FileInputStream fin;
+
+
+ try
+{
+fin = new FileInputStream(args[0])
+;
+
+
+ } catch(FileNotFoundException e)
+{
+System.out.println("File Not Found")
+;
+return;
+
+
+ } catch(ArrayIndexOutOfBoundsException e)
+{
+System.out.println("Usage: ShowFile File")
+;
+return;
+
+
+}
+
+
+228 第1 部分Java 语言
+
+// read characters until EOF is encountered
+
+ do
+{
+i = fin.read()
+;
+if(i != -1) System.out.print((char) i)
+;
+
+
+ } while(i != -1);
+
+fin.close()
+;
+}
+}
+
+
+向文件中写数据，需用FileOutputStream 定义的write()方法。它的最简单形式如下：
+
+void write(int byteval) throws IOException
+
+该方法按照byteval 指定的数向文件写入字节。尽管byteval 作为整数声明，但仅低8位字
+节可以写入文件。如果在写的过程中出现问题，一个IOException 被引发。下面的例子用write()
+拷贝一个文本文件：
+
+/* Copy a text file.
+
+To use this program, specify the name
+of the source file and the destination file.
+For example, to copy a file called FIRST.TXT
+to a file called SECOND.TXT, use the following
+command line.
+
+
+Java CopyFile FIRST.TXT SECOND.TXT
+*
+/
+
+
+import java.io.*;
+
+class CopyFile
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+int i;
+FileInputStream fin;
+FileOutputStream fout;
+
+
+ try
+{
+// open input file
+try
+{
+
+
+ fin = new FileInputStream(args[0]);
+
+ } catch(FileNotFoundException e)
+{
+System.out.println("Input File Not Found")
+;
+return;
+
+
+}
+
+ // open output file
+try
+{
+fout = new FileOutputStream(args[1])
+;
+
+
+ } catch(FileNotFoundException e)
+{
+System.out.println("Error Opening Output File")
+;
+return;
+
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+ }
+
+ } catch(ArrayIndexOutOfBoundsException e)
+{
+System.out.println("Usage: CopyFile From To")
+;
+return;
+
+
+}
+
+ // Copy File
+try
+{
+
+
+ do
+{
+i = fin.read()
+;
+if(i != -1) fout.write(i)
+;
+
+
+ } while(i != -1)
+;
+} catch(IOException e)
+{
+System.out.println("File Error")
+;
+}
+
+
+ fin.close()
+;
+fout.close()
+;
+}
+}
+
+
+注意本程序中和前面ShowFile 程序中处理潜在输入/输出错误的方法。不像其他的计算
+机语言，包括C和C++ ，这些语言用错误代码报告文件错误，而Java 用异常处理机制。这样
+不仅是文件处理更为简洁，而且使Java 正在执行输入时容易区分是文件出错还是EOF 条件
+问题。在C/C++ 中，很多输入函数在出错时和到达文件结尾时返回相同的值（也就是说，
+在C/C++ 中，EOF 情况与输入错误情况映射相同）。这通常意味着程序员必须还要编写特殊
+程序语句来判定究竟是哪种事件发生。Java 中，错误通过异常引发，而不是通过read( )的返
+回值。这样，当read( ) 返回-1时，它仅表示一点：遇到了文件的结尾。
+
+12.6 小应用程序基础
+本书中前面所有的例子都是Java 应用程序。然而，应用程序只是Java 程序的一种。另一
+种类型的程序是applet （小应用程序）。如第1章提到的，小应用程序（applet ）是访问internet
+服务器，在internet 上传播的，自动安装的，作为部分Web 文档运行的小应用程序。当小应
+用程序到达客户端，它被限制访问资源，以使它能够在不受病毒威胁和破坏数据完整性的
+情况下生成一个二进制的多媒体用户界面以及完成复杂的计算。
+
+用到applet 包时，很多关于创建和使用小应用程序的问题会在第2部分见到。然而，有
+关创建小应用程序的基础问题在这里描述，因为小应用程序与以前所用的程序具有不同的
+结构。你将看到，小应用程序在几处关键地方与应用程序不同。
+
+让我们从下面的简单小应用程序开始：
+
+import java.awt.*
+;
+import java.applet.*
+;
+
+
+public class SimpleApplet extends Applet
+{
+public void paint(Graphics g)
+{
+g.drawString("A Simple Applet", 20, 20)
+;
+
+
+
+230
+第1 部分Java 语言
+
+
+}
+}
+
+
+这个小应用程序以两个import 语句开始。第一个导入抽象窗口工具集（AWT ）类。小
+应用程序是通过AWT 与用户交流的，而不是通过基于控制台的输入/输出类。AWT 包含了
+对基于视窗的图形界面的支持。你能猜想，AWT 是非常庞大和复杂的，关于它的详尽的讨
+论在本书的第2部分花了好几章。幸运的是，这个简单的小应用程序仅用到了AWT 的一点
+点内容。第二个import 语句导入了applet 包，该包包含Applet 类。每一个小应用程序都必须
+是Applet 的子类。
+
+程序的下面一行声明了SimpleApplet 类。该类必须为public 型，因为它的代码会在程序
+外面被引用。
+
+在SimpleApplet 内部声明了paint() 。该方法由AWT 定义且必须被小应用程序重载。小应
+用程序每次重新显示输出时都要调用paint() 。发生这种情况有多种原因。例如，小应用程
+序运行的窗口可以被另一窗口重写然后覆盖。或者，小应用程序窗口可以最小化然后恢复。
+paint() 方法在小应用程序启动时也被调用。无论什么原因，当小应用程序需要重画输出时，
+paint() 总被调用。paint() 方法有一个Graphics 类型的参数，该参数包含描绘小应用程序运行
+的图形环境的内容。一旦小应用程序需要输出，该内容被用到。
+
+在paint( ) 内调用Graphics 类成员drawString() ，该方法从指定的X，Y坐标处输出一个字
+符串。它有下面的常用形式：
+
+void drawString(String message, int x, int y)
+
+这里message 是以x,y为输出起点的字符串。在Java 窗口中，左上角的位置为0，0。在小
+应用程序中DrawString() 的调用使得在坐标20，20处开始显示消息“A Simple Applet ”。
+
+注意小应用程序没有main() 方法，不像Java 应用程序，小应用程序不以main() 为程序起
+始。实际上，大多数小应用程序甚至不含main() 方法。相反，当小应用程序类名被传输到
+小应用程序阅读器(applet view) 或网络浏览器时它开始执行。
+
+在你键入SimpleApplet 的源代码后，用你以前编译程序的方法编译该程序。但是，运行
+SimpleApplet 包含一个完全不同的过程。实际上，有两种方法可以运行小应用程序。
+
+·
+在一个兼容Java 的网络浏览器，例如Netscape Navigator 中执行小应用程序
+·
+使用小应用程序阅读器，例如标准JDK 工具，小应用程序阅览器（appletviewer ）。
+一个小应用程序阅读器在窗口中执行小应用程序。这是检测小应用程序最快和最简
+单的方法。
+上述方法在下面都有阐述。
+
+为在一个网络浏览器中执行小应用程序，需要编写包含适当APPLET 标记的简短的
+HTML 文档。下面是执行SimpleApplet 的HTML 文件：
+
+<applet code="SimpleApplet" width=200 height=60>
+</applet>
+
+
+width 和height 语句指定了小应用程序用到的显示区域的尺寸（APPLET 标记包括几个
+其他的选项，这在第2部分有详细的描述）。创建文件后，你可以启动浏览器并加载可以执
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+行SimpleApplet 的文件。
+为使用小应用程序阅读器执行SimpleApplet ，你也需执行前面的HTML 文件。例如前面
+所述的HTML 文档叫做RunApp.html ，则下面的命令行将运行SimpleApplet：
+
+C:\>appletviewer RunApp.html
+
+然而，存在一个更方便的方法使测试更快的完成。仅仅在你包含APPLET 标记的Java
+源代码的开头加入一个命令。这样做，你的代码就被一个必要的HTML 语句原型证明，你
+只需启动含有JAVA 源码文件的小应用程序阅读器就可以测试你编译过的小应用程序。如果
+你使用该方法，SimpleApplet 源文件如下：
+
+import java.awt.*
+;
+import java.applet.*
+;
+/
+*
+<applet code="SimpleApplet" width=200 height=60>
+</applet>
+*
+/
+
+
+public class SimpleApplet extends Applet
+{
+public void paint(Graphics g)
+{
+g.drawString("A Simple Applet", 20, 20)
+;
+}
+}
+
+
+总的来说，你可以使用下面三步来应用小应用程序：
+
+1.
+编写Java 源程序。
+2.
+编译程序。
+3.
+执行小应用程序阅览器，指定小应用程序源文件名称。小应用程序阅览器将在注释
+中遇到APPLET 标记并执行小应用程序。
+SimpleApplet 生成的窗口，在小应用程序阅览器中显示。该窗口如下面插图：
+
+
+关于小应用程序的专题在本书后面有更详尽的讨论，下面是需要记住的关键点：
+
+·
+小应用程序不一定包含 main( ) 方法。
+·
+小应用程序必须在小应用程序阅读器或兼容JAVA的浏览器中运行。
+·
+用户输入/输出不是由Java 的输入/输出流类来完成的。相反，小应用程序运用
+AWT 提供的界面。
+
+232 第1 部分Java 语言
+
+12.7 Transient和volatile 修饰符
+Java 定义了两类有趣的修饰符：transient和volatile ，这些修饰符用来处理特殊的情况。
+
+如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。例如：
+
+class T {
+
+transient int a; // will not persist
+
+int b; // will persist
+
+}
+
+这里，如果T类的一个对象被写入一个持久的存储区域，a的内容不被保存，但b将被保
+存。
+
+Volatile 修饰符告诉编译器被volatile 修饰的变量可以被程序的其他部分改变。一种这样
+的情形是多线程程序（参看第11章的例子）。在多线程程序里，有时两个或更多的线程共
+享一个相同的实例变量。考虑效率的问题，每个线程可以自己保存该共享变量的私有拷贝。
+实际的（或主要的）变量副本在不同的时候更新，例如当进入synchronized 方法时。当这种
+方式运行良好时，它在时间上会是低效的。在某些情况，真正要紧的是变量主副本的值会
+体现当前的状态。为保证这点，仅需把变量定义成volatile 型，它告诉编译器它必须总是使
+用volatile 变量的主副本（或者至少总是保持一些私有的最新的主副本的拷贝，反之亦然），
+同时，对主变量的获取必须以简洁次序执行，就像执行私有拷贝一样。
+
+注意：Java中的volatile 或多或少与C/C++ 中的类似。
+
+12.8 使用instanceof
+有时，在运行时间内知道对象类型是很有用的。例如，你有一个执行线程生成各种类
+型的对象，其他线程处理这些对象。这种情况下，让处理线程在接受对象时知道每一个对
+象的类型是大有裨益的。另一种在运行时间内知道对象的类型是很有用的情形是强制类型
+转换。Java 中非法强制类型转换导致运行时错误。很多非法的强制类型转换在编译时发生。
+然而包括类层次结构的强制类型转换可能产生仅能在运行时间里被察觉的非法强制类型转
+换。例如，一个名为A的父类能生成两个子类B和C。这样，在强制B对象转换为类型A或强
+制C对象转换为类型A都是合法的，但强制B对象转换为C对象（或相反）都是不合法的。
+因为类型A的一个对象可以引用B或C。但是你怎么知道，在运行时，在强制转换为C之前
+哪类对象被引用？它可能是A，B或C的一个对象。如果它是B的对象，一个运行时异常被
+引发。Java 提供运行时运算符instanceof 来解决这个问题。
+
+instanceof运算符具有下面的一般形式：
+
+object instanceof type
+
+这里，object 是类的实例，而type 是类的类型。如果object 是指定的类型或者可以被强制
+转换成指定类型，instanceof 将它评估成true ，若不是，则结果为false。这样，instanceof是
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+你的程序获得对象运行时类型信息的方法。
+下面的程序说明了instanceof 的应用：
+
+// Demonstrate instanceof operator.
+class A
+{
+int i, j;
+}
+
+
+class B
+{
+int i, j;
+}
+
+
+class C extends A
+{
+int k;
+}
+
+
+class D extends A
+{
+int k;
+}
+
+
+class InstanceOf {
+
+public static void main(String args[]) {
+A a = new A();
+B b = new B();
+C c = new C();
+D d = new D();
+
+ if(a instanceof A)
+System.out.println("a is instance of A");
+if(b instanceof B)
+System.out.println("b is instance of B");
+if(c instanceof C)
+System.out.println("c is instance of C");
+if(c instanceof A)
+System.out.println("c can be cast to A");
+
+ if(a instanceof C)
+System.out.println("a can be cast to C");
+
+ System.out.println();
+
+// compare types of derived types
+A ob;
+
+ob = d; // A reference to d
+System.out.println("ob now refers to d");
+if(ob instanceof D)
+
+ System.out.println("ob is instance of D");
+
+ System.out.println();
+
+ob = c; // A reference to c
+System.out.println("ob now refers to c");
+
+
+234 第1 部分Java 语言
+
+ if(ob instanceof D)
+System.out.println("ob can be cast to D")
+;
+else
+System.out.println("ob cannot be cast to D")
+;
+
+
+ if(ob instanceof A)
+System.out.println("ob can be cast to A")
+;
+
+
+ System.out.println();
+
+// all objects can be cast to Object
+if(a instanceof Object)
+System.out.println("a may be cast to Object")
+;
+if(b instanceof Object)
+System.out.println("b may be cast to Object")
+;
+if(c instanceof Object)
+System.out.println("c may be cast to Object")
+;
+if(d instanceof Object)
+System.out.println("d may be cast to Object")
+;
+}
+}
+
+
+程序输出如下：
+
+a is instance of
+A
+b is instance of
+B
+c is instance of
+C
+c can be cast to
+A
+
+
+ob now refers to
+d
+ob is instance of
+D
+
+
+ob now refers to
+c
+ob cannot be cast to
+D
+ob can be cast to
+A
+
+
+a may be cast to Object
+b may be cast to Object
+c may be cast to Object
+d may be cast to Object
+
+
+多数程序不需要instanceof 运算符，因为，一般来说，你知道你正在使用的对象类型。
+但是，在你编写对复杂类层次结构对象进行操作的通用程序时它是非常有用的。
+
+12.9 strictfp
+Java 2 向Java 语言增加了一个新的关键字strictfp。与Java 2 同时产生的浮点运算计算模
+型很轻松的使某些处理器可以以较快速度进行浮点运算例如奔腾处理器。特别指明，在计
+算过程中，一个不需要切断某些中介值的新的模型产生了。用strictfp来修饰类或方法，可
+以确保浮点运算（以及所有切断）正如它们在早期Java 版本中那样准确。切断只影响某些
+操作的指数。当一个类被strictfp 修饰，所有该类的方法都自动被strictfp修饰。
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+举例来说，下面的程序段告诉Java 在MyClass 中定义的所有方法都用原始浮点运算模型
+来计算：
+
+strictfp class MyClass { //...
+
+坦白地说，很多程序员从未用过strictfp，因为它只对非常少的问题有影响。
+
+12.10 本机方法
+尽管这种情况极少发生，你也许希望调用不是用Java 语言写的子程序。通常，这样的
+子程序是CPU 的或是你所工作环境的执行代码——也就是说，本机代码。例如，你希望调
+用本机代码子程序来获得较快的执行时间。或者，你希望用一个专用的第三方的库，例如
+统计学包。然而，因为Java 程序被编译为字节码，字节码由Java 运行时系统解释（或动态编
+译），看起来在Java 程序中调用本机代码子程序是不可能的。幸运的是，这个结论是错误
+的。Java 提供了native 关键字，该关键字用来声明本机代码方法。一旦声明，这些方法可以
+在Java 程序中被调用，就像调用其他Java 方法一样。
+
+为声明一个本机方法，在该方法之前用native 修饰符，但是不要定义任何方法体。例如：
+
+public native int meth() ;
+
+声明本机方法后，必须编写本机方法并要执行一系列复杂的步骤使它与Java 代码链接。
+
+很多本机方法是用C写的。把C代码结合到Java 程序中的机制是调用Java Native
+Interface (JNI) 。该方法学由Java 1.1 创建并在Java 2 中增强。（Java 1.0 是用不同的方法，该
+方法已经过时），关于JNI 的详尽描述超出了本书的范围。但是下面的描述为多数应用程序
+提供了足够的信息。
+
+注意：所需执行的精确的步骤随Java 环境和版本的不同而不同，它还依赖于所要
+
+实现的本机方法使用的语言。下面的讨论假定在Windows 95/98/NT/2000 环境下。
+
+所要实现的本机方法是用C写的。
+
+理解该过程的最简单的方法是完成一个例子。开始，输入下面的短程序，该程序使用
+了一个名为test( )的native 方法。
+
+// A simple example that uses a native method.
+
+public class NativeDemo {
+
+ int i;
+
+public static void main(String args[]) {
+
+NativeDemo ob = new NativeDemo();
+
+ ob.i = 10;
+
+System.out.println("This is ob.i before the native method:" +
+
+ ob.i);
+
+ob.test(); // call a native method
+
+System.out.println("This is ob.i after the native method:" +
+
+ ob.i);
+
+}
+
+// declare native method
+
+
+236 第1 部分Java 语言
+
+public native void test() ;
+
+// load DLL that contains static method
+static
+{
+System.loadLibrary("NativeDemo")
+;
+}
+}
+
+
+注意test( )方法声明为native 且不含方法体。简而言之这是我们用Ｃ语言实现的方法。
+同时注意static块。像本书前面解释过的，一个static块仅在程序开始执行时执行（更为简单
+的说，当它的类被加载时执行）。这种情况下，它用来加载包含本地执行方法test( )的动态
+链接库（你不久就会看到怎样创建这个库）。
+
+该库由loadLibrary( ) 方法加载。loadLibrary( ) 方法是System 类的组成单元。它的一般形
+式为：
+
+static void loadLibrary(String filename)
+
+这里，filename 是指定保存该库文件名的字符串。在Windows 环境下，该文件的扩展名
+为.DLL 。
+
+写完程序后，编译它生成NativeDemo.class 。然后，你必须用javah.exe 生成一个文件：
+NativeDemo.h（javah.exe 包含在JDK 中）。在执行test( ) 时你要包含NativeDemo.h 。为生成
+NativeDemo.h ，用下面的命令：
+
+javah -jni NativeDemo
+
+该命令生成名为NativeDemo.h 的头文件。该文件必须包含在实现test()的C文件中。该命
+令的输出结果如下：
+
+/* DO NOT EDIT THIS FILE - it is machine generated *
+/
+#include <jni.h>
+/* Header for class NativeDemo *
+/
+
+
+#ifndef _Included_NativeDemo
+#define _Included_NativeDemo
+#ifdef _ _cplusplus
+extern "C"
+{
+#endif
+/
+*
+
+
+* Class: NativeDemo
+* Method: test
+* Signature: ()
+V
+*
+/
+JNIEXPORT void JNICALL Java_NativeDemo_test
+(JNIEnv *, jobject)
+;
+
+
+#ifdef _ _cplusplus
+}
+#endif
+#endif
+
+
+请特别注意下面一行，该行定义了所要创建的test( )函数的原型：
+
+
+第12 章输入/输出、小应用程序和其他主题
+
+JNIEXPORT void JNICALL Java_NativeDemo_test(JNIEnv *, jobject);
+
+注意函数的名称是Java_NativeDemo_test( ) 。调用本机函数你必须用这样的名字。也就
+是说，不是生成一个名为test( ) 的C函数，而是创建一个名为Java_NativeDemo_test( ) 函数。
+加入前缀NativeDemo 是因为它把test( )方法作为NativeDemo 类的一部分。记住，其他类可以
+定义它们自己的与NativeDemo 定义的完全不同的本地test( )方法。前缀中包括类名的方法解
+决了区分不同版本的问题。作为一个常规方法，给本机函数取名，前缀中必须包括声明它
+们的类名。
+
+生成了必备的头文件后，可以编写test( )执行文件并把它存在一个名为NativeDemo.c 的
+文件中：
+
+/* This file contains the C version of the
+test() method.
+*
+/
+
+
+#include <jni.h>
+#include "NativeDemo.h"
+#include <stdio.h>
+
+
+JNIEXPORT void JNICALL Java_NativeDemo_test(JNIEnv *env, jobject obj)
+
+{
+jclass cls;
+jfieldID fid;
+jint i;
+
+
+ printf("Starting the native method.\n")
+;
+cls = (*env)->GetObjectClass(env, obj)
+;
+fid = (*env)->GetFieldID(env, cls, "i", "I")
+;
+
+
+if(fid == 0)
+{
+printf("Could not get field id.\n")
+;
+return;
+
+
+}
+i = (*env)->GetIntField(env, obj, fid)
+;
+printf("i = %d\n", i)
+;
+(*env)->SetIntField(env, obj, fid, 2*i)
+;
+printf("Ending the native method.\n")
+;
+
+
+}
+
+注意此文件包含具有接口信息的jni.h 文件。该文件由你的Java 编译器提供。头文件
+NativeDemo.h 预先已由javah 创建。
+
+该函数中，GetObjectClass( ) 方法用来获得一个含有NativeDemo 类信息的C结构。
+GetFieldID( ) 方法返回一个包含该类域名“i”信息的C结构。GetIntField() 检索该域原来的
+值。SetIntField( ) 存储该域的一个更新值（别的处理其他数据类型的方法参看文件jni.h ）。
+
+生成NativeDemo.c 文件后，必须编译它生成一个DLL 文件。用微软C/C++ 编译器来做，
+使用下面的命令行：
+
+Cl /LD NativeDemo.c
+
+它生成了一个名为NativeDemo.dll 的文件。该步骤完成，你可以执行Java 程序。该程
+
+
+238
+第1 部分Java 语言
+
+序输出如下：
+
+This is ob.i before the native method: 10
+Starting the native method.
+i = 10
+Ending the native method.
+This is ob.i after the native method: 20
+
+
+注意：使用native 的特殊环境是依赖于实现和环境的。而且，与JAVA代码接口的
+指定方式必须改变。你必须仔细考虑完成你Java 开发系统文件的本机方法。
+
+12.11 使用本机方法的问题
+本机方法看起来提供巨大承诺，因为它们使你有权使用已经存在的库程序，而且使快
+速执行成为可能。但是本机方法同样引入了两个重大问题：
+
+·
+潜在的安全隐
+患
+因为本机方法执行实际的机器代码，它有权使用主机系统的任何
+资源。也就是说，本机代码不受Java 执行环境的限制。例如，它可能允许病毒入侵。
+因为这个原因，小应用程序不能使用本机方法。同样，DLL 文件的加载被限制，它
+们的加载必须经过安全管理器的同意。
+·
+丧失了可移植性因为本机代码是包含在DLL 文件中的，它必须存在于执行Java 程
+序的机器上。而且，因为每一个本机方法都依赖于CPU 和操作系统，每一个DLL 文
+件在本质上都是不可可移植性的。这样，一个运用本机方法的Java 程序只能在一个
+已经安装了可兼容的DLL 的机器上运行。
+本机方法的使用是受限的，因为它使Java 程序丧失了可移植性且造成重大安全隐患。
+        `
+    },
+    {
+        name:'第2部分Java库  第13章字符串处理',
+        cont:`
+            在第7章已对Java 的字符串处理做了简要的介绍。本章将对此做详细论述。像大多数其
+他计算机语言一样，Java 中的字符串也是一连串的字符。但是与许多其他的计算机语言将
+字符串作为字符数组处理不同，Java 将字符串作为String 类型对象来处理。
+
+将字符串作为内置的对象处理允许Java 提供十分丰富的功能特性以方便处理字符串。
+例如，Java 语言中有多种方法用于比较两个字符串，搜索子字符串，连接字符串以及改变
+字符串中字母的大小写。也有许多途径可以构造出String 对象，使得当需要时，能够容易得
+到字符串。
+
+有些出乎意料的是当创建一个String 对象时，被创建的字符串是不能被改变的。这也就
+是说一旦一个String 对象被创建，将无法改变那些组成字符串的字符。表面上看起来，这好
+像是一个严格的约束。然而事实并非如此。你仍能够执行各种类型的字符串操作。区别在
+于每次需要改变字符串时都要创建一个新的String 对象来保存新的内容。原始的字符串不
+变。之所以采用这种方法是因为实现固定的，不可变的字符串比实现可变的字符串更高效。
+对于那些想得到改变的字符串的情况，有一个叫做StringBuffer 的String 类的友类。它的对象
+包含了在创建之后可被改变的字符串。
+
+String 类和StringBuffer 类都在java.lang 中定义。因此它们可以自动的被所有程序利用。
+两者均被说明为final ，这意味着两者均不含子类。从而使得某些增强性能的优化可作用于
+普通字符串操作。
+
+最后需要指明一点：包含在类型String 对象中的字符串的不可改变意味着String 实例一
+旦被建立，它的内容将不能被改变。然而在任何时候，被说明为String 引用的变量可以被改
+变以指向另外的一些字符串（String ）对象。
+
+13.1 String构造函数
+String 类支持几种构造函数。将创建空String 的构造函数称为默认构造函数。例如，
+
+String s = new String();
+
+将创建一个String 实例，该实例中不包含字符。
+
+通常希望创建含有初始值的字符串。String 类提供了各种构造函数来完成这项功能。使
+
+
+240 第2 部分Java 库
+
+用如下的构造函数可以创建一个被字符数组初始化的字符串（String）
+：
+
+String(char chars[ ])
+
+下面是一个例子：
+
+char chars[] = { 'a', 'b', 'c' }
+;
+String s = new String(chars)
+;
+
+
+这个构造函数用字符串“abc ”初始化s
+。
+使用下面的构造函数可以指定字符数组的一个子区域作为初始化值
+。
+
+
+String(char chars[ ], int startIndex, int numChars)
+
+这里，startIndex 指定了子区域开始的下标，numChars 指定所用字符的个数。下面是一
+个例子：
+
+char chars[] = { 'a', 'b', 'c', 'd', 'e', 'f' }
+;
+String s = new String(chars, 2, 3)
+;
+
+
+该例子用字符cde 初始化s。
+用下面的构造函数可以构造一个String 对象，该对象包括了与另一个String 对象相同的
+字符序列。
+
+String(String strObj)
+
+这里strObj是一个String 对象，请看如下例子：
+
+// Construct one String from another.
+class MakeString
+{
+
+
+public static void main(String args[])
+{
+char c[] = {'J', 'a', 'v', 'a'}
+;
+String s1 = new String(c)
+;
+String s2 = new String(s1)
+;
+
+
+ System.out.println(s1)
+;
+System.out.println(s2)
+;
+}
+}
+
+
+程序的输出如下所示：
+
+Java
+Java
+
+
+正如你所能看到的，s1和s2包含了相同的字符串。
+
+尽管Java 的Char类型使用16位（bit ）表示Unicode 编码字符集，在Internet 中，字符串的
+典型格式使用由ASCII 字符集构成的8位字节数组。因为8位ASCII 字符串是共同的，当给定
+一个字节（byte ）数组时，String 类提供了初始化字符串的构造函数。它们的形式如下：
+
+String(byte asciiChars[ ]
+)
+String(byte asciiChars[ ], int startIndex, int numChars)
+
+
+
+第13 章字符串处理
+
+这里asciiChars 指定了字节数组。第二种形式允许指定一个子区域。在这些构造函数中，
+通过使用操作平台默认的字符编码实现了由字节到字符的转换，下面的程序举例说明了这
+些构造函数：
+
+// Construct string from subset of char array.
+class SubStringCons
+{
+public static void main(String args[])
+{
+byte ascii[] = {65, 66, 67, 68, 69, 70 }
+;
+
+
+String s1 = new String(ascii)
+;
+System.out.println(s1)
+;
+
+
+String s2 = new String(ascii, 2, 3)
+;
+System.out.println(s2)
+;
+}
+}
+
+
+该程序运行产生如下的输出：
+
+ABCDEF
+CDE
+
+
+字节-字符串转换的扩展版本也有定义，使用该版本，你可以指定实现字节-字符串转
+换的字符编码方式。不过，大多数情况下，一般会选择操作平台提供的默认编码。
+
+注意：当从一个数组创建一个String 对象时，数组的内容将被复制。在字符串被
+创建以后，如果改变数组的内容，String 将不会随之改变。
+
+13.2 字符串长度
+字符串的长度是指其所包含的字符的个数。调用如下的length( ) 方法可以得到这个值：
+
+int length( )
+
+下面的程序段输出“3”，因为在字符串s中有三个字符。
+
+char chars[] = { 'a', 'b', 'c' }
+;
+String s = new String(chars)
+;
+System.out.println(s.length())
+;
+
+
+13.3 特殊的字符串操作
+因为字符串是程序中的一个通用和重要的部分，Java 为字符串操作在语法中增加了特
+殊的支持。这些操作包括从字符串常量自动创建新的String 实例。通过+运算符连接多个
+String 对象以及将其他的数据类型转换成字符串形式。尽管有显式的方法去执行这些函数，
+而为了方便程序员，Java 会自动执行它们。
+
+
+242 第2 部分Java 库
+
+13.3.1 字符串文字
+前面的例子说明了如何通过使用new运算符从一个字符数组明确地创建一个String 实
+例。然而这是一种早期的使用字符串常量的处理方法。对于程序中的每一个字符串常量，
+Java 会自动创建String 对象。因此，可以使用字符串常量初始化String 对象。例如，如下的
+程序代码段创建两个相等的字符串。
+
+char chars[] = { 'a', 'b', 'c' }
+;
+String s1 = new String(chars)
+;
+
+
+String s2 = "abc"; // use string literal
+
+由于对应每一个字符串常量，有一String 对象被创建，因此在使用字符串文字的任何地
+方，都可以使用String 对象。例如，可以直接对引用字符串调用方法，如同它是一个对象引
+用，如下面语句所显示的那样。以字符串“abc ”调用方法length( ) ，正如所料，输出“3”。
+
+System.out.println("abc".length());
+
+13.3.2 字符串连接
+通常，Java 不允许对String 对象进行操作。这一规则的一个例外是+运算符，它可以连
+接两个字符串，产生一个String 对象。也允许使用一连串的+运算符，例如下面的程序段将
+三个字符串连接起来：
+
+String age = "9"
+;
+String s = "He is " + age + " years old."
+;
+System.out.println(s)
+;
+
+
+输出为字符串“He is 9 years old. ”。
+字符串连接的一个实际使用是当创建一个很长的字符串时，可以将它拆开，使用+将它
+们连接起来，避免源代码中长字符串的换行，下面是一个例子：
+
+// Using concatenation to prevent long lines.
+class ConCat
+{
+public static void main(String args[])
+{
+
+
+String longStr = "This could have been "
++
+"a very long line that would have "
++
+"wrapped around. But string concatenation "
++
+"prevents this."
+;
+
+
+ System.out.println(longStr)
+;
+}
+}
+
+
+13.3.3 字符串与其他类型数据的连接
+字符串可以和其他类型的数据连接。例如，考虑与前面的例子略有差别的一个例子：
+
+int age = 9;
+String s = "He is " + age + " years old."
+;
+System.out.println(s)
+;
+
+
+
+第13 章字符串处理
+
+在这里，age 是一个整型（int ）而不是另一个字符串（String ）型值，但是程序的输出
+与前面的例子相同。这是因为在字符串（String ）对象中age 的整型（int ）值自动转换为它
+的字符串（String ）形式。然后这个字符串就和前面一样被连接。只要+运算符的一个运算
+数是字符串（String ）实例，编译器就将另一个运算数转换为它的字符串形式。
+
+应当小心的是当你将其他类型的操作与字符串连接表达式混合时，有可能得到意想不
+到的结果。看下面例子：
+
+String s = "four: " + 2 + 2;
+System.out.println(s)
+;
+
+
+程序显示：
+
+four: 22
+
+而不是
+
+four: 4
+
+虽然这可能是你期望得到的。这是为什么呢？这是因为运算符的优先级造成了首先是
+“four”和与2相应的字符串的连接，这个连接的结果再和与2相应的字符串连接。若要先
+实现整数加，就应该使用圆括号。像下面这样：
+
+String s = "four: " + (2 + 2);
+
+现在s包含了字符串“four：4”。
+
+13.3.4 字符串转换和toString( )
+当Java 在连接时将数据转换为其字符串形式时，它是通过调用一个由字符串（String）
+定义的字符串转换方法valueOf( ) 的重载来完成的。valueOf( ) 方法对所有简单的类型和类型
+Object 重载。对于简单类型，valueOf( ) 方法返回一个字符串，该字符串包含了相应其被调
+用的值的可读值。对于对象，valueOf( ) 方法调用toString( ) 方法。在本章后面我们将更仔细
+地分析valueOf( ) 方法。这里让我们讨论toString( ) 方法，因为通过它可以确定所创建类的对
+象的字符串形式。
+
+每一个类都执行toString( ) 方法，因为它是由Object 定义的。然而toString( ) 方法的默认
+实现是不够的。对于所创建的大多数类，通常想用你自己提供的字符串表达式重载toString( )
+方法。幸运的是这很容易做到。toString( ) 方法具有如下的一般形式：
+
+String toString( )
+
+实现toString( ) 方法，仅仅返回一个String 对象，该对象包含描述类中对象的可读的字符
+串。
+
+通过对所创建类的toString( ) 方法的覆盖，允许将得到的字符串完全集成到Java 的程序
+设计环境中。例如它们可以被用于print( ) 和println( ) 语句以及连接表达式中。下面的程序中
+用Box 类重载toString( ) 方法说明了这些。
+
+// Override toString() for Box class.
+class Box
+{
+
+
+
+244 第2 部分Java 库
+
+ double width;
+double height;
+double depth;
+
+
+Box(double w, double h, double d)
+{
+width = w;
+height = h;
+depth = d;
+
+
+}
+
+public String toString()
+{
+return "Dimensions are " + width + " by "
++
+depth + " by " + height + "."
+;
+}
+}
+
+
+class toStringDemo {
+
+public static void main(String args[])
+{
+Box b = new Box(10, 12, 14)
+;
+String s = "Box b: " + b; // concatenate Box object
+
+
+System.out.println(b); // convert Box to string
+System.out.println(s)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Dimensions are 10.0 by 14.0 by 12.0
+Box b: Dimensions are 10.0 by 14.0 by 12.0
+
+
+正如你能看到的那样，当Box 对象在连接表达式中使用或出现在调用println( ) 中时，Box
+的toString( ) 方法被自动调用。
+
+13.4 字符截取
+String 类提供了许多从String 对象中截取字符的方法。下面逐一介绍。尽管在一个String
+对象中构成字符串的字符不能像字符数组一样被索引，许多字符串（String ）方法利用下标
+（或偏移）对字符串进行操作。和数组一样，字符串下标从0开始。
+
+13.4.1 charAt( )
+为了从一个字符串（String ）中截取一个字符，可以通过charAt( ) 方法直接引用单个字
+符。其一般形式如下：
+
+char charAt(int where)
+
+这里，where 是想要得到的字符的下标。where 的值必须是非负的，它指定了在字符串
+中的位置。charAt( ) 方法返回指定位置的字符。例如，
+
+char ch;
+
+
+第13 章字符串处理
+
+ch = "abc".charAt(1);
+
+将“b”赋给ch。
+
+13.4.2 getChars( )
+如果想一次截取多个字符，可以使用getChars( ) 方法。它有如下的一般形式：
+
+void getChars(int sourceStart, int sourceEnd, char target[ ], int
+targetStart)
+
+这里sourceStart 指定了子字符串开始的下标，sourceEnd 指定了子字符串结束的下一个
+字符的下标。因此子字符串包含了从sourceStart 到sourceEnd–1 的字符。获得字符的数组由
+target 所指定。将被复制子字符串于其中的target 的下标由targetStart指定。注意必须确保的
+是数组target 应该足够大以保证能容纳被指定子字符串中的字符。
+
+下面的程序说明了getChars( ) 方法：
+
+class getCharsDemo {
+
+public static void main(String args[]) {
+
+String s = "This is a demo of the getChars method.";
+
+ int start = 10;
+
+ int end = 14;
+
+char buf[] = new char[end - start];
+
+ s.getChars(start, end, buf, 0)
+;
+System.out.println(buf)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+demo
+
+13.4.3 getBytes( )
+有一种称为getBytes( ) 的方法，它是实现将字符存放于字节数组中的getChars( ) 方法的
+替代，它使用平台提供的默认的字符到字节的转换。下面是它的最简单形式：
+
+byte[ ] getBytes( )
+
+也可使用getBytes( ) 方法的其他形式。在将字符串（String ）值输出到一个不支持16位
+Unicode 编码的环境时，getBytes( ) 是最有用的。例如，大多数Internet 协议和文本文件格式
+在文本交换时使用8位ASCII 编码。
+
+13.4.4 toCharArray( )
+如果想将字符串（String ）对象中的字符转换为一个字符数组，最简单的方法就是调用
+toCharArray( ) 方法。对应整个字符串，它返回一个字符数组。其一般形式为：
+
+char[ ] toCharArray( )
+
+这个函数是为了便于使用而提供的，因此也可以用getChars( ) 方法获得相同的结果。
+
+
+246 第2 部分Java 库
+
+13.5 字符串比较
+String 类包括了几个用于比较字符串或字符串内子字符串的方法。下面分别对它们进行
+介绍。
+
+13.5.1 equals( ) 和 equalsIgnoreCase( )
+使用equals( ) 方法比较两个字符串是否相等。它具有如下的一般形式：
+
+boolean equals(Object str)
+
+这里str是一个用来与调用字符串（String ）对象做比较的字符串（String ）对象。如果
+两个字符串具有相同的字符和长度，它返回true，否则返回false。这种比较是区分大小写的。
+为了执行忽略大小写的比较，可以调用equalsIgnoreCase( ) 方法。当比较两个字符串时，
+它会认为A-Z 和a-z 是一样的。其一般形式如下：
+
+boolean equalsIgnoreCase(String str)
+
+这里，str是一个用来与调用字符串（String ）对象做比较的字符串（String ）对象。如
+果两个字符串具有相同的字符和长度，它也返回true ，否则返回false。
+下面的例子说明了equals( ) 和equalsIgnoreCase( ) 方法：
+
+// Demonstrate equals() and equalsIgnoreCase()
+.
+class equalsDemo
+{
+
+
+public static void main(String args[])
+{
+String s1 = "Hello"
+;
+String s2 = "Hello"
+;
+String s3 = "Good-bye"
+;
+String s4 = "HELLO"
+;
+System.out.println(s1 + " equals " + s2 + " -> "
++
+
+
+ s1.equals(s2))
+;
+System.out.println(s1 + " equals " + s3 + " -> "
++
+s1.equals(s3))
+;
+System.out.println(s1 + " equals " + s4 + " -> "
++
+s1.equals(s4))
+;
+System.out.println(s1 + " equalsIgnoreCase " + s4 + " -> "
++
+s1.equalsIgnoreCase(s4))
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Hello equals Hello -> true
+Hello equals Good-bye -> false
+Hello equals HELLO -> false
+Hello equalsIgnoreCase HELLO -> true
+
+
+
+第13 章字符串处理
+
+13.5.2 regionMatches( )
+regionMatches( )方法将一个字符串中指定的区间和另一字符串中指定的区间进行比
+较。它的重载形式允许在比较时忽略大小写。下面给出这两种方法的一般形式：
+
+boolean regionMatches(int startIndex, String str2,
+
+ int str2StartIndex, int numChars)
+
+boolean regionMatches(boolean ignoreCase,
+
+ int startIndex, String str2,
+
+ int str2StartIndex, int numChars)
+
+对于这两种形式，startIndex 指定了调用字符串（String ）对象内区间开始的下标。用于
+比较的字符串（String ）由str2 指定的。在str2内，开始比较区间的下标由str2StartIndex 指定。
+用于比较的子字符串的长度在numChars 中。在第二种方案中，如果ignoreCase 是true ，字符
+的大小写被忽略。否则，大小写是有意义的。
+
+13.5.3 startsWith( ) 和endsWith( )
+字符串（String ）定义两个例程，它们或多或少是regionMatches( ) 方法的特殊形式。
+startsWith( ) 方法判断一个给定的字符串（String ）是否从一个指定的字符串开始。相反地，
+endsWith( ) 方法判断所讨论的字符串（String ）是否是以一个指定的字符串结尾。它们具有
+如下的一般形式：
+
+boolean startsWith(String str)
+boolean endsWith(String str)
+
+
+这里，str是被测试的字符串（String ）。如果字符串匹配，返回true 。否则返回false。
+例如：
+
+"Foobar".endsWith("bar")
+
+和
+
+"Foobar".startsWith("Foo")
+
+都是true
+。
+下面给出startsWith( ) 方法的第二种形式。这种形式允许指定一个起始点
+：
+
+
+boolean startsWith(String str, int startIndex)
+
+这里，startIndex 指定了调用字符串开始搜索的下标。例如，
+
+"Foobar".startsWith("bar", 3)
+
+返回true 。
+
+13.5.4 equals( ) 与==的比较
+理解equals( ) 方法和==运算符执行的是两个不同的操作是重要的。如同刚才解释的那
+样，equals( ) 方法比较字符串（String ）对象中的字符。而==运算符比较两个对象引用看它
+们是否引用相同的实例。下面的程序说明了两个不同的字符串（String ）对象是如何能够包
+
+
+248 第2 部分Java 库
+
+含相同字符的，但同时这些对象引用是不相等的：
+
+// equals() vs =
+=
+class EqualsNotEqualTo
+{
+
+
+public static void main(String args[])
+{
+String s1 = "Hello"
+;
+String s2 = new String(s1)
+;
+
+
+System.out.println(s1 + " equals " + s2 + " -> "
++
+s1.equals(s2))
+;
+System.out.println(s1 + " == " + s2 + " -> " + (s1 == s2))
+;
+}
+}
+
+
+变量s1指向由“Hello ”创建的字符串（String ）实例。s2所指的的对象是以s1作为初始
+化而创建的。因此这两个字符串（String ）对象的内容是一样的。但它们是不同的对象，这
+就意味着s1和s2没有指向同一的对象，因此它们是不==的，上面例子的结果如下：
+
+Hello equals Hello -> true
+Hello == Hello -> false
+
+
+13.5.5 compareTo( )
+通常，仅仅知道两个字符串是否相同是不够的。对于排序应用来说，必须知道一个字
+符串是大于、等于还是小于另一个。一个字符串小于另一个指的是它在字典中先出现。而
+一个字符串大于另一个指的是它在字典中后出现。字符串（String ）的compareTo( ) 方法实
+现了这种功能。它的一般形式如下：
+
+int compareTo(String str)
+
+这里str是与调用字符串（String ）比较的字符串（String ）。比较的结果返回并被解释
+如表13-1 所示：
+
+表13.1 字符串比较的结果及其含义
+
+值含义
+小于0 调用字符串小于str
+大于0 调用字符串大于str
+等于0 两个字符串相等
+
+下面是一个对字符串数组进行排序的例子程序。程序中在冒泡法排序中使用
+compareTo( ) 方法确定排序的顺序：
+
+// A bubble sort for Strings.
+class SortString
+{
+
+
+static String arr[] =
+{
+"Now", "is", "the", "time", "for", "all", "good", "men"
+,
+"to", "come", "to", "the", "aid", "of", "their", "country"
+
+
+}
+;
+public static void main(String args[])
+{
+for(int j = 0; j < arr.length; j++)
+{
+
+
+
+第13 章字符串处理
+
+for(int i = j + 1; i < arr.length; i++) {
+
+ if(arr[i].compareTo(arr[j]) < 0)
+{
+String t = arr[j]
+;
+arr[j] = arr[i]
+;
+arr[i] = t;
+
+
+}
+}
+System.out.println(arr[j])
+;
+
+
+}
+}
+}
+
+
+程序的输出是如下的单词表：
+
+Now
+aid
+all
+come
+country
+for
+good
+is
+men
+of
+the
+the
+their
+time
+to
+to
+
+
+正如从这个例子的输出所能看到的，compareTo( ) 方法区分单词的大小写。单词“Now”
+因为是以大写字母开始的而出现在其他单词的前面，这意味着它在ASCII 字符集中具有更小
+的值。
+
+如果想在比较两个字符串时，忽略大小写，可以使用如下的compareToIgnoreCase( ) 方
+法：
+
+int compareToIgnoreCase(String str)
+
+除了忽略大小写之外，该方法的返回值与compareTo( ) 方法相同。该方法是在Java 2 中
+新增加的。可以在前面的程序中换成这个方法。这样做了之后，“Now ”将不再是第一个
+输出了。
+
+13.6 搜索字符串
+String 类提供了两个方法，允许在字符串中搜索指定的字符或子字符串：
+
+· indexOf( ) 搜索字符或子字符串首次出现。
+· lastIndexOf( ) 搜索字符或子字符串的最后一次出现。
+
+250 第2 部分Java 库
+
+这两种方法被几种不同的方法重载。在所有这些情况下，方法返回字符或子字符串被
+
+发现的位置的下标，当搜索失败时，返回-1。
+搜索字符首次出现用
+
+int indexOf(int ch)
+
+搜索字符最后一次出现用
+
+int lastIndexOf(int ch)
+
+这里ch是被查找的字符。
+
+搜索子字符串首次或最后一次出现用
+
+int indexOf(String str)
+int lastIndexOf(String str)
+
+
+这里子字符串由str指
+定
+可以使用如下这些形式指定搜索的起始点
+：
+
+
+int indexOf(int ch, int startIndex)
+int lastIndexOf(int ch, int startIndex)
+
+
+int indexOf(String str, int startIndex)
+int lastIndexOf(String str, int startIndex)
+
+
+这里startIndex 指定了搜索开始点的下标。对于indexOf( ) 方法，搜索从startIndex 开始到
+
+字符串结束。对于lastIndexOf( ) 方法，搜索从startIndex 开始到下标0。
+下面的例子说明如何利用不同的索引方法在字符串（String ）的内部进行搜索：
+
+// Demonstrate indexOf() and lastIndexOf()
+.
+class indexOfDemo
+{
+public static void main(String args[])
+{
+String s = "Now is the time for all good men "
++
+"to come to the aid of their country."
+;
+
+
+ System.out.println(s)
+;
+System.out.println("indexOf(t) = "
++
+s.indexOf('t'))
+;
+System.out.println("lastIndexOf(t) = "
++
+s.lastIndexOf('t'))
+;
+System.out.println("indexOf(the) = "
++
+s.indexOf("the"))
+;
+System.out.println("lastIndexOf(the) = "
++
+s.lastIndexOf("the"))
+;
+System.out.println("indexOf(t, 10) = "
++
+s.indexOf('t', 10))
+;
+System.out.println("lastIndexOf(t, 60) = "
++
+s.lastIndexOf('t', 60))
+;
+System.out.println("indexOf(the, 10) = "
++
+s.indexOf("the", 10))
+;
+System.out.println("lastIndexOf(the, 60) = "
++
+s.lastIndexOf("the", 60))
+;
+}
+
+
+
+第13 章字符串处理
+
+}
+
+下面是该程序的输出结果：
+
+Now is the time for all good men to come to the aid of their country.
+indexOf(t) = 7lastIndexOf(t) = 65indexOf(the) = 7lastIndexOf(the) = 55indexOf(t, 10) = 11lastIndexOf(t, 60) = 55indexOf(the, 10) = 44lastIndexOf(the, 60) = 55
+
+13.7 修改字符串
+因为字符串（String ）对象是不可改变的，每当想修改一个字符串（String ）时，就必
+须采用或者将它复制到StringBuffer 或者使用下面字符串（String ）方法中的一种，这些方法
+都将构造一个完成修改的字符串的拷贝。
+
+13.7.1 substring( )
+利用substring( ) 方法可以截取子字符串，它有两种形式。其中第一种形式如下：
+
+String substring(int startIndex)
+
+这里startIndex 指定了子字符串开始的下标。这种形式返回一个从startIndex 开始到调用
+字符串结束的子字符串的拷贝。
+
+substring( ) 方法的第二种形式允许指定子字符串的开始和结束下标：
+
+String substring(int startIndex, int endIndex)
+
+这里startIndex 指定开始下标，endIndex 指定结束下标。返回的字符串包括从开始下标
+直到结束下标的所有字符，但不包括结束下标对应的字符。
+
+下面的程序使用substring( ) 方法完成在一个字符串内用一个子字符串替换另一个子字
+符串的所有实例的功能：
+
+// Substring replacement.
+
+class StringReplace {
+
+public static void main(String args[]) {
+
+String org = "This is a test. This is, too.";
+
+ String search = "is";
+
+ String sub = "was";
+
+ String result = "";
+
+ int i;
+
+do { // replace all matching substrings
+
+ System.out.println(org);
+
+ i = org.indexOf(search);
+
+ if(i != -1) {
+
+ result = org.substring(0, i);
+
+
+252 第2 部分Java 库
+
+ result = result + sub;
+result = result + org.substring(i + search.length())
+;
+org = result;
+
+
+}
+} while(i != -1)
+;
+
+
+}
+}
+
+
+这个程序的输出如下所示：
+
+This is a test. This is, too.
+Thwas is a test. This is, too.
+Thwas was a test. This is, too.
+Thwas was a test. Thwas is, too.
+Thwas was a test. Thwas was, too.
+
+
+13.7.2 concat( )
+使用concat( ) 可以连接两个字符串，一般形式如下：
+
+String concat(String str)
+
+这个方法创建一个新的对象，该对象包含调用字符串。而str的内容跟在调用字符串的
+后面。concat( )方法与+运算符执行相同的功能。例如，
+
+String s1 = "one"
+;
+String s2 = s1.concat("two")
+;
+
+
+将字符串“onetwo ”赋给s2。它和下面的程序段产生相同的结果：
+
+String s1 = "one"
+;
+String s2 = s1 + "two"
+;
+
+
+13.7.3 replace( )
+replace( )方法用另一个字符代替调用字符串中一个字符的所有具体值。它具有如下的
+一般形式：
+
+String replace(char original, char replacement)
+
+这里original 指定被由replacement 指定的字符所代替的字符，返回得到的字符串。例如：
+
+String s = "Hello".replace('l', 'w');
+
+将字符串“Hewwo ”赋给s。
+
+13.7.4 trim( )
+trim( ) 方法返回一个调用字符串的拷贝，该字符串是将位于调用字符串前面和后面的空
+白符删除后的剩余部分。它的一般形式如下：
+
+String trim( )
+
+
+第13 章字符串处理
+
+这里是一个例子：
+
+String s = " Hello World ".trim();
+
+将字符串“Hello World ”赋给s。
+
+trim( ) 方法在处理用户输入的命令时，是十分有用的。例如，下面的程序提示用户输入
+一个州名后显示该州的首府名。程序中使用trim( ) 方法删除在用户输入期间，不经意间输入
+的任何前缀或后缀空白符。
+
+// Using trim() to process commands.
+import java.io.*
+;
+
+
+class UseTrim
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+// create a BufferedReader using System.in
+BufferedReader br = new
+
+
+ BufferedReader(new InputStreamReader(System.in))
+;
+String str;
+
+
+ System.out.println("Enter 'stop' to quit.")
+;
+System.out.println("Enter State: ")
+;
+do
+{
+
+
+ str = br.readLine()
+;
+str = str.trim(); // remove whitespace
+
+
+ if(str.equals("Illinois")
+)
+System.out.println("Capital is Springfield.")
+;
+else if(str.equals("Missouri")
+)
+System.out.println("Capital is Jefferson City.")
+;
+else if(str.equals("California")
+)
+System.out.println("Capital is Sacramento.")
+;
+else if(str.equals("Washington")
+)
+System.out.println("Capital is Olympia.")
+;
+// ..
+.
+} while(!str.equals("stop"))
+;
+}
+}
+
+
+13.8 利用valueOf( ) 方法实现数据转换
+valueOf( ) 方法将数据的内部格式转换为可读的形式。它是一种静态方法，对于所有Java
+内置的类型，在字符串（String ）内被重载，以便每一种类型都能被转换成字符串。valueOf( )
+方法还被类型Object 重载，所以创建的任何形式类的对象也可被用作一个参数（我们知道
+Object 是所有的类的超类）。这里是它的几种形式：
+
+static String valueOf(double num)
+static String valueOf(long num)
+static String valueOf(Object ob)
+static String valueOf(char chars[ ]
+)
+
+
+
+254 第2 部分Java 库
+
+与前面的讨论一样，调用valueOf( ) 方法可以得到其他类型数据的字符串形式——例如
+在进行连接操作时。对各种数据类型，可以直接调用这种方法得到合理的字符串（String）
+形式。所有的简单类型数据转换成相应于它们的普通字符串（String ）形式。任何传递给
+valueOf( ) 方法的对象都将返回对象的toString( ) 方法调用的结果。事实上，也可以通过直接
+调用toString( ) 方法而得到相同的结果。
+
+对大多数数组，valueOf( ) 方法返回一个相当晦涩的字符串，这说明它是一个某种类型
+的数组。然而对于字符（char ）数组，它创建一个包含了字符（char）数组中的字符的字符
+串（String ）对象。valueOf( ) 方法有一种特定形式允许指定字符（char ）数组的一个子集。
+它具有如下的一般形式：
+
+static String valueOf(char chars[ ], int startIndex, int numChars)
+
+这里chars是存放字符的数组，startIndex 是字符数组中期望得到的子字符串的首字符下
+标，numChars 指定子字符串的长度。
+
+13.9 改变字符串内字符的大小写
+toLowerCase( ) 方法将字符串内的所有字符从大写字母改写为小写字母。而
+toUpperCase( ) 方法将字符串内所有字符从小写字母改写为大写字母。对于那些非字母字符，
+如数字等则不受影响。下面是这些方法的一般形式：
+
+String toLowerCase(
+)
+String toUpperCase(
+)
+
+
+两种方法返回与调用字符串（String ）对应的大写或小写的字符串（String ）对象。
+下面是一个使用toLowerCase( ) 和toUpperCase( ) 方法的例子：
+
+// Demonstrate toUpperCase() and toLowerCase().
+
+class ChangeCase
+{
+public static void main(String args[]
+)
+{
+
+
+String s = "This is a test.";
+
+ System.out.println("Original: " + s);
+
+ String upper = s.toUpperCase()
+;
+String lower = s.toLowerCase()
+;
+
+
+ System.out.println("Uppercase: " + upper)
+;
+System.out.println("Lowercase: " + lower)
+;
+}
+}
+
+
+程序的输出显示如下：
+
+Original: This is a test.
+Uppercase: THIS IS A TEST.
+
+
+
+第13 章字符串处理
+
+Lowercase: this is a test.
+
+13.10 StringBuffer
+StringBuffer 是提供了大量的字符串功能的字符串（String ）类的对等类。正如你所知，
+字符串（String ）表示了定长，不可变的字符序列。相反，StringBuffer表示了可变长的和可
+写的字符序列。StringBuffer可有插入其中或追加其后的字符或子字符串。StringBuffer 可以
+针对这些添加自动地增加空间，同时它通常还有比实际需要更多的预留字符，从而允许增
+加空间。Java 大量使用这两种类，但是多数程序员仅仅处理字符串（String ）而通过重载+
+运算符让Java 在后台处理StringBuffer 。
+
+13.10.1 StringBuffer 构造函数
+StringBuffer 定义了下面三个构造函数：
+
+StringBuffer(
+)
+StringBuffer(int size)
+StringBuffer(String str)
+
+
+默认构造函数（无参数）预留了16个字符的空间。该空间不需再分配。第二种形式接
+收一个整数参数，清楚地设置缓冲区的大小。第三种形式接收一个字符串（String ）参数，
+设置StringBuffer 对象的初始内容，同时不进行再分配地多预留了16个字符的空间。当没有
+指定缓冲区的大小时，StringBuffer 分配了16个附加字符的空间，这是因为再分配在时间上
+代价很大。而且频繁地再分配可以产生内存碎片。StringBuffer 通过给一些额外的字符分配
+空间，减少了再分配操作发生的次数。
+
+13.10.2 length( ) 和capacity( )
+通过调用length( ) 方法可以得到当前StringBuffer 的长度。而通过调用capacity( ) 方法可
+以得到总的分配容量。它们的一般形式如下：
+
+int length(
+)
+int capacity(
+)
+
+
+这里是一个例子：
+
+// StringBuffer length vs. capacity.
+class StringBufferDemo
+{
+public static void main(String args[])
+{
+StringBuffer sb = new StringBuffer("Hello")
+;
+
+
+System.out.println("buffer = " + sb)
+;
+System.out.println("length = " + sb.length())
+;
+System.out.println("capacity = " + sb.capacity())
+;
+
+
+}
+}
+
+
+下面是这个程序的输出，它说明了StringBuffer 如何为另外的处理预留额外的空间：
+
+
+256 第2 部分Java 库
+
+buffer = Hello
+length =
+5
+capacity = 21
+
+
+由于sb在创建时由字符串“Hello”初始化，因此它的长度为5。因为给16个附加的字符
+自动增加了存储空间，因此它的存储容量为21。
+
+13.10.3 ensureCapacity( )
+如果想在构造StringBuffer 之后为某些字符预分配空间，可以使用ensureCapacity( ) 方法
+设置缓冲区的大小。这在事先已知要在StringBuffer 上追加大量小字符串的情况下是有用的。
+ensureCapacity( ) 方法具有如下的一般形式：
+
+void ensureCapacity(int capacity)
+
+这里capacity 指定了缓冲区的大小。
+
+13.10.4 setLength( )
+使用setLength( ) 方法在StringBuffer 对象内设置缓冲区的大小。其一般形式如下：
+
+void setLength(int len)
+
+这里len指定了缓冲区的长度。这个值必须是非负的。
+
+当增加缓冲区的大小时，空字符将被加在现存缓冲区的后面。如果用一个小于length( )
+方法返回的当前值的值调用setLength( ) 方法，那么在新长度之后存储的字符将被丢失。后
+面的setCharAtDemo 例子程序使用setLength( ) 方法缩短StringBuffer 。
+
+13.10.5 charAt( ) 和setCharAt( )
+使用charAt( ) 方法可以从StringBuffer 中得到单个字符的值。可以通过setCharAt( ) 方法
+给StringBuffer 中的字符置值。它们的一般形式如下：
+
+char charAt(int where)
+void setCharAt(int where, char ch)
+
+
+对于charAt( ) 方法，where 指定获得的字符的下标。对于setCharAt( ) 方法，where 指定被
+置值的字符的下标，而ch指定了该字符的新值。对于这两种方法，where 必须是非负的，同
+时不能指定在缓冲区之外的位置。
+
+下面的例子说明了charAt( ) 和setCharAt( ) 方法：
+
+// Demonstrate charAt() and setCharAt()
+.
+class setCharAtDemo
+{
+
+
+public static void main(String args[])
+{
+StringBuffer sb = new StringBuffer("Hello")
+;
+System.out.println("buffer before = " + sb)
+;
+System.out.println("charAt(1) before = " + sb.charAt(1))
+;
+
+
+ sb.setCharAt(1, 'i')
+;
+sb.setLength(2)
+;
+System.out.println("buffer after = " + sb)
+;
+System.out.println("charAt(1) after = " + sb.charAt(1))
+;
+
+
+
+第13 章字符串处理
+
+
+}
+}
+
+
+下面是该程序的输出结果：
+
+buffer before = Hello
+charAt(1) before =
+e
+buffer after = Hi
+charAt(1) after =
+i
+
+
+13.10.6 getChars( )
+使用getChars( ) 方法将StringBuffer 的子字符串复制给数组。其一般形式如下：
+
+void getChars(int sourceStart, int sourceEnd, char target[ ]
+,
+int targetStart)
+
+
+这里，sourceStart 指定子字符串开始时的下标，而sourceEnd 指定了该子字符串结束时
+下一个字符的下标。这意味着子字符串包含了从sourceStart 到sourceEnd–1 位置上的字符。
+接收字符的数组由target 指定。在target 内将被复制子字符串的位置下标由targetStart 传递。
+应注意确保target 数组足够大以便能够保存指定的子字符串所包含的字符。
+
+13.10.7 append( )
+append( )方法将任一其他类型数据的字符串形式连接到调用StringBuffer对象的后面。
+对所有内置的类型和Object ，它都有重载形式。下面是其几种形式：
+
+StringBuffer append(String str)
+StringBuffer append(int num)
+StringBuffer append(Object obj)
+
+
+每个参数调用String.valueOf( ) 方法获得其字符串表达式。结果追加在当前StringBuffer
+对象后面。对每一种append( ) 形式，返回缓冲区本身。它允许后续的调用被连成一串，下
+面的例子说明了这一点：
+
+// Demonstrate append()
+.
+class appendDemo
+{
+
+
+public static void main(String args[])
+{
+String s;
+int a = 42;
+StringBuffer sb = new StringBuffer(40)
+;
+
+
+ s = sb.append("a = ").append(a).append("!").toString()
+;
+System.out.println(s)
+;
+}
+}
+
+
+程序的输出如下所示：
+
+a = 42!
+
+当对字符串（String ）对象使用+运算符时，append( ) 方法是最常被调用的。Java 自动地
+
+
+258 第2 部分Java 库
+
+改变对字符串（String ）实例的修改，就像对StringBuffer 实例的操作一样。因此，连接调用
+StringBuffer 对象的append( ) 方法。在执行连接之后，编译器插入对toString( ) 方法的调用，
+将修改的StringBuffer 返回到一个不变的字符串（String ）中。所有这一切看起来是很复杂的。
+为什么不是仅仅只有一个其操作或多或少地像StringBuffer 的字符串类呢？答案是性能。
+Java 运行时执行的许多优化是知道字符串（String ）对象是不可改变的。值得欣慰的是Java
+隐藏了大多数复杂的String 与StringBuffer 之间的转换。实际上，大多数的程序员从没有直接
+感觉到需要使用StringBuffer ，而可以根据应用于字符串（String ）变量上的+运算符表示大
+多数的操作。
+
+13.10.8 insert( )
+insert( )方法将一个字符串插入另一个字符串中。它被重载而接收所有简单类型的值，
+包括String 和Object 。和append( ) 方法一样，它调用String.valueOf( ) 方法得到调用它的值的
+字符串表达式。随后这个字符串被插入所调用的StringBuffer 对象中。下面是它们的几种形
+式：
+
+StringBuffer insert(int index, String str)
+StringBuffer insert(int index, char ch)
+StringBuffer insert(int index, Object obj)
+
+
+这里index 指定将字符串插入所调用的StringBuffer 对象中的插入点的下标
+。
+下面的例子程序完成在“I”和“Java ”之间插入“like ”的功能
+。
+
+
+// Demonstrate insert()
+.
+class insertDemo
+{
+public static void main(String args[])
+{
+StringBuffer sb = new StringBuffer("I Java!")
+;
+
+
+ sb.insert(2, "like ")
+;
+System.out.println(sb)
+;
+}
+}
+
+
+程序的输出结果如下所示：
+
+I like Java!
+
+13.10.9 reverse( )
+可以使用reverse( ) 方法将StringBuffer 对象内的字符串翻转，其一般形式如下：
+
+StringBuffer reverse( )
+
+这种方法返回被调用对象的翻转对象。下面的程序说明了reverse( ) 方法：
+
+// Using reverse() to reverse a StringBuffer.
+class ReverseDemo
+{
+public static void main(String args[])
+{
+StringBuffer s = new StringBuffer("abcdef")
+;
+
+
+
+第13 章字符串处理
+
+ System.out.println(s)
+;
+s.reverse()
+;
+System.out.println(s)
+;
+
+
+}
+}
+
+
+程序的输出结果如下所示：
+
+abcdef
+fedcba
+
+
+13.10.10 delete( ) 和deleteCharAt( )
+Java 2 在StringBuffer 中增加了用于删除字符串的方法delete( ) 和deleteCharAt( ) 。这些方
+法的一般形式如下：
+
+StringBuffer delete(int startIndex, int endIndex)
+StringBuffer deleteCharAt(int loc)
+
+
+delete( ) 方法从调用对象中删除一串字符。这里startIndex 指定了需删除的第一个字符的
+下标，而endIndex 指定了需删除的最后一个字符的下一个字符的下标。因此要删除的子字
+符串从startIndex 到endIndex–1 ，返回结果的StringBuffer对象。
+
+deleteCharAt( ) 方法删除由loc 指定下标处的字符，返回结果的StringBuffer 对象。
+这里是一个说明delete( ) 和deleteCharAt( ) 方法的程序。
+
+// Demonstrate delete() and deleteCharAt(
+)
+class deleteDemo
+{
+public static void main(String args[])
+{
+StringBuffer sb = new StringBuffer("This is a test.")
+;
+
+
+ sb.delete(4, 7)
+;
+System.out.println("After delete: " + sb)
+;
+
+
+sb.deleteCharAt(0)
+;
+System.out.println("After deleteCharAt: " + sb)
+;
+}
+}
+
+
+程序输出如下所示：
+
+After delete: This a test.
+After deleteCharAt: his a test.
+
+
+13.10.11 replace( )
+Java 2 在StringBuffer 中增加的另一个方法是replace( ) 。它完成在StringBuffer 内部用一组
+字符代替另一组字符的功能。它的形式如下：
+
+StringBuffer replace(int startIndex, int endIndex, String str)
+
+被替换的子字符串由下标startIndex 和endIndex 指定。因此从startIndex 到endIndex-1 的子
+字符串被替换。替代字符串在str中传递。返回结果的StringBuffer 对象。
+
+
+260 第2 部分Java 库
+
+下面的程序说明了replace( )方法：
+
+// Demonstrate replace(
+)
+class replaceDemo
+{
+public static void main(String args[])
+{
+StringBuffer sb = new StringBuffer("This is a test.")
+;
+
+
+ sb.replace(5, 7, "was")
+;
+System.out.println("After replace: " + sb)
+;
+}
+}
+
+
+输出如下所示：
+
+After replace: This was a test.
+
+13.10.12 substring( )
+Java 2 也增加了substring( ) 方法，它返回StringBuffer的一部分值。它具有如下的两种形
+式：
+
+String substring(int startIndex)
+String substring(int startIndex, int endIndex)
+
+
+第一种形式返回调用StringBuffer 对象中从startIndex 下标开始直至结束的一个子字符
+串。第二种形式返回从startIndex 开始到endIndex–1 结束的子字符串。这些方法与前面在
+String 中定义的那些方法具有相同的功能。
+        `
+    },
+    {
+        name:'第14章  java.lang 研究',
+        cont:`
+            本章讨论那些由java.lang 定义的类和接口。正如你所知道的那样，java.lang 被自动导入
+所有的程序。它所包含的类和接口对所有实际的Java 程序都是必要的。它是Java 最广泛使用
+
+的包。
+java.lang 包括了下面这些类：
+Boolean Long StrictMath (Java 2,1.3)
+Byte Math String
+Character Number StringBuffer
+Class Object System
+ClassLoader Package (Java 2) Thread
+Compiler Process >ThreadGroup
+Double Runtime ThreadLocal (Java 2)
+Float >RuntimePermission (Java 2) Throwable
+>InheritableThreadLocal (Java 2) SecurityManager Void
+>Integer >Short >
+
+另外还有两个由Character 定义的类：Character.Subset 和Character.UnicodeBlock ，它们是
+在Java 2 中新增加的。
+
+java.lang 也定义了如下的接口：
+
+· Cloneable
+
+· Comparable
+
+· Runnable
+
+其中Comparable 接口是在Java 2 中新增加的。
+
+java.lang 中的几个类包含了过时的方法，其中的大多数可以追溯到Java 1.0 。在Java2 中
+仍然提供了这些方法，用于支持逐渐减少的老程序，而这些方法在新程序中不被推荐使用。
+大多数的过时方法出现在Java 2 之前，因此在这里不讨论这些方法。而在Java 2 中出现的那
+些过时的方法将被提及。
+
+Java 2 也在java.lang 包中增加了几个新的类和方法，这些新类和方法被说明如下。
+
+14.1 简单类型包装器
+在本书的第1部分，我们提到因为性能的原因，Java 使用简单的类型，例如整型（int）
+和字符（char）。这些数据类型不是对象层次结构的组成部分。它们通过值传递给方法而
+
+
+262 第2 部分Java 库
+
+不能直接通过引用传递。而且，也没有办法使两种方法对整型（int ）引用同一实例（same
+instance）。有时需要对这些简单的类型建立对象表达式。例如在第15章中讨论的仅仅处理
+对象的枚举类；如果要将简单类型存储到这些类中的一个，需要在类中包装简单类型。为
+了满足这种需要，Java 提供了与每一个简单类型相应的类。本质上，这些类在类中包装
+（wrap ）简单类型。因此，它们通常被称作类型包装器（wrappers ）。
+
+14.1.1 Number
+抽象类Number 定义了一个由包装数字类型字节型（byte），短整型（short），整型（int）
+，
+长整型（long ），浮点型（float ）和双精度型（double ）的类实现的超类。Number 有返回上
+面不同数字格式的对象值的抽象方法。也就是，doubleValue( ) 方法返回双精度（double）
+值，floatValue( ) 方法返回浮点（float ）值等。这些方法如下：
+
+byte byteValue( )
+double doubleValue( )
+float floatValue( )
+int intValue( )
+long longValue( )
+short shortValue( )
+
+这些方法的返回值可以被舍入。
+
+Number 有6个具体的子类包含了6种数字类型的显式值：双精度型（Double ），浮点型
+（Float ），字节型（Byte ），短整型（Short ），整型（Integer ）和长整型（Long ）。
+
+14.1.2 Double 和Float
+双精度（Double ）和浮点（Float ）分别是对类型double 和类型float 的浮点值的包装器。
+浮点（Float ）构造函数如下所示：
+
+Float(double num)
+Float(float num)
+Float(String str) 引发NumberFormatException 异
+常
+
+
+正如你所看到的，浮点（Float ）对象可以由类型float 或类型double 的值创建。它们也能
+由浮点数的字符串表达式创建。
+
+双精度（Double ）构造函数如下：
+
+Double(double num)
+Double(String str) 引发NumberFormatException异
+常
+
+
+双精度（Double ）对象可以被双精度（double ）值或包含了浮点值的字符串创建。
+
+由浮点（Float ）定义的方法在表14-1 中列出。由双精度（Double ）定义的方法在表14-2
+中列出。浮点（Float ）和双精度（Double ）都定义了下面的常数：
+
+MAX_VALUE 最大正值
+MIN_VALUE 最小正值
+NaN 非数字
+
+
+第14 章java.lang 研究 263
+POSITIVE_INFINITY 正无穷
+NEGATIVE_INFINITY 负无穷
+TYPE 浮点（float ）或双精度（double ）的类（Class）对象
+表14-1 由Float 定义的方法
+方法描述
+byte byteValue（
+）
+返回调用对象的值（字节型）
+int compareTo（Float f）
+将调用对象的数值与f中的数值进行比较，如果两者相等，返
+回0。如果调用对象的值小于f的值，则返回负值。如果调用对
+象的值大于f的值，则返回正值（在Java 2中新增加的）
+int compareTo（object obj）
+当obj是类Float 中的对象时，该方法与compareTo（Float ）的
+功能相同。否则，引发一个ClassCastException 异常（在Java 2
+中新增加的）
+double doubleValue（
+）
+返回调用对象的值(双精度型)
+boolean equals（Object FloatObj）
+如果float 调用对象与FloatObj 相等，则返回true。否则返回false
+static int float ToIntBits（float num）
+返回与num相应的与IEEE兼容的单精度位模式
+Float floatValue（
+）
+返回调用对象的值（浮点型）
+int hashCode（
+）
+返回调用对象的散列值
+static float intBitsToFloat（int num）
+返回由num指定的，与IEEE 兼容的单精度位模式的等价浮点
+（float ）值
+int intValue（
+）
+返回整型（int）形式的调用对象值
+boolean isInfinite（
+）
+如果调用对象包含有无穷大值，则返回true。否则返回false
+static boolean isInfinite（float num）
+如果num指定了一个无穷大值，则返回true。否则返回false
+boolean isNaN（
+）
+如果调用对象中包含了非数字值，则返回true。否则返回false
+static boolean isNaN（float num）
+如果num指定了一个非数字值，则返回true。否则返回false
+long longValue() 返回调用对象的值（长整型）
+static float parseFloat（String str）以10为基数，返回包含在由str指定的字符串中的数字的等价
+throws NumberFormatException 浮点值（在Java 2中新增加的）
+short shortValue（
+）
+返回调用对象值（短整型）
+String toString（
+）
+返回调用对象的等价字符串形式
+static String to String（float num）
+返回由num指定的值的等价字符串
+static Float valueOf（String str）返回包含了由str中的字符串指定的值的float 对象
+throws NumberForamtException
+
+
+264 第2 部分Java 库
+表14-2 由Double 定义的方法
+方法描述
+
+byte byteValue（
+）
+返回调用对象的值（字节型）
+int compareTo（Double d）
+将调用对象的值与d的数值进行比较。如果这两个值相等，
+则返回0。如果调用对象的数值小于d的数值，则返回负值。
+如果调用对象的数值大于d的数值，则返回正值（在Java 2
+中新增加的）
+Int compareTo（Object obj）
+如果obj属于类Double
+，
+其操作与compareTo（Double ）相
+同。否则，引发一个ClassCastException 异常（在Java 2中
+新增加的）
+static long doubleToLongBits（double num）
+返回与num相应的与IEEE兼容的双精度位模式
+double doubleValue（
+）
+返回调用对象的值（双精度）
+boolean equals（Object DoubleObj）
+如果double 调用对象与DoubleObj 相等，则返回true。否则，
+返回false
+float floatValue（
+）
+返回调用对象的值（浮点型）
+int hashcode（
+）
+返回调用对象的散列码
+int intValue（
+）
+返回调用对象的值（整型）
+boolean isInfinite（
+）
+如果调用对象包含了一个无穷大值，则返回true。否则，
+返回false
+static boolean isInfinite（double num）
+如果num指定了一个无穷大值，则返回true。否则，返回
+false
+boolean is NaN（
+）
+如果调用对象包含了一个非数字值，则返回true。否则，
+返回false
+static boolean isNaN（double num）
+如果num指定了一个非数字值，则返回true。否则，返回
+false
+static double longBitsToDouble（long num）
+返回由num指定的，与IEEE兼容的双精度位模式的双精度
+（double ）等价值
+long longValue（
+）
+返回调用对象的值（长整型）
+static double parseDouble（String str）以10为基数，返回包含在由str指定的字符串中的数字的等
+throws NumberFormatException 价双精度（double ）形式（在Java 2中新增加的）
+short shortValue（
+）
+返回调用对象的值（短整型）
+String toString（
+）
+返回调用对象的等价字符串形式
+Static String toString（double num）
+返回由num指定的值的等价字符串形式
+Static Double valueOf（String str）返回包含了由str中的字符串指定的值的double 对象
+
+ throws NumberFormatException
+
+在下面的例子中创建两个double 对象——一个通过使用双精度（double ）值实现，另一
+个通过传递一个可以被解析为双精度（double ）的字符串来实现。
+
+
+第14 章java.lang 研究
+
+class DoubleDemo {
+
+public static void main(String args[])
+{
+Double d1 = new Double(3.14159)
+;
+Double d2 = new Double("314159E-5")
+;
+
+
+System.out.println(d1 + " = " + d2 + " -> " + d1.equals(d2))
+;
+}
+}
+
+
+正如从下面的输出中可以看到的那样，如同通过equals( ) 方法返回true ，两种构造函数
+创建相同的双精度（double ）实例。
+
+3.14159 = 3.14159 –> true
+
+理解isInfinite( ) 和isNaN( )
+
+浮点（Float ）和双精度（Double ）提供了isInfinite( ) 和isNaN( ) 方法，这些方法会有助
+于操作两个特殊的双精度（double ）和浮点（float ）值，这些方法检验两个由IEEE 浮点规
+范定义的独特的值：无穷和NaN （非具体数字）。当被检验的值为无穷大或无穷小值时，
+isInfinite( ) 方法返回true 。当被检验值为非数字时，isNaN( ) 方法返回true 。
+
+在下面的例子中构造了两个Double 对象；一个是无穷，另一个是非数字：
+
+// Demonstrate isInfinite() and isNaN(
+)
+class InfNaN
+{
+
+
+public static void main(String args[])
+{
+Double d1 = new Double(1/0.)
+;
+Double d2 = new Double(0/0.)
+;
+
+
+System.out.println(d1 + ": " + d1.isInfinite() + ", " + d1.isNaN());
+System.out.println(d2 + ": " + d2.isInfinite() + ", " + d2.isNaN());
+}
+}
+
+程序运行产生如下的输出：
+
+Infinity: true, false
+NaN: false, true
+
+
+14.1.3 Byte, Short, Integer 和 Long
+Byte，Short，Integer ，和Long 类分别是字节型（byte ），短整型（short），整型（int）
+和长整型（long ）整数类型的包装器。它们的构造函数如下：
+
+Byte(byte num)
+Byte(String str) 引发一个NumberFormatException异
+常
+Short(short num)
+Short(String str) 引发一个NumberFormatException异
+常
+Integer(int num)
+
+
+
+266
+第2 部分Java 库
+
+Integer(String str) 引发一个NumberFormatException异
+常
+Long(long num)
+Long(String str) 引发一个NumberFormatException异
+常
+
+
+正如你能看到的，这些对象可由数值或含有有效整数值的字符串创建。
+
+由这些类定义的方法列在表14-3 到表14-6 中。正如你能看到的，它们定义方法以便从
+字符串解析整数和将字符串转换为整数。为方便起见，这些方法提供的变量可以用来指定
+radix ，也称为基数。通常二进制（binary ）的基数是2，八进制（octal ）的基数是8，十进制
+（decimal ）的基数是10，而十六进制（hexadecimal ）的基数为16。
+
+表14-3 由Byte 定义的方法
+
+方
+法
+描述
+
+byte byteValue（
+）
+返回调用对象值（字节型）
+
+int compareTo（Byte b）
+将调用对象的数值与b的数值进行比较。如果这两个数值相
+等，则返回0。如果调用对象的数值小于b的数值，则返回负
+值。如果调用对象的数值大于b的数值，则返回正值（在Java
+2中新增加的）
+
+int compareTo（Object obj）
+如果obj 属于类Byte ，其操作与compareTo（Byte ）相同。否
+则，引发一个ClassCastException 异常（在Java 2中新增加的）
+
+static Byte decode（String str）返回一个包含了由str中的字符串指定的值的Byte 对象
+throws NumberFormatException
+
+double doubleValue（
+）
+返回调用对象值（双精度度型）
+
+boolean equals（Object ByteObj）
+如果Byte 调用对象与ByteObj 相等，则返回true。否则，返回
+false
+
+float floatValue（
+）
+返回调用对象值（浮点型）
+
+int hashCode（
+）
+返回调用对象的散列码
+
+int intValue（
+）
+返回调用对象值（整型）
+
+long longValue（
+）
+返回调用对象值（长整型）
+
+static byte parseByte（String str）以10为基数，返回包含在由str指定的字符串中的数字的等价
+throws NumberFormatException 字节（byte ）形式
+
+static byte parseByte（String str，int radix）以指定的基数（radix ）为底，返回包含在由str指定的字符串
+throws NumberFormatException 中的数字的等价字节
+
+short shortValue（
+）
+返回调用对象值（短整型）
+
+String toString（
+）
+返回一个包含了调用对象的等价十进制形式的字符串
+
+static String toString（byte num）
+返回一个包含了num的等价十进制形式的字符串
+
+static Byte valueOf（String str）返回一个包含了由str中的字符串指定的值的Byte 对象
+throws NumberFormatException
+
+static Byte valueOf（String str，int radix）以指定的基数（radix ）为底，返回一个包含了由str中的字符
+throws NumberFormatException 串指定的值的Byte 对象
+
+
+第14 章java.lang 研究
+
+表14-4 由Short 定义的方法
+
+方法描述
+
+byte byteValue（
+）
+返回调用对象值（字节型）
+int compareTo（Short s）
+将调用对象的数值和s的数值进行比较。如果这两个值相等，
+则返回0。如果调用对象的数值小于s的数值，则返回负值
+如果调用对象的数值大于s的数值，则返回正值（在Java 2中
+新增加的）
+int compareTo（Object obj）
+如果obj属于类Short
+，
+其操作与compareTo（Short
+）
+相同。否
+则，引发一个ClassCastException 异常（在Java 2中新增加的）
+static Short decode（String str）
+返回一个包含了由str中的字符串指定值的Short 对象
+throws NumberFormatException
+double doubleValue（
+）
+返回调用对象值（双精度型）
+boolean equals（Object ShortObj）
+如果整型（Interger
+）
+调用对象与ShortObj 相等，则返回true。
+否则，返回false
+float floatValue（
+）
+返回调用对象值（浮点值）
+int hashCode（
+）
+返回调用对象的散列码
+int intValue（
+）
+返回调用对象值（整型）
+long longValue（
+）
+返回调用对象值（长整型）
+static short parseShort（String str）
+throws以10为基数，返回包含在由str指定的字符串中的数字的等价
+NumberFormatException 短整型（Short ）数
+static short parseShort（String str，int radix）
+以指定的基数（radix
+）
+为底，返回包含在由str指定的字符串
+throws NumberFormatException 中的数字的等价短整型（Short ）数
+short shortValue（
+）
+返回调用对象值（短整型）
+String toString（
+）
+返回一个包含了调用对象的等价十进制形式的字符串
+static String to String（short num）
+返回一个包含了num的等价十进制形式的字符串
+static Shortvalue Of（Stringstr）throws以10为基数，返回一个包含了由str中的字符串指定的值的
+NumberFormatException Short 对象
+static Short valueOf（String str，int radix）
+以指定的基数（radix
+）
+为底，返回一个包含了由str中的字符
+throws NumberFormatException 串指定的值的Short 对象
+
+表14-5 由Integer 定义的方法
+
+方法描述
+byte byteValue（
+）
+返回调用对象值（字节型）
+int compareTo（Integer i）
+将调用对象的数值与i的数值进行比较。如果这两个值相等，
+则返回0。如果调用对象的数值小于i的数值，则返回负值。
+如果调用对象的数值大于i的数值，则返回正值（在Java 2 中
+新增加的）
+
+
+268
+第2 部分Java 库
+
+方
+法
+描述
+
+续表
+
+int compareTo（Object obj）
+如果obj属于类Integer ，其操作与compareTo（Integer ）相同。
+否则，引发一个ClassCastException 异常（在Java 2中新增加
+的）
+
+static Integer decode（String str）返回一个包含了由str中的字符串指定值的Integer 对象
+throws NumberFormatException
+
+double doubleValue（
+）
+返回调用对象值（双精度型）
+
+boolean equals（Object IntegerObj）
+如果调用Interger 对象与IntegerObj 相等，则返回true。否则，
+
+返回false
+float floatValue（）static Integer getInteger 返回调用对象值（浮点型）
+（String propertyName）
+返回与由propertyname 指定的环境属性相关联的值，调用失
+
+败返回null
+
+static Integer getInteger
+返回与由propertyname 指定的环境属性相关联的值，调用失
+
+（String propertyName，int default）
+败返回default 值
+
+static Integer getInteger
+返回与由propertyname 指定的环境属性相关联的值，调用失
+
+（String propertyName，Integer default）
+败返回default 值
+
+int hashCode（
+）
+返回调用对象的散列码
+
+int intValue（
+）
+返回调用对象值（整型）
+
+long longValue（
+）
+返回调用对象值（长整型）
+
+static int parseInt（String str）以10为基数，返回包含在由str指定的字符串中的数字的等价
+throws NumberFormatException 整数（integer ）值
+
+static int parseInt（String str，int radix）以指定的基数（radix ）为底，返回包含在由str指定的字符串
+throws NumberFormatException 中的数字的等价整数值
+
+short shortValue（
+）
+返回调用对象值（短整型）
+
+static String toBinaryString（int num）
+返回一个包含了num的等价二进制形式的字符串
+
+static String toHexString（int num）
+返回一个包含了num的等价十六进制形式的字符串
+
+static String toOctalString（int num）
+返回一个包含了num的等价八进制形式的字符串
+
+String toString（
+）
+返回一个包含了调用对象的等价十进制形式的字符串
+
+static String toString（int num）
+返回一个包含了num的等价十进制形式的字符串
+
+static String toString（int num，int radix）
+以指定的基数（radix ）为底，返回一个包含了num的等价十
+
+进制形式的字符串
+static Integer valueOf（String str）返回一个包含了由str中的字符串指定的值的Integer 对象
+throws NumberFormatException
+static Integer valueOf（String str，int radix）以指定的基数（radix ）为底，返回一个包含了由str中的字符
+throws NumberFormatException 串指定的值的Integer 对象
+
+
+第14 章java.lang 研究
+
+表14-6 由Long 定义的方法
+
+方
+法
+描述
+
+byte byteValue（
+）
+返回调用对象值（字节型）
+
+int compareTo（Long l）
+将调用对象的数值和l的数值进行比较，如果这两个值相等，
+则返回0。如果调用对象的数值小于l的数值，则返回负值。
+如果调用对象的数值大于l的数值，则返回正值（在Java 2
+中新增加的）
+
+int compareTo（Object obj）
+如果obj属于类long ，其操作与compareTo（Long ）相同。否
+则，引发一个ClassCastException 异常（在Java 2中新增加的）
+
+static Long decode（String str）返回一个包含了由str中的字符串指定的值的Long 对象
+throws NumberFormatException
+
+double doubleValue（
+）
+返回调用对象值（双精度型）
+
+boolean equals（Object LongObj）
+如果调用Long 对象与LongObj 相等，则返回true。否则，返
+回false
+
+float floatValue（
+）
+返回调用对象值（浮点型）
+
+static Long getLong（String propertyname）
+返回与由propertyname 指定的环境属性相关联的值，调用失
+
+败则返回null
+static Long getLong（String propertyname，
+返回与由propertyname 指定的环境属性相关联的值，调用失
+long default）
+败则返回default 的值
+static long getLong（String propertyname，
+返回与由propertyname 指定的环境属性相关联的值，调用失
+
+Long default）
+败则返回default 的值
+
+int hashcode（
+）
+返回调用对象的散列码
+
+int intValue（
+）
+返回调用对象值（整型）
+
+long longValue（
+）
+返回调用对象值（长整型）
+
+static long parseLong（String str）以10为基数，返回包含在由str指定的字符串中的数字的等
+throws NumberFormatException 价长整型（Long ）数
+
+static long parseLong（String str，int radix）以指定的基数（radix ）为底，返回包含在由str指定的字符
+throws NumberFormatException 串中的数字的等价长整型（Long ）数
+
+short shortValue（
+）
+返回调用对象值（短整型）
+
+static String toBinaryString（long num）
+返回一个包含了num的等价二进制形式的字符串
+
+static String toHexString（long num）
+返回一个包含了num的等价十六进制形式的字符串
+
+static String toOctalString（long num）
+返回一个包含了num的等价八进制形式的字符串
+
+String toString（
+）
+返回一个包含了调用对象的等价十进制形式的字符串
+
+static String toString（long num）
+返回一个包含了num的等价十进制形式的字符串
+
+static String toString（long num，int radix）
+以指定的基数（radix ）为底，返回一个包含了num的等价十
+
+进制形式的字符串
+static Long valueOf（String str）返回一个包含了由str中的字符串指定的值的Long 对象
+throws NumberFormatException
+
+
+270 第2 部分Java 库
+
+方法描述
+
+续表
+
+static Long valueOf（String str，int radix）
+throws NumberFormatException
+以指定的基数（radix ）为底，返回一个包含了由str中的字
+符串指定的值的Long 对象
+定义下面的常数：
+MIN_VALUE
+MAX_VALUE
+最小值
+最大值
+
+TYPE 字节（Byte ），短整型（short ），整型（int）或长整型（long ）的类（Class）对象
+
+数字和字符串的转换
+
+程序设计中一个最常见的任务是将一个数字的字符串表达式转换成内部的二进制格
+式。幸运的是Java 提供了一个方便的方法去完成这项任务。Byte，Short，Integer 和Long 类
+分别提供了parseByte( )，parseShort( )，parseInt( ) 和parseLong( ) 方法。这些方法返回与调用
+它们的数值字符串相应的字节（byte ），短整型（short ），整型（int ）和长整型（long ）值
+（在Float 和Double 类中也有相似的方法）。
+
+下面的程序说明了parseInt( ) 方法。该程序完成对用户输入的一系列整数的求和。在程
+序中通过使用readLine( ) 方法读取整数，使用parseInt( ) 方法将这些字符串转换成与之相应的
+整型（int ）值。
+
+/* This program sums a list of numbers enteredby the user. It converts the string representation
+of each number into an int using parseInt().
+
+*/
+
+import java.io.*;
+
+class ParseDemo {
+public static void main(String args[])
+throws IOException
+
+{
+// create a BufferedReader using System.in
+BufferedReader br = new
+
+ BufferedReader(new InputStreamReader(System.in));
+String str;
+int i;
+int sum=0;
+
+System.out.println("Enter numbers, 0 to quit.");
+
+ do {
+str = br.readLine();
+try {
+
+ i = Integer.parseInt(str);
+
+ } catch(NumberFormatException e) {
+System.out.println("Invalid format");
+i = 0;
+
+}
+
+
+第14 章java.lang 研究
+
+ sum += i;
+System.out.println("Current sum is: " + sum)
+;
+} while(i != 0)
+;
+}
+}
+
+
+为了将一个整数转换为一个十进制的字符串，可以使用在Byte，Short，Integer 或Long
+类中定义的toString( ) 方法。Integer 和Long 类还同时提供了toBinaryString( )，toHexString( )
+和toOctalString( ) 方法，可以分别将一个值转换成二进制，十六进制和八进制字符串。
+
+下面的程序说明了向二进制，十六进制和八进制的转换：
+
+/* Convert an integer into binary, hexadecimal,
+and octal.
+*
+/
+
+
+class StringConversions
+{
+public static void main(String args[])
+{
+int num = 19648;
+
+
+System.out.println(num + " in binary: "
++
+Integer.toBinaryString(num))
+;
+
+
+System.out.println(num + " in octal: "
++
+Integer.toOctalString(num))
+;
+
+
+System.out.println(num + " in hexadecimal: "
++
+Integer.toHexString(num))
+;
+}
+}
+
+
+程序的输出结果如下所示：
+
+19648 in binary: 100110011000000
+19648 in octal: 46300
+19648 in hexadecimal: 4cc0
+
+
+14.1.4 Character
+字符（Character）是围绕字符型（char）的一个简单的包装器。字符（Character ）的构
+造函数如下：
+
+Character(char ch)
+
+这里ch指定了被创建的字符（Character）对象所包装的字符。
+调用如下的charValue( ) 方法可以获得包含在字符（Character ）对象中的字符型（char）
+值。
+
+char charValue( )
+
+调用的结果返回字符
+。
+字符（Character ）类定义了几个常数，包括下面这些
+：
+
+
+
+272 第2 部分Java 库
+
+MAX_RADIX 最大基数
+MIN_RADIX 最小基数
+MAX_VALUE 最大字符值
+MIN_VALUE 最小字符值
+TYPE 字符型（char ）的类（Class）对象
+
+字符（Character ）包括了几个静态方法，这些方法完成将字符分类并改变它们的大小
+写。这些方法在表14-7 中列出。下面的例子说明了这些方法。
+
+// Demonstrate several Is... methods.
+
+class IsDemo {
+public static void main(String args[]) {
+char a[] = {'a', 'b', '5', '?', 'A', ' '};
+
+for(int i=0; i<a.length; i++) {
+if(Character.isDigit(a[i]))
+System.out.println(a[i] + " is a digit.");
+if(Character.isLetter(a[i]))
+System.out.println(a[i] + " is a letter.");
+if(Character.isWhitespace(a[i]))
+System.out.println(a[i] + " is whitespace.");
+if(Character.isUpperCase(a[i]))
+System.out.println(a[i] + " is uppercase.");
+if(Character.isLowerCase(a[i]))
+System.out.println(a[i] + " is lowercase.");
+}
+}
+}
+
+程序的输出结果如下所示：
+
+a is a letter.
+a is lowercase.
+b is a letter.
+b is lowercase.
+5 is a digit.
+A is a letter.
+A is uppercase.
+
+is whitespace.
+
+表14-7 各种字符（Character ）方法
+
+方法描述
+
+static boolean isDefined（char ch）
+如果ch是由Unicode 定义的，则返回true，
+否则，返回false
+static boolean isDigit（char ch）
+如果ch是一个数字，则返回true，否则，返回false
+static boolean isIdentifierIgnorable（char ch）
+如果在一个标识符中ch应被忽略，则返回true，
+否则，返
+回false
+static boolean isISOControl（char ch）
+如果ch是一个ISO控制字符，则返回true，否则，返回false
+
+
+第14 章java.lang 研究
+
+续表
+
+方法描述
+
+static boolean isJavaIdentifierPart（char ch）
+如果ch被做为Java标识符的一部分（除了第一个字符），
+则返回true。否则，返回false
+static boolean isJavaIdentifierStart（char ch）
+如果ch被做为Java 标识符的首字符，则返回true。否则返
+回false
+static boolean isLetter（char ch）
+如果ch是一个字母，则返回true。否则返回false
+static boolean isLetterOrDigit（char ch）
+如果ch是一个字母或一个数字，则返回true 。否则返回
+false
+static boolean isLowerCase（char ch）
+当ch是小写字母时，返回true。否则返回false
+static boolean isSpaceChar（char ch）
+如果ch是Unicode 编码的空格字符，则返回true 。否则返
+回false
+static boolean isTitleCase（char ch）
+如果ch是Unicode 编码的标题字符，则返回true 。否则返
+回false
+static boolean isUnicodeIdentifierPart 如果ch被做为Unicode 编码标识符的一部分（除了第一个
+（char ch）
+字符），则返回true。否则，返回false
+static boolean isUnicodeIdentifierStart 如果ch被做为一个Unicode 标识符的首字符，则返回true。
+（char ch）
+否则返回false
+static boolean isUpperCase（char ch）
+如果ch是一个大写字母，则返回true。否则返回false
+static boolean isWhitespace（char ch）
+如果ch是一个空白符，则返回true。否则，返回false
+static char toLowerCase（char ch）
+返回ch的小写等价形式
+static char toTitleCase（char ch）
+返回ch的标题等价形式
+static char toUpperCase（char ch）
+返回ch的大写等价形式
+
+字符（Character ）定义了如下形式的forDigit( ) 和digit( ) 方法：
+
+static char forDigit(int num, int radix)
+static int digit(char digit, int radix)
+
+
+forDigit( ) 方法返回与num 的值关联的数字字符。而转换的基数由radix 指定。digit( ) 方
+法按照给定的基数，返回与指定字符（该字符可能是一个数字）相关联的整数值。
+由Character 类定义的另一个方法是compareTo( ) ，该方法具有如下的两种形式：
+
+int compareTo(Character c)
+int compareTo(Object obj)
+
+
+第一种形式当调用对象与c具有相同值时返回0。当调用对象具有比c小的值时返回一个
+负值。否则它将返回一个正值。在第二种形式中，当obj是对Character 类的一个引用时，其
+功能与第一种形式一样。否则它将引发一个ClassCastException 异常。这些方法是在Java 2
+中新增加的。
+
+Character类还定义了equals( ) 和hashCode( ) 方法。
+另两个与字符有关的类是Character.Subset 和Character.UnicodeBlock ，其中
+
+
+274 第2 部分Java 库
+
+Character.Subset 类用于描述Unicode 编码的一个子集，而Character.UnicodeBlock 类中包含了
+Unicode 2.0 编码的字符块。
+
+14.1.5 Boolean
+Boolean 是一个围绕布尔（boolean ）值的非常细小的包装器，主要用在通过引用传递布
+尔（boolean ）变量的场合。它包含了常数TRUE 和FALSE ，这些常数定义了布尔（Boolean）
+对象的真与假。Boolean 也定义了TYPE 域，它是boolean 的Class 对象。在Boolean 中定义了如
+下的构造函数：
+
+Boolean(boolean boolValue)
+Boolean(String boolString)
+
+
+在第一种形式中，boolValue 要么是true，要么是false。在第二种形式中，如果在boolString
+中包含了字符串“true ”（无论是大写形式还是小写形式），则新的布尔（Boolean ）对象
+将为真，否则为假。
+
+Boolean 定义了如表14-8 中列出的方法。
+
+表14-8 由Boolean 定义的方法
+
+方法描述
+boolean booleanValue( ) 返回布尔（boolean ）等价形式
+boolean equals(Object boolObj) 如果调用对象与boolObj 相等，则返回true。否则返回
+false
+static boolean getBoolean(String propertyName) 如果由propertyName 指定的系统属性为true，则返回
+true。否则返回false
+int hashCode( ) 返回调用对象的散列码
+String toString( ) 返回调用对象的字符串等价形式
+static Boolean valueOf(String boolString) 如果在boolString 中包含了“true”（以大写或小写形式）
+，
+则返回true。否则返回false
+
+14.2 Void
+Void 类有一个TYPE 域，该域保存对类型void 的Class 对象的引用。这样做将不创建类的
+实例。
+
+14.3 Process
+抽象类Process 封装了一个进程（process）——也就是说一个正在执行的程序。它主要
+被当作由Runtime 类中的exec( ) 方法所创建的对象的类型的超类。Runtime 类将在下面介绍。
+在抽象类Process 中，包含了如下表14-9 中列出的抽象方法。
+
+
+第14 章java.lang 研究
+
+表14-9 由Process 定义的抽象方法
+
+方法描述
+
+void destroy( ) 中断进程
+int exitValue( ) 返回一个从子进程获得的退出码
+InputStream getErrorStream( ) 返回一个从进程的err输出流中读输入的输入流
+InputStream getInputStream( ) 返回一个从进程的out输出流中读输入的输入流
+OutputStream getOutputStream( ) 返回一个从进程的in输入流中写输出的输出流
+Int waitFor( ) 返回由进程返回的退出码。这个方法直到调用它的进程中
+
+ throws InterruptedException 止，才会返回
+
+14.4 Runtime
+Runtime 类封装了运行时环境。一般不实例化一个Runtime 对象。但是可以通过调用静
+态方法Runtime.getRuntime( ) 而获得对当前Runtime 对象的引用。一旦获得了对当前对象的
+引用，就可以调用几个控制Java 虚拟机的状态和行为的方法。小应用程序（Applets ）和其
+他不可信赖的编码由于没有引起一个安全异常（SecurityException ）而不能调用任何的
+Runtime 方法。
+
+表14-10 给出了由Runtime 定义的方法。Java 2 中不赞成使用方法runFinalizersOnExit( ) 。
+这种方法是在Java 1.1 中增加的，但被认为是一种不稳定的方法。
+
+表14-10 由Runtime 定义的常用方法
+
+方法描述
+void addShutdownHook(Thread thrd) 当Java虚拟机终止时，寄存器thrd 作为线程而运行
+Process exec(String progName)将由progName 指定的程序作为独立的进程来执行。返回描
+throws IOException 述新进程的类型Process 的对象
+Process exec(String progName, String 将由progName 指定的程序作为独立的进程来执行。该独立
+environment[ ]) throws IOException 进程的环境由environment 指定。返回描述新进程的类型
+Process 的对象
+Process exec(String comLineArray[ ], 将由comLineArray 中的字符串指定的命令行作为独立的进
+String environment[ ]) throws程来执行。运行环境由environment 指定。返回描述新进程
+IOException 的类型Process 的对象
+void exit(int exitCode) 暂停执行并且向父进程返回exitCode 的值，按照约定，0表
+示正常中止，所有的其他值表示有某种形式的错误
+long freeMemory( ) 返回Java运行系统可以利用的空闲内存的大概字节数
+void gc( ) 初始化垃圾回收站
+static Runtime getRuntime( ) 返回当前的Runtime 对象
+
+
+276
+第2 部分Java 库
+
+方
+法
+描述
+
+续表
+
+void halt(int code)
+立即终止Java虚拟机，不执行任何的终止线程和善后处理程
+序。code 的值返回给调用进程（在Java 2的1.3版中新增加的）
+
+void load(String libraryFileName)
+载入库中文件由libraryFileName 指定的动态库，必须指定它
+的完全路径
+
+void loadLibrary(String libraryName)
+载入库名为libraryName 的动态库
+
+boolean removeShutdownHook(Thread 当Java虚拟机中止，从线程列表中移出thrd 的运行。如果成
+thrd) 功，也就是说如果线程被移出，则返回true（在Java 2的1.3
+版中新增加的）
+
+void runFinalization(
+)
+调用未用的但还不是回收站中对象的finalize() 方法
+
+long totalMemory(
+)
+返回程序可以利用的内存的总字节数
+
+void traceInstructions(boolean traceOn)
+根据traceOn 的值，打开或关闭指令跟踪。如果traceOn 值为
+true，跟踪被显示。如果traceOn 值为false ，跟踪被关闭
+
+void traceMethodCalls(boolean traceOn)
+根据traceOn 的值，打开或关闭调用跟踪的方法。如果traceOn
+的值为true，跟踪被显示。如果traceOn 的值为false，跟踪被
+关闭
+
+让我们来看一看Runtime 类的两个最普遍的用法：内存管理和执行附加进程。
+
+14.4.1 内存管理
+尽管Java 提供了自动垃圾回收，有时也想知道对象堆的大小以及它还剩下多少。可以
+利用这些信息检验你的代码的效率，或估计对某些类型，有多少对象可以被实例化。为了
+获得这些值，可以使用totalMemory( ) 和freeMemory( ) 方法。
+
+正如我们在第1部分提及的，Java 的垃圾回收器周期性地运行将不再使用的对象放入回
+收站。然而有时想在收集器的下一个指定循环之前收集被丢弃的对象。可以通过调用gc( )
+方法按照要求运行垃圾回收器。一个好的尝试是调用gc( )方法，然后再调用freeMemory( )
+方法以获得内存使用的底线。接着执行你的程序，并再一次调用freeMemory( ) 方法看分配
+了多少内存。下面的例子说明了这个思想。
+
+// Demonstrate totalMemory(), freeMemory() and gc().
+
+class MemoryDemo {
+
+public static void main(String args[]) {
+
+ Runtime r = Runtime.getRuntime();
+
+ long mem1, mem2;
+
+ Integer someints[] = new Integer[1000];
+
+System.out.println("Total memory is: "
++
+r.totalMemory())
+;
+
+
+ mem1 = r.freeMemory()
+;
+System.out.println("Initial free memory: " + mem1)
+;
+
+
+
+第14 章java.lang 研究
+
+ r.gc()
+;
+mem1 = r.freeMemory()
+;
+System.out.println("Free memory after garbage collection:
+"
+
+
+ + mem1);
+for(int i=0; i<1000; i++
+)
+someints[i] = new Integer(i); // allocate integers
+
+
+ mem2 = r.freeMemory();
+
+System.out.println("Free memory after allocation: "
+
+ + mem2)
+;
+System.out.println("Memory used by allocation:
+"
++ (mem1-mem2));
+// discard Integers
+
+for(int i=0; i<1000; i++) someints[i] = null;
+
+ r.gc(); // request garbage collection
+
+ mem2 = r.freeMemory()
+;
+System.out.println("Free memory after collecting"
++
+" discarded Integers: " + mem2)
+;
+
+
+}
+}
+
+
+这个例子的一个输出样本如下（当然，你的实际运行结果可能会与之不同）：
+
+Total memory is: 1048568
+Initial free memory: 751392
+Free memory after garbage collection: 841424
+Free memory after allocation: 824000
+Memory used by allocation: 17424
+Free memory after collecting discarded Integers: 842640
+
+
+14.4.2 执行其他的程序
+在可靠的环境中，可以在你的多任务操作系统中使用Java 去执行其他特别繁重的进程
+（也即程序）。exec( )方法的几种形式允许命名想运行的程序以及它们的输入参数。exec( )
+方法返回一个Process 对象，这个对象可以被用来控制你的Java 程序如何与这个正在运行的
+新进程相互作用。因为Java 可以运行在多种平台和多种操作系统的情况下，exec( ) 方法本质
+上是依赖于环境的。
+
+下面的例子使用exec( )方法装入Window 的简单文本编辑器——notepad 。显而易见，这
+个例子必须在Windows 操作系统下运行。
+
+// Demonstrate exec().
+
+class ExecDemo {
+
+public static void main(String args[]) {
+
+ Runtime r = Runtime.getRuntime();
+
+ Process p = null;
+
+ try
+{
+p = r.exec("notepad")
+;
+
+
+
+278 第2 部分Java 库
+
+ } catch (Exception e)
+{
+System.out.println("Error executing notepad.")
+;
+}
+}
+}
+
+
+exec( )方法有几个形式可用，而在本例子中展示的是最常用的一种。在新程序开始运
+行之后，由exec( ) 方法返回的Process 对象可以被Process 方法使用。可以使用destroy( ) 方法
+杀死子进程。waitFor( ) 方法暂停你的程序直至子进程结束。当子进程结束后，exitValue( )
+方法返回子进程返回的值。如果没有问题发生，它通常返回0。下面是前面关于exec( )方法
+例子的改进版本。例子被修改为等待直至正在运行的进程退出：
+
+// Wait until notepad is terminated.
+class ExecDemoFini
+{
+
+
+public static void main(String args[])
+{
+Runtime r = Runtime.getRuntime()
+;
+Process p = null;
+
+
+ try
+{
+p = r.exec("notepad")
+;
+p.waitFor()
+;
+
+
+ } catch (Exception e) {
+
+ System.out.println("Error executing notepad.");
+}
+System.out.println("Notepad returned " + p.exitValue());
+
+}
+}
+
+
+当子进程正在运行时，可以从它的标准输入输出进行读和写。getOutputStream( ) 方法
+和getInputStream( ) 方法返回子进程的标准输入（in）和输出（out）的句柄（关于I/O 将在第
+17章详细讨论）。
+
+14.5 System
+System 类保存静态方法和变量的集合。标准的输入，输出和Java 运行时错误输出存储
+在变量in，out和err中。由System 类定义的方法列在表14-11 中。注意当所做操作是安全方式
+所不允许的时，许多方法引发一个安全异常（SecurityException ）。应当注意的另一点是：
+Java 2 不赞成使用runFinalizersOnExit( ) 方法。该方法是在Java 1.1 中增加的，同时也被证明
+是不可靠的。
+
+让我们看一看System 类的一些普遍用法。
+第14 章java.lang 研究
+
+表14-11 由Sysem 定义的方法
+
+方法描述
+static void arraycopy(Object source, int 复制数组。被复制的数组由source 传递，而source 中开始
+sourceStart, Object target, int targetStart,复制数组时的下标由sourceStart 传递。接收复制的数组由
+int size) target 传递。而target 中开始复制数组时的下标由targetStart
+传递。Size 是被复制的元素的个数
+static long currentTimeMillis( ) 返回自1970 年1月1日午夜至今的时间，时间单位为毫秒。
+static void exit(int exitCode) 暂停执行，返回exitCode 值给父进程（通常为操作系统）。
+按照约定，0表示正常退出，所有其他的值代表某种形式
+的错误
+static void gc( ) 初始化垃圾回收
+static Properties getProperties( ) 返回与Java 运行系统有关的属性类（Properties class ）将
+在第15章中介绍）
+static String getProperty(String which) 返回与which 有关的属性。如果期望的属性没有被发现，
+返回一个空对象（null object）
+static String getProperty(String which,返回一个与which 有关的属性。如果期望的属性没有被发
+String default) 现，则返回default
+static SecurityManager getSecurityManager( ) 返回当前的安全管理程序，如果没有安装安全管理程序，
+则返回一个空对象（null object）
+static native int identityHashCode(Object obj) 返回obj的特征散列码
+static void load(String libraryFileName) 载入其文件由libraryFileName 指定的动态库，必须指定其
+完全路径
+static void loadLibrary(String libraryName) 载入其库名为libraryName 的动态库
+static String mapLibraryName(String lib) 对应名为lib 的库，返回一个指定平台的名字（在Java 2
+中新增加的）
+static void runFinalization( ) 启动调用不用的但还不是回收站中的对象的finalize( ) 方
+法。
+static void setErr(PrintStream eStream) 设置标准的错误（err）流为iStream
+static void setIn(InputStream iStream) 设置标准的输入（in）流为oStream
+static void setOut(PrintStream oStream) 设置标准的输出（out）流eStream
+static void 设置由sysProperties 指定的当前系统属性
+setProperties(Properties sysProperties)
+Static String setProperty(String which, 将v值赋给名为which 的属性（在Java 2中新增加的）
+String v)
+static void setSecurityManager 设置由secMan 指定的安全管理程序
+( SecurityManager secMan)
+
+
+280 第2 部分Java 库
+
+14.5.1 使用currentTimeMillis( ) 记录程序执行的时间
+可以发现System 类的一个特别有意义的用法是利用currentTimeMillis( ) 方法来记录你
+的程序的不同部分的执行时间。currentTimeMillis( ) 方法返回自从1970 年1月1号午夜起到现
+在的时间，时间单位是毫秒。如果要记录你的程序中一段有问题程序的运行时间可以在这
+段程序开始之前存储当前时间，在该段程序结束之际再次调用currentTimeMillis( ) 方法。执
+行该段程序所花费的时间为其结束时刻的时间值减去其开始时刻的时间值。下面的程序说
+明了这一点：
+
+// Timing program execution.
+
+class Elapsed
+{
+public static void main(String args[])
+{
+long start, end;
+
+
+System.out.println("Timing a for loop from 0 to 1,000,000");
+
+// time a for loop from 0 to 1,000,000
+start = System.currentTimeMillis(); // get starting time
+for(int i=0; i < 1000000; i++) ;
+end = System.currentTimeMillis(); // get ending time
+
+System.out.println("Elapsed time: " + (end-start))
+;
+}
+}
+
+
+这里是程序运行的一个输出样本（记住你的程序的运行结果可能与此不同）：
+
+Timing a for loop from 0 to 1,000,000
+Elapsed time: 10
+
+
+14.5.2 使用arraycopy( )
+使用arraycopy( ) 方法可以将一个任意类型的数组快速地从一个地方复制到另一个地
+方。这比使用Java 中编写的循环要快的多。下面是一个用arraycopy( ) 方法复制两个数组的
+例子。首先，将数组a复制给数组b，接下来，数组a中的所有元素向后移一位，然后数组b
+中元素向前移一位。
+
+// Using arraycopy().
+
+class ACDemo
+{
+static byte a[] = { 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 }
+;
+static byte b[] = { 77, 77, 77, 77, 77, 77, 77, 77, 77, 77 }
+;
+
+
+public static void main(String args[])
+{
+System.out.println("a = " + new String(a))
+;
+System.out.println("b = " + new String(b))
+;
+System.arraycopy(a, 0, b, 0, a.length)
+;
+System.out.println("a = " + new String(a))
+;
+System.out.println("b = " + new String(b))
+;
+System.arraycopy(a, 0, a, 1, a.length - 1)
+;
+
+
+
+第14 章java.lang 研究
+
+System.arraycopy(b, 1, b, 0, b.length - 1);
+System.out.println("a = " + new String(a));
+System.out.println("b = " + new String(b));
+
+}
+}
+
+正如从下面的输出中看到的那样，可以使用相同的源和目的在任一方向进行复制：
+
+a = ABCDEFGHIJ
+b = MMMMMMMMMM
+a = ABCDEFGHIJ
+b = ABCDEFGHIJ
+a = AABCDEFGHI
+b = BCDEFGHIJJ
+
+14.5.3 环境属性
+下面的属性在Java 2 的所有环境中可以使用：
+
+file.separator java.vendor.url os.arch
+java.class.path java.version os.name
+java.class.version java.vm.name os.version
+java.ext.dirs java.vm.specification.name Path.separator
+java.home java.vm.specification.vendor User.dir
+java.specification.name java.vm.specification.version User.home
+java.specification.vendor java.vm.vendor User.name
+java.specification.version java.vm.version
+java.vendor line.separator
+
+可以通过调用System.getProperty( ) 方法来获得不同环境变量的值。例如下面的程序显
+示当前用户目录的路径：
+
+class ShowUserDir {
+public static void main(String args[]) {
+System.out.println(System.getProperty("user.dir"));
+}
+}
+
+14.6 Object
+正如我们在第1部分所提及的，Object 类是其他所有类的一个超类。表14-12 给出了
+Object 类中定义的方法，这些方法对于每一个对象都是可用的。
+
+
+282 第2 部分Java 库
+
+表14-12 由Object 定义的方法
+
+方法描述
+
+Object clone( ) 创建一个与调用对象一样的新对象
+Throws
+CloneNotSupportedException
+Boolean equals(Object object) 如果调用对象等价于object 返回true
+void finalize( ) 默认的finalize( ) 方法。常常被子类重载
+throws Throwable
+final Class getClass( ) 获得描述调用对象的Class对象
+int hashCode( ) 返回与调用对象关联的散列码
+final void notify( ) 恢复等待调用对象的线程的执行
+final void notifyAll( ) 恢复等待调用对象的所有线程的执行
+String toString( ) 返回描述对象的一个字符串
+final void wait( ) 等待另一个执行的线程
+throws InterruptedException
+final void wait(long milliseconds) 等待直至指定毫秒数的另一个执行的线程
+throws InterruptedException
+final void wait(long milliseconds, 等待直至指定毫秒加毫微秒数的另一个执行的线程
+int nanoseconds)
+throws InterruptedException
+
+14.7 使用clone( )和Cloneable 接口
+由Object 类定义的绝大部分方法在本书其他部分讨论。而一个特别值得关注的方法是
+clone( ) 。clone( ) 方法创建调用它的对象的一个复制副本。只有那些实现Cloneable 接口的类
+能被复制。
+
+Cloneable接口没有定义成员。它通常用于指明被创建的一个允许对对象进行位复制（也
+就是对象副本）的类。如果试图用一个不支持Cloneable 接口的类调用clone( ) 方法，将引发
+一个CloneNotSupportedException 异常。当一个副本被创建时，并没有调用被复制对象的构
+造函数。副本仅仅是原对象的一个简单精确的拷贝。
+
+复制是一个具有潜在危险的操作，因为它可能引起不是你所期望的副作用。例如，假
+如被复制的对象包含了一个称为obRef 的引用变量，当副本创建时，副本中的obRef 如同原
+对象中的obRef 一样引用相同的对象。如果副本改变了被obRef 引用的对象的内容，那么对
+应的原对象也将被改变。这里是另一个例子。如果一个对象打开一个I/O 流并被复制，两个
+对象将可操作相同的流。而且，如果其中一个对象关闭了流，而另一个对象仍试图对I/O 流
+进行写操作的话，将导致错误。
+
+由于复制可能引起问题，因此在Object 内，clone( ) 方法被说明为protected。这就意味着
+它必须或者被由实现Cloneable 的类所定义的方法调用，或者必须被那些类显式重载以便它
+
+
+第14 章java.lang 研究
+
+是公共的。让我们看关于下面每一种方法的例子。
+下面的程序实现Cloneable 接口并定义cloneTest( ) 方法，该方法在Object 中调用clone( )
+方法：
+
+// Demonstrate the clone() method.
+
+class TestClone implements Cloneable
+{
+int a;
+double b;
+
+
+// This method calls Object's clone()
+.
+TestClone cloneTest()
+{
+
+
+ try
+{
+// call clone in Object.
+return (TestClone) super.clone()
+;
+
+
+ } catch(CloneNotSupportedException e)
+{
+System.out.println("Cloning not allowed.")
+;
+return this;
+
+
+}
+}
+}
+
+
+class CloneDemo {
+
+public static void main(String args[])
+{
+TestClone x1 = new TestClone()
+;
+TestClone x2;
+
+
+ x1.a = 10;
+x1.b = 20.98;
+
+
+x2 = x1.cloneTest(); // clone x1
+
+System.out.println("x1: " + x1.a + " " + x1.b)
+;
+System.out.println("x2: " + x2.a + " " + x2.b)
+;
+}
+}
+
+
+这里，方法cloneTest( ) 在Object 中调用clone( ) 方法并且返回结果。注意由clone( ) 方法
+返回的对象必须被强制转换成它的适当类型（TestClone ）。
+下面的例子重载clone( ) 方法以便它能被其类外的程序所调用。为了完成这项功能，它
+的存取说明符必须是public ，如下所示：
+
+// Override the clone() method.
+
+class TestClone implements Cloneable
+{
+int a;
+double b;
+
+
+// clone() is now overridden and is public.
+public Object clone()
+{
+
+
+ try
+{
+// call clone in Object.
+return super.clone()
+;
+
+
+
+284 第2 部分Java 库
+
+ } catch(CloneNotSupportedException e)
+{
+System.out.println("Cloning not allowed.")
+;
+return this;
+
+
+}
+}
+}
+
+
+class CloneDemo2 {
+
+public static void main(String args[])
+{
+TestClone x1 = new TestClone()
+;
+TestClone x2;
+
+
+ x1.a = 10;
+x1.b = 20.98;
+
+
+// here, clone() is called directly.
+x2 = (TestClone) x1.clone()
+;
+
+
+System.out.println("x1: " + x1.a + " " + x1.b)
+;
+System.out.println("x2: " + x2.a + " " + x2.b)
+;
+}
+}
+
+
+由复制带来的副作用最初一般是比较难发现的。通常很容易想到的是类在复制时是很
+安全的，而实际却不是这样。一般在没有一个必须的原因的情况下，对任何类都不应该执
+行Cloneable 。
+
+14.8 Class
+Class 封装对象或接口运行时的状态。当类被加载时，类型Class 的对象被自动创建。不
+能显式说明一个类（Class ）对象。一般地，通过调用由Object 定义的getClass( ) 方法来获得
+一个类（Class ）对象。由Class 定义的一些最常用的方法列在表14-13 中。
+
+表14-13 由Class 定义的一些方法
+
+方法描述
+static Class forName(String name) 返回一个给定全名的Class对象
+throws ClassNotFoundException
+static Class forName(String name,返回一个给定全名的Calss对象。对象由ldr指定的加载程序
+Boolean how, ClassLoader ldr)加载。如果how为true，
+对象被初始化，否则它将不被初始
+throws ClassNotFoundException 化（在Java 2中新增加的）
+Class[ ] getClasses( ) 对每一个公共类和接口，返回一个类（Class）
+对象。这些
+公共类和接口是调用对象的成员
+ClassLoader getClassLoader( ) 返回一个加载类或接口的ClassLoader 对象，类或接口用于
+实例化调用对象
+
+
+第14 章java.lang 研究
+
+续表
+
+方法描述
+
+Constructor[ ] getConstructors( )对这个类的所有的公共构造函数，返回一个Constructor 对
+throws SecurityException 象
+Constructor[ ] getDeclaredConstructors( )对由这个类所声明的所有构造函数，返回一个Constructor
+throws SecurityException 对象
+Field[ ] getDeclaredFields( ) 对由这个类所声明的所有域，返回一个Field 对象
+throws SecurityException
+Method[ ] getDeclaredMethods( )对由这个类或接口所声明的所有方法，返回一个Method 对
+throws SecurityException 象
+Field[ ] getFields( )对于这个类的所有公共域，返回一个Field 对象
+throws SecurityException
+Class[ ] getInterfaces( ) 当调用对象时，这个方法返回一个由该对象的类类型实现
+的接口数组。当调用接口时，这个方法返回一个由该接口
+扩展的接口数组
+Method[ ] getMethods( )对这个类中的所有公共方法，返回一个Method 对象
+throws SecurityException
+String getName( ) 返回调用对象的类或接口的全名
+ProtectionDomain getProtectionDomain( ) 返回与调用对象有关的保护范围（在Java 2中新增加的）
+Class getSuperclass( ) 返回调用对象的超类。如果调用对象是类型Object 的，则
+返回值为空（null）
+Boolean isInterface( ) 如果调用对象是一个接口，则返回true。否则返回false
+Object newInstance( ) 创建一个与调用对象类型相同的新的实例（即一个新对
+throws IllegalAccessException,象）。这相当于对类的默认构造函数使用new 。返回新对
+InstantiationException 象
+String toString( ) 返回调用对象或接口的字符串表达式
+
+由Class 定义的方法经常用在需要知道对象的运行时类型信息的场合。如同表14-13 中所
+说明的那样，由Class 提供的方法确定关于特定的类的附加信息。例如它的公共构造函数，
+域以及方法。这对于本书后面将要讨论的Java Beans 函数是很重要的。
+
+下面的程序说明了getClass( ) （从Object 继承的）和getSuperclass( ) 方法（从Class 继承的）
+：
+
+// Demonstrate Run-Time Type Information.
+
+class X {
+int a;
+float b;
+
+}
+
+class Y extends X {
+double c;
+}
+
+
+286 第2 部分Java 库
+
+class RTTI {
+
+public static void main(String args[])
+{
+X x = new X()
+;
+Y y = new Y()
+;
+Class clObj;
+
+
+clObj = x.getClass(); // get Class reference
+System.out.println("x is object of type: "
++
+clObj.getName())
+;
+
+
+clObj = y.getClass(); // get Class reference
+System.out.println("y is object of type: "
++
+
+
+ clObj.getName())
+;
+clObj = clObj.getSuperclass()
+;
+System.out.println("y's superclass is "
++
+
+
+ clObj.getName())
+;
+}
+}
+
+
+这个程序的输出如下所示：
+
+x is object of type:
+X
+y is object of type:
+Y
+y’s superclass is
+X
+
+
+14.9 ClassLoader
+抽象类ClassLoader 规定了类是如何加载的。应用程序可以创建扩展ClassLoader 的子类，
+实现它的方法。这样做允许使用不同于通常由Java 运行时系统加载的另一些方法来加载类。
+由ClassLoader 定义的一些方法列在表14-14 中。
+
+表14-14 由CalssLoader 定义的一些方法
+
+方法描述
+final Class defineClass(String str, byte b[ ], 返回一个类（Class）
+对象，类的名字在str中，对象包
+int index, int numBytes)含在由b指定的字节数组中。该数组中对象开始的位
+throws ClassFormatError 置下标由index 指定，而该数组的长度为numBytes 。b
+中的数据必须表示一个有效的对象
+final Class findSystemClass(String name)返回一个给定名字的类（Class）对象
+throws ClassNotFoundException
+abstract Class loadClass(String name, 如果callResolveClass 为true，
+这个抽象方法的实现工
+boolean callResolveClass) 具必须加载一个给定名字的类，并调用resolveClass( )
+throws ClassNotFoundException 方法
+final void resolveClass(Class obj) 用obj引用的类被解析（即，它的名字被输入在类名字
+空间中）
+
+
+第14 章java.lang 研究
+
+14.10 Math
+Math类保留了所有用于几何学，三角学以及几种一般用途方法的浮点函数。Math定义
+了两个双精度（double ）常数：E（近似为2.72 ）和PI（近似为3.14 ）。
+
+14.10.1 超越函数
+下面的三种方法对一个以弧度为单位的角度接收一个双精度（double ）参数并且返回
+它们各自的超越函数的结果：
+
+方法描述
+
+Static double sin(double arg) 返回由以弧度为单位由arg指定的角度的正弦值
+static double cos(double arg) 返回由以弧度为单位由arg指定的角度的余弦值
+static double tan(double arg) 返回由以弧度为单位由arg指定的角度的正切值
+
+下面的方法将超越函数的结果作为一个参数，按弧度返回产生这个结果的角度值。它
+们是其非弧度形式的反。
+
+方法描述
+
+static double asin(double arg) 返回一个角度，该角度的正弦值由arg指定
+static double acos(double arg) 返回一个角度，该角度的余弦值由arg指定
+static double atan(double arg) 返回一个角度，该角度的正切值由arg指定
+static double atan2(double x, double y) 返回一个角度，该角度的正切值为x/y
+14.10.2 指数函数
+
+Math定义了下面的指数方法：
+
+方法描述
+
+static double exp(double arg) 返回arg的e
+static double log(double arg) 返回arg的自然对数值
+static double pow(double y, double x) 返回以y为底数，以x为指数的幂值；例如pow(2.0, 3.0) 返回8.0
+static double sqrt(double arg) 返回arg的平方根
+14.10.3 舍入函数
+
+Math类定义了几个提供不同类型舍入运算的方法。这些方法列在表14-15 中。
+
+
+288 第2 部分Java 库
+表14-15 由Math 定义的舍入方法
+方法描述
+
+static int abs(int arg) 返回arg的绝对值
+static long abs(long arg) 返回arg的绝对值
+static float abs(float arg) 返回arg的绝对值
+static double abs(double arg) 返回arg的绝对值
+static double ceil(double arg) 返回大于或等于arg的最小整数
+static double floor(double arg) 返回小于或等于arg的最大整数
+static int max(int x, int y) 返回x和y中的最大值
+static long max(long x, long y) 返回x和y中的最大值
+static float max(float x, float y) 返回x和y中的最大值
+static double max(double x, double y) 返回x和y中的最大值
+static int min(int x, int y) 返回x和y中的最小值
+static long min(long x, long y) 返回x和y中的最小值
+static float min(float x, float y) 返回x和y中的最小值
+static double min(double x, double y) 返回x和y中的最小值
+static double rint(double arg) 返回最接近arg的整数值
+static int round(float arg) 返回arg的只入不舍的最近的整型（int）值
+static long round(double arg) 返回arg的只入不舍的最近的长整型（long）值
+14.10.4 其他的数学方法
+
+除了给出的方法，Math还定义了下面这些方法：
+
+static double IEEEremainder(double dividend, double divisor)
+static double random(
+)
+static double toRadians(double angle)
+static double toDegrees(double angle)
+
+
+IEEEremainder( ) 方法返回dividend/divisor 的余数。random( ) 方法返回一个伪随机数，
+其值介于0与1之间。在大多数情况下，当需要产生随机数时，通常用Random 类。toRadians( )
+方法将角度的度转换为弧度。而toDegrees( ) 方法将弧度转换为度。这后两种方法是在Java 2
+中新增加的。
+
+下面是一个说明toRadians( ) 和toDegrees( ) 方法的例子：
+
+// Demonstrate toDegrees() and toRadians().
+class Angles {
+public static void main(String args[]) {
+double theta = 120.0;
+
+System.out.println(theta + " degrees is " +
+Math.toRadians(theta) + " radians.");
+
+ theta = 1.312;
+System.out.println(theta + " radians is "
++
+
+
+
+第14 章java.lang 研究
+
+ Math.toDegrees(theta) + " degrees.")
+;
+}
+}
+
+
+程序输出如下所示：
+
+120.0 degrees is 2.0943951023931953 radians.
+1.312 radians is 75.17206272116401 degrees.
+14.11 StrictMath
+在Java 2 的1.3版本中增加了StrictMath 类。这个类定义一个与Math中的数学方法类似的
+一套完整的数学方法。两者的区别在于StrictMath 中的方法对所有Java 工具保证产生精确一
+致的结果，而Math中的方法更大程度上是为了提高性能。
+
+14.12 Compiler
+Compiler 类支持创建将字节码编译而非解释成可执行码的Java 环境。常规的程序不使用
+它。
+
+14.13 Thread，ThreadGroup 和Runnable
+Runnable 接口以及Thread 和ThreadGroup 类支持多线程编程。下面分别予以说明。
+
+注意：关于管理线程，实现Runnable 接口以及创建多线程程序的概述已在第11章
+中介绍过。
+
+14.13.1 Runnable 接口
+Runnable 接口必须由启动执行的独立线程的类所实现。Runnable 仅定义了一种抽象方
+法，叫做run( )。该方法是线程的入口点。它的形式如下所示：
+
+abstract void run( )
+
+所创建的线程必须实现该方法。
+
+14.13.2 Thread
+Thread创建一个新的执行线程。它定义了如下的构造函数：
+
+Thread(
+)
+Thread(Runnable threadOb)
+Thread(Runnable threadOb, StringthreadName)
+Thread(String threadName)
+Thread(ThreadGroup groupOb, Runnable threadOb)
+Thread(ThreadGroup groupOb, Runnable threadOb, String threadName)
+Thread(ThreadGroup groupOb, String threadName)
+
+
+
+290 第2 部分Java 库
+
+threadOb 是实现Runnable 接口的类的一个实例，它定义了线程运行开始的地方。线程的
+名字由threadName 指定。当名字未被指定时，Java 虚拟机将创建一个。groupOb 指定了新线
+程所属的线程组。当没有线程组被指定时，新线程与其父线程属于同一线程组。
+
+下面的常数由Thread定义：
+
+MAX_PRIORITY
+MIN_PRIORITY
+NORM_PRIORITY
+
+
+正如所期望的那样，这些常数指定了最大，最小以及默认的线程优先权。
+
+由Thread 定义的方法列在表14-16 中。在比Java 2 早的版本中，Thread中也包括了stop( )
+，
+suspend( )以及resume( ) 方法。然而正如在第11章中解释的那样，这些方法由于其固有的不
+稳定性而在Java 2 中被摈弃了。在Java 2 中摈弃的还有countStackFrames( ) 方法，因为它调用
+了suspend( ) 方法。
+
+表14-16 由Thread 定义的方法
+
+方法描述
+static int activeCount( ) 返回线程所属的线程组中线程的个数
+void checkAccess( ) 引起安全管理程序检验当前的线程能访问和/或能改
+变在其上checkAccess( ) 方法被调用的线程
+static Thread currentThread( ) 返回一个Thread 对象，该对象封装了调用这个方法的
+线程
+void destroy( ) 终止线程
+static int enumerate(Thread threads[ ]) 将当前线程组中的所有Thread 对象的拷贝放入threads
+中。返回线程的个数
+ClassLoader getContextClassLoader( ) 返回用于对这个线程加载类和资源的类加载程序（在
+Java 2中新增加的）
+final String getName( ) 返回线程名
+final int getPriority( ) 返回线程的属性设置
+final ThreadGroup getThreadGroup( ) 返回调用线程是其中一个成员的ThreadGroup 对象
+void interrupt( ) 中断线程
+static boolean interrupted( ) 如果当前执行的线程已经被预先设置了中断，则返回
+true；否则，返回false
+final boolean isAlive( ) 如果线程仍在运行中，则返回true；否则返回false
+final boolean isDaemon( ) 如果线程是一个后台进程线程（Java运行系统的一部
+分），则返回true；否则返回false
+boolean isInterrupted( ) 如果线程被中断，则返回true，否则返回false
+final void join( ) 等待直至线程终止
+throws InterruptedException
+
+
+第14 章java.lang 研究
+
+续表
+
+方法描述
+
+final void join(long milliseconds)等待直到为终止线程而指定的以毫秒计时的时间
+throws InterruptedException
+final void join(long milliseconds, int nanoseconds)等待直到为终止线程而指定的以毫秒加毫微秒计时
+
+ throws InterruptedException 的时间
+void run( ) 开始线程的执行
+void setContextClassLoader(ClassLoader cl) 设置将被调用线程用于cl的类加载程序（在Java 2中新
+
+增加的
+）
+final void setDaemon(boolean state) 标记线程为后台进程线
+程
+final void setName(String threadName) 将线程的名字设置为由threadName 指定的名
+字
+final void setPriority(int priority) 设置由priority 指定的线程优先
+权
+static void sleep(long milliseconds) 以指定的毫秒为单位的时间长度挂起执行的线
+程
+
+
+ throws InterruptedException
+
+static void sleep(long milliseconds, 以指定的毫秒加毫微秒为单位的时间长度挂起执行
+int nanoseconds)的线程
+throws InterruptedException
+
+void start( ) 开始线程的执
+行
+String toString( ) 返回线程的等价字符串形
+式
+static void yield( ) 调用线程将CPU 让给其他的线
+程
+
+
+14.13.3 ThreadGroup
+线程组（ThreadGroup ）创建了一组线程。它定义了如下的两个构造函数：
+
+ThreadGroup(String groupName)
+ThreadGroup(ThreadGroup parentOb, String groupName)
+
+
+对于两种形式，groupName 指定了线程组的名字。第一种形式创建一个新的线程组，
+该线程组将当前的线程作为它的父线程。在第二种形式中，父线程由parentOb 指定。
+
+由ThreadGroup 定义的方法列在表14-17 中。在比Java 2更早出现的Java 版本中，
+ThreadGroup 中也包括了stop( )，suspend( ) 以及resume( ) 方法。这些方法由于其本身固有的
+不稳定性，而在Java 2 中被摈弃。
+
+表14-17 由ThreadGroup 定义的方法
+
+方法描述
+int activeCount( ) 返回线程组加上以这个线程作为父类的所有线程组中线
+程的个数
+int activeGroupCount( )
+final void checkAccess( )
+返回调用线程是父类的线程的组数
+引起安全管理程序检验调用线程能访问和/或能改变在
+其上checkAccess( ) 方法被调用的线程组
+
+
+292 第2 部分Java 库
+
+方法描述
+
+续表
+
+final void destroy( ) 撤消被调用的线程组（以及任一子线程组）
+int enumerate(Thread group[ ]) 将构成调用线程组的线程放入group 数组中
+int enumerate(Thread group[ ], boolean all) 将构成调用线程组的线程放入group 数组中。如果all 为
+true，那么线程组的所有子线程组中的线程也被放入
+group 中
+int enumerate(ThreadGroup group[ ]) 将调用线程组的子线程组放入group 数组中
+int enumerate(ThreadGroup group[ ],将调用线程组的子线程组放入group 数组中。如果all 为
+boolean all) true，所有子线程组的子线程组（等等）也被放入group
+中
+final int getMaxPriority( ) 返回对线程组设置的最大优先权
+final String getName( ) 返回线程组名
+final ThreadGroup getParent( ) 如果调用ThreadGroup 对象没有父类，则返回null ；否则
+返回调用对象的父类
+final void interrupt( ) 调用线程组中所有线程的interrupt( ) 方法（在Java 2中新
+增加的）
+final boolean isDaemon( ) 如果线程组是一个端口后台进程组，则返回true；
+否则返
+回false
+boolean isDestroyed( ) 如果线程组已经被破坏，则返回true；否则，返回false
+void list( ) 显示关于线程组的信息
+final boolean parentOf(ThreadGroup group) 如果调用线程是group 的父线程（或group 本身）
+，
+则返
+回true；否则返回false
+final void setDaemon(boolean isDaemon) 如果isDaemon 为true，那么调用线程组被标记为一个端
+口后台进程组
+final void setMaxPriority(int priority) 对调用线程组设置最大优先权priority
+String toString( ) 返回线程组的字符串等价形式
+void uncaughtException(Thread thread, 当一个异常未被捕获时，该方法被调用
+Throwable e)
+
+线程组提供了一种方便的方法，可以将一组线程当做一个单元来管理。这在想挂起或
+恢复一些相关的线程的情况下，是特别有用的。例如假想在一个程序中，有一组线程被用
+来打印文档，另一组线程被用来将该文档显示在屏幕上，同时另一组线程将文档保存为磁
+盘文件。如果打印被异常中止了，想用一种很简单的方法停止所有与打印有关的线程。线
+程组为这种处理提供了方便。下面的程序说明了这种用法，在程序中创建两个线程组，每
+一线程组中有两个线程：
+
+// Demonstrate thread groups.
+class NewThread extends Thread {
+
+ boolean suspendFlag;
+
+
+第14 章java.lang 研究
+
+NewThread(String threadname, ThreadGroup tgOb)
+{
+super(tgOb, threadname)
+;
+System.out.println("New thread: " + this)
+;
+suspendFlag = false;
+start(); // Start the thread
+
+
+}
+
+// This is the entry point for thread.
+public void run()
+{
+try
+{
+
+
+for(int i = 5; i > 0; i--)
+{
+System.out.println(getName() + ": " + i)
+;
+Thread.sleep(1000)
+;
+synchronized(this)
+{
+
+
+ while(suspendFlag)
+{
+wait()
+;
+}
+}
+}
+} catch (Exception e)
+{
+
+
+ System.out.println("Exception in " + getName())
+;
+}
+System.out.println(getName() + " exiting.")
+;
+
+
+}
+
+ void mysuspend()
+{
+suspendFlag = true;
+}
+
+
+synchronized void myresume()
+{
+suspendFlag = false;
+notify()
+;
+
+
+}
+}
+
+class ThreadGroupDemo {
+
+public static void main(String args[])
+{
+ThreadGroup groupA = new ThreadGroup("Group A")
+;
+ThreadGroup groupB = new ThreadGroup("Group B")
+;
+
+
+NewThread ob1 = new NewThread("One", groupA)
+;
+NewThread ob2 = new NewThread("Two", groupA)
+;
+NewThread ob3 = new NewThread("Three", groupB)
+;
+NewThread ob4 = new NewThread("Four", groupB)
+;
+
+
+System.out.println("\nHere is output from list():")
+;
+groupA.list()
+;
+groupB.list()
+;
+System.out.println()
+;
+
+
+ System.out.println("Suspending Group A")
+;
+Thread tga[] = new Thread[groupA.activeCount()]
+;
+groupA.enumerate(tga); // get threads in group
+for(int i = 0; i < tga.length; i++)
+{
+
+
+ ((NewThread)tga[i]).mysuspend(); // suspend each thread
+
+
+294 第2 部分Java 库
+
+ }
+
+ try
+{
+Thread.sleep(4000)
+;
+} catch (InterruptedException e)
+{
+System.out.println("Main thread interrupted.")
+;
+}
+
+
+ System.out.println("Resuming Group A");
+for(int i = 0; i < tga.length; i++) {
+((NewThread)tga[i]).myresume(); // resume threads in group
+}
+
+// wait for threads to finish
+
+ try {
+System.out.println("Waiting for threads to finish.");
+ob1.join();
+ob2.join();
+ob3.join();
+ob4.join();
+
+ } catch (Exception e)
+{
+System.out.println("Exception in Main thread")
+;
+}
+
+
+ System.out.println("Main thread exiting.");
+}
+}
+
+该程序的一个输出样本如下所示：
+
+New thread: Thread[One,5,Group A]
+New thread: Thread[Two,5,Group A]
+New thread: Thread[Three,5,Group B]
+New thread: Thread[Four,5,Group B]
+Here is output from list()
+:
+java.lang.ThreadGroup[name=Group A,maxpri=10]
+
+
+ Thread[One,5,Group A]
+Thread[Two,5,Group A]
+
+
+java.lang.ThreadGroup[name=Group B,maxpri=10]
+Thread[Three,5,Group B]
+Thread[Four,5,Group B]
+
+Suspending Group AThree: 5
+Four: 5
+Three: 4
+Four: 4
+Three: 3
+Four: 3
+Three: 2
+Four: 2
+Resuming Group AWaiting for threads to finish.
+One: 5
+Two: 5
+Three: 1
+
+
+第14 章java.lang 研究
+
+Four:
+1
+One:
+4
+Two:
+4
+Three exiting.
+Four exiting.
+One:
+3
+Two:
+3
+One:
+2
+Two:
+2
+One:
+1
+Two:
+1
+One exiting.
+Two exiting.
+Main thread exiting.
+
+
+注意在这个程序中，线程组A被挂起四秒。由于输出确认，造成线程One 和线程Two 暂
+停，但是线程Three 和线程Four 仍然运行。四秒钟之后，线程One 和线程Two 被恢复。注意
+线程组A是如何被挂起和恢复的。首先通过对线程组A调用enumerate( ) 方法得到线程组A中
+的线程。然后每一个线程重复通过得到的数组而被挂起。为了恢复线程组A中的线程，序
+列再一次被遍历，每一个线程被恢复。最后一点：这个例子使用了Java 2 推荐使用的方法去
+完成挂起和恢复线程的任务。而没有用在Java 2 中被摈弃的方法suspend( ) 和resume( ) 。
+
+14.14 ThreadLocal 和InheritableThreadLocal
+在Java 2 的java.lang 中增加了两个与线程有关的类：
+
+·
+ThreadLocal 用于创建线程局部变量。每个线程都拥有自己局部变量的拷贝。
+·
+InheritableThreadLocal 创建可以被继承的线程局部变量。
+14.15 Package
+在Java 2 中增加了一个称为Package 的类。这个类封装了与包有关的版本数据。包版本
+信息由于包的增值以及由于Java 程序可能需要知道哪些包版本可以利用而变得更加重要。
+Package 中定义的方法列在表14-18 中。下面的程序通过显示程序当前已知的包而说明了
+Package 。
+
+表14-18 由Package 定义的方法
+
+方法描述
+
+String getImplementationTitle( ) 返回调用包的标题
+String getImplementationVendor( ) 返回调用包的实现程序的程序名
+String getImplementationVersion( ) 返回调用包的版本号
+String getName( ) 返回调用包的名字
+Static Package getPackage(String pkgName) 返回一个由pkgName 指定的Package 对象
+
+
+296 第2 部分Java 库
+
+方法描述
+
+续表
+
+Static Package[ ] getPackages( ) 返回调用程序当前已知的所有包
+String getSpecificationTitle( ) 返回调用包的规格说明的标题
+String getSpecificationVendor( ) 返回对调用包的规格说明的所有者的名字
+String getSpecificationVersion( ) 返回调用包的规格说明的版本号
+Int hashCode( ) 返回调用包的散列码
+Boolean isCompatibleWith(String verNum) 如果verNum 小于或等于调用包的版本号，则返回true
+throws NumberFormatException
+Boolean isSealed( ) 如果调用包被封，则返回true；否则返回false
+Boolean isSealed(URL url) 如果调用包相对于url 被封，则返回true；否则返回false 。
+String toString( ) 返回调用包的等价字符串形式
+// Demonstrate Packageclass PkgTest {
+
+public static void main(String args[]) {
+Package pkgs[];
+
+ pkgs = Package.getPackages();
+
+for(int i=0; i < pkgs.length; i++)
+
+ System.out.println(
+
+ pkgs[i].getName() + " " +
+
+ pkgs[i].getImplementationTitle() + " " +
+
+ pkgs[i].getImplementationVendor() + " " +
+
+ pkgs[i].getImplementationVersion()
+);
+
+ }
+}
+
+14.16 RuntimePermission
+在Java 2 的java.lang 中也新增加了RuntimePermission 。它与Java 的安全机制有关，这里
+不做进一步的讨论。
+
+14.17 Throwable
+Throwable 类支持Java 的异常处理系统，它是派生所有异常类的类。在本书第10章已经
+讨论过它。
+
+
+第14 章java.lang 研究
+
+14.18 SecurityManager
+SecurityManager 是一个子类可以实现的抽象类，它用于创建一个安全管理程序。一般
+不需要实现自己的安全管理程序，如果非要这样做，需要查阅与你的Java 开发系统一起得
+到的相关文档。
+
+14.19 Comparable接口
+Java 2 在java.lang 中新增加了一个接口：Comparable 。实现Comparable 的类的对象可以
+被排序。换句话说，实现Comparable 的类包含了可以按某种有意义的方式进行比较的对象。
+Comparable 接口说明了一个方法，该方法用于确定Java 2 调用一个类的实例的自然顺序。该
+方法如下所示：
+
+int compareTo(Object obj)
+
+这个方法比较调用对象和obj 。如果他们相等，就返回0。如果调用对象比obj 小，则返
+回一个负值。否则返回一个正值。
+
+该接口由前面已经介绍的几种类实现。特别是Byte，Character，Double，Float，Long，
+Short，String 以及Integer 类定义了compareTo( ) 方法。另外，下一章将会介绍到，实现这个
+接口的对象可以被使用在不同的集合中。
+
+14.20 java.lang.ref 和java.lang.reflect 包
+在Java 中定义了两个java.lang 的子包：java.lang.ref 和java.lang.reflect 。下面分别予以简
+单介绍。
+
+14.20.1 java.lang.ref
+在前面学到过，在Java 中，垃圾回收工具自动确定何时对一个对象，没有引用存在。
+然后这个对象就被认为是不再需要的，同时它所占的内存也被释放。在Java 2 中新增加的
+java.lang.ref 包中的类对垃圾回收处理提供更加灵活的控制。例如，假设你的程序创建了大
+量的在后面某个时间又想重新使用的对象，可以持续保持对这些对象的引用，但是这可能
+需要更多的内存开销。
+
+作为替代，可以对这些对象定义“软”引用。如果可以利用的内存接近用完的话，一
+个可以“软实现”的对象可以从垃圾回收工具中释放。在那种情况下，垃圾回收工具将这
+个对象的“软”引用设为空（null ）。否则，垃圾回收工具保存对象以便以后使用。
+
+程序设计人员具有确定是否一个“软实现”的对象被释放的能力。如果它被释放了，
+可以重新创建它。如果没有释放，该对象对于后面的应用将一直是可以利用的。也可以为
+对象创建“弱”（weak ）和“假想”（phantom ）引用，不过关于这些以及java.lang.ref 包中
+
+
+298 第2 部分Java 库
+
+其他特性的讨论已经超过了本书的范围。
+
+14.20.2 java.lang.reflect
+Reflection 是一个程序分析自己的能力。包java.lang.reflect 提供了获得关于一个类的域、
+构造函数、方法和修改符的能力。需要这些信息去创建可以使你利用Java Beans 组件的软件
+工具。这个工具使用映射动态地确定组件的特征。这个主题将在第25章中讨论。
+
+另外，包java.lang.reflect 包括了一个可以动态创建和访问数组的类。
+
+
+第15 章java.util 第1 部分：类集框架
+
+java.util 包中包含了一些在Java 2 中新增加的最令人兴奋的增强功能：类集。一个类集
+（collection ）是一组对象。类集的增加使得许多java.util 中的成员在结构和体系结构上发生
+根本的改变。它也扩展了包可以被应用的任务范围。类集是被所有Java 程序员紧密关注的
+最新型的技术。
+
+除了类集，java.util 还包含了支持范围广泛的函数的各种各样的类和接口。这些类和接
+口被核心的Java 包广泛使用，同时当然也可以被你编写的程序所使用。对它们的应用包括
+产生伪随机数，对日期和时间的操作，观测事件，对位集的操作以及标记字符串。由于
+java.util 具有许多特性，因此它是Java 中最被广泛使用的一个包。
+
+java.util 中包含的类如下。在Java 2 中新增加的一些也被列出：
+
+AbstractCollection (Java 2) EventObject Random
+AbstractList (Java 2) GregorianCalendar ResourceBundle
+AbstractMap (Java 2) HashMap (Java 2) SimpleTimeZone
+AbstractSequentialList (Java 2) HashSet (Java 2) Stack
+AbstractSet (Java 2) Hashtable StringTokenizer
+ArrayList (Java 2) LinkedList (Java 2) Timer (Java 2, v1.3)
+Arrays (Java 2) ListResourceBundle TimerTask (Java 2, v1.3)
+BitSet Locale TimeZone
+Calendar Observable TreeMap (Java 2)
+Collections (Java 2) Properties TreeSet (Java 2)
+Date PropertyPermission (Java 2) Vector
+Dictionary PropertyResourceBundle WeakHashMap (Java 2)
+
+
+java.util 定义了如下的接口。注意其中大多数是在Java 2 中新增加的。
+
+Collection (Java 2) List (Java 2) Observer
+Comparator (Java 2) ListIterator (Java 2) Set (Java 2)
+Enumeration Map (Java 2) SortedMap (Java 2)
+EventListener Map.Entry (Java 2) SortedSet (Java 2)
+Iterator (Java 2)
+
+
+ResourceBundle 类，ListResourceBundle 类和PropertyResourceBundle 类帮助具有特定地
+区资源的大型程序国际化。关于这些类的讨论，在这里从略。授权对系统属性进行读/写的
+PropertyPermission 类也超过了本书的讨论范围。EventObject 和EventListener 类将在第20章讨
+论。下面将对剩下的类和接口做详细的讨论。
+
+
+300 第2 部分Java 库
+
+由于java.util 包非常大，关于它的讨论将分成两章进行。本章讨论那些与对象的类集有
+关的成员。在第16章讨论其他的类和接口。
+
+15.1 类集概述
+Java 的类集（Collection ）框架使你的程序处理对象组的方法标准化。在Java 2 出现之前，
+Java 提供了一些专门的类如Dictionary，Vector，Stack和Properties 去存储和操作对象组。尽
+管这些类非常有用，它们却缺少一个集中，统一的主题。因此例如说使用Vector 的方法就
+会与使用Properties 的方法不同。以前的专门的方法也没有被设计成易于扩展和能适应新的
+环境的形式。而类集解决了这些（以及其他的一些）问题。
+
+类集框架被设计用于适应几个目的。首先，这种框架是高性能的。对基本类集（动态
+数组，链接表，树和散列表）的实现是高效率的。一般很少需要人工去对这些“数据引擎”
+编写代码（如果有的话）。第二点，框架必须允许不同类型的类集以相同的方式和高度互
+操作方式工作。第三点，类集必须是容易扩展和/或修改的。为了实现这一目标，类集框架
+被设计成包含一组标准的接口。对这些接口，提供了几个标准的实现工具（例如LinkedList，
+HashSet 和TreeSet ），通常就是这样使用的。如果你愿意的话，也可以实现你自己的类集。
+为了方便起见，创建用于各种特殊目的的实现工具。一部分工具可以使你自己的类集实现
+更加容易。最后，增加了允许将标准数组融合到类集框架中的机制。
+
+算法（Algorithms ）是类集机制的另一个重要部分。算法操作类集，它在Collections 类
+中被定义为静态方法。因此它们可以被所有的类集所利用。每一个类集类不必实现它自己
+的方案，算法提供了一个处理类集的标准方法。
+
+由类集框架创建的另一项是Iterator 接口。一个迭代程序（iterator ）提供了一个多用途
+的，标准化的方法，用于每次访问类集的一个元素。因此迭代程序提供了一种枚举类集内
+容（enumerating the contents of a collection ）的方法。因为每一个类集都实现Iterator ，所以
+通过由Iterator 定义的方法，任一类集类的元素都能被访问到。因此，稍作修改，循环通过
+集合的程序代码也可以被用来循环通过列表。
+
+除了类集之外，框架定义了几个映射接口和类。映射（Maps）存储键/值对。尽管映射
+在对项的正确使用上不是“类集”，但它们完全用类集集成。在类集框架的语言中，可以
+获得映射的类集“视图”（collection-view ）。这个“视图”包含了从存储在类集中的映射
+得到的元素。因此，如果选择了一个映射，就可以将其当做一个类集来处理。
+
+对于由java.util 定义的原始类，类集机制被更新以便它们也能够集成到新的系统里。所
+以理解下面的说法是很重要的：尽管类集的增加改变了许多原始工具类的结构，但它却不
+会导致被抛弃。类集仅仅是提供了处理事情的一个更好的方法。
+
+最后的一点：如果你对C++ 比较熟悉的话，那么你可以发现Java 的类集技术与在C++ 中
+定义的标准模板库（STL）相似。在C++ 中叫做容器（container ），而在Java 中叫做类集。
+        `
+    },
+    {
+        name:'第15章  java.util 第1 部分：类集框架',
+        cont:`
+            15.2 类集接口
+类集框架定义了几个接口。本节对每一个接口都进行了概述。首先讨论类集接口是因
+为它们决定了collection 类的基本特性。不同的是，具体类仅仅是提供了标准接口的不同实
+现。支持类集的接口总结在如下的表中：
+
+接口描述
+Collection 能使你操作对象组，它位于类集层次结构的顶层
+List 扩展Collection 去处理序列（对象的列表）
+Set 扩展Collection 去处理集合，集合必须包含唯一元素
+SortedSet 扩展Set 去处理排序集合
+
+除了类集接口之外，类集也使用Comparator，Iterator 和ListIterator 接口。关于这些接口
+将在本章后面做更深入的描述。简单地说，Comparator 接口定义了两个对象如何比较；
+Iterator 和ListIterator 接口枚举类集中的对象。
+
+为了在它们的使用中提供最大的灵活性，类集接口允许对一些方法进行选择。可选择
+的方法使得使用者可以更改类集的内容。支持这些方法的类集被称为可修改的
+（modifiable ）。不允许修改其内容的类集被称为不可修改的（unmodifiable ）。如果对一
+个不可修改的类集使用这些方法，将引发一个UnsupportedOperationException 异常。所有内
+置的类集都是可修改的。
+
+下面讨论类集接口。
+
+15.2.1 类集接口
+Collection 接口是构造类集框架的基础。它声明所有类集都将拥有的核心方法。这些方
+法被总结在表15-1 中。因为所有类集实现Collection ，所以熟悉它的方法对于清楚地理解框
+架是必要的。其中几种方法可能会引发一个UnsupportedOperationException 异常。正如上面
+解释的那样，这些发生在当类集不能被修改时。当一个对象与另一个对象不兼容，例如当
+企图增加一个不兼容的对象到一个类集中时。将产生一个ClassCastException 异常。
+
+表15-1 由Collection 定义的方法
+
+方法描述
+boolean add(Object obj) 将obj 加入到调用类集中。如果obj 被加入到类集中了，则返
+回true；如果obj 已经是类集中的一个成员或类集不能被复制
+时，则返回false
+boolean addAll(Collection c) 将c中的所有元素都加入到调用类集中，如果操作成功（也
+就是说元素被加入了），则返回true；否则返回false
+void clear( )
+boolean contains(Object obj)
+从调用类集中删除所有元素
+如果obj是调用类集的一个元素，则返回true，否则，返回false
+
+
+302 第2 部分Java 库
+
+方法描述
+boolean containsAll(Collection c) 如果调用类集包含了c中的所有元素，则返回true；否则
+，
+返
+回false
+boolean equals(Object obj) 如果调用类集与obj相等，则返回true；否则返回false
+int hashCode( ) 返回调用类集的散列码
+boolean isEmpty( ) 如果调用类集是空的，则返回true；否则返回false
+Iterator iterator( ) 返回调用类集的迭代程序
+Boolean remove(Object obj) 从调用类集中删除obj的一个实例。如果这个元素被删除了，
+则返回true；否则返回false
+Boolean removeAll(Collection c) 从调用类集中删除c的所有元素。如果类集被改变了（也就
+是说元素被删除了），则返回true；否则返回false
+Boolean retainAll(Collection c) 删除调用类集中除了包含在c中的元素之外的全部元素。如
+果类集被改变了（也就是说元素被删除了），则返回true，
+否则返回false
+int size( ) 返回调用类集中元素的个数
+Object[ ] toArray( ) 返回一个数组，该数组包含了所有存储在调用类集中的元
+素。数组元素是类集元素的拷贝
+Object[ ] toArray(Object array[ ]) 返回一个数组，该数组仅仅包含了那些类型与数组元素类型
+匹配的类集元素。数组元素是类集元素的拷贝。如果array
+的大小与匹配元素的个数相等，它们被返回到array 。如果
+array 的大小比匹配元素的个数小，将分配并返回一个所需大
+小的新数组，如果array 的大小比匹配元素的个数大，在数组
+中，在类集元素之后的单元被置为null 。如果任一类集元素
+的类型都不是array 的子类型，则引发一个
+ArrayStoreException 异常
+
+续表
+
+调用add( )方法可以将对象加入类集。注意add( ) 带一个Object 类型的参数。因为Object
+是所有类的超类，所以任何类型的对象可以被存储在一个类集中。然而原始类型可能不行。
+例如，一个类集不能直接存储类型int，char，double 等的值。当然如果想存储这些对象，也
+可以使用在第14章中介绍的原始类型包装器之一。可以通过调用addAll( ) 方法将一个类集的
+全部内容增加到另一个类集中。
+
+可以通过调用remove( ) 方法将一个对象删除。为了删除一组对象，可以调用removeAll( )
+方法。调用retainAll( ) 方法可以将除了一组指定的元素之外的所有元素删除。为了清空类集，
+可以调用clear( )方法。
+
+通过调用contains( ) 方法，可以确定一个类集是否包含了一个指定的对象。为了确定一
+个类集是否包含了另一个类集的全部元素，可以调用containsAll( ) 方法。当一个类集是空的
+时候，可以通过调用isEmpty( ) 方法来予以确认。调用size( )方法可以获得类集中当前元素
+的个数。
+
+
+第15 章java.util 第1 部分：类集框架
+
+toArray( ) 方法返回一个数组，这个数组包含了存储在调用类集中的元素。这个方法比
+它初看上去的能力要更重要。经常使用类数组语法来处理类集的内容是有优势的。通过在
+类集和数组之间提供一条路径，可以充分利用这两者的优点。
+
+调用equals( ) 方法可以比较两个类集是否相等。“相等”的精确含义可以不同于从类集
+到类集。例如，可以执行equals( ) 方法以便用于比较存储在类集中的元素的值，换句话说，
+equals( ) 方法能比较对元素的引用。
+
+一个更加重要的方法是iterator( ) ，该方法对类集返回一个迭代程序。正如你将看到的
+那样，当使用一个类集框架时，迭代程序对于成功的编程来说是至关重要的。
+
+15.2.2 List接口
+List 接口扩展了Collection 并声明存储一系列元素的类集的特性。使用一个基于零的下
+标，元素可以通过它们在列表中的位置被插入和访问。一个列表可以包含复制元素。
+
+除了由Collection 定义的方法之外，List 还定义了一些它自己的方法，这些方法总结在
+表15-2 中。再次注意当类集不能被修改时，其中的几种方法引发UnsupportedOperation
+Exception异常。当一个对象与另一个不兼容，例如当企图将一个不兼容的对象加入一个类
+集中时，将产生ClassCastException 异常。
+
+表15-2 由List 定义的方法
+
+方法描述
+void add(int index, Object obj) 将obj插入调用列表，插入位置的下标由index 传递。任何已存
+在的，在插入点以及插入点之后的元素将前移。因此，没有元
+素被覆盖
+boolean addAll(int index, Collection c) 将c中的所有元素插入到调用列表中，插入点的下标由index 传
+递。在插入点以及插入点之后的元素将前移。因此，没有元素
+被覆盖。如果调用列表改变了，则返回true；否则返回false
+Object get(int index) 返回存储在调用类集内指定下标处的对象
+int indexOf(Object obj) 返回调用列表中obj 的第一个实例的下标。如果obj 不是列表中
+的元素，则返回-1
+int lastIndexOf(Object obj) 返回调用列表中obj 的最后一个实例的下标。如果obj 不是列表
+中的元素，则返回-1
+ListIterator listIterator( ) 返回调用列表开始的迭代程序
+ListIterator listIterator(int index) 返回调用列表在指定下标处开始的迭代程序
+Object remove(int index) 删除调用列表中index 位置的元素并返回删除的元素。删除后，
+列表被压缩。也就是说，被删除元素后面的元素的下标减一
+Object set(int index, Object obj) 用obj对调用列表内由index 指定的位置进行赋值
+List subList(int start, int end) 返回一个列表，该列表包括了调用列表中从start到end–1 的元
+素。返回列表中的元素也被调用对象引用
+
+对于由Collection 定义的add( ) 和addAll( ) 方法，List 增加了方法add(int, Object) 和
+
+
+304 第2 部分Java 库
+
+addAll(int, Collection) 。这些方法在指定的下标处插入元素。由Collection 定义的add(Object)
+和addAll(Collection) 的语义也被List 改变了，以便它们在列表的尾部增加元素。
+
+为了获得在指定位置存储的对象，可以用对象的下标调用get( ) 方法。为了给类表中的
+一个元素赋值，可以调用set( )方法，指定被改变的对象的下标。调用indexOf( ) 或lastIndexOf( )
+可以得到一个对象的下标。
+
+通过调用subList( ) 方法，可以获得列表的一个指定了开始下标和结束下标的子列表。
+正如你能想象到的，subList( ) 方法使得列表处理十分方便。
+
+15.2.3 集合接口
+集合接口定义了一个集合。它扩展了Collection 并说明了不允许复制元素的类集的特
+性。因此，如果试图将复制元素加到集合中时，add( ) 方法将返回false。它本身并没有定义
+任何附加的方法。
+
+15.2.4 SortedSet 接口
+SortedSet 接口扩展了Set并说明了按升序排列的集合的特性。除了那些由Set定义的方法
+之外，由SortedSet 接口说明的方法列在表15-3 中。当没有项包含在调用集合中时，其中的
+几种方法引发NoSuchElementException 异常。当对象与调用集合中的元素不兼容时，引发
+ClassCastException 异常。如果试图使用null 对象，而集合不允许null 时，引发
+NullPointerException 异常。
+
+表15-3 由SortedSet 定义的方法
+
+方法描述
+Comparator comparator( ) 返回调用被排序集合的比较函数，如果对该集合使用自然顺
+序，则返回null
+Object first( ) 返回调用被排序集合的第一个元素
+SortedSet headSet(Object end) 返回一个包含那些小于end 的元素的SortedSet ，那些元素包
+含在调用被排序集合中。返回被排序集合中的元素也被调用
+被排序集合所引用
+Object last( ) 返回调用被排序集合的最后一个元素
+SortedSet subSet(Object start, Object end) 返回一个SortedSet
+，
+它包括了从start到end–1 的元素。返回类
+集中的元素也被调用对象所引用
+SortedSet tailSet(Object start) 返回一个SortedSet
+，
+它包含了那些包含在分类集合中的大于
+等于start的元素。返回集合中的元素也被调用对象所引用
+
+SortedSet 定义了几种方法，使得对集合的处理更加方便。调用first( )方法，可以获得集
+合中的第一个对象。调用last( ) 方法，可以获得集合中的最后一个元素。调用subSet( ) 方法，
+可以获得排序集合的一个指定了第一个和最后一个对象的子集合。如果需要得到从集合的
+第一个元素开始的一个子集合，可以使用headSet( ) 方法。如果需要获得集合尾部的一个子
+集合，可以使用tailSet( ) 方法。
+
+
+第15 章java.util 第1 部分：类集框架
+
+15.3 Collection类
+现在，你已经熟悉了类集接口，下面开始讨论实现它们的标准类。一些类提供了完整
+的可以被使用的工具。另一些类是抽象的，提供主框架工具，作为创建具体类集的起始点。
+没有Collection 类是同步的，但正如你将在本章后面看到的那样，有可能获得同步版本。
+
+标准的Collection 类总结在下面的表中。
+
+类描述
+AbstractCollection 实现大多数Collection 接口
+AbstractList 扩展AbstractCollection 并实现大多数List 接口
+AbstractSequentialList 为了被类集使用而扩展AbstractList ，该类集使用连续而不是随机方
+式访问其元素
+LinkedList 通过扩展AbstractSequentialList 来实现链接表
+ArrayList 通过扩展AbstractList 来实现动态数组
+AbstractSet 扩展AbstractCollection 并实现大多数Set 接口
+HashSet 为了使用散列表而扩展AbstractSet
+TreeSet 实现存储在树中的一个集合。扩展AbstractSet
+
+注意：除了Collection 类外，还有几个从以前版本遗留下来的类，如Vector，Stack
+和Hashtable 均被重新设计成支持类集的形式。这些内容将在本章后面讨论。
+
+下面讨论具体的Collection 类，举例说明它们的用法。
+
+15.3.1 ArrayList 类
+ArrayList 类扩展AbstractList 并执行List 接口。ArrayList 支持可随需要而增长的动态数
+组。在Java 中，标准数组是定长的。在数组创建之后，它们不能被加长或缩短，这也就意
+味着你必须事先知道数组可以容纳多少元素。但是，你直到运行时才能知道需要多大的数
+组。为了解决这个问题，类集框架定义了ArrayList 。本质上，ArrayList 是对象引用的一个
+变长数组。也就是说，ArrayList 能够动态地增加或减小其大小。数组列表以一个原始大小
+被创建。当超过了它的大小，类集自动增大。当对象被删除后，数组就可以缩小。
+
+注意：动态数组也被从以前版本遗留下来的类Vector 所支持。关于这一点，将在
+本章后面介绍。
+
+ArrayList 有如下的构造函数：
+
+ArrayList(
+)
+ArrayList(Collection c)
+ArrayList(int capacity)
+
+
+其中第一个构造函数建立一个空的数组列表。第二个构造函数建立一个数组列表，该
+
+
+306 第2 部分Java 库
+
+数组列表由类集c中的元素初始化。第三个构造函数建立一个数组列表，该数组有指定的初
+始容量（capacity ）。容量是用于存储元素的基本数组的大小。当元素被追加到数组列表上
+时，容量会自动增加。
+
+下面的程序展示了ArrayList 的一个简单应用。首先创建一个数组列表，接着添加类型
+String 的对象（回想一个引用字符串被转化成一个字符串（String ）对象）。接着列表被显
+示出来。将其中的一些元素删除后，再一次显示列表。
+
+// Demonstrate ArrayList.
+import java.util.*
+;
+
+
+class ArrayListDemo {
+
+public static void main(String args[])
+{
+// create an array list
+ArrayList al = new ArrayList()
+;
+
+
+System.out.println("Initial size of al: "
++
+al.size())
+;
+
+
+// add elements to the array list
+al.add("C")
+;
+al.add("A")
+;
+al.add("E")
+;
+al.add("B")
+;
+al.add("D")
+;
+al.add("F")
+;
+al.add(1, "A2")
+;
+
+
+System.out.println("Size of al after additions: "
++
+al.size())
+;
+
+
+// display the array list
+System.out.println("Contents of al: " + al)
+;
+
+
+// Remove elements from the array list
+al.remove("F")
+;
+al.remove(2)
+;
+
+
+System.out.println("Size of al after deletions: "
++
+al.size())
+;
+System.out.println("Contents of al: " + al)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Initial size of al:
+0
+Size of al after additions:
+7
+Contents of al: [C, A2, A, E, B, D, F]
+Size of al after deletions:
+5
+Contents of al: [C, A2, E, B, D]
+
+
+注意a1开始时是空的，当添加元素后，它的大小增加了。当有元素被删除后，它的大
+
+
+第15 章java.util 第1 部分：类集框架
+
+小又会变小。
+
+在前面的例子中，使用由toString( ) 方法提供的默认的转换显示类集的内容，toString( )
+方法是从AbstractCollection 继承下来的。尽管它对简短的例子程序来说是足够了，然而很少
+使用这种方法去显示实际中的类集的内容。通常编程者会提供自己的输出程序。但在下面
+的几个例子中，仍将采用由toString( ) 方法创建的默认输出。
+
+尽管当对象被存储在ArrayList 对象中时，其容量会自动增加。仍可以通过调用
+ensureCapacity( ) 方法来人工地增加ArrayList 的容量。如果事先知道将在当前能够容纳的类
+集中存储许许多多的项时，你可能会想这样做。在开始时，通过一次性地增加它的容量，
+就能避免后面的再分配。因为再分配是很花时间的，避免不必要的处理可以改善性能。
+ensureCapacity( ) 方法的特征如下所示：
+
+void ensureCapacity(int cap)
+
+这里，cap是新的容量。
+相反地，如果想要减小在ArrayList 对象之下的数组的大小，以便它有正好容纳当前项
+的大小，可以调用trimToSize( ) 方法。该方法说明如下：
+
+void trimToSize( )
+
+从数组列表（ArrayList ）获得数组（Array）
+
+当使用ArrayList 时，有时想要获得一个实际的数组，这个数组包含了列表的内容。正
+如前面解释的那样，可以通过调用方法toArray( ) 来实现它。下面是几个为什么可能想将类
+集转换成为数组的原因：
+
+·
+对于特定的操作，可以获得更快的处理时间。
+·
+为了给方法传递数组，而方法不必重载去接收类集。
+·
+为了将新的基于类集的程序与不认识类集的老程序集成。
+无论何种原因，如下面的例子程序所示，将ArrayList 转换成数组是一件繁琐的事情。
+
+// Convert an ArrayList into an array.
+import java.util.*
+;
+
+
+class ArrayListToArray {
+
+public static void main(String args[])
+{
+// Create an array list
+ArrayList al = new ArrayList()
+;
+
+
+// Add elements to the array list
+al.add(new Integer(1))
+;
+al.add(new Integer(2))
+;
+al.add(new Integer(3))
+;
+al.add(new Integer(4))
+;
+
+
+System.out.println("Contents of al: " + al);
+
+ // get array
+
+
+308 第2 部分Java 库
+
+ Object ia[] = al.toArray()
+;
+int sum = 0;
+
+
+ // sum the array
+for(int i=0; i<ia.length; i++
+)
+sum += ((Integer) ia[i]).intValue()
+;
+
+
+System.out.println("Sum is: " + sum)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Contents of al: [1, 2, 3, 4]
+Sum is: 10
+
+
+程序开始时创建一个整数的类集。正如上面做出的解释那样，由于不能将原始类型存
+储在类集中，因此类型Integer 的对象被创建并被保存。接下来，toArray( ) 方法被调用，它
+获得了一个Objects 数组。这个数组的内容被置为整型（Integer ），接下来对这些值进行求
+和。
+
+15.3.2 LinkedList 类
+LinkedList 类扩展AbstractSequentialList 并执行List 接口。它提供了一个链接列表数据结
+构。它具有如下的两个构造函数，说明如下：
+
+LinkedList(
+)
+LinkedList(Collection c)
+
+
+第一个构造函数建立一个空的链接列表。第二个构造函数建立一个链接列表，该链接
+列表由类集c中的元素初始化。
+
+除了它继承的方法之外，LinkedList 类本身还定义了一些有用的方法，这些方法主要用
+于操作和访问列表。使用addFirst( ) 方法可以在列表头增加元素；使用addLast( ) 方法可以在
+列表的尾部增加元素。它们的形式如下所示：
+
+void addFirst(Object obj)
+void addLast(Object obj)
+
+
+这里，obj是被增加的项。
+调用getFirst( ) 方法可以获得第一个元素。调用getLast( ) 方法可以得到最后一个元素。
+它们的形式如下所示：
+
+Object getFirst(
+)
+Object getLast(
+)
+
+
+为了删除第一个元素，可以使用removeFirst( ) 方法；为了删除最后一个元素，可以调
+用removeLast( ) 方法。它们的形式如下所示：
+
+Object removeFirst(
+)
+Object removeLast(
+)
+
+
+
+第15 章java.util 第1 部分：类集框架
+
+下面的程序举例说明了几个LinkedList 支持的方法。
+
+// Demonstrate LinkedList.
+import java.util.*
+;
+
+
+class LinkedListDemo {
+
+public static void main(String args[])
+{
+// create a linked list
+LinkedList ll = new LinkedList()
+;
+
+
+// add elements to the linked list
+ll.add("F")
+;
+ll.add("B")
+;
+ll.add("D")
+;
+ll.add("E")
+;
+ll.add("C")
+;
+ll.addLast("Z")
+;
+ll.addFirst("A")
+;
+
+
+ ll.add(1, "A2");
+
+System.out.println("Original contents of ll: " + ll);
+
+// remove elements from the linked list
+ll.remove("F")
+;
+ll.remove(2)
+;
+
+
+System.out.println("Contents of ll after deletion: "
+
+ + ll);
+// remove first and last elements
+ll.removeFirst()
+;
+ll.removeLast()
+;
+
+
+System.out.println("ll after deleting first and last: "
+
+ + ll);
+// get and set a value
+Object val = ll.get(2)
+;
+ll.set(2, (String) val + " Changed")
+;
+
+
+System.out.println("ll after change: " + ll)
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Original contents of ll: [A, A2, F, B, D, E, C, Z]
+Contents of ll after deletion: [A, A2, D, E, C, Z]
+ll after deleting first and last: [A2, D, E, C]
+ll after change: [A2, D, E Changed, C]
+
+
+因为LinkedList 实现List 接口，调用add(Object) 将项目追加到列表的尾部，如同addLast( )
+方法所做的那样。使用add( ) 方法的add(int, Object) 形式，插入项目到指定的位置，如例子
+
+
+310 第2 部分Java 库
+
+程序中调用add（1，“A2”）的举例。
+
+注意如何通过调用get( ) 和set( ) 方法而使得ll中的第三个元素发生了改变。为了获得一
+个元素的当前值，通过get( ) 方法传递存储该元素的下标值。为了对这个下标位置赋一个新
+值，通过set( )方法传递下标和对应的新值。
+
+15.3.3 HashSet 类
+HashSet 扩展AbstractSet 并且实现Set接口。它创建一个类集，该类集使用散列表进行存
+储。正像大多数读者很可能知道的那样，散列表通过使用称之为散列法的机制来存储信息。
+在散列（hashing ）中，一个关键字的信息内容被用来确定唯一的一个值，称为散列码（hash
+code）。而散列码被用来当做与关键字相连的数据的存储下标。关键字到其散列码的转换
+是自动执行的——你看不到散列码本身。你的程序代码也不能直接索引散列表。散列法的
+优点在于即使对于大的集合，它允许一些基本操作如add( )，contains( )，remove( ) 和size( )
+方法的运行时间保持不变。
+
+下面的构造函数定义为：
+
+HashSet(
+)
+HashSet(Collection c)
+HashSet(int capacity)
+HashSet(int capacity, float fillRatio)
+
+
+第一种形式构造一个默认的散列集合。第二种形式用c中的元素初始化散列集合。第三
+种形式用capacity 初始化散列集合的容量。第四种形式用它的参数初始化散列集合的容量和
+填充比（也称为加载容量）。填充比必须介于0.0与1.0 之间，它决定在散列集合向上调整大
+小之前，有多少能被充满。具体的说，就是当元素的个数大于散列集合容量乘以它的填充
+比时，散列集合被扩大。对于没有获得填充比的构造函数，默认使用0.75 。
+
+HashSet 没有定义任何超过它的超类和接口提供的其他方法。
+
+重要的是，注意散列集合并没有确保其元素的顺序，因为散列法的处理通常不让自己
+参与创建排序集合。如果需要排序存储，另一种类集——TreeSet 将是一个更好的选择。
+
+这里是一个说明HashSet 的例子。
+
+// Demonstrate HashSet.
+import java.util.*
+;
+
+
+class HashSetDemo {
+
+public static void main(String args[]) {
+
+// create a hash set
+
+HashSet hs = new HashSet();
+
+// add elements to the hash set
+
+hs.add("B");
+
+hs.add("A");
+
+hs.add("D");
+
+hs.add("E");
+
+hs.add("C");
+
+hs.add("F");
+
+
+第15 章java.util 第1 部分：类集框架
+
+ System.out.println(hs)
+;
+}
+}
+
+
+下面是该程序的输出：
+
+[A, F, E, D, C, B]
+
+如上面解释的那样，元素并没有按顺序进行存储。
+
+15.3.4 TreeSet类
+TreeSet为使用树来进行存储的Set接口提供了一个工具，对象按升序存储。访问和检索
+是很快的。在存储了大量的需要进行快速检索的排序信息的情况下，TreeSet是一个很好的
+选择。
+
+下面的构造函数定义为：
+
+TreeSet(
+)
+TreeSet(Collection c)
+TreeSet(Comparator comp)
+TreeSet(SortedSet ss)
+
+
+第一种形式构造一个空的树集合，该树集合将根据其元素的自然顺序按升序排序。第
+二种形式构造一个包含了c的元素的树集合。第三种形式构造一个空的树集合，它按照由
+comp 指定的比较函数进行排序（比较函数将在本章后面介绍）。第四种形式构造一个包含
+了ss的元素的树集合
+
+这里是一个说明TreeSet 的例子。
+
+// Demonstrate TreeSet.
+import java.util.*
+;
+
+
+class TreeSetDemo {
+
+public static void main(String args[])
+{
+// Create a tree set
+TreeSet ts = new TreeSet()
+;
+
+
+// Add elements to the tree set
+ts.add("C")
+;
+ts.add("A")
+;
+ts.add("B")
+;
+ts.add("E")
+;
+ts.add("F")
+;
+ts.add("D")
+;
+
+
+ System.out.println(ts)
+;
+}
+}
+
+
+这个程序的输出如下所示：
+
+[A, B, C, D, E, F]
+
+正如上面解释的那样，因为TreeSet 按树存储其元素，它们被按照排序次序自动安排，
+
+
+312 第2 部分Java 库
+
+如程序输出所示。
+
+15.4 通过迭代函数访问类集
+通常希望循环通过类集中的元素。例如，可能会希望显示每一个元素。到目前为止，
+处理这个问题的最简单方法是使用iterator
+，
+iterator 是一个或者实现Iterator 或者实现
+ListIterator 接口的对象。Iterator 可以完成循环通过类集，从而获得或删除元素。ListIterator
+扩展Iterator ，允许双向遍历列表，并可以修改单元。Iterator 接口说明的方法总结在表15-4
+中。ListIterator 接口说明的方法总结在表15-5 中。
+
+表15-4 由Iterator 定义的方法
+
+方法描述
+
+boolean hasNext( ) 如果存在更多的元素，则返回true，否则返回false
+Object next( ) 返回下一个元素。如果没有下一个元素，则引发NoSuchElementException 异常
+void remove( ) 删除当前元素，如果试图在调用next( ) 方法之后，调用remove( ) 方法，则引发
+IllegalStateException 异常
+表15-5 由ListIterator 定义的方法
+方法描述
+void add(Object obj) 将obj插入列表中的一个元素之前，该元素在下一次调用next( ) 方法时，被返
+回
+boolean hasNext( ) 如果存在下一个元素，则返回true；否则返回false
+boolean hasPrevious( ) 如果存在前一个元素，则返回true；否则返回false
+Object next( ) 返回下一个元素，如果不存在下一个元素，则引发一个NoSuchElement
+Exception 异常
+int nextIndex( ) 返回下一个元素的下标，如果不存在下一个元素，则返回列表的大小
+Object previous( ) 返回前一个元素，如果前一个元素不存在，则引发一个NoSuchElement
+Exception 异常
+int previousIndex( ) 返回前一个元素的下标，如果前一个元素不存在，则返回-1
+void remove( ) 从列表中删除当前元素。如果remove( ) 方法在next( ) 方法或previous( ) 方法调
+用之前被调用，则引发一个IllegalStateException 异常
+void set(Object obj) 将obj赋给当前元素。这是上一次调用next( ) 方法或previous( ) 方法最后返回的
+元素
+
+15.4.1 使用迭代函数
+在通过迭代函数访问类集之前，必须得到一个迭代函数。每一个Collection 类都提供一
+个iterator( ) 函数，该函数返回一个对类集头的迭代函数。通过使用这个迭代函数对象，可
+以访问类集中的每一个元素，一次一个元素。通常，使用迭代函数循环通过类集的内容，
+
+
+第15 章java.util 第1 部分：类集框架
+
+步骤如下：
+
+1. 通过调用类集的iterator( ) 方法获得对类集头的迭代函数。
+2. 建立一个调用hasNext( ) 方法的循环，只要hasNext( ) 返回true ，就进行循环迭代。
+3. 在循环内部，通过调用next( ) 方法来得到每一个元素。
+对于执行List 的类集，也可以通过调用ListIterator 来获得迭代函数。正如上面解释的那
+样，列表迭代函数提供了前向或后向访问类集的能力，并可让你修改元素。否则，ListIterator
+如同Iterator 功能一样。
+
+这里是一个实现这些步骤的例子，说明了Iterator 和ListIterator 。它使用ArrayList 对象，
+但是总的原则适用于任何类型的类集。当然，ListIterator 只适用于那些实现List 接口的类集。
+
+// Demonstrate iterators.
+import java.util.*
+;
+
+
+class IteratorDemo {
+
+public static void main(String args[])
+{
+// create an array list
+ArrayList al = new ArrayList()
+;
+
+
+// add elements to the array list
+al.add("C")
+;
+al.add("A")
+;
+al.add("E")
+;
+al.add("B")
+;
+al.add("D")
+;
+al.add("F")
+;
+
+
+// use iterator to display contents of al
+System.out.print("Original contents of al: ")
+;
+Iterator itr = al.iterator()
+;
+while(itr.hasNext())
+{
+
+
+ Object element = itr.next();
+
+ System.out.print(element + " ")
+;
+}
+System.out.println()
+;
+
+
+// modify objects being iterated
+ListIterator litr = al.listIterator()
+;
+while(litr.hasNext())
+{
+
+
+ Object element = litr.next()
+;
+litr.set(element + "+")
+;
+}
+
+
+System.out.print("Modified contents of al: ")
+;
+itr = al.iterator()
+;
+while(itr.hasNext())
+{
+
+
+ Object element = itr.next();
+
+ System.out.print(element + " ")
+;
+}
+System.out.println()
+;
+
+
+
+314 第2 部分Java 库
+
+// now, display the list backwards
+System.out.print("Modified list backwards: ")
+;
+while(litr.hasPrevious())
+{
+
+
+ Object element = litr.previous();
+
+ System.out.print(element + " ")
+;
+}
+System.out.println()
+;
+
+
+}
+}
+
+
+程序的输出如下所示：
+
+Original contents of al: C A E B D
+F
+Modified contents of al: C+ A+ E+ B+ D+ F+
+Modified list backwards: F+ D+ B+ E+ A+ C+
+
+
+特别值得注意的是：列表是如何被反向显示的。在列表被修改之后，litr指向列表的末
+端（记住，当到达列表末端时，litr.hasNext( ) 方法返回false）。为了以反向遍历列表，程序
+继续使用litr，但这一次，程序检测它是否有前一个元素。只要它有前一个元素，该元素就
+被获得并被显示出来。
+
+15.5 将用户定义的类存储于Collection 中
+为了简单，前面的例子在类集中存储内置的对象，如String 或Integer 。当然，类集并没
+有被限制为只能存储内置的对象。完全相反的是，类集的能力是它能存储任何类型的对象，
+包括你所创建的类的对象。例如，考虑下面的例子，在这个例子中使用LinkedList 存储信箱
+地址。
+
+// A simple mailing list example.
+import java.util.*
+;
+
+
+class Address
+{
+private String name;
+private String street;
+private String city;
+private String state;
+private String code;
+
+
+Address(String n, String s, String c,
+
+ String st, String cd)
+{
+name = n;
+street = s;
+city = c;
+state = st;
+code = cd;
+
+
+}
+
+public String toString()
+{
+return name + "\n" + street + "\n"
++
+city + " " + state + " " + code;
+}
+
+
+
+第15 章java.util 第1 部分：类集框架
+
+}
+
+class MailList
+{
+public static void main(String args[])
+{
+LinkedList ml = new LinkedList()
+;
+
+
+// add elements to the linked list
+ml.add(new Address("J.W. West", "11 Oak Ave"
+,
+"Urbana", "IL", "61801"))
+;
+ml.add(new Address("Ralph Baker", "1142 Maple Lane"
+,
+"Mahomet", "IL", "61853"))
+;
+ml.add(new Address("Tom Carlton", "867 Elm St"
+,
+"Champaign", "IL", "61820"))
+;
+
+
+ Iterator itr = ml.iterator();
+
+ while(itr.hasNext())
+{
+Object element = itr.next()
+;
+System.out.println(element + "\n")
+;
+
+
+}
+System.out.println()
+;
+}
+}
+
+
+程序的输出如下所示：
+
+J.W. West
+11 Oak Ave
+Urbana IL 61801
+Ralph Baker
+1142 Maple Lane
+Mahomet IL 61853
+
+
+Tom Carlton
+867 Elm St
+Champaign IL 61820
+
+
+除了在类集中存储用户定义的类之外，关于上面程序的另一个重要的，值得注意的事
+情是它是非常短的。当考虑用50行代码建立一个能够实现存储，检索，以及处理信箱地址
+的链表时，类集框架的能力就变得显而易见了。正如大多数读者知道的那样，如果所有这
+些功能都必须用人工编写代码的话，程序将比现在的长好几倍。类集对许多不同的编程问
+题提供了现成的解决方案。每当情况出现时，就可以用它们。
+
+15.6 处理映射
+正如在本章开始时所谈到的，除了类集，Java 2 还在java.util 中增加了映射。映射（map）
+是一个存储关键字和值的关联或者说是关键字/值对的对象。给定一个关键字，可以得到它
+的值。关键字和值都是对象。关键字必须是唯一的。但值是可以被复制的。有些映射可以
+接收null 关键字和null 值。而有的则不行。
+
+
+316 第2 部分Java 库
+
+15.6.1 映射接口
+因为映射接口定义了映射的特征和本质，因此关于映射的讨论从这里开始。下面的接
+口支持映射：
+
+接口描述
+
+Map 映射唯一关键字给值
+Map.Entry 描述映射中的元素（关键字/值对）。这是Map 的一个内部类
+SortedMap 扩展Map 以便关键字按升序保持
+
+下面对每个接口依次进行讨论。
+
+Map 接口
+
+Map接口映射唯一关键字到值。关键字（key ）是以后用于检索值的对象。给定一个关
+键字和一个值，可以存储这个值到一个Map对象中。当这个值被存储以后，就可以使用它
+的关键字来检索它。由Map说明的方法总结在表15-6 中。当调用的映射中没有项存在时，
+其中的几种方法会引发一个NoSuchElementException 异常。而当对象与映射中的元素不兼容
+时，引发一个ClassCastException 异常。如果试图使用映射不允许使用的null 对象时，则引发
+一个NullPointerException 异常。当试图改变一个不允许修改的映射时，则引发一个
+UnsupportedOperationException 异常。
+
+表15-6 由Map 定义的方法
+
+方法描述
+void clear( ) 从调用映射中删除所有的关键字/值对
+boolean containsKey(Object k) 如果调用映射中包含了作为关键字的k，则返回true；否则返回
+false
+boolean containsValue(Object v) 如果映射中包含了作为值的v，
+则返回true；否则返回false
+Set entrySet( ) 返回包含了映射中的项的集合（Set ）。该集合包含了类型
+Map.Entry 的对象。这个方法为调用映射提供了一个集合“视图”
+Boolean equals(Object obj) 如果obj是一个Map 并包含相同的输入，则返回true；否则返回false
+Object get(Object k) 返回与关键字k相关联的值
+int hashCode( ) 返回调用映射的散列码
+boolean isEmpty( ) 如果调用映射是空的，则返回true；否则返回false
+Set keySet( ) 返回一个包含调用映射中关键字的集合（Set
+）
+。这个方法为调用
+映射的关键字提供了一个集合“视图”
+Object put(Object k, Object v) 将一个输入加入调用映射，覆盖原先与该关键字相关联的值。关
+键字和值分别为k和v。如果关键字已经不存在了，则返回null；
+否则，返回原先与关键字相关联的值
+void putAll(Map m) 将所有来自m的输入加入调用映射
+Object remove(Object k) 删除关键字等于k的输入
+
+
+第15 章java.util 第1 部分：类集框架
+
+续表
+
+方法描述
+int size( ) 返回映射中关键字/值对的个数
+Collection values( ) 返回一个包含了映射中的值的类集。这个方法为映射中的值提供
+了一个类集“视图”
+
+映射循环使用两个基本操作：get( ) 和put( ) 。使用put( ) 方法可以将一个指定了关键字和
+值的值加入映射。为了得到值，可以通过将关键字作为参数来调用get( ) 方法。调用返回该
+值。
+
+正如前面谈到的，映射不是类集，但可以获得映射的类集“视图”。为了实现这种功
+能，可以使用entrySet( ) 方法，它返回一个包含了映射中元素的集合（Set）。为了得到关键
+字的类集“视图”，可以使用keySet( ) 方法。为了得到值的类集“视图”，可以使用values( )
+方法。类集“视图”是将映射集成到类集框架内的手段。
+
+SortedMap 接口
+
+SortedMap 接口扩展了Map，它确保了各项按关键字升序排序。由SortedMap 说明的方
+法总结在表15-7 中。当调用映射中没有的项时，其中的几种方法引发一个NoSuchElement
+Exception异常。当对象与映射中的元素不兼容时，则引发一个ClassCastException 异常。当
+试图使用映射不允许使用的null 对象时，则引发一个NullPointerException 异常。
+
+表15-7 由SortedMap 定义的方法
+
+方法描述
+Comparator comparator( ) 返回调用排序映射的比较函数。如果调用映射使用的是
+自然顺序的话，则返回null
+Object firstKey( ) 返回调用映射的第一个关键字
+SortedMap headMap(Object end) 返回一个排序映射，该映射包含了那些关键字小于end
+的映射输入
+Object lastKey( ) 返回调用映射的最后一个关键字
+SortedMap subMap(Object start, Object end) 返回一个映射，该映射包含了那些关键字大于等于start
+同时小于end 的输入
+SortedMap tailMap(Object start) 返回一个映射，该映射包含了那些关键字大于等于start
+的输入
+
+排序映射允许对子映射（换句话说，就是映射的子集）进行高效的处理。使用
+headMap( )，tailMap( ) 或subMap( ) 方法可以获得子映射。调用firstKey( ) 方法可以获得集合
+的第一个关键字。而调用lastKey( ) 方法可以获得集合的最后一个关键字。
+
+Map.Entry 接口
+
+Map.Entry 接口使得可以操作映射的输入。回想由Map 接口说明的entrySet( ) 方法，调用
+该方法返回一个包含映射输入的集合（Set）。这些集合元素的每一个都是一个Map.Entry
+
+
+318 第2 部分Java 库
+
+对象。表15-8 总结了由该接口说明的方法。
+
+表15-8 由Map.Entry 定义的方法
+
+方法描述
+boolean equals(Object obj) 如果obj是一个关键字和值都与调用对象相等的Map.Entry ，则返回true
+Object getKey( ) 返回该映射项的关键字
+Object getValue( ) 返回该映射项的值
+int hashCode( ) 返回该映射项的散列值
+Object setValue(Object v) 将这个映射输入的值赋给v。如果v不是映射的正确类型，则引发一个
+ClassCastException 异常。如果v 存在问题，则引发一个
+IllegalArgumentException 异常。如果v是null而映射又不允许null 关键字，
+则引发一个NullPointerException 异常。如果映射不能被改变，则引发一
+个UnsupportedOperationException 异常。
+
+15.6.2 映射类
+有几个类提供了映射接口的实现。可以被用做映射的类总结如下：
+
+类描述
+
+AbstractMap 实现大多数的Map 接口
+HashMap 将AbstractMap 扩展到使用散列表
+TreeMap 将AbstractMap 扩展到使用树
+WeakHashMap 将AbstractMap 扩展到使用弱关键字散列表
+
+注意AbstractMap 对三个具体的映射实现来说，是一个超类。WeakHashMap 实现一个使
+用“弱关键字”的映射，它允许映射中的元素，当该映射的关键字不再被使用时，被放入
+回收站。关于这个类，在这里不做更深入的讨论。其他的类将在下面介绍。
+
+HashMap 类
+
+HashMap 类使用散列表实现Map接口。这允许一些基本操作如get( ) 和put( ) 的运行时间
+保持恒定，即便对大型集合，也是这样的。
+下面的构造函数定义为：
+
+HashMap(
+)
+HashMap(Map m)
+HashMap(int capacity)
+HashMap(int capacity, float fillRatio)
+
+
+第一种形式构造一个默认的散列映射。第二种形式用m的元素初始化散列映射。第三
+种形式将散列映射的容量初始化为capacity 。第四种形式用它的参数同时初始化散列映射的
+容量和填充比。容量和填充比的含义与前面介绍的HashSet 中的容量和填充比相同。
+
+HashMap 实现Map并扩展AbstractMap。它本身并没有增加任何新的方法。
+应该注意的是散列映射并不保证它的元素的顺序。因此，元素加入散列映射的顺序并
+
+
+第15 章java.util 第1 部分：类集框架
+
+不一定是它们被迭代函数读出的顺序。
+下面的程序举例说明了HashMap 。它将名字映射到账目资产平衡表。注意集合“视图”
+是如何获得和被使用的。
+
+import java.util.*;
+
+class HashMapDemo
+{
+public static void main(String args[])
+{
+
+
+// Create a hash map
+HashMap hm = new HashMap()
+;
+
+
+// Put elements to the map
+hm.put("John Doe", new Double(3434.34))
+;
+hm.put("Tom Smith", new Double(123.22))
+;
+hm.put("Jane Baker", new Double(1378.00))
+;
+hm.put("Todd Hall", new Double(99.22))
+;
+hm.put("Ralph Smith", new Double(-19.08))
+;
+
+
+// Get a set of the entries
+Set set = hm.entrySet()
+;
+
+
+ // Get an iterator
+Iterator i = set.iterator()
+;
+
+
+ // Display elements
+
+ while(i.hasNext())
+{
+Map.Entry me = (Map.Entry)i.next()
+;
+System.out.print(me.getKey() + ": ")
+;
+System.out.println(me.getValue())
+;
+
+
+}
+System.out.println()
+;
+
+
+// Deposit 1000 into John Doe's account
+double balance = ((Double)hm.get("John Doe")).doubleValue()
+;
+hm.put("John Doe", new Double(balance + 1000))
+;
+System.out.println("John Doe's new balance: "
++
+
+
+ hm.get("John Doe"))
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Todd Hall: 99.22
+Ralph Smith: -19.08
+John Doe: 3434.34
+Jane Baker: 1378.0
+Tom Smith: 123.22
+
+
+John Doe’s current balance: 4434.34
+
+程序开始创建一个散列映射，然后将名字的映射增加到平衡表中。接下来，映射的内
+容通过使用由调用函数entrySet( ) 而获得的集合“视图”而显示出来。关键字和值通过调用
+
+
+320 第2 部分Java 库
+
+由Map.Entry 定义的getKey( ) 和getValue( ) 方法而显示。注意存款是如何被制成John Doe 的账
+目的。put( ) 方法自动用新值替换与指定关键字相关联的原先的值。因此，在John Doe 的账
+目被更新后，散列映射将仍然仅仅保留一个“John Doe ”账目。
+
+TreeMap 类
+
+TreeMap类通过使用树实现Map接口。TreeMap 提供了按排序顺序存储关键字/值对的有
+效手段，同时允许快速检索。应该注意的是，不像散列映射，树映射保证它的元素按照关
+键字升序排序。
+
+下面的TreeMap 构造函数定义为：
+
+TreeMap(
+)
+TreeMap(Comparator comp)
+TreeMap(Map m)
+TreeMap(SortedMap sm)
+
+
+第一种形式构造一个空树的映射，该映射使用其关键字的自然顺序来排序。第二种形
+式构造一个空的基于树的映射，该映射通过使用Comparator comp 来排序（比较函数
+Comparators 将在本章后面进行讨论）。第三种形式用从m的输入初始化树映射，该映射使
+用关键字的自然顺序来排序。第四种形式用从sm的输入来初始化一个树映射，该映射将按
+与sm相同的顺序来排序。
+
+TreeMap实现SortedMap 并且扩展AbstractMap。而它本身并没有另外定义其他方法。
+下面的程序重新使前面的例子运转，以便在其中使用TreeMap：
+
+import java.util.*;
+
+class TreeMapDemo
+{
+public static void main(String args[])
+{
+
+
+// Create a tree map
+TreeMap tm = new TreeMap()
+;
+
+
+// Put elements to the map
+tm.put("John Doe", new Double(3434.34))
+;
+tm.put("Tom Smith", new Double(123.22))
+;
+tm.put("Jane Baker", new Double(1378.00))
+;
+tm.put("Todd Hall", new Double(99.22))
+;
+tm.put("Ralph Smith", new Double(-19.08))
+;
+
+
+// Get a set of the entries
+Set set = tm.entrySet()
+;
+
+
+ // Get an iterator
+Iterator i = set.iterator()
+;
+
+
+ // Display elements
+
+ while(i.hasNext())
+{
+Map.Entry me = (Map.Entry)i.next()
+;
+System.out.print(me.getKey() + ": ")
+;
+System.out.println(me.getValue())
+;
+
+
+
+第15 章java.util 第1 部分：类集框架
+
+
+}
+System.out.println()
+;
+
+
+// Deposit 1000 into John Doe's account
+double balance = ((Double)tm.get("John Doe")).doubleValue()
+;
+tm.put("John Doe", new Double(balance + 1000))
+;
+System.out.println("John Doe's new balance: "
++
+
+
+ tm.get("John Doe"))
+;
+}
+}
+
+
+下面是该程序的输出结果：
+
+Jane Baker: 1378.0
+John Doe: 3434.34
+Ralph Smith: -19.08
+Todd Hall: 99.22
+Tom Smith: 123.22
+
+
+John Doe’s current balance: 4434.34
+
+注意对关键字进行了排序。然而，在这种情况下，它们用名字而不是用姓进行了排序。
+可以通过在创建映射时，指定一个比较函数来改变这种排序。在下一节将介绍如何做。
+
+15.7 比较函数
+TreeSet和TreeMap 都按排序顺序存储元素。然而，精确定义采用何种“排序顺序”的
+是比较函数。通常在默认的情况下，这些类通过使用被Java 称之为“自然顺序”的顺序存
+储它们的元素，而这种顺序通常也是你所需要的（A在B的前面，1在2的前面，等等）。如
+果需要用不同的方法对元素进行排序，可以在构造集合或映射时，指定一个Comparator 对
+象。这样做为你提供了一种精确控制如何将元素储存到排序类集和映射中的能力。
+
+Comparator 接口定义了两个方法：compare( ) 和equals( ) 。这里给出的compare( ) 方法按
+顺序比较了两个元素：
+
+int compare(Object obj1, Object obj2)
+
+obj1 和obj2 是被比较的两个对象。当两个对象相等时，该方法返回0；当obj1 大于obj2
+时，返回一个正值；否则，返回一个负值。如果用于比较的对象的类型不兼容的话，该方
+法引发一个ClassCastException 异常。通过覆盖compare( )，可以改变对象排序的方式。例如，
+通过创建一个颠倒比较输出的比较函数，可以实现按逆向排序。
+
+这里给出的equals( ) 方法，测试一个对象是否与调用比较函数相等：
+
+boolean equals(Object obj)
+
+obj是被用来进行相等测试的对象。如果obj 和调用对象都是Comparator 的对象并且使用
+相同的排序。该方法返回true 。否则返回false。重载equals( ) 方法是没有必要的，大多数简
+单的比较函数都不这样做。
+
+
+322 第2 部分Java 库
+
+15.7.1 使用比较函数
+下面是一个说明定制的比较函数能力的例子。该例子实现compare( ) 方法以便它按正常
+顺序的逆向进行操作。因此，它使得一个树集合按逆向的顺序进行存储。
+
+// Use a custom comparator.
+import java.util.*
+;
+
+
+// A reverse comparator for strings.
+class MyComp implements Comparator
+{
+public int compare(Object a, Object b)
+{
+String aStr, bStr;
+
+
+ aStr = (String) a;
+bStr = (String) b;
+
+
+ // reverse the comparison
+return bStr.compareTo(aStr)
+;
+}
+
+
+// no need to override equals
+}
+
+
+class CompDemo {
+
+public static void main(String args[])
+{
+// Create a tree set
+TreeSet ts = new TreeSet(new MyComp())
+;
+
+
+// Add elements to the tree set
+ts.add("C")
+;
+ts.add("A")
+;
+ts.add("B")
+;
+ts.add("E")
+;
+ts.add("F")
+;
+ts.add("D")
+;
+
+
+ // Get an iterator
+Iterator i = ts.iterator()
+;
+
+
+ // Display elements
+
+ while(i.hasNext())
+{
+Object element = i.next()
+;
+System.out.print(element + " ")
+;
+
+
+}
+System.out.println()
+;
+}
+}
+
+
+正如下面的输出所示，树按照逆向顺序进行存储：
+
+F E D C B A
+
+仔细观察实现Comparator 并覆盖compare( ) 方法的MyComp 类（正如前面所解释的那样，
+覆盖equals( ) 方法既不是必须的，也不是常用的）。在compare( ) 方法内部，String 方法
+
+
+第15 章java.util 第1 部分：类集框架
+
+compareTo( ) 比较两个字符串。然而由bStr—— 不是aStr—— 调用compareTo( ) 方法，这导致
+比较的结果被逆向。
+
+对应一个更实际的例子，下面的例子是用TreeMap 程序实现前面介绍的存储账目资产
+平衡表例子的程序。在前面介绍的程序中，账目是按名进行排序的，但程序是以按照名字
+进行排序开始的。下面的程序按姓对账目进行排序。为了实现这种功能，程序使用了比较
+函数来比较每一个账目下姓的排序。得到的映射是按姓进行排序的。
+
+// Use a comparator to sort accounts by last name.
+import java.util.*
+;
+
+
+// Compare last whole words in two strings.
+class TComp implements Comparator
+{
+
+
+public int compare(Object a, Object b)
+{
+int i, j, k;
+String aStr, bStr;
+
+
+ aStr = (String) a;
+bStr = (String) b;
+
+
+// find index of beginning of last name
+i = aStr.lastIndexOf(' ')
+;
+j = bStr.lastIndexOf(' ')
+;
+
+
+ k = aStr.substring(i).compareTo(bStr.substring(j))
+;
+if(k==0) // last names match, check entire name
+return aStr.compareTo(bStr)
+;
+else
+return k;
+}
+
+
+// no need to override equals
+}
+
+
+class TreeMapDemo2 {
+
+public static void main(String args[])
+{
+// Create a tree map
+TreeMap tm = new TreeMap(new TComp())
+;
+
+
+// Put elements to the map
+tm.put("John Doe", new Double(3434.34))
+;
+tm.put("Tom Smith", new Double(123.22))
+;
+tm.put("Jane Baker", new Double(1378.00))
+;
+tm.put("Todd Hall", new Double(99.22))
+;
+tm.put("Ralph Smith", new Double(-19.08))
+;
+
+
+// Get a set of the entries
+Set set = tm.entrySet()
+;
+
+
+ // Get an iterator
+Iterator itr = set.iterator()
+;
+
+
+ // Display elements
+while(itr.hasNext())
+{
+
+
+
+324 第2 部分Java 库
+
+ Map.Entry me = (Map.Entry)itr.next()
+;
+System.out.print(me.getKey() + ": ")
+;
+System.out.println(me.getValue())
+;
+
+
+}
+System.out.println()
+;
+
+
+// Deposit 1000 into John Doe's account
+double balance = ((Double)tm.get("John Doe")).doubleValue()
+;
+tm.put("John Doe", new Double(balance + 1000))
+;
+System.out.println("John Doe's new balance: "
++
+
+
+ tm.get("John Doe"))
+;
+}
+}
+
+
+这里是程序的输出结果，注意此时的账目是按姓进行排序的：
+
+Jane Baker: 1378.0
+John Doe: 3434.34
+Todd Hall: 99.22
+Ralph Smith: -19.08
+Tom Smith: 123.22
+
+
+John Doe’s new balance: 4434.34
+
+比较函数类TComp 比较两个包含姓和名的字符串。它首先比较姓。具体是这样做的，
+它首先寻找每一个字符串中最后一个空格的下标，然后比较从这个位置开始的每一个元素
+的子字符串。当两个字符串中姓完全相等时，它再比较两个名。这样就形成了一个先按姓
+进行排序，在姓相同的情况下，再按名字进行排序的树型映射。通过程序的输出中Ralph
+Smith 出现在Tom Smith 之前的结果可以看到这一点。
+
+15.8 类集算法
+类集框架定义了几种能用于类集和映射的算法。在Collections 类中，这些算法被定义为
+静态方法。表15-9 中列出了这些算法。当试图比较不兼容的类型时，其中的一些算法引发
+一个ClassCastException 异常；而当试图改变一个不可改变的类集时，则引发一个
+UnsupportedOperationException 异常。
+
+表15-9 由Collections 定义的算法
+
+方法描述
+static int binarySearch(List list, Object按照c的次序在list中搜寻value 。如果value 在list内，则
+value,Comparator c) 返回value 在list的位置。如果在list中没有发现value，
+则返回-1
+static int binarySearch(List list, Object value) 在list中搜寻value ，列表（list）
+必须被排序。如果value
+在list内，则返回value 的位置。如果在list中没有发现
+value ，则返回-1
+static void copy(List list1, List list2) 将list2中的元素复制给list1
+
+
+第15 章java.util 第1 部分：类集框架
+
+续表
+
+方法描述
+static Enumeration enumeration(Collection c) 返回c的一个枚举（参看本章后面的“枚举接口”）。
+static void fill(List list, Object obj) 将obj赋给list中的每一个元素
+Static Object max(Collection c,Comparator comp) 返回由comp 确定的c中的最大元素
+static Object max(Collection c) 返回按自然顺序确定的c中的最大元素。类集不必被排
+序
+static Object min(Collection c,Comparator comp) 返回由comp 确定的c中的最小元素。类集不必被排序
+static Object min(Collection c) 返回按自然顺序确定的c中的最小元素
+static List nCopies(int num, Object obj) 返回包含在不可改变的列表中的obj的num个拷贝。
+num必须大于等于0
+static void reverse(List list) 将list中的序列逆向
+static Comparator reverseOrder( ) 返回一个逆向比较函数（即将两个元素比较的结果进
+行逆向的比较函数）
+static void shuffle(List list, Random r) 用r作为随机数的源，对list中的元素进行混淆（也即
+随机化）
+static void shuffle(List list) 对list中的元素进行混淆（也即随机化）
+static Set singleton(Object obj) 返回一个不可改变的集合obj。这是一个实现将单个对
+象变成集合的简单办法
+static List singletonList(Object obj) 返回一个不可改变的列表obj。这是一个实现将单个对
+象变成列表的简单办法（在Java 2 的1.3 版中新增加的）
+static Map singletonMap(Object k, Object v) 返回一个不可改变的关键字/值对映射k/v 。这是一个
+实现将单个关键字/值对变成映射的简单办法（在Java
+2的1.3 版中新增加的）
+static void sort(List list, Comparator comp) 按comp 对list中的元素进行排序
+static void sort(List list) 按自然顺序对list中的元素进行排序
+static Collection 返回一个被c支持的安全线程类集
+synchronizedCollection(Collection c)
+static List synchronizedList(List list) 返回一个被list支持的安全线程列表
+static Map synchronizedMap(Map m) 返回一个被m支持的安全线程映射
+static Set synchronizedSet(Set s) 返回一个被s支持的安全线程集合
+static SortedMap 返回一个被sm支持的安全线程排序集合
+synchronizedSortedMap(SortedMap sm)
+static SortedSet 返回一个被ss支持的安全线程集合
+synchronizedSortedSet(SortedSet ss)
+static Collection 返回一个被c支持的不可变类集
+unmodifiableCollection(Collection c)
+Static List unmodifiableList(List list) 返回一个被list支持的不可变列表
+
+
+326 第2 部分Java 库
+
+方法描述
+
+续表
+
+static Map unmodifiableMap(Map m) 返回一个被m支持的不可变映
+射
+static Set unmodifiableSet(Set s) 返回一个被s支持的不可变集
+合
+Static SortedMap 返回一个被sm支持的不可变排序映
+射
+
+
+ unmodifiable SortedMap(SortedMap sm)
+static SortedSet 返回一个被ss支持的不可变排序集
+合
+unmodifiableSortedSet(SortedSet ss)
+
+
+注意其中的几种方法，如synchronizedList( ) 和synchronizedSet( ) 被用来获得各种类集的
+同步（安全线程）拷贝。正如前面解释的那样，没有任何一个标准类集实现是同步的。必
+须使用同步算法来为其提供同步。另一种观点：同步类集的迭代函数必须在synchronized 块
+内使用。
+
+以unmodifiable 开头的一组方法返回不能被改变的各种类集“视图”。这些方法当将一
+些进程对类集设为只读形式时很有用的。
+Collections 定义了三个静态变量：EMPTY_SET，EMPTY_LIST 和EMPTY_MAP 。它们
+都是不可改变的。EMPTY_MAP 是在Java 2 的1.3 版中新增加的。
+
+下面的程序说明了其中的一些算法。该程序创建和初始化了一个链表。reverseOrder( )
+方法返回一个对Integer 对象的比较进行逆向的Comparator 函数。列表中的元素按照这个比较
+函数进行排序并被显示出来。接下来，调用shuffle( )方法对列表进行随机排列。然后显示
+列表的最大和最小值。
+
+// Demonstrate various algorithms.
+import java.util.*
+;
+
+
+class AlgorithmsDemo
+{
+public static void main(String args[])
+{
+
+
+// Create and initialize linked list
+LinkedList ll = new LinkedList()
+;
+ll.add(new Integer(-8))
+;
+ll.add(new Integer(20))
+;
+ll.add(new Integer(-20))
+;
+ll.add(new Integer(8))
+;
+
+
+// Create a reverse order comparator
+Comparator r = Collections.reverseOrder()
+;
+
+
+// Sort list by using the comparator
+Collections.sort(ll, r)
+;
+
+
+ // Get iterator
+Iterator li = ll.iterator()
+;
+
+
+ System.out.print("List sorted in reverse: ")
+;
+while(li.hasNext()
+)
+System.out.print(li.next() + " ")
+;
+
+
+
+第15 章java.util 第1 部分：类集框架
+
+ System.out.println();
+
+ Collections.shuffle(ll);
+
+ // display randomized list
+li = ll.iterator()
+;
+System.out.print("List shuffled: ")
+;
+while(li.hasNext()
+)
+
+
+ System.out.print(li.next() + " ")
+;
+System.out.println()
+;
+
+
+ System.out.println("Minimum: " + Collections.min(ll))
+;
+System.out.println("Maximum: " + Collections.max(ll))
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+List sorted in reverse: 20 8 -8 -20
+List shuffled: 20 -20 8 -
+8
+Minimum: -20
+Maximum: 20
+
+
+注意min( ) 和max( ) 方法是在列表被混淆之后，对其进行操作的。两者在运行时，都不
+需要排序的列表。
+
+15.9 Arrays （数组）
+Java 2 在java.util 中新增加了一个叫做Arrays 的类。这个类提供了各种在进行数组运算时
+很有用的方法。尽管这些方法在技术上不属于类集框架，但它们提供了跨越类集和数组的
+桥梁。在这一节中，分析由Arrays 定义的每一种方法。
+
+asList( ) 方法返回一个被指定数组支持的List 。换句话说，列表和数组访问的是同一个
+单元。它具有如下的形式：
+
+static List asList(Object[ ] array)
+
+这里array是包含了数据的数组。
+binarySearch( ) 方法使用二进制搜索寻找指定的值。该方法必须应用于排序数组。它具
+有如下的形式：
+
+static int binarySearch(byte[ ] array, byte value)
+static int binarySearch(char[ ] array, char value)
+static int binarySearch(double[ ] array, double value)
+static int binarySearch(float[ ] array, float value)
+static int binarySearch(int[ ] array, int value)
+static int binarySearch(long[ ] array, long value)
+static int binarySearch(short[ ] array, short value)
+static int binarySearch(Object[ ] array, Object value)
+static int binarySearch(Object[ ] array, Object value, Comparator c)
+
+
+
+328 第2 部分Java 库
+
+这里，array是被搜索的数组，而value 是被查找的值。当array中包含的元素是不可比较
+的（例如Double 和StringBuffer ）或者当value 与array中的类型不兼容时，后两种形式引发一
+个ClassCastException 异常。在最后一种形式中，比较函数（Comparator）c用于确定array中
+的元素的顺序。在所有的形式中，如果array中含有value ，则返回该元素的下标。否则，返
+回一个负值。
+
+当两个数组相等时，equals( ) 方法返回true ；否则返回false。equals( ) 方法具有下面的一
+些形式：
+
+static boolean equals(boolean array1[ ], boolean array2[ ]
+)
+static boolean equals(byte array1[ ], byte array2[ ]
+)
+static boolean equals(char array1[ ], char array2[ ]
+)
+static boolean equals(double array1[ ], double array2[ ]
+)
+static boolean equals(float array1[ ], float array2[ ]
+)
+static boolean equals(int array1[ ], int array2[ ]
+)
+static boolean equals(long array1[ ], long array2[ ]
+)
+static boolean equals(short array1[ ], short array2[ ]
+)
+static boolean equals(Object array1[ ], Object array2[ ]
+)
+
+
+这里array1 和array2 是两个用来比较看是否相等的数组。
+fill( )方法将一个值赋给数组中的所有元素。换句话说，它用一个指定的值填充数组。
+fill( )方法有两种形式。第一种形式具有下面的一些形式，填充整个数组：
+
+static void fill(boolean array[ ], boolean value)
+static void fill(byte array[ ], byte value)
+static void fill(char array[ ], char value)
+static void fill(double array[ ], double value)
+static void fill(float array[ ], float value)
+static void fill(int array[ ], int value)
+static void fill(long array[ ], long value)
+static void fill(short array[ ], short value)
+static void fill(Object array[ ], Object value)
+
+
+这里value 被赋给数组array中的每一个元素。
+fill( )方法的第二种形式将一个值赋给数组的一个子集。它的几种形式如下：
+
+static void fill(boolean array[ ], int start, int end, boolean value)
+static void fill(byte array[ ], int start, int end, byte value)
+static void fill(char array[ ], int start, int end, char value)
+static void fill(double array[ ], int start, int end, double value)
+static void fill(float array[ ], int start, int end, float value)
+static void fill(int array[ ], int start, int end, int value)
+static void fill(long array[ ], int start, int end, long value)
+static void fill(short array[ ], int start, int end, short value)
+static void fill(Object array[ ], int start, int end, Object value)
+
+这里，value 是赋给数组array 中从start开始到end–1 结束的子集的值。这些方法当start大
+于end时，都能引发一个IllegalArgumentException 异常；而当start或end出界时，都能引发一
+个ArrayIndexOutOfBoundsException 异常。
+
+sort( )方法对数组进行排序，以便数组能够按升序进行排列。sort( )方法有两种形式。
+下面给出的第一种形式对整个数组进行排序：
+
+
+第15 章java.util 第1 部分：类集框架
+
+static void sort(byte array[ ]
+)
+static void sort(char array[ ]
+)
+static void sort(double array[ ]
+)
+static void sort(float array[ ]
+)
+static void sort(int array[ ]
+)
+static void sort(long array[ ]
+)
+static void sort(short array[ ]
+)
+static void sort(Object array[ ]
+)
+static void sort(Object array[ ], Comparator c)
+
+
+这里，array是被排序的数组。在最后的一种形式中，c是一个用来规定array中元素顺序
+的比较函数(Comparator) 。当用于排序的数组中的元素不可比较时，这些对Object 的数组进
+行排序的sort( )方法将引发一个ClassCastException 异常。
+
+sort( )方法的第二种形式允许在一个数组内，指定一个想要进行排序的范围。它的具体
+形式如下：
+
+static void sort(byte array[ ], int start, int end)
+static void sort(char array[ ], int start, int end)
+static void sort(double array[ ], int start, int end)
+static void sort(float array[ ], int start, int end)
+static void sort(int array[ ], int start, int end)
+static void sort(long array[ ], int start, int end)
+static void sort(short array[ ], int start, int end)
+static void sort(Object array[ ], int start, int end)
+static void sort(Object array[ ], int start, int end, Comparator c)
+
+
+这里，数组中想要进行排序的范围从start到end–1 。在最后一种形式中，c是一个用来规
+定array 中元素顺序的Comparator 。如果start 大于end ，所有这些方法都能引发一个
+IllegalArgumentException 异常；而当start 或end 出界时，又都能引发一个
+ArrayIndexOutOfBoundsException 异常。当用于排序的数组中的元素不可比较时，最后两种
+形式也能引发一个ClassCastException 异常。
+
+下面的程序举例说明了如何使用Arrays 类中的一些方法：
+
+// Demonstrate Arrays
+import java.util.*
+;
+
+
+class ArraysDemo
+{
+public static void main(String args[])
+{
+
+
+// allocate and initialize array
+
+int array[] = new int[10];
+
+for(int i = 0; i < 10; i++)
+
+ array[i] = -3 * i;
+
+ // display, sort, display
+
+ System.out.print("Original contents: ");
+
+display(array);
+
+Arrays.sort(array);
+
+ System.out.print("Sorted: ");
+
+display(array);
+
+
+330 第2 部分Java 库
+
+ // fill and display
+Arrays.fill(array, 2, 6, -1)
+;
+System.out.print("After fill(): ")
+;
+display(array)
+;
+
+
+ // sort and display
+Arrays.sort(array)
+;
+System.out.print("After sorting again: ")
+;
+display(array)
+;
+
+
+// binary search for -
+9
+System.out.print("The value -9 is at location ")
+;
+int index
+=
+
+
+ Arrays.binarySearch(array, -9)
+;
+System.out.println(index)
+;
+}
+
+
+static void display(int array[])
+{
+for(int i = 0; i < array.length; i++
+)
+System.out.print(array[i] + " ")
+;
+System.out.println("")
+;
+}
+}
+
+
+下面是该程序的输出结果：
+
+Original contents: 0 -3 -6 -9 -12 -15 -18 -21 -24 -27
+Sorted: -27 -24 -21 -18 -15 -12 -9 -6 -3
+0
+After fill(): -27 -24 -1 -1 -1 -1 -9 -6 -3
+0
+After sorting again: -27 -24 -9 -6 -3 -1 -1 -1 -1
+0
+The value -9 is at location
+2
+
+
+15.10 从以前版本遗留下来的类和接口
+正如本章开始时介绍的那样，java.util 的最初版本中不包括类集框架。取而代之，它定
+义了几个类和接口提供专门的方法用于存储对象。随着在Java 2 中引入类集，有几种最初的
+类被重新设计成支持类集接口。因此它们与框架完全兼容。尽管实际上没有类被摈弃，但
+其中某些仍被认为是过时的。当然，在那些重复从以前版本遗留下来的类的功能性的地方，
+通常都愿意用类集编写新的代码程序。一般地，对从以前版本遗留下来的类的支持是因为
+仍然存在大量使用它们的基本代码。包括现在仍在被Java 2 的应用编程接口（API ）使用的
+程序。
+
+另一点，没有一个类集类是同步的。但是所有的从以前版本遗留下来的类都是同步的。
+这一区别在有些情况下是很重要的。当然，通过使用由Collections 提供的算法也很容易实现
+类集同步。
+
+由java.util 定义的从以前版本遗留下来的类说明如下：
+
+Dictionary Hashtable Properties Stack Vector
+
+
+第15 章java.util 第1 部分：类集框架
+
+有一个枚举（Enumeration ）接口是从以前版本遗留下来。在下面依次介绍Enumeration
+和每一种从以前版本遗留下来的类。
+
+15.10.1 Enumeration 接口
+Enumeration 接口定义了可以对一个对象的类集中的元素进行枚举（一次获得一个）的
+方法。这个接口尽管没有被摈弃，但已经被Iterator 所替代。Enumeration 对新程序来说是过
+时的。然而它仍被几种从以前版本遗留下来的类（例如Vector 和Properties ）所定义的方法
+使用，被几种其他的API 类所使用以及被目前广泛使用的应用程序所使用。
+
+Enumeration 指定下面的两个方法：
+
+boolean hasMoreElements(
+)
+Object nextElement(
+)
+
+
+执行后，当仍有更多的元素可提取时，hasMoreElements( ) 方法一定返回true 。当所有
+元素都被枚举了，则返回false。nextElement( ) 方法将枚举中的下一个对象做为一个类属
+Object 的引用而返回。也就是每次调用nextElement( ) 方法获得枚举中的下一个对象。调用例
+程必须将那个对象置为包含在枚举内的对象类型。
+
+15.10.2 Vector
+Vector 实现动态数组。这与ArrayList 相似，但两者不同的是：Vector 是同步的，并且它
+包含了许多不属于类集框架的从以前版本遗留下来的方法。随着Java 2 的公布，Vector 被重
+新设计来扩展AbstractList 和实现List 接口，因此现在它与类集是完全兼容的。
+
+这里是Vector 的构造函数：
+
+Vector(
+)
+Vector(int size)
+Vector(int size, int incr)
+Vector(Collection c)
+
+
+第一种形式创建一个原始大小为10的默认矢量。第二种形式创建一个其原始容量由size
+指定的矢量。第三种形式创建一个其原始容量由size指定，并且它的增量由incr 指定的矢量。
+增量指定了矢量每次允许向上改变大小的元素的个数。第四种形式创建一个包含了类集c
+中元素的矢量。这个构造函数是在Java 2 中新增加的。
+
+所有的矢量开始都有一个原始的容量。在这个原始容量达到以后，下一次再试图向矢
+量中存储对象时，矢量自动为那个对象分配空间同时为别的对象增加额外的空间。通过分
+配超过需要的内存，矢量减小了可能产生的分配的次数。这种次数的减少是很重要的，因
+为分配内存是很花时间的。在每次再分配中，分配的额外空间的总数由在创建矢量时指定
+的增量来确定。如果没有指定增量，在每个分配周期，矢量的大小增一倍。
+
+Vector 定义了下面的保护数据成员：
+
+int capacityIncrement;
+int elementCount;
+Object elementData[ ]
+;
+
+
+
+332 第2 部分Java 库
+
+增量值被存储在capacityIncrement 中。矢量中的当前元素的个数被存储在elementCount
+中。保存矢量的数组被存储在elementData 中。
+
+除了由List 定义的类集方法之外，Vector 还定义了几个从以前版本遗留下来的方法，这
+些方法列在表15-10 中。
+
+表15-10 由Vector 定义的方法
+
+方法描述
+final void addElement(Object element) 将由element 指定的对象加入矢量
+int capacity( ) 返回矢量的容量
+Object clone( ) 返回调用矢量的一个拷贝
+Boolean contains(Object element) 如果element 被包含在矢量中，则返回true；
+如果不包含于其
+中，则返回false
+void copyInto(Object array[ ]) 将包含在调用矢量中的元素复制到由array 指定的数组中
+Object elementAt(int index) 返回由index 指定位置的元素
+Enumeration elements( ) 返回矢量中元素的一个枚举
+Object firstElement( ) 返回矢量的第一个元素
+int indexOf(Object element) 返回element 首次出现的位置下标。如果对象不在矢量中，
+则返回-1
+int indexOf(Object element, int start) 返回element 在矢量中在start及其之后第一次出现的位置下
+标。如果该对象不属于矢量的这一部分，则返回-1
+void insertElementAt(Object element, 在矢量中，在由index 指定的位置处加入element
+int index)
+boolean isEmpty( ) 如果矢量是空的，则返回true。如果它包含了一个或更多个
+元素，则返回false
+Object lastElement( ) 返回矢量中的最后一个元素
+int lastIndexOf(Object element) 返回element 在矢量中最后一次出现的位置下标。如果对象
+不包含在矢量中，则返回-1
+int lastIndexOf(Object element,int start) 返回element 在矢量中，在start 之前最后一次出现的位置下
+标。如果该对象不属于矢量的这一部分，则返回-1
+void removeAllElements( ) 清空矢量，在这个方法执行以后，矢量的大小为0
+boolean removeElement(Object element) 从矢量中删除element 。对于指定的对象，矢量中如果有其
+多个实例，则其中第一个实例被删除。如果成功删除，则
+返回true；如果没有发现对象，则返回false
+void removeElementAt(int index) 删除由index 指定位置处的元素
+void setElementAt(Object element, 将由index 指定的位置分配给element
+int index)
+void setSize(int size) 将矢量中元素的个数设为size。如果新的长度小于老的长
+度，元素将丢失；如果新的长度大于老的长度，则在其后
+增加null元素
+int size( ) 返回矢量中当前元素的个数
+
+
+第15 章java.util 第1 部分：类集框架
+
+续表
+
+方法描述
+String toString( ) 返回矢量的字符串等价形式
+void trimToSize( ) 将矢量的容量设为与其当前拥有的元素的个数相等
+
+因为Vector 实现List ，所以可以像使用ArrayList 的一个实例那样使用矢量。也可以使用
+它的从以前版本遗留下来的方法来操作它。例如，在后面实例化Vector ，可以通过调用
+addElement( ) 方法而为其增加一个元素。调用elementAt( ) 方法可以获得指定位置处的元素。
+调用firstElement( ) 方法可以得到矢量的第一个元素。调用lastElement( ) 方法可以检索到矢量
+的最后一个元素。使用indexOf( ) 和lastIndexOf( ) 方法可以获得元素的下标。调用
+removeElement( ) 或removeElementAt( ) 方法可以删除元素。
+
+下面的程序使用矢量存储不同类型的数值对象。程序说明了几种由Vector 定义的从以
+前版本遗留下来的方法，同时它也说明了枚举（Enumeration ）接口。
+
+// Demonstrate various Vector operations.
+import java.util.*
+;
+
+
+class VectorDemo
+{
+public static void main(String args[])
+{
+
+
+// initial size is 3, increment is
+2
+Vector v = new Vector(3, 2)
+;
+
+
+System.out.println("Initial size: " + v.size())
+;
+System.out.println("Initial capacity: "
++
+v.capacity())
+;
+
+
+ v.addElement(new Integer(1))
+;
+v.addElement(new Integer(2))
+;
+v.addElement(new Integer(3))
+;
+v.addElement(new Integer(4))
+;
+
+
+System.out.println("Capacity after four additions: " +
+
+ v.capacity())
+;
+v.addElement(new Double(5.45))
+;
+System.out.println("Current capacity: "
++
+
+
+ v.capacity())
+;
+v.addElement(new Double(6.08))
+;
+v.addElement(new Integer(7))
+;
+
+
+ System.out.println("Current capacity: " +
+
+ v.capacity())
+;
+v.addElement(new Float(9.4))
+;
+v.addElement(new Integer(10))
+;
+
+
+ System.out.println("Current capacity: " +
+
+ v.capacity())
+;
+v.addElement(new Integer(11))
+;
+v.addElement(new Integer(12))
+;
+
+
+
+334 第2 部分Java 库
+
+ System.out.println("First element: "
++
+(Integer)v.firstElement())
+;
+System.out.println("Last element: "
++
+(Integer)v.lastElement())
+;
+
+
+ if(v.contains(new Integer(3))
+)
+System.out.println("Vector contains 3.")
+;
+
+
+// enumerate the elements in the vector.
+Enumeration vEnum = v.elements()
+;
+
+
+ System.out.println("\nElements in vector:")
+;
+while(vEnum.hasMoreElements()
+)
+System.out.print(vEnum.nextElement() + " ")
+;
+System.out.println()
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Initial size:
+0
+Initial capacity:
+3
+Capacity after four additions:
+5
+Current capacity:
+5
+Current capacity:
+7
+Current capacity:
+9
+First element:
+1
+Last element: 12
+Vector contains 3.
+
+
+Elements in vector:
+1 2 3 4 5.45 6.08 7 9.4 10 11 12
+
+
+随着Java 2 的公布，Vector 增加了对迭代函数的支持。现在可以使用迭代函数来替代枚
+举去遍历对象（正如前面的程序所做的那样）。例如，下面的基于迭代函数的程序代码可
+以被替换到上面的程序中：
+
+// use an iterator to display contents
+Iterator vItr = v.iterator()
+;
+
+
+System.out.println("\nElements in vector:")
+;
+while(vItr.hasNext()
+)
+System.out.print(vItr.next() + " ")
+;
+System.out.println()
+;
+
+
+因为建议不要使编写枚举新的程序代码，所以通常可以使用迭代函数来对矢量的内容
+进行枚举。当然，业已存在的大量的老程序采用了枚举。不过幸运的是，枚举和迭代函数
+的工作方式几乎相同。
+
+15.10.3 Stack
+Stack是Vector 的一个子类，它实现标准的后进先出堆栈。Stack仅仅定义了创建空堆栈
+
+
+第15 章java.util 第1 部分：类集框架
+
+的默认构造函数。Stack 包括了由Vector 定义的所有方法，同时增加了几种它自己定义的方
+法，具体总结在表15-11 中。
+
+表15-11 由Stack 定义的方法
+
+方法描述
+boolean empty( ) 如果堆栈是空的，则返回true，当堆栈包含有元素时，返回false
+Object peek( ) 返回位于栈顶的元素，但是并不在堆栈中删除它
+Object pop( ) 返回位于栈顶的元素，并在进程中删除它
+Object push(Object element) 将element 压入堆栈，同时也返回element
+int search(Object element) 在堆栈中搜索element
+，
+如果发现了，则返回它相对于栈顶的偏移
+量。否则，返回-1
+
+调用push( ) 方法可将一个对象压入栈顶。调用pop( )方法可以删除和返回栈顶的元素。
+当调用堆栈是空的时，如果调用pop( )方法，将引发一个EmptyStackException 异常。调用
+peek( )方法返回但不删除栈顶的对象。调用empty( ) 方法，当堆栈中没有元素时，返回true 。
+search( )方法确定一个对象是否存在于堆栈，并且返回将其指向栈顶所需的弹出次数。下面
+是一个创建堆栈的例子，在例子中，将几个整型（Integer ）对象压入堆栈，然后再将它们
+弹出。
+
+// Demonstrate the Stack class.
+import java.util.*
+;
+
+
+class StackDemo {
+
+static void showpush(Stack st, int a)
+{
+st.push(new Integer(a))
+;
+System.out.println("push(" + a + ")")
+;
+System.out.println("stack: " + st)
+;
+
+
+}
+
+static void showpop(Stack st)
+{
+System.out.print("pop -> ")
+;
+Integer a = (Integer) st.pop()
+;
+System.out.println(a)
+;
+System.out.println("stack: " + st)
+;
+
+
+}
+
+public static void main(String args[])
+{
+Stack st = new Stack()
+;
+
+
+ System.out.println("stack: " + st)
+;
+showpush(st, 42)
+;
+showpush(st, 66)
+;
+showpush(st, 99)
+;
+showpop(st)
+;
+showpop(st)
+;
+showpop(st)
+;
+try
+{
+
+
+showpop(st);
+
+
+336 第2 部分Java 库
+
+} catch (EmptyStackException e)
+{
+System.out.println("empty stack")
+;
+}
+}
+}
+
+
+下面是由该程序产生的输出。注意对于EmptyStackException 的异常处理程序是如何被
+捕获以便于能够从容地处理堆栈的下溢：
+
+stack: [
+]
+push(42)
+stack: [42]
+push(66)
+stack: [42, 66]
+push(99)
+stack: [42, 66, 99]
+pop -> 99
+stack: [42, 66]
+pop -> 66
+stack: [42]
+pop -> 42
+stack: [
+]
+pop -> empty stack
+
+
+15.10.4 Dictionary
+字典（Dictionary ）是一个表示关键字/值存储库的抽象类，同时它的操作也很像映射
+（Map）。给定一个关键字和值，可以将值存储到字典（Dictionary ）对象中。一旦这个值
+被存储了，就能够用它的关键字来检索它。因此，与映射一样，字典可以被当做关键字/值
+对列表来考虑。尽管在Java 2 中并没有摈弃字典（Dictionary ），由于它被映射（Map）所取
+代，从而被认为是过时的。然而由于目前Dictionary 被广泛地使用，因此这里仍对它进行详
+细的讨论。
+
+由Dictionary 定义的抽象方法在表15-12 中列出。
+
+表15-12 由Dictionary 定义的抽象方法
+
+方法描述
+Enumeration elements( ) 返回对包含在字典中的值的枚举
+Object get(Object key) 返回一个包含与key 相连的值的对象。如果key 不在字典中，
+则返回一个空对象
+boolean isEmpty( ) 如果字典是空的，则返回true；
+如果字典中至少包含一个关
+键字，则返回false
+Enumeration keys( ) 返回包含在字典中的关键字的枚举
+Object put(Object key, Object value) 将一个关键字和它的值插入字典中。如果key 已经不在字典
+中了，则返回null；如果key 已经在字典中了，则返回与key
+相关联的前一个值
+
+
+第15 章java.util 第1 部分：类集框架
+
+续表
+
+方法描述
+
+Object remove(Object key) 删除key 和它的值。返回与key相关联的值。如果key 不在字
+典中，则返回null
+int size( ) 返回字典中的项数
+
+使用put( ) 方法在字典中增加关键字和值。使用get( ) 方法检索给定关键字的值。当分别
+使用keys( ) 和elements( ) 方法进行枚举（Enumeration ）时，关键字和值可以分别逐个地返回。
+size( )方法返回存储在字典中的关键字/值对的个数。当字典是空的时候，isEmpty( ) 返回true 。
+使用remove( ) 方法可以删除关键字/值对。
+
+注意：Dictionary 类是过时的。应该执行Map接口去获得关键字/值存储的功能。
+
+15.10.5 Hashtable
+散列表（Hashtable ）是原始java.util 中的一部分同时也是Dictionary 的一个具体实现。然
+而，Java 2 重新设计了散列表（Hashtable ）以便它也能实现映射（Map）接口。因此现在
+Hashtable 也被集成到类集框架中。它与HashMap 相似，但它是同步的。
+
+和HashMap 一样，Hashtable 将关键字/值对存储到散列表中。使用Hashtable 时，指定一
+个对象作为关键字，同时指定与该关键字相关联的值。接着该关键字被散列，而把得到的
+散列值作为存储在表中的值的下标。
+
+散列表仅仅可以存储重载由Object 定义的hashCode( ) 和equals( ) 方法的对象。hashCode( )
+方法计算和返回对象的散列码。当然，equals( ) 方法比较两个对象。幸运的是，许多Java 内
+置的类已经实现了hashCode( ) 方法。例如，大多数常见的Hashtable 类型使用字符串（String）
+对象作为关键字。String 实现hashCode( ) 和equals( ) 方法。
+
+Hashtable 的构造函数如下所示：
+
+Hashtable(
+)
+Hashtable(int size)
+Hashtable(int size, float fillRatio)
+Hashtable(Map m)
+
+
+第一种形式是默认的构造函数。第二种形式创建一个散列表，该散列表具有由size指定
+的原始大小。第三种形式创建一个散列表，该散列表具有由size指定的原始大小和由fillRatio
+指定的填充比。填充比必须介于0.0和1.0之间，它决定了在散列表向上调整大小之前散列表
+的充满度。具体地说，当元素的个数大于散列表的容量乘以它的填充比时，散列表被扩展。
+如果没有指定填充比，默认使用0.75。最后，第四种形式创建一个散列表，该散列表用m中
+的元素初始化。散列表的容量被设为m中元素的个数的两倍。默认的填充因子设为0.75。第
+四种构造函数是在Java 2 中新增加的。
+
+除了Hashtable 目前实现的，由Map 接口定义的方法之外，Hashtable 定义的从以前版本
+遗留下来的方法列在表15-13 中。
+
+
+338 第2 部分Java 库
+表15-13 由Hashtable 定义的从以前版本遗留下来的方法
+方法描述
+
+void clear( ) 复位并清空散列表
+Object clone( ) 返回调用对象的复制
+boolean contains(Object value) 如果一些值与存在于散列表中的value 相等的话，则返回true；
+如果这个值不存在，则返回false
+boolean containsKey(Object key) 如果一些关键字与存在于散列表中的key 相等的话，则返回true；
+如果这个关键字不存在，则返回false
+boolean containsValue(Object value) 如果一些值与散列表中存在的value 相等的话，返回true；如果
+这个值没有找到，则返回false
+（
+是一种为了保持一致性而在Java
+2中新增加的非Map 方法）
+Enumeration elements( ) 返回包含在散列表中的值的枚举
+Object get(Object key) 返回包含与key 相关联的值的对象。如果key 不在散列表中，则
+返回一个空对象
+boolean isEmpty( ) 如果散列表是空的，则返回true；
+如果散列表中至少包含一个关
+键字，则返回false
+Enumeration keys( ) 返回包含在散列表中的关键字的枚举
+Object put(Object key, Object value) 将关键字和值插入散列表中。如果key 已经不在散列表中
+，
+返回
+null。如果key已经存在于散列表中，则返回与key 相连的前一个
+值
+void rehash( ) 增大散列表的大小并且对其关键字进行再散列。
+Object remove(Object key) 删除key 及其对应的值。返回与key 相关联的值。如果key不在散
+列表中，则返回一个空对象
+int size( ) 返回散列表中的项数
+String toString( ) 返回散列表的等价字符串形式
+
+下面的例子重写前面介绍的关于银行账目的程序。在重写的程序中，使用Hashtable 储
+存银行存款人的名字和他们当前的资产平衡表：
+
+// Demonstrate a Hashtableimport java.util.*;
+class HTDemo {
+
+public static void main(String args[]) {
+
+Hashtable balance = new Hashtable();
+
+ Enumeration names;
+
+ String str;
+
+ double bal;
+
+ balance.put("John Doe", new Double(3434.34));
+balance.put("Tom Smith", new Double(123.22));
+balance.put("Jane Baker", new Double(1378.00));
+balance.put("Todd Hall", new Double(99.22));
+balance.put("Ralph Smith", new Double(-19.08));
+
+
+第15 章java.util 第1 部分：类集框架
+
+// Show all balances in hash table.
+names = balance.keys()
+;
+while(names.hasMoreElements())
+{
+
+
+ str = (String) names.nextElement()
+;
+System.out.println(str + ": "
++
+balance.get(str))
+;
+}
+
+
+ System.out.println();
+
+// Deposit 1,000 into John Doe's account
+bal = ((Double)balance.get("John Doe")).doubleValue()
+;
+balance.put("John Doe", new Double(bal+1000))
+;
+System.out.println("John Doe's new balance: "
++
+
+
+ balance.get("John Doe"))
+;
+}
+}
+
+
+该程序的输出如下所示：
+
+Todd Hall: 99.22
+Ralph Smith: -19.08
+John Doe: 3434.34
+Jane Baker: 1378.0
+Tom Smith: 123.22
+
+
+John Doe’s new balance: 4434.34
+
+重要的一点是：和映射类一样，Hashtable 不直接支持迭代函数。因此，上面的程序使
+用枚举来显示balance 的内容。然而，我们可以获得允许使用迭代函数的散列表的集合视图。
+为了实现它，可以简单地使用由Map定义的一个类集“视图”方法，如entrySet( ) 或keySet( )
+方法。例如，可以获得关键字的一个集合“视图”，并遍历这些关键字。下面是采用这种
+技术后重新编写的程序：
+
+// Use iterators with a Hashtable.
+import java.util.*
+;
+
+
+class HTDemo2 {
+
+public static void main(String args[])
+{
+Hashtable balance = new Hashtable()
+;
+String str;
+double bal;
+
+
+ balance.put("John Doe", new Double(3434.34))
+;
+balance.put("Tom Smith", new Double(123.22))
+;
+balance.put("Jane Baker", new Double(1378.00))
+;
+balance.put("Todd Hall", new Double(99.22))
+;
+balance.put("Ralph Smith", new Double(-19.08))
+;
+
+
+// show all balances in hashtable
+Set set = balance.keySet(); // get set-view of keys
+
+
+ // get iterator
+
+
+340 第2 部分Java 库
+
+ Iterator itr = set.iterator();
+
+ while(itr.hasNext())
+{
+str = (String) itr.next()
+;
+System.out.println(str + ": "
++
+
+
+ balance.get(str))
+;
+}
+
+
+ System.out.println();
+
+// Deposit 1,000 into John Doe's account
+bal = ((Double)balance.get("John Doe")).doubleValue()
+;
+balance.put("John Doe", new Double(bal+1000))
+;
+System.out.println("John Doe's new balance: "
++
+
+
+ balance.get("John Doe"))
+;
+}
+}
+
+
+15.10.6 Properties
+属性（Properties ）是Hashtable 的一个子类。它用来保持值的列表，在其中关键字和值
+都是字符串（String ）。Properties 类被许多其他的Java 类所使用。例如，当获得系统环境值
+时，System.getProperties( ) 返回对象的类型。
+
+Properties 定义了下面的实例变量：
+
+Properties defaults;
+
+这个变量包含了一个与属性（Properties ）对象相关联的默认属性列表。Properties 定义
+了如下的构造函数：
+
+Properties(
+)
+Properties(Properties propDefault)
+
+
+第一种形式创建一个没有默认值的属性（Properties ）对象。第二种形式创建一个将
+propDefault 作为其默认值的对象。在这两种情况下，属性列表都是空的。
+
+除了Properties 从Hashtable 中继承下来的方法之外，Properties 自己定义的方法列在表
+15-14 中。Properties 也包含了一个不被赞成使用的方法：save( ) 。它被store( ) 方法所取代，
+因为它不能正确地处理错误。
+
+表15-14 由Properties 定义的从以前版本遗留下来的方法
+
+方法描述
+String getProperty(String key) 返回与key 相关联的值。如果key既不在列表中，也不在默
+认属性列表中，则返回一个null对象
+String getProperty(String key,
+String defaultProperty)
+void list(PrintStream streamOut)
+void list(PrintWriter streamOut)
+返回与key 相关联的值。如果key既不在列表中，也不在默
+认属性列表中，则返回defaultProperty
+将属性列表发送给与streamOut 相链接的输出流
+将属性列表发送给与streamOut 相链接的输出流
+
+
+第15 章java.util 第1 部分：类集框架
+
+续表
+
+方法描述
+
+void load(InputStream streamIn) 从与streamIn 相链接的输入数据流输入一个属性列表
+throws IOException
+Enumeration propertyNames( ) 返回关键字的枚举，也包括那些在默认属性列表中找到的
+关键字
+Object setProperty(String key, String value) 将value 与key 关联。返回与key关联的前一个值，如果不存
+在这样的关联，则返回null（为了保持一致性，在Java 2中
+新增加的）
+void store(OutputStream streamOut, 在写入由description 指定的字符串之后，属性列表被写入与
+String description) streamOut 相链接的输出流（在Java 2 中新增加的）
+
+Properties 类的一个有用的功能是可以指定一个默认属性，如果没有值与特定的关键字
+相关联，则返回这个默认属性。例如，默认值可以与关键字一起在getProperty( ) 方法中被指
+定——如getProperty(“name”，“default value”)。如果“name”值没有找到，则返回“default
+value ”。当构造一个Properties 对象时，可以传递Properties 的另一个实例做为新实例的默认
+值。在这种情况下，如果对一个给定的Properties 对象调用getProperty(“foo”) ，而“foo”并
+不存在时，Java 在默认Properties 对象中寻找“foo ”。它允许默认属性的任意层嵌套。
+
+下面的例子说明了Properties 。该程序创建一个属性列表，在其中关键字是美国的州名，
+值是这些州的首府的名字。注意试图寻找包括默认值的Florida 的首府时的情况。
+
+// Demonstrate a Property list.
+import java.util.*;
+
+class PropDemo {
+
+public static void main(String args[]) {
+
+Properties capitals = new Properties();
+
+ Set states;
+
+ String str;
+
+ capitals.put("Illinois", "Springfield");
+capitals.put("Missouri", "Jefferson City");
+capitals.put("Washington", "Olympia");
+capitals.put("California", "Sacramento");
+capitals.put("Indiana", "Indianapolis");
+
+// Show all states and capitals in hashtable.
+states = capitals.keySet(); // get set-view of keys
+Iterator itr = states.iterator();
+
+ while(itr.hasNext()) {
+
+ str = (String) itr.next();
+
+ System.out.println("The capital of " +
+
+ str + " is " +
+
+ capitals.getProperty(str)
+
+ + ".");
+}
+
+342 第2 部分Java 库
+
+ System.out.println();
+
+// look for state not in list -- specify default
+str = capitals.getProperty("Florida", "Not Found")
+;
+System.out.println("The capital of Florida is
+"
+
+
+ + str + ".");
+}
+}
+
+
+该程序的输出如下所示：
+
+The capital of Missouri is Jefferson City.
+The capital of Illinois is Springfield.
+The capital of Indiana is Indianapolis.
+The capital of California is Sacramento.
+The capital of Washington is Olympia.
+
+
+The capital of Florida is Not Found.
+
+由于Florida 不在列表中，所以使用了默认值。
+
+尽管当调用getProperty( ) 方法时，使用默认值是十分有效的，正如上面的程序所展示的
+那样，对大多数属性列表的应用来说，有更好的方法去处理默认值。为了更大的灵活性，
+当构造一个属性（Properties ）对象时，指定一个默认的属性列表。如果在主列表中没有发
+现期望的关键字，将会搜索默认列表。例如，下面是对前面程序稍作修改的程序。在该程
+序中，有一个指定州的默认列表。在这种情况下，当搜索Florida 时，将在默认列表中找到
+它。
+
+// Use a default property list.
+import java.util.*
+;
+
+
+class PropDemoDef {
+
+public static void main(String args[])
+{
+Properties defList = new Properties()
+;
+defList.put("Florida", "Tallahassee")
+;
+defList.put("Wisconsin", "Madison")
+;
+
+
+Properties capitals = new Properties(defList)
+;
+Set states;
+String str;
+
+
+ capitals.put("Illinois", "Springfield")
+;
+capitals.put("Missouri", "Jefferson City")
+;
+capitals.put("Washington", "Olympia")
+;
+capitals.put("California", "Sacramento")
+;
+capitals.put("Indiana", "Indianapolis")
+;
+
+
+// Show all states and capitals in hashtable.
+states = capitals.keySet(); // get set-view of keys
+Iterator itr = states.iterator()
+;
+
+
+ while(itr.hasNext())
+{
+str = (String) itr.next()
+;
+System.out.println("The capital of "
++
+
+
+ str + " is " +
+
+
+第15 章java.util 第1 部分：类集框架
+
+ capitals.getProperty(str)
+
+ + ".")
+;
+}
+System.out.println();
+
+// Florida will now be found in the default list.
+str = capitals.getProperty("Florida")
+;
+System.out.println("The capital of Florida is
+"
+
+
+ + str + ".");
+}
+}
+
+
+15.10.7 使用store( ) 和load( )
+Properties 的一个最有用的方面是可以利用store( ) 和load( ) 方法方便地对包含在属性
+（Properties ）对象中的信息进行存储或从盘中装入信息。在任何时候，都可以将一个属性
+（Properties ）对象写入流或从中将其读出。这使得属性列表特别方便实现简单的数据库。
+例如，下面的程序使用属性列表创建一个简单的用计算机处理的存储着姓名和电话号码的
+电话本。为了寻找某人的电话号码，可输入他或者她的名字。程序使用store( ) 和load( ) 方法
+来存储和检索列表。当程序执行时，它首先试着从一个叫做phonebook.dat 的文件中装入列
+表。如果这个文件存在，列表就被装入。然后就可以增加列表。如果这样做了，当终止程
+序时，新列表就会被保存。注意：实现一个小且实用的计算机化的电话号码本只需要很少
+的程序代码。
+
+/* A simple telephone number database that uses
+
+a property list. *
+/
+import java.io.*
+;
+import java.util.*
+;
+
+
+class Phonebook
+{
+public static void main(String args[]
+)
+throws IOException
+
+
+{
+Properties ht = new Properties()
+;
+BufferedReader br
+=
+
+
+ new BufferedReader(new InputStreamReader(System.in));
+String name, number;
+FileInputStream fin = null;
+boolean changed = false;
+
+// Try to open phonebook.dat file.
+try
+{
+fin = new FileInputStream("phonebook.dat")
+;
+} catch(FileNotFoundException e)
+{
+// ignore missing file
+}
+
+
+/* If phonebook file already exists,
+load existing telephone numbers. *
+/
+try
+{
+if(fin != null)
+{
+ht.load(fin)
+;
+
+
+
+344 第2 部分Java 库
+
+ fin.close()
+;
+}
+} catch(IOException e)
+{
+System.out.println("Error reading file.")
+;
+}
+
+
+// Let user enter new names and numbers.
+do
+{
+System.out.println("Enter new name"
++
+
+
+ " ('quit' to stop): ")
+;
+name = br.readLine()
+;
+if(name.equals("quit")) continue;
+
+
+ System.out.println("Enter number: ")
+;
+number = br.readLine()
+;
+
+
+ ht.put(name, number)
+;
+changed = true;
+} while(!name.equals("quit"))
+;
+
+
+// If phone book data has changed, save it.
+if(changed) {
+FileOutputStream fout = new FileOutputStream("phonebook.dat");
+
+ ht.store(fout, "Telephone Book")
+;
+fout.close()
+;
+}
+
+
+// Look up numbers given a name.
+do
+{
+System.out.println("Enter name to find"
++
+
+
+ " ('quit' to quit): ")
+;
+name = br.readLine()
+;
+if(name.equals("quit")) continue;
+
+
+ number = (String) ht.get(name)
+;
+System.out.println(number)
+;
+} while(!name.equals("quit"))
+;
+}
+}
+
+
+15.11 类集总结
+类集框架为程序员提供了一个功能强大的设计方案以解决编程过程中面临的大多数任
+务。下一次当你需要存储和检索信息时，可考虑使用类集。记住，类集不仅仅是专为那些
+“大型作业”，例如联合数据库，邮件列表或产品清单系统等所专用的。它们对于一些小
+型作业也是很有效的。例如，TreeMap 可以给出一个很好的类集以保留一组文件的字典结
+构。TreeSet 在存储工程管理信息时是十分有用的。坦白地说，对于采用基于类集的解决方
+案而受益的问题种类只受限于你的想象力。
+
+
+第16 章java.util 第2 部分：更多的实用工具类
+
+本章将通过浏览那些不属于类集框架的类和接口的方式来继续研究java.util 。这其中包
+括了标记字符串，处理日期，计算随机数以及观测事件。也包括了在本章后面简要提及的
+java.util.zip 包和java.util.jar 包。
+
+16.1 StringTokenizer （字符串标记）
+对文本的处理经常包括对格式化的输入字符串进行语法分析。语法分析（Parsing ）将
+文本划分为一组不连续的部分，或标记（tokens ），在一个确定的序列中，标记可以表达语
+义。StringTokenizer 类提供了语法分析处理的第一步。经常被称为lexer （词法分析程序）或
+scanner（扫描程序）。StringTokenizer 实现枚举（Enumeration ）接口。因此，给定一个输
+入字符串，可以使用StringTokenizer 对包含于其中的单独标记进行枚举。
+
+使用StringTokenizer 时，指定一个输入字符串和一个包含了分割符的字符串。分割符
+（Delimiters ）是分割标记的字符。分割符字符串中的每一个字符被当做一个有效的分割符
+——例如，“,;: ”建立逗号，分号和冒号分割符。默认建立的分割符有空白符字符，空格，
+tab键，换行以及回车。
+
+StringTokenizer 的构造函数如下所示：
+
+StringTokenizer(String str)
+StringTokenizer(String str, String delimiters)
+StringTokenizer(String str, String delimiters, boolean delimAsToken)
+
+
+在上述三种形式中，str都表示将被标记的字符串。在第一种形式中，使用默认的分割
+符。在第二种和第三种形式中，delimiters 是用来指定分割符的一个字符串。在第三种形式
+中，如果delimAsToken 为true ，当字符串被分析时，分割符也被作为标记而被返回；否则，
+不返回分割符。在第一种和第二种形式中，分割符不会作为标记而被返回。
+
+一旦创建了StringTokenizer 对象之后，nextToken( ) 方法被用于抽取连续的标记。当有
+更多的标记被抽取时，hasMoreTokens( ) 方法返回true 。因为StringTokenizer 实现枚举
+（Enumeration ），因此hasMoreElements( ) 和nextElement( ) 方法也被实现，同时它们的作用
+也分别与hasMoreTokens( ) 和nextToken( ) 方法相同。StringTokenizer 方法列在表16-1 中。
+
+下面是一个创建用于分析“key=value ”对的StringTokenizer 的例子。连续的多组
+“key=value ”对将用分号分开。
+
+// Demonstrate StringTokenizer.
+import java.util.StringTokenizer;
+
+
+class STDemo
+{
+static String in = "title=Java: The Complete Reference;"
++
+
+
+
+346 第2 部分Java 库
+
+ "author=Schildt;"
++
+"publisher=Osborne/McGraw-Hill;"
++
+"copyright=2001"
+;
+
+
+public static void main(String args[]) {
+StringTokenizer st = new StringTokenizer(in, "=;");
+
+ while(st.hasMoreTokens())
+{
+String key = st.nextToken()
+;
+String val = st.nextToken()
+;
+System.out.println(key + "\t" + val)
+;
+
+
+}
+}
+}
+
+表16-1 由StringTokenizer 定义的方法
+
+方法描述
+int countTokens( ) 使用当前分割符集，该方法确定还没被分析的标记的个数并返回
+结果
+boolean hasMoreElements( ) 如果在字符串中包含有一个或多个标记，则返回true；如果在字
+符串中不包含标记，则返回false
+boolean hasMoreTokens( ) 如果在字符串中包含有一个或多个标记，则返回true；如果在字
+符串中不包含标记，则返回false
+Object nextElement( ) 将下一个标记作为Object 返回
+String nextToken( ) 将下一个标记作为String返回
+String nextToken(String delimiters) 将下一个标记作为String 返回并且将分割符字符串设为由
+delimiters 指定的字符串
+
+该程序的输出如下所示：
+
+title Java: The Complete Reference
+author Schildt
+publisher Osborne/McGraw-Hill
+copyright 2001
+
+
+16.2 BitSet （置位）
+BitSet 类创建一个专用类型的数组，该数组包含位的值。而该数组的大小可以按需要进
+行增加。这使得它与位矢量相似。BitSet 的构造函数如下所示：
+
+BitSet(
+)
+BitSet(int size)
+
+
+第一种形式创建一个默认的对象。第二种形式允许指定其初始大小（也就是说，它所
+能包含的位的个数）。所有的位被初始化为0。
+BitSet 实现Cloneable 接口并且定义了表16-2 中列出的方法。
+
+
+第16 章java.util 第2 部分：更多的实用工具类
+
+表16-2 由BitSet 定义的方法
+
+方
+法
+描述
+
+void and(BitSet bitSet)
+将调用BitSet 对象的内容与由bitSet 指定的那些内容进行相与（AND）
+运算，结果被放置在调用对象中
+
+void andNot(BitSet bitSet)
+对应bitSet 中的每一位，清除调用BitSet 中相应的位（在Java 2 中新增
+加的）
+
+void clear(int index)
+对由index 指定的位进行置0
+
+Object clone(
+)
+复制调用BitSet 对象
+
+Boolean equals(Object bitSet)
+如果调用位集合与由bitSet 传递的位集合相等，则返回true；否则，该
+方法返回false
+
+Boolean get(int bitIndex)
+返回指定下标处位的当前状态
+
+int hashCode(
+)
+返回调用对象的散列值
+
+int length(
+)
+返回包含调用BitSet 的内容所需的位的个数。该值由最后1位的位置确
+定（在Java 2中新增加的）
+
+void or(BitSet bitSet)
+将调用对象的内容与由bitSet 指定的内容进行“或”（OR）运算，结
+果被放置在调用对象中
+
+void set(int index)
+设置由index 指定的位
+
+int size(
+)
+返回调用BitSet 对象中位的个数
+
+String toString(
+)
+返回调用BitSet 对象的字符串等价形式
+
+void xor(BitSet bitSet)
+将调用BitSet 对象的内容与由bitSet 指定的内容进行“异或”（XOR）
+运算，结果被放置在调用对象中
+
+这里是一个说明BitSet 的例子。
+
+// BitSet Demonstration.
+import java.util.BitSet;
+
+class BitSetDemo {
+public static void main(String args[]) {
+BitSet bits1 = new BitSet(16);
+BitSet bits2 = new BitSet(16);
+
+ // set some bits
+
+ for(int i=0; i<16; i++)
+{
+if((i%2) == 0) bits1.set(i)
+;
+if((i%5) != 0) bits2.set(i)
+;
+
+
+}
+
+System.out.println("Initial pattern in bits1: ");
+System.out.println(bits1);
+System.out.println("\nInitial pattern in bits2: ");
+System.out.println(bits2);
+
+ // AND bits
+
+bits2.and(bits1);
+
+
+348 第2 部分Java 库
+
+ System.out.println("\nbits2 AND bits1: ")
+;
+System.out.println(bits2)
+;
+
+
+ // OR bits
+bits2.or(bits1)
+;
+System.out.println("\nbits2 OR bits1: ")
+;
+System.out.println(bits2)
+;
+
+
+ // XOR bits
+bits2.xor(bits1)
+;
+System.out.println("\nbits2 XOR bits1: ")
+;
+System.out.println(bits2)
+;
+
+
+}
+}
+
+
+下面是该程序的输出。当用toString( ) 方法将一个BitSet 对象转换成其相应的字符串形
+式后，每组位就由其位置表示。被清除的位将不被显示。
+
+Initial pattern in bits1:
+{0, 2, 4, 6, 8, 10, 12, 14}
+
+
+Initial pattern in bits2:
+{1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14}
+
+
+bits2 AND bits1:
+{2, 4, 6, 8, 12, 14}
+
+
+bits2 OR bits1:
+{0, 2, 4, 6, 8, 10, 12, 14}
+
+
+bits2 XOR bits1:
+{
+}
+
+
+16.3 Date（日期）
+Date 类封装当前的日期和时间。在开始检验Date 类之前，需要着重强调的是：这里讨
+论的Date 类与其在Java 1.0 中所定义的原始版本相比，已经发生了本质上的改变。在Java 1.1
+公布的时候，许多原来由原始Date 类执行的函数功能被移入到Calendar 和DateFormat 类中，
+这样做的结果就导致许多最初1.0 中的Date 方法被摈弃。在Java 2 中对时间和日期类增加了
+几个新的方法，但是以与Java 1.1 中相同的形式来实现它们。由于被摈弃的Java 1.0 中的方法
+不被新的程序所使用，这里就不讨论它们了。
+
+Date 支持下面的构造函数：
+
+Date(
+)
+Date(long millisec)
+
+
+第一种形式的构造函数用当前的日期和时间初始化对象。第二种形式的构造函数接收
+一个参数，该参数等于从1970 年1月1日午夜起至今的毫秒数的大小。由Date 类定义的未被
+摈弃的方法列在表16-3 中。随着Java 2 的出现，Date 也实现了Comparable 接口。
         `
     }
 ]

@@ -42,11 +42,9 @@ class ReadingCatalog extends Component {
 					</li>
 				)
 			})
-			console.log(readingCatalog.length)
+			// console.log(readingCatalog.length)
 			// this.props.lent(readingCatalog.length)
 			
-		  }else{
-			this.props.noCont();
 		  }
 	  }
     return (

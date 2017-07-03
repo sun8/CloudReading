@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 //			<!--专题阅读--start-->
-class Special extends Component {
+class SpecialRead extends Component {
+    constructor(props){
+		super(props);
+    }
     render() {
+        let {history:{push}} = this.props;
         return (
 
-            <div >
+            <div className="speci"
+            
+            onClick={ev=>{
+                    push({
+                        pathname: '/special',
+                        state: {
+                            val:'仙剑'
+                        }
+                    });
+                
+                }}
+                
+                >
                 <div className = "m-subject" >
-                    <a href = "/special"
+                    <a href = "javascript:;"
                         className = "j-gap"
                         title = "重磅好书六一欢乐促  献礼永远的大儿童" >
                         <img src = { require('../../../img/child.jpg') }
@@ -17,7 +33,7 @@ class Special extends Component {
                 </div>                
                 <div className = "m-book-item" >
            
-                    <a href = "/special"
+                    <a href = "javascript:;"
                     title = "重磅好书六一欢乐促  献礼永远的大儿童"
                     className = "j-gap" > 点击阅读专题图书 
                         < em className = "m-arrow" > < /em>
@@ -29,4 +45,4 @@ class Special extends Component {
     }
 }
 
-export default Special;
+export default SpecialRead;

@@ -17,17 +17,18 @@ class Special extends Component {
     }
 
     componentDidMount() {
-        let _this = this;
+        let {val} = this.props.location.state;
+        console.log(val)
         $.ajax({
             url: 'https://api.douban.com/v2/book/search',
             type: 'get',
             dataType: 'jsonp',
             data:{
-                tag:'仙剑'
+                q:val
             },
             callback: 'spec',
-            success: function(data) {
-                _this.setState({
+            success: (data)=> {
+                this.setState({
                     list: data
                 })
             }

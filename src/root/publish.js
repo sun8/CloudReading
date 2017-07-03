@@ -12,7 +12,7 @@ import BookBoard from '../components/commont/content/BookBoard';
 //经典排行榜
 import Classical from '../components/commont/content/Classical';
 //专题阅读
-import Special from '../components/commont/content/special';
+import SpecialRead from '../components/commont/content/SpecialRead';
 //下载down
 import Down from '../components/different/down';
 //底部footer
@@ -28,8 +28,8 @@ import $ from 'jquery';
 
 
 class Publish extends Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state = {
 			list:null,
 			banner:null,
@@ -62,7 +62,7 @@ class Publish extends Component {
     return (
   		<div>
 			
-	    	<Banner>轮播图</Banner>
+	    	<Banner history={history} >轮播图</Banner>
 	    	<Readed />
 			
 	        <section className="m-list-box">
@@ -83,7 +83,7 @@ class Publish extends Component {
 	        </section>
 	        
 	     
-	        <Ad>两条广告</Ad>
+	        <Ad history={history} >两条广告</Ad>
 	     
 	     	
 	     	<section className="m-list-box">
@@ -114,7 +114,7 @@ class Publish extends Component {
 	        
 	        <section className="m-list-box subject-box">    
 	        	<Title title={'精彩书单'}/>
-	        	<Special />
+	        	<SpecialRead history = {history}/>
 	        </section>
 			
 			<Down history={history}>下载和搜索</Down>

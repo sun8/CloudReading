@@ -286,6 +286,9 @@ a.info span {
   line-height: 0.525rem;
 }
 /*专题阅读*/
+.speci {
+  width: 100%;
+}
 .m-subject {
   margin-bottom: 0.5rem;
 }

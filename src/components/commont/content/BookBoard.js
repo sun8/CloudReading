@@ -18,14 +18,14 @@ class BookBoard extends Component {
 				dataType: 'jsonp',
 				callback: 'time',
 				data:{
-						tag:name,
-						fields:'all',
-						count:count
+					tag:name,
+					fields:'all',
+					count:count
 				},
 				success: function(data) {
-						_this.setState({
-								list: data
-						})
+					_this.setState({
+						list: data
+					})
 				}
 		});
 	}
@@ -40,42 +40,39 @@ class BookBoard extends Component {
 			//重磅推荐
 			arrZbtj = books.map((e,i)=>{ 
 			
-					let j ={
-						key:e.id,
-						id:e.id,
-						index:i,
-						title:e.title,
-						summary:e.summary,
-						binding:e.binding,
-						name:e.subtitle,
-						img:e.images.medium
+				let j ={
+					key:e.id,
+					id:e.id,
+					index:i,
+					title:e.title,
+					summary:e.summary,
+					binding:e.binding,
+					name:e.subtitle,
+					img:e.images.medium
 
-					}
-					
-					return (
-						<li key ={
-							j.key
-						}
-							onClick={ev=>{
-								history.push({
-									pathname: '/bookDetails',
-									state:{
-										id:j.id
-										
-									}
-								}); 
-							}}
-						>
-							{star?<em className="classical">{j.index+1}</em>:''}
-							<a href="javascript:;" className="pic" >
-								<img src={j.img}  alt={j.title} />
-							</a>
-							<a href="javascript:;"  className="info">
-									<h4>{j.title}</h4>
-									<span>{j.name}</span>
-							</a>
-						</li>
-					)
+				}
+				
+				return (
+					<li key ={j.key}
+						onClick={ev=>{
+							history.push({
+								pathname: '/bookDetails',
+								state:{
+									id:j.id
+								}
+							}); 
+						}}
+					>
+						{star?<em className="classical">{j.index+1}</em>:''}
+						<a href="javascript:;" className="pic" >
+							<img src={j.img}  alt={j.title} />
+						</a>
+						<a href="javascript:;"  className="info">
+								<h4>{j.title}</h4>
+								<span>{j.name}</span>
+						</a>
+					</li>
+				)
 				
 			})
 
@@ -84,8 +81,8 @@ class BookBoard extends Component {
 
 
     return (
-			<ul className="clearfix">
-				{arrZbtj}
+		<ul className="clearfix">
+			{arrZbtj}
 	    </ul>
 
     );

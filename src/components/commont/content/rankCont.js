@@ -12,7 +12,6 @@ class RankCont extends Component {
 	
 	componentDidMount(){
 		let {reqData:{count,name}}= this.props;
-		console.log(this.props, 'rank')
 		$.ajax({
 				url: 'https://api.douban.com/v2/book/search',
 				type: 'get',

@@ -34,7 +34,7 @@ import Title from '../components/commont/content/title';
 //经典排行榜
 import Classical from '../components/commont/content/Classical';
 //精彩书单
-import Special from '../components/commont/content/special';
+import SpecialRead from '../components/commont/content/SpecialRead';
 //下载客户端
 import Down from '../components/different/down';
 //footer底部
@@ -284,7 +284,7 @@ class Girl extends Component {
 
                 <section className = "m-list-box subject-box" >
                     <Title title = { '精彩书单' }/> 
-                    <Special / >
+                    <SpecialRead history={history} / >
                 </section>
 
                 < div id = "J_GoTop" className = "m-gotop" > < /div>
