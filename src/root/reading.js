@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
+//目录
 import ReadingCatalog from '../components/commont/bookDetails/Readingcatalog';
+//读书样式的组件(字体，夜间。下载，目录按钮)
 import Icon from '../components/commont/bookDetails/icon';
-
+//书的核心页面
 import bookContent from '../data/book';
-
-
-
 //数据
 import $ from 'jquery';
-//import main from './data/main';
-
-//路由
-//import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
-// console.log(bookContent)
-// console.log(bookContent)
 class Reading extends Component {
 	constructor(props){
 		super(props);
@@ -36,11 +29,10 @@ class Reading extends Component {
 		this.neightF = this.neightF.bind(this);
 		this.fontF = this.fontF.bind(this);
 		this.catalogF = this.catalogF.bind(this);
-		this.lent = this.lent.bind(this);
 		this.gotoCategory = this.gotoCategory.bind(this);
 		
 	}
-
+	//点击目录的时候拿到当前点击的索引
 	gotoCategory( indx ){
 		this.setState({
 			categoryIndx: indx
@@ -55,7 +47,7 @@ class Reading extends Component {
             dataType: 'jsonp',
             callback: 'book',
             success: (data) =>{
-				console.log(data);
+				// console.log(data);
 
                 this.setState({
                     list: data,
@@ -68,10 +60,64 @@ class Reading extends Component {
             }
         });
 		
-		
-		
 	}
 	
+	//按下
+  touchstart(ev){
+	let xs = ev.changedTouches[0].pageX;
+	//设置目录的top值
+	let ScrollY = window.pageYOffset/40;
+	this.setState({
+		start:xs,
+		top:ScrollY
+	})
+  }
+  //移动
+  touchmove(ev){
+	let xm = ev.changedTouches[0].pageX;
+	this.setState({
+		move:xm
+	})
+  }
+  //抬起
+  touchend(){
+	let X = window.innerWidth/2;
+	if(this.state.move-this.state.start>X){
+		//左滑
+		this.setState({
+			tab:true
+		})
+		
+	}else{
+		//右滑
+		this.setState({
+			tab:false
+		})
+	}
+  }
+
+  // 夜间模式
+	neightF(ev){
+		this.setState({
+			atNeight:!this.state.atNeight
+		})
+	}
+	// 字体
+	fontF(ev){
+		this.setState({
+			font:!this.state.font
+		})
+	}
+	//目录
+	catalogF(ev){
+		let ScrollY = window.pageYOffset/40;
+		this.setState({
+			tab:!this.state.tab,
+			top:ScrollY
+		})
+	}
+
+
   render() {
 	let {id} = this.props.location.state;
 	let {categoryIndx} = this.state;
@@ -83,7 +129,6 @@ class Reading extends Component {
 	// 书的章节及内容
 	let content = bookContent[categoryIndx];
 	//书的内容
-	// console.log(content.cont)
 	let contComp = content.cont.split(/\n/).map((e,i)=>{
 		return (
 			<p
@@ -151,10 +196,6 @@ class Reading extends Component {
 					lent={this.lent}
 					gotoCategory={this.gotoCategory}
 					/>:''}`
-			    
-			  
-  			
-   			
    			
    			<div className="aside-btn">
    				<button className="dir-btn dir-btn-disable">上100章</button>
@@ -202,70 +243,7 @@ class Reading extends Component {
     );
 
   }
-  //按下
-  touchstart(ev){
-
-	let xs = ev.changedTouches[0].pageX;
-	let ScrollY = window.pageYOffset/40;
-	this.setState({
-		start:xs,
-		top:ScrollY
-	})
-  }
-  //移动
-  touchmove(ev){
-	let xm = ev.changedTouches[0].pageX;
-	this.setState({
-		move:xm
-	})
-  }
-  //抬起
-  touchend(){
-	  
-	  let X = window.innerWidth/2;
-	  
-	if(this.state.move-this.state.start>X){
-		//左滑
-		this.setState({
-			tab:true
-		})
-		
-	}else{
-		this.setState({
-			tab:false
-		})
-	}
-  }
-
-  // 夜间模式
-	neightF(ev){
-		this.setState({
-			atNeight:!this.state.atNeight
-		})
-	}
-	// 字体
-	fontF(ev){
-		this.setState({
-			font:!this.state.font
-		})
-	}
-	//目录
-	catalogF(ev){
-		let ScrollY = window.pageYOffset/40;
-		this.setState({
-			tab:!this.state.tab,
-			top:ScrollY
-		})
-	}
-
-	//章节
-	lent(n){
-		// console.log(n)
-		// let lent = n;
-		// this.setState({
-		// 	lent:lent
-		// })
-	}
+  
 }
 
 export default Reading;

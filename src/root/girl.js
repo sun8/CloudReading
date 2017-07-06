@@ -53,11 +53,11 @@ class Girl extends Component {
             },
             timer: null
         }
+        this.hasUnMount = false;
     }
 
     componentWillReceiveProps(){
         let {q, fields} = this.props.location.state;
-        let _this = this;
         
         $.ajax({
             url: 'https://api.douban.com/v2/book/search',
@@ -68,12 +68,14 @@ class Girl extends Component {
                 q,
                 fields
             },
-            success: function(data) {
-                _this.setState({
+            success: (data)=> {
+                if(this.hasUnMount) return;	
+                this.setState({
                     timer: data
                 })
             }
         });
+        this.hasUnMount = true;
     }
 
 
@@ -82,7 +84,7 @@ class Girl extends Component {
         if(!this.props.location.state) return;
         let {q, fields} = this.props.location.state;
 
-        let _this = this;
+      
         
         $.ajax({
             url: 'https://api.douban.com/v2/book/search',
@@ -93,8 +95,9 @@ class Girl extends Component {
                 q,
                 fields
             },
-            success: function(data) {
-                _this.setState({
+            success: (data)=> {
+                if(this.hasUnMount) return;	
+                this.setState({
                     timer: data
                 })
             }

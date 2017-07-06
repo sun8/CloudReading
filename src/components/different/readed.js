@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 //头部导航
 class Readed extends Component {
   render() {
     return (
     	<div className="m-last-book clearfix">  
 	    	<span>还没有最近阅读的书籍哟</span>
-	      	<a href="" className="j-gap last-book" ></a>
-	      	<a href="javascript:;" className="shelf" >书架</a> 
+	      	<Link to="/account" className="shelf" >书架</Link> 
 	      	<i className="sep"></i>          
 	    </div>
     );

@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 //路由
 import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
-//头部
-import Nav from '../components/commont/nav/nav';
-//列表
-import Titlelist from '../components/commont/nav/titleList';
 //内容
 import TasteCont from '../components/commont/content/tasteCont';
 
@@ -20,10 +16,11 @@ class Taste extends Component {
 		this.state = {
 			list:null
 		}
+
+		this.hasUnMount = false;
 	}
 	
 	componentDidMount(){
-		let _this = this; 
 		$.ajax({
             url: 'https://api.douban.com/v2/book/search',
             type: 'get',
@@ -33,13 +30,20 @@ class Taste extends Component {
 			},
             dataType: 'jsonp',
             callback: 'love',
-            success: function(data) {
-                _this.setState({
+            success: (data)=> {
+
+				if(this.hasUnMount) return;	
+
+                this.setState({
                     list: data
                 })
             }
         });
 		
+	}
+
+	componentWillUnmount(){
+		this.hasUnMount = true;
 	}
 	
 	
@@ -76,9 +80,7 @@ class Taste extends Component {
 	
     return (
   		<div className="wrap">
-			
 	    	<div className="g-bd">
-			
             <div className="m-taste">
                 <a className="j-cate" href="/taste/select.do">
                 	<span className="m-tip">
@@ -96,17 +98,9 @@ class Taste extends Component {
             
             <div className="book-list" id="J_BookList">
 				{arrLove}
-        		
         	</div>
     	</div>
-	    	 
-        
-		
-	    	
-	    	
 	    	<a id="J_GoTop" className="m-gotop" href="#root"></a>
-	    	
-		        
 		    <Foot>底部</Foot>
 		</div>
     );

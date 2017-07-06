@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 //<!--内容标题-->
 class Title extends Component {
 	constructor(props){
@@ -11,9 +12,9 @@ class Title extends Component {
 	        	<em className="sep"></em>
 	        	<span className="gradient">{this.props.title}</span>
 	        </strong>
-	        <a href="/more" className="more" >更多
+	        <Link to="/more" className="more" >更多
 	        	<em className="m-arrow"></em>
-	        </a>
+	        </Link>
     	</h3> 
     	
     );

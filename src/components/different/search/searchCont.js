@@ -13,6 +13,16 @@ class SeachCont extends Component {
 		}
 		this.dele = this.dele.bind(this);
 	}
+	
+ dele(){
+	//本地数据存储清空
+  	localStorage.setItem('key',JSON.stringify([]));
+	this.setState({
+  		list:[]
+  	})
+	
+  }
+
   render() {
   	//热门搜索
   	let arrD = ['永恒的边缘','阿耐','欢乐颂','白鹿原','宠爱入骨，首席的意外新妻','人民的名义','侯沧海商路笔记','婚浅情深：总裁诱妻上瘾','一代医后','月关'];
@@ -60,14 +70,7 @@ class SeachCont extends Component {
     );
   }
   
-  dele(){
-	//本地数据存储清空
-  	localStorage.setItem('key',JSON.stringify([]));
-	this.setState({
-  		list:[]
-  	})
-	
-  }
+ 
 }
 
 export default SeachCont;

@@ -8,28 +8,33 @@ class RankCont extends Component {
 			list:null
 
 		}
+		this.hasUnMount = false;
   }
 	
 	componentDidMount(){
 		let {reqData:{count,name}}= this.props;
 		$.ajax({
-				url: 'https://api.douban.com/v2/book/search',
-				type: 'get',
-				dataType: 'jsonp',
-				callback: 'time',
-				data:{
-						tag:name,
-						fields:'all',
-						count:count
-				},
-				success: (data)=> {
-						this.setState({
-								list:data
-						})
-				}
+			url: 'https://api.douban.com/v2/book/search',
+			type: 'get',
+			dataType: 'jsonp',
+			callback: 'time',
+			data:{
+					tag:name,
+					fields:'all',
+					count:count
+			},
+			success: (data)=> {
+				if(this.hasUnMount) return;	
+				this.setState({
+						list:data
+				})
+			}
 		});
 	}
-	
+	componentWillUnmount(){
+		this.hasUnMount = true;
+	}
+
   render() {
 		let {id} = this.props; 
 		let {history, location:{pathname}} = this.props;
@@ -100,10 +105,10 @@ class RankCont extends Component {
 
 
     return (
-			<ul className="m-rank-list clearfix">
-				
-				{ranking}
-			</ul>
+		<ul className="m-rank-list clearfix">
+			
+			{ranking}
+		</ul>
     );
   }
 }

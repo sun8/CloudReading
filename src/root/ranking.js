@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-//数据
-import $ from 'jquery';
-//路由
-import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
-//头部
-import Nav from '../components/commont/nav/nav';
-//列表
-import Titlelist from '../components/commont/nav/titleList';
 //标题
 import Title from '../components/commont/content/title';
-//内容
-import RankOne from '../components/commont/content/rankOne';
 import RankCont from '../components/commont/content/rankCont';
 //下载客户端
 import Down from '../components/different/down';
@@ -42,13 +32,6 @@ class Ranking extends Component {
 		}
 	}
 	
-	componentDidMount(){
-		
-	}
-	
-	
-	
-	
 	
   render() {
 	let {history,location, location:{state}} = this.props;
@@ -61,10 +44,6 @@ class Ranking extends Component {
 				<div id="u-loading" style={{display:'blcok'}}>
 					<b></b> 正在加载...
 				</div>
-				{/*<ul className="m-rank-list clearfix">
-					{arrLove4[15]}
-					{arrLove}
-				</ul>*/}
 				<RankCont
 					reqData={this.state.girl}
 					history={history} 
@@ -93,10 +72,7 @@ class Ranking extends Component {
 					}}
 				/>
 			</section>
-        
-		
-	    	
-	    	
+    
 	    	<a id="J_GoTop" className="m-gotop" href="#root"></a>
 	    	
 		    <Down history={history}> 下载和搜索 < /Down>   

@@ -8,8 +8,58 @@ class Notlogin extends Component {
 		this.add = this.add.bind(this);
     this.login = this.login.bind(this);
 	}
+
+	add(){
+  	//注册
+  	this.act('register');
+  }
+  
+  login(){
+  	//登录
+  	this.act('login');
+  }
+  
+  act(acco){
+		let {history:{push}, login,signup} = this.props;
+  	//value值为空的情况下
+  	if(!$('#user').val()||!$('#pass').val()){
+  		$('#erro').html('用户名或密码不能为空！')
+  		$('#erro').css('display','block');
+      this.shake($('#erro')[0],'left',function(){
+      	$('#erro').animate({
+						opacity:0
+					},3000,'linear',function(){
+						$('#erro').css({
+							display:'none',
+							opacity:1
+							});
+					})
+      })
+      return;
+  	}
+  	//不为空请求数据
+
+		if(acco==='login'){
+			login(
+				{
+					username:$('#user').val(),
+					passw:$('#pass').val(),
+					cfPassw:$('#pass').val()
+      	}
+			);
+		}else{
+			signup(
+				{
+					username:$('#user').val(),
+					passw:$('#pass').val(),
+					cfPassw:$('#pass').val()
+      	}
+			);
+		}
+  }
+
   render() {
-  	let {history:{push, goBack}} = this.props;
+  	let {history:{push, goBack}, login} = this.props;
 	
     return (
     	<div className="m-login-container">
@@ -77,93 +127,7 @@ class Notlogin extends Component {
 		)
   }
 
-	add(){
-  	//注册
-  	this.act('register');
-  }
-  
-  login(){
-  	//登录
-  	this.act('login');
-  }
-  
-  act(acco){
-		let {history:{push}} = this.props;
-  	//value值为空的情况下
-  	if(!$('#user').val()||!$('#pass').val()){
-  		$('#erro').html('用户名或密码不能为空！')
-  		$('#erro').css('display','block');
-      this.shake($('#erro')[0],'left',function(){
-      	$('#erro').animate({
-						opacity:0
-					},3000,'linear',function(){
-						$('#erro').css({
-							display:'none',
-							opacity:1
-							});
-					})
-      })
-      return;
-  	}
-  	//不为空请求数据
-  	$.ajax({
-      url:'http://api.noods.me/'+acco,
-      data:{
-        username:$('#user').val(),
-        passw:$('#pass').val(),
-				cfPassw:$('#pass').val()
-      },
-			type:'post',
-      success:(data)=>{
-				console.log(data)
-				if(data.code){
-					//失败
-				}else{
-					//成功
-					push({
-							pathname: '/myinfo',
-							state: {
-									user:data.data.username
-							}
-            });
-				}
-        // if(data[0]){
-          //成功跳转
-					// push({
-          //       pathname: '/account/Login',
-          //       state: {
-          //           user:data[0].username
-          //       }
-          //   }); 
-          // alert('欢迎'+data[0].username)
-          // window.location.href = 'http://localhost:3000/';
-
-        // }else{
-          //失败
-          // $('#erro').html((acco==='Login')?'用户名或密码错误！':'用户已注册');
-          
-          // $('#erro').css('display','block');
-          // this.shake($('#erro')[0],'left',function(){
-          // 	$('#erro').animate({
-					// 		opacity:0
-					// 	},3000,'linear',function(){
-					// 		$('#erro').css({
-					// 			display:'none',
-					// 			opacity:1
-					// 		});
-					// 	})
-          	
-          // })
-        //   console.log('失败')
-        // }
-      }
-    });
-  }
-  
-  
-  
-  
-  
+ 
 	shake(obj,attr,endFn){
 	//抖动函数
     var arr=[];

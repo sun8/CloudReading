@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//    <!--内容列表--start-->
+//限时畅读
 class TimeCont extends Component {
 	constructor(props){
     super(props)

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
-import $ from 'jquery';
 //foot底部
 import Foot from '../components/commont/footer/Foot';
 import Notlogin from '../components/different/login/Notlogin';
@@ -11,7 +9,7 @@ class Account extends Component {
     
   }
   render() {
-		let {history} = this.props;
+		let {history, login, signup} = this.props;
     return (
     	<div className="g-wrap">
     		<header className="level1">
@@ -23,7 +21,13 @@ class Account extends Component {
 	            >下载APP</a>
 	        </section>
 	    	</header>
-        <Notlogin history={history}/>
+        <Notlogin 
+					history={history}
+					{...{
+						login,
+						signup
+					}}
+				/>
 		    <Foot />
 		  </div>
     );

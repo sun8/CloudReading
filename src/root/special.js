@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 //数据
 import $ from 'jquery';
-//路由
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 //内容
 import SpecialCont from '../components/commont/content/specialCont';
@@ -62,7 +60,6 @@ class Special extends Component {
 
 
         }
-
 
 
         return ( 

@@ -13,45 +13,43 @@ class ReadingCatalog extends Component {
 	  let { gotoCategory} = this.props;
 	  let readingCatalog = null;
 	  let {list} = this.props.data;
+		//判断一下是否有数据。目录数据的处理
 	  if(list){
 		  let {catalog} = list;
 		  if(catalog){
-			let totle = catalog.split(/\n/);
-			
-			let tempArr = []
-
-			totle.forEach(e=>{
-				if(/^\d/.test(e))return;
-				tempArr.push(e);
-			});
-
-			readingCatalog = tempArr.map((e,i)=>{
+				let totle = catalog.split(/\n/);
 				
-				let j={
-					key:i,
-					index:i,
-					name:e
-				};
-				return (
-					<li
-					className="grade_02 "
-					key={i}
-					onClick={ev=>gotoCategory(i)}
-					>
-						<span>{j.name}</span>
-					</li>
-				)
-			})
-			// console.log(readingCatalog.length)
-			// this.props.lent(readingCatalog.length)
-			
-		  }
+				let tempArr = []
+
+				totle.forEach(e=>{
+					if(/^\d/.test(e))return;
+					tempArr.push(e);
+				});
+
+				readingCatalog = tempArr.map((e,i)=>{
+					
+					let j={
+						key:i,
+						index:i,
+						name:e
+					};
+					return (
+						<li
+						className="grade_02 "
+						key={i}
+						onClick={ev=>gotoCategory(i)}
+						>
+							<span>{j.name}</span>
+						</li>
+					)
+				})
+			}
 	  }
     return (
 
-			<ul>
-                {readingCatalog}
-   			</ul>
+		<ul>
+			{readingCatalog}
+		</ul>
 			
     );
   }

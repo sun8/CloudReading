@@ -13,6 +13,9 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+const extractCSS = new ExtractTextPlugin('[name]-one.css');
+const extractLESS = new ExtractTextPlugin('[name]-two.css');
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -96,6 +99,8 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc),
+      extractCSS,
+      extractLESS,
     ],
   },
   module: {
@@ -105,6 +110,10 @@ module.exports = {
         test: /\.txt$/,
         use: ['raw-loader']
       },
+      // {
+      //   test: /\.less$/,
+      //   use: ['less-loader']
+      // },
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
@@ -138,6 +147,7 @@ module.exports = {
           /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
+          /\.less$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -180,7 +190,7 @@ module.exports = {
       // in the main CSS file.
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
+        loader: extractCSS.extract(
           Object.assign(
             {
               fallback: require.resolve('style-loader'),
@@ -218,6 +228,49 @@ module.exports = {
         ),
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      {
+        test: /\.less$/,
+        loader: extractLESS.extract(
+          Object.assign(
+            {
+              fallback: require.resolve('style-loader'),
+              use: [
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                    minimize: true,
+                    sourceMap: true,
+                  },
+                },
+                // {
+                //   loader: require.resolve('postcss-loader'),
+                //   options: {
+                //     ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+                //     plugins: () => [
+                //       require('postcss-flexbugs-fixes'),
+                //       autoprefixer({
+                //         browsers: [
+                //           '>1%',
+                //           'last 4 versions',
+                //           'Firefox ESR',
+                //           'not ie < 9', // React doesn't support IE8 anyway
+                //         ],
+                //         flexbox: 'no-2009',
+                //       }),
+                //     ],
+                //   },
+                // },
+                {
+                  loader: 'less-loader'
+                }
+              ],
+            },
+            extractTextPluginOptions
+          )
+        ),
+        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+      },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
@@ -229,6 +282,8 @@ module.exports = {
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
+    extractCSS,
+    extractLESS,
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,

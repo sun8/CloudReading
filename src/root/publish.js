@@ -9,8 +9,6 @@ import Ad from '../components/commont/banner/ad';
 import Title from '../components/commont/content/title';
 //内容
 import BookBoard from '../components/commont/content/BookBoard';
-//经典排行榜
-import Classical from '../components/commont/content/Classical';
 //专题阅读
 import SpecialRead from '../components/commont/content/SpecialRead';
 //下载down
@@ -121,16 +119,13 @@ class Publish extends Component {
 	        <a id="J_GoTop" className="m-gotop" href="#root"></a>
 	        <Footer>底部</Footer>
 	        
-	        
-	        
+
 		</div>
 		
 	
     );
 
   }
-
-  
 
 }
 

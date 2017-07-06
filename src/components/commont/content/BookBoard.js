@@ -10,23 +10,22 @@ class BookBoard extends Component {
 		}
   }
 	componentDidMount(){
-		let _this = this; 
 		let {reqData:{count,name}}= this.props;
 		$.ajax({
-				url: 'https://api.douban.com/v2/book/search',
-				type: 'get',
-				dataType: 'jsonp',
-				callback: 'time',
-				data:{
-					tag:name,
-					fields:'all',
-					count:count
-				},
-				success: function(data) {
-					_this.setState({
-						list: data
-					})
-				}
+			url: 'https://api.douban.com/v2/book/search',
+			type: 'get',
+			dataType: 'jsonp',
+			callback: 'time',
+			data:{
+				tag:name,
+				fields:'all',
+				count:count
+			},
+			success: (data)=>{
+				this.setState({
+					list: data
+				})
+			}
 		});
 	}
 	
@@ -68,8 +67,8 @@ class BookBoard extends Component {
 							<img src={j.img}  alt={j.title} />
 						</a>
 						<a href="javascript:;"  className="info">
-								<h4>{j.title}</h4>
-								<span>{j.name}</span>
+							<h4>{j.title}</h4>
+							<span>{j.name}</span>
 						</a>
 					</li>
 				)

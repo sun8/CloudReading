@@ -23,18 +23,6 @@ class Classification extends Component {
 	}
 	
 	componentDidMount(){
-		let _this = this; 
-//		$.ajax({
-//			url:'https://n.bjtrm.com/myproject/Book/GetData?',
-//			dataType:'jsonp',
-//			callback:'boy',
-//			success:function(data){
-//				_this.setState({
-//		          list:data
-//		       })
-//			}
-//		});
-		
 	}
 	
 	

@@ -9,9 +9,8 @@ class SearchNav extends Component {
 			this.state = {
 				
 			}
-	    // this.search = this.search.bind(this);
-	    // this.retu = this.retu.bind(this);
 	  }
+
   render() {
 		console.log(this.props.history)
 		let {tab, history:{push, goBack}} = this.props;
@@ -58,36 +57,7 @@ class SearchNav extends Component {
 	
     );
   }
-  
-  // search(){
-  // 	let _this = this;
-  // 	if(!$('#search-input').val())return;
-	// 	$.ajax({
-	// 			url:'https://api.douban.com/v2/book/search',
-	// 			dataType:'jsonp',
-	// 			callback:'search',
-	// 			data:{
-	// 				q:$('#search-input').val()
-	// 			},
-	// 			success:function(data){
-	// 				//通知父级数据传递
-	// 				_this.props.tab(data);
-	// 				//存储搜索的记录
-	// 				arr.push($('#search-input').val());
-	// 				//本地存储
-	// 				localStorage.setItem('key',JSON.stringify(arr));
-	// 				//搜索框清空
-	// 				$('#search-input').val('');
-	// 			}
-	// 	});
-	
-  // }
-  
-  retu(){
-		//点击返回
-  	this.props.retuP();
-  }
-  
+
 }
 
 export default SearchNav;

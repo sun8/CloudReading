@@ -23,8 +23,6 @@ class MoreTitle extends Component {
 					<Link className="right" to="/">首页</Link>
 				</section>
 			</header>
-		
-    	
     );
   }
 }

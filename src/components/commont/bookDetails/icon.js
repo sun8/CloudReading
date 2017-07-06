@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//目录
+//读书样式的组件(字体，夜间。下载，目录按钮)
 class Icon extends Component {
 	constructor(props){
 		super(props);
@@ -11,39 +11,6 @@ class Icon extends Component {
 		this.catalog = this.catalog.bind(this);
 	}
 
-  render() {
-		
-		let {down} = this.props;
-    return (
-			<div className="nav_bot">
-				<a href="javascript:;"
-					onClick = {this.catalog}
-				
-				>
-					<img src={require('../../../img/icon01.png')} />
-					<strong>目录</strong>
-				</a>
-				<a href="javascript:;"
-					onClick = {this.font}
-				>  
-					<img src={require('../../../img/icon022.png')} />
-					<strong>字体</strong>
-				</a>
-				<a href="javascript:;"
-					onClick = {this.neight}
-				>
-					<img src={this.state.onOff?require('../../../img/icon03.png'):require('../../../img/icon032.png')} ref="neight"/>
-					<strong>{this.state.onOff?'白天':'夜间'}</strong>
-				</a>
-				<a href={down?down.catalog:'123'}
-					download={down?down.title:'123'}
-				>
-					<img src={require('../../../img/icon04.png')}/>
-					<strong>下载</strong>
-				</a>
-			</div>
-    );
-  }
 	// 夜间模式
 	neight(ev){
 		ev.preventDefault();
@@ -65,6 +32,41 @@ class Icon extends Component {
 		ev.stopPropagation();
 		this.props.catalogF();
 	}
+
+  render() {
+		
+	let {down} = this.props;
+    return (
+		<div className="nav_bot">
+			<a href="javascript:;"
+				onClick = {this.catalog}
+			
+			>
+				<img src={require('../../../img/icon01.png')} />
+				<strong>目录</strong>
+			</a>
+			<a href="javascript:;"
+				onClick = {this.font}
+			>  
+				<img src={require('../../../img/icon022.png')} />
+				<strong>字体</strong>
+			</a>
+			<a href="javascript:;"
+				onClick = {this.neight}
+			>
+				<img src={this.state.onOff?require('../../../img/icon03.png'):require('../../../img/icon032.png')} ref="neight"/>
+				<strong>{this.state.onOff?'白天':'夜间'}</strong>
+			</a>
+			<a href={down?down.catalog:'123'}
+				download={down?down.title:'123'}
+			>
+				<img src={require('../../../img/icon04.png')}/>
+				<strong>下载</strong>
+			</a>
+		</div>
+    );
+  }
+	
 }
 
 export default Icon;

@@ -5,7 +5,7 @@ class Ad extends Component {
 		super(props);
   }
   render() {
-     let {history:{push}} = this.props;
+    let {history:{push}} = this.props;
     return (
     	<section className="m-list-box clearfix">
         <a href=""

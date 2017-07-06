@@ -4,7 +4,7 @@ import $ from 'jquery';
 class Content extends Component {
 	constructor(props){
     super(props);
-		// this.book = this.book.bind(this);
+	
   }
 	
 	
@@ -38,23 +38,6 @@ class Content extends Component {
 
     );
   }
-
-	// book(){
-	// 	let _this = this ;
-
-	// 	$.ajax({
-	// 		url: 'https://api.douban.com/v2/book/'+this.props.id+'',
-	// 		type: 'get',
-	// 		dataType: 'jsonp',
-	// 		callback: 'time',
-	// 		success: function(data) {
-	// 			console.log(data);
-	// 				// _this.setState({
-	// 				// 		list: data
-	// 				// })
-	// 		}
-	// 	});
-	// }
 
 }
 

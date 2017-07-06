@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//目录
+//阅读页面的头部
 class Header extends Component {
   render() {
     let {history:{push, goBack}} = this.props;

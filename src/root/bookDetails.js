@@ -10,12 +10,11 @@ class BookDetails extends Component {
 	this.state = {
 		data:null
 	}
-	this.download = this.download.bind(this);
   }
 	
 	componentDidMount(){
 		let {id} = this.props.location.state;
-		console.log(id)
+		// console.log(id)
 		$.ajax({
 			url: 'https://api.douban.com/v2/book/'+id+'',
 			type: 'get',
@@ -23,7 +22,7 @@ class BookDetails extends Component {
 			callback: 'time',
 			success: (data)=> {
 
-				console.log(111,data);
+				// console.log(111,data);
 				this.setState({
 					data: data
 				})
@@ -34,13 +33,14 @@ class BookDetails extends Component {
 
 	
   render() {
+	  //数据结构
 	let {history,location, location:{state}} = this.props;
 	let {id} = this.props.location.state;
-	console.log(id)
+	
 	let catalog = null;
 	if(!this.state.data)return (<div></div>)
 	let {data} = this.state;
-	// let {id} = data.series;
+	//判断标题的数据有没有
 	let title = data.series?data.series.title:'暂无哟！';
 	catalog = data.tags.map((e,i)=>{
 		let j={
@@ -198,11 +198,6 @@ class BookDetails extends Component {
 			
     );
   }
-  download(){
-	// this.refs.down.download=this.refs.name;
-	// this.refs.down.href=this.refs.pic.src.toDataURL();
-  }
-
 
 }
 

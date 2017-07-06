@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 //数据
 import $ from 'jquery';
-//路由
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-//头部
-import Nav from '../components/commont/nav/nav';
-//列表
-import Titlelist from '../components/commont/nav/titleList';
 //限时阅读
 import TimeTitle from '../components/commont/boy/timeTitle';
 //限时阅读
@@ -31,27 +25,27 @@ class Free extends Component {
                 s: 14
             }
         }
+        this.hasUnMount = false;
     }
 
     componentDidMount() {
-        let _this = this;
         $.ajax({
             url: 'https://api.douban.com/v2/book/search?q=python&fields=all',
             type: 'get',
             dataType: 'jsonp',
             callback: 'free',
-            success: function(data) {
-                _this.setState({
+            success: (data)=> {
+                if(this.hasUnMount) return;	
+                this.setState({
                     timer: data
                 })
             }
         });
 
     }
-
-
-
-
+    componentWillUnmount(){
+		this.hasUnMount = true;
+	}
 
     render() {
         let arrTimer = null;
@@ -83,8 +77,6 @@ class Free extends Component {
   		$('#u-loading').css('display','none');
 
         }
-
-
 
         return ( 
             <div className = "wrap" >

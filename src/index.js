@@ -25,14 +25,14 @@ import Myinfo from './root/Myinfo';
 //更多
 import More from './root/more';
 import registerServiceWorker from './registerServiceWorker';
-
-require('./css/reset.css');
-require('./css/index.css');
-require('./css/account.css');
-require('./css/bookDetails.css');
-require('./css/comment.css');
-require('./css/different.css');
-require('./css/Read.css');
+import './css/reset.css';
+// require('./css/reset.css');
+require('./css/index.less');
+require('./css/account.less');
+require('./css/bookDetails.less');
+require('./css/comment.less');
+require('./css/different.less');
+require('./css/Read.less');
 
 $.ajaxSetup({
     xhrFields: { withCredentials: true }
@@ -46,6 +46,38 @@ export default class Index extends React.Component{
 			userInfo: null
 		}
 		this.logout = this.logout.bind(this);
+		this.login = this.login.bind(this);
+		this.signup = this.signup.bind(this);
+	}
+
+	login(reqData){
+		let {history:{push}, } = this.props;
+		$.post('http://api.noods.me/login', reqData)
+		.done(
+			data => {
+				if(data.code===0){
+					this.setState({
+						userInfo: data.data
+					});
+					push('/')
+				}
+			}
+		);
+	}
+
+	signup(reqData){
+		let {history:{push} } = this.props;
+		$.post('http://api.noods.me/register', reqData)
+		.done(
+			data => {
+				if(data.code===0){
+					this.setState({
+						userInfo: data.data
+					});
+					push('/')
+				}
+			}
+		);
 	}
 
 	logout(){
@@ -67,7 +99,10 @@ export default class Index extends React.Component{
 	componentDidMount(){
 		$.post('http://api.noods.me/autologin')
 		.done(data=>{
-			this.setState({userInfo: data});
+			if(data.code===0){
+				this.setState({userInfo: data.data});
+			}
+			
 		})
 	}
 
@@ -75,17 +110,18 @@ export default class Index extends React.Component{
 
 		let {userInfo} = this.state;
 
-		let {logout} = this;
+		let {logout, login, signup} = this;
 
+		// console.log(userInfo)
 
 		return (
 			<Switch>
-				<Route  path="/myinfo" render={({history}) => (
+				<Route  path="/myinfo" render={({ history }) => (
 					<Myinfo  
 						{...{
 							userInfo,
 							history,
-							logout						
+							logout					
 						}}
 
 					/>
@@ -94,7 +130,17 @@ export default class Index extends React.Component{
 				<Route  path="/bookDetails" component={BookDetails}/>
 				<Route  path="/special" component={Special}/>
 				<Route  path="/more" component={More}/>
-				<Route  path="/account" component={Account}/>
+				<Route  path="/account" render={ 
+					({history})=> (
+						<Account
+							{...{
+								history,
+								login,
+								signup
+							}}
+						/>
+					)
+				}/>
 				<Route  path="/search" component={Search}/>
 				<Route  path="/" component={App}/>
 	      </Switch>
