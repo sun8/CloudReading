@@ -49,7 +49,7 @@ export default class Index extends React.Component{
 		this.login = this.login.bind(this);
 		this.signup = this.signup.bind(this);
 	}
-
+	//登陆
 	login(reqData){
 		let {history:{push}, } = this.props;
 		$.post('http://api.noods.me/login', reqData)
@@ -64,7 +64,7 @@ export default class Index extends React.Component{
 			}
 		);
 	}
-
+	//注册
 	signup(reqData){
 		let {history:{push} } = this.props;
 		$.post('http://api.noods.me/register', reqData)
@@ -79,7 +79,7 @@ export default class Index extends React.Component{
 			}
 		);
 	}
-
+	//退出登录
 	logout(){
 
 		let {history:{push}, } = this.props;
@@ -95,8 +95,9 @@ export default class Index extends React.Component{
 			}
 		);
 	}
-
+	//组件装载完成触发
 	componentDidMount(){
+		//自动登录数据请求
 		$.post('http://api.noods.me/autologin')
 		.done(data=>{
 			if(data.code===0){

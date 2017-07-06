@@ -19,9 +19,10 @@ class Reading extends Component {
 			font:false,
 			tab:false,
 			lent:0,
-			noCont:false,
+			noCont:true,
 			top:0,
-			categoryIndx:0
+			categoryIndx:0,
+			onOff:true
 		}
 		this.touchstart = this.touchstart.bind(this);
 		this.touchmove = this.touchmove.bind(this);
@@ -55,7 +56,8 @@ class Reading extends Component {
 						catalog:data.catalog,
 						title:data.title
 					},
-					noCont:data.catalog
+					noCont:data.catalog,
+					onOff:false
                 })
             }
         });
@@ -66,10 +68,9 @@ class Reading extends Component {
   touchstart(ev){
 	let xs = ev.changedTouches[0].pageX;
 	//设置目录的top值
-	let ScrollY = window.pageYOffset/40;
+	
 	this.setState({
-		start:xs,
-		top:ScrollY
+		start:xs
 	})
   }
   //移动
@@ -82,16 +83,20 @@ class Reading extends Component {
   //抬起
   touchend(){
 	let X = window.innerWidth/2;
+	let ScrollY = window.pageYOffset/40;
+	console.log(ScrollY)
 	if(this.state.move-this.state.start>X){
 		//左滑
 		this.setState({
-			tab:true
+			tab:true,
+			top:ScrollY
 		})
 		
 	}else{
 		//右滑
 		this.setState({
-			tab:false
+			tab:false,
+			top:ScrollY
 		})
 	}
   }
@@ -126,24 +131,36 @@ class Reading extends Component {
 		fontF:this.fontF,
 		catalogF:this.catalogF
 	}
-	// 书的章节及内容
-	let content = bookContent[categoryIndx];
+	let contComp = null;
+	let content = {
+		name:null
+	};
+	if(this.state.onOff){
+		return(<div></div>);
+	}else{
+	// 书的章节及内容,传入索引值
+	content = bookContent[categoryIndx];
 	//书的内容
-	let contComp = content.cont.split(/\n/).map((e,i)=>{
+	contComp = content.cont.split(/\n/).map((e,i)=>{
 		return (
 			<p
 				key={i}
 			>{e}</p>
 		)
 	})
+	}
 	//返回
-	let {history:{goBack}} = this.props;
+	let {history:{goBack,push}} = this.props;
     return (
-  		<div className={`g-wrap reader mode-light ${this.state.atNeight ? 'bg':''} ${this.state.font ? 'font':''}`}
-		  >
+  		<div className={`g-wrap reader mode-light 
+  			${this.state.atNeight ? 'bg':''} 
+  			${this.state.font ? 'font':''}
+  		`}>
 	
 	{/*<!--state-opened左滑动位移-->*/}
-	<section className={`g-main ${this.state.tab ? 'ui-main':''}`} 
+	<section className={`g-main 
+		${this.state.tab ? 'ui-main':''}
+	`}
 	onTouchStart={this.touchstart}
 	onTouchMove={this.touchmove}
 	onTouchEnd={this.touchend}
@@ -190,12 +207,12 @@ class Reading extends Component {
 
 			   {/*目录*/}
 			   
-			  `${this.state.noCont?
-				   <ReadingCatalog 
-					data={this.state}
-					lent={this.lent}
-					gotoCategory={this.gotoCategory}
-					/>:''}`
+			{this.state.noCont?
+			   <ReadingCatalog 
+				data={this.state}
+				lent={this.lent}
+				gotoCategory={this.gotoCategory}
+				/>:''}
    			
    			<div className="aside-btn">
    				<button className="dir-btn dir-btn-disable">上100章</button>
@@ -228,7 +245,15 @@ class Reading extends Component {
 	>
 		<p><img src={require('../img/face-error.png')} /></p>
 		<p>本地书需要先放入书架才能阅读</p>
-		<p><a className="btn btn-primary block j-put-shelf" href="javascript:;">放入书架</a></p>
+		<p><a 
+		className="btn btn-primary block j-put-shelf" 
+		href="javascript:;"
+		onClick={ev=>{
+			ev.stopPropagation();
+			ev.preventDefault();
+			push('/myinfo');
+		}}
+		>放入书架</a></p>
 		<p><a href=""
 			onClick={ev=>{
 				ev.stopPropagation();

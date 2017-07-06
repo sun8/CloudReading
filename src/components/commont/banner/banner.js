@@ -171,7 +171,7 @@ class Banner extends Component {
 
 
   //抬起
-  touchend(){
+  touchend(ev){
 	  //可视区的宽的一半
 	let X = window.innerWidth/80;
 	//判断是够是左右滑动
@@ -214,10 +214,10 @@ class Banner extends Component {
 						ev.preventDefault();
 						ev.stopPropagation();
 						push({
-								pathname: '/bookDetails',
-								state: {
-										id:e.id
-								}
+							pathname: '/bookDetails',
+							state: {
+									id:e.id
+							}
 						});  
 					}}
 				

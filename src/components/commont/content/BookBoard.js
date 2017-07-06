@@ -8,6 +8,7 @@ class BookBoard extends Component {
 		this.state = {
 			list:null
 		}
+	this.hasUnMount = false;
   }
 	componentDidMount(){
 		let {reqData:{count,name}}= this.props;
@@ -27,6 +28,9 @@ class BookBoard extends Component {
 				})
 			}
 		});
+	}
+	componentWillUnmount(){
+		this.hasUnMount = true;
 	}
 	
   render() {

@@ -32,7 +32,9 @@ class SeachCont extends Component {
   				</a>
   	})
   	//搜素记录，从本地存储中取数据
+  	localStorage.setItem('key',localStorage.getItem('key')?localStorage.getItem('key'):JSON.stringify([]));
 	let cookic = JSON.parse(localStorage.getItem('key'));
+//	console.log(cookic)
   	if(cookic.length){
 		this.state.list = cookic.map((e,i)=>{
 			return 	<a href="javascript:;" key={i}>{e}</a>

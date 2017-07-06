@@ -12,19 +12,19 @@ class SearchNav extends Component {
 	  }
 
   render() {
-		console.log(this.props.history)
-		let {tab, history:{push, goBack}} = this.props;
+//	console.log(this.props.history)
+	let {tab, history:{push, goBack}} = this.props;
     return (
     	
 		<header className="level2">
 			<div className="title clearfix">
 				<section className="m-search-book">					 
 			    	<Link to="/search/cont" className="left" 
-								onClick={ev=>{
-									ev.stopPropagation();
-									ev.preventDefault();
-									goBack();
-								}}
+						onClick={ev=>{
+							ev.stopPropagation();
+							ev.preventDefault();
+							goBack();
+						}}
 						>
 			    		<span className="ui-leftaw-2"></span>
 			    	</Link>

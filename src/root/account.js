@@ -13,21 +13,21 @@ class Account extends Component {
     return (
     	<div className="g-wrap">
     		<header className="level1">
-	        <section className="clearfix">
-	            <h1 className="logo"></h1>
-	            <a href="Javascript:;" 
-	            className="download" 
-	            style={{float: "right"}}
-	            >下载APP</a>
-	        </section>
+		        <section className="clearfix">
+		            <h1 className="logo"></h1>
+		            <a href="Javascript:;" 
+		            className="download" 
+		            style={{float: "right"}}
+		            >下载APP</a>
+		        </section>
 	    	</header>
-        <Notlogin 
-					history={history}
-					{...{
-						login,
-						signup
-					}}
-				/>
+        	<Notlogin 
+				history={history}
+				{...{
+					login,
+					signup
+				}}
+			/>
 		    <Foot />
 		  </div>
     );

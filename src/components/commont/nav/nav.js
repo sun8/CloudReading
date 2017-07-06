@@ -12,7 +12,7 @@ class Nav extends Component {
         <div className="headR">
         	<Link to="/search/cont" className="search fl" >搜索</Link>
         	<i className="sep fl"></i>
-        	<Link to="/Myinfo" className="account fl">
+        	<Link to="/myinfo" className="account fl">
         		帐户
         	</Link>
         </div>

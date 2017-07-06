@@ -24,10 +24,10 @@ class Myinfo extends Component {
 
   render() {
 
-		let {userInfo} = this.props;
-		if(!userInfo){
-			return (<div>跳转到登录页面</div>)
-		}
+	let {userInfo} = this.props;
+	if(!userInfo){
+		return (<div>跳转到登录页面</div>)
+	}
 
     return (
 			
