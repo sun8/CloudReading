@@ -16,7 +16,6 @@ class Special extends Component {
 
     componentDidMount() {
         let {val} = this.props.location.state;
-        console.log(val)
         $.ajax({
             url: 'https://api.douban.com/v2/book/search',
             type: 'get',

@@ -6,56 +6,56 @@ class Notlogin extends Component {
 	constructor(props){
 	    super(props);
 		this.add = this.add.bind(this);
-    this.login = this.login.bind(this);
+    	this.login = this.login.bind(this);
 	}
-
-	add(){
-  	//注册
+	//注册
+	add(ev){
+  	ev.stopPropagation();
+	ev.preventDefault();
   	this.act('register');
   }
-  
-  login(){
-  	//登录
+  //登录
+  login(ev){
+  	ev.stopPropagation();
+	ev.preventDefault();
   	this.act('login');
   }
   
   act(acco){
-		let {history:{push}, login,signup} = this.props;
+	let {history:{push}, login,signup} = this.props;
   	//value值为空的情况下
   	if(!$('#user').val()||!$('#pass').val()){
   		$('#erro').html('用户名或密码不能为空！')
   		$('#erro').css('display','block');
       this.shake($('#erro')[0],'left',function(){
       	$('#erro').animate({
-						opacity:0
-					},3000,'linear',function(){
-						$('#erro').css({
-							display:'none',
-							opacity:1
-							});
-					})
+			opacity:0
+		},3000,'linear',function(){
+			$('#erro').css({
+				display:'none',
+				opacity:1
+				});
+		})
       })
       return;
   	}
   	//不为空请求数据
 
-		if(acco==='login'){
-			login(
-				{
-					username:$('#user').val(),
-					passw:$('#pass').val(),
-					cfPassw:$('#pass').val()
-      	}
-			);
-		}else{
-			signup(
-				{
-					username:$('#user').val(),
-					passw:$('#pass').val(),
-					cfPassw:$('#pass').val()
-      	}
-			);
-		}
+	if(acco==='login'){
+		//登陆
+		login({
+			username:$('#user').val(),
+			passw:$('#pass').val(),
+			cfPassw:$('#pass').val()
+  		});
+	}else{
+		//注册
+		signup({
+			username:$('#user').val(),
+			passw:$('#pass').val(),
+			cfPassw:$('#pass').val()
+  		});
+	}
   }
 
   render() {
@@ -69,10 +69,10 @@ class Notlogin extends Component {
 						 id="goBack" 
 						 href="/"
 						 onClick={ev=>{
-								ev.stopPropagation();
-								ev.preventDefault();
-								goBack();
-							}}
+							ev.stopPropagation();
+							ev.preventDefault();
+							goBack();
+						}}
 						></a>
 		        <span>用户名快速登录</span>
 		        <Link to="/" className="right" id="goHome"> 首页 </Link>
