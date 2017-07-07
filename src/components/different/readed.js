@@ -6,7 +6,7 @@ class Readed extends Component {
     return (
     	<div className="m-last-book clearfix">  
 	    	<span>还没有最近阅读的书籍哟</span>
-	      	<Link to="/account" className="shelf" >书架</Link> 
+	      	<Link to="/myinfo" className="shelf" >书架</Link> 
 	      	<i className="sep"></i>          
 	    </div>
     );

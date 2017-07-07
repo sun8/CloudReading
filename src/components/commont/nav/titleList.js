@@ -84,7 +84,7 @@ class Titlelist extends Component {
 		<ul className="menu clearfix">
 	    	{Arr}
 	        <li key="8">
-	        	<Link to="/account" className="recharge" >充值</Link>
+	        	<Link to="/myinfo" className="recharge" >充值</Link>
 	        </li>           
     	</ul>
     );
