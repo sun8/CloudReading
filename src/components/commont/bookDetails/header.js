@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
 //阅读页面的头部
 class Header extends Component {
   render() {
@@ -18,9 +19,9 @@ class Header extends Component {
             <span className="ui-leftaw-2"></span>
           </a>
             <a className="right" href="/">首页</a>
-            <a className="left-search" href="/search/cont">
+            <Link to="/search/cont" className="left-search">
               <span className="ui-search"></span>
-            </a>
+            </Link>
         </section>
       </header>
     );

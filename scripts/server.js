@@ -1,9 +1,16 @@
+process.env.BABEL_ENV = 'development';
+process.env.NODE_ENV = 'development';
+
 const webpack = require('webpack');
+const path = require('path');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./cfg/dev.js');
-const {dfPath} = require('./cfg/default');
+const config = require('../config/webpack.config.dev');
+// const {dfPath} = require('./cfg/default');
+const paths = require('../config/paths');
 const OpenBrowser = require('open-browser-webpack-plugin');
+
+
 
 let app = new ( require('express') )();
 
@@ -20,14 +27,15 @@ if(args[args.length-1]==='open'){
 let compiler = webpack(config);
 
 app.use( webpackDevMiddleware(compiler, {
-    publicPath: '/assets/',
+    publicPath: config.output.publicPath,
     stats:{colors: true},
-    headers: { "X-Custom-Header": "yes" }
+    headers: { "X-Custom-Header": "yes" },
+    contentBase: paths.appPublic
 }) );
 
 app.use( webpackHotMiddleware(compiler) );
 
-app.get('/*', (req, res)=> res.sendFile(dfPath.src + '/index.html') )
+app.get('/*', (req, res)=> res.sendFile( path.resolve(__dirname, '../public/index.html') ) )
 
 app.listen(port, (error)=>{
     if(!error){

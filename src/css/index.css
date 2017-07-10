@@ -125,7 +125,7 @@ h6 {
   left: -16rem;
   top: 0;
 }
-.ban_list li {
+.ban_list div {
   width: 16rem;
   height: 5.5rem;
   float: left;

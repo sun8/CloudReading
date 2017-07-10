@@ -44,10 +44,11 @@ class Publish extends Component {
 				count:3,
 				star:1
 			}
-
+			
 		}
+
 	}
-	
+
 	componentDidMount(){
 		
 	}
@@ -60,9 +61,9 @@ class Publish extends Component {
     return (
   		<div>
 			
-	    	<Banner history={history} >轮播图</Banner>
+	    	<Banner history={history} bl={this.setBl} >轮播图</Banner>
 	    	<Readed />
-			
+			{this.state.bl}
 	        <section className="m-list-box">
 	        	<Title title={'主编推荐'}/>
 				<div id="u-loading" style={{display:'blcok'}}>
