@@ -61,7 +61,7 @@ class Publish extends Component {
     return (
   		<div>
 			
-	    	<Banner history={history} bl={this.setBl} >轮播图</Banner>
+	    	<Banner history={history}>轮播图</Banner>
 	    	<Readed />
 			{this.state.bl}
 	        <section className="m-list-box">

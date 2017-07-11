@@ -20,7 +20,6 @@ class Reading extends Component {
 			tab:false,
 			lent:0,
 			noCont:true,
-			top:0,
 			categoryIndx:0,
 			onOff:true
 		}
@@ -67,8 +66,6 @@ class Reading extends Component {
 	//按下
   touchstart(ev){
 	let xs = ev.changedTouches[0].pageX;
-	//设置目录的top值
-	
 	this.setState({
 		start:xs
 	})
@@ -83,20 +80,16 @@ class Reading extends Component {
   //抬起
   touchend(){
 	let X = window.innerWidth/2;
-	let ScrollY = window.pageYOffset/40;
-	console.log(ScrollY)
 	if(this.state.move-this.state.start>X){
 		//左滑
 		this.setState({
-			tab:true,
-			top:ScrollY
+			tab:true
 		})
 		
 	}else{
 		//右滑
 		this.setState({
-			tab:false,
-			top:ScrollY
+			tab:false
 		})
 	}
   }
@@ -115,10 +108,8 @@ class Reading extends Component {
 	}
 	//目录
 	catalogF(ev){
-		let ScrollY = window.pageYOffset/40;
 		this.setState({
-			tab:!this.state.tab,
-			top:ScrollY
+			tab:!this.state.tab
 		})
 	}
 
@@ -190,7 +181,7 @@ class Reading extends Component {
 		</div>
 	</section>								
    	<aside className={`ui-panel ${this.state.tab ? 'ui-main1':''}`}
-	   style={{top:this.state.top+'rem'}}
+	   
 	   >
    		<section className="m-cata" >
    			<div className="sort-btn clearfix">
