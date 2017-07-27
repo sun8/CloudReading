@@ -5,17 +5,17 @@ import ReactSwipe from 'react-swipe';
 let bannerArr = [
 	{
 		name:'白鹿原',
-		img:require('../../../img/banner1.jpg'),
+		img:require('./../../../img/banner1.jpg'),
 		id:'1200846'
 	},
 	{
 		name:'纽约客',
-		img:require('../../../img/banner3.jpg'),
+		img:require('./../../../img/banner3.jpg'),
 		id:'26253698'
 	},
 	{
 		name:'欢乐颂',
-		img:require('../../../img/banner6.jpg'),
+		img:require('./../../../img/banner6.jpg'),
 		id:'26757148'
 	}
 ]

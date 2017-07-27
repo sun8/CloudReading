@@ -18,7 +18,7 @@ class Header extends Component {
           >
             <span className="ui-leftaw-2"></span>
           </a>
-            <a className="right" href="/">首页</a>
+            <Link className="right" to="/">首页</Link>
             <Link to="/search/cont" className="left-search">
               <span className="ui-search"></span>
             </Link>

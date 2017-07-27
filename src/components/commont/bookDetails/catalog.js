@@ -9,7 +9,7 @@ class Catalog extends Component {
     return (
 
 			<li className="grade_01 dis">
-				<a  href="">{this.props.name} / {this.props.title}<i></i></a>
+				<a  href="javascript:;">{this.props.name} / {this.props.title}<i></i></a>
 			</li>
 			
     );

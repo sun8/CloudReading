@@ -13,7 +13,7 @@ class Comment extends Component {
 				<input type="hidden" name="cid" value=""/>
 				<input type="hidden" name="tipstr" value="快樂永随"/>
 				<input type="hidden" name="uid" value=""/>
-				<img src={require('../../../img/touxiang.jpg')} className="headimg j-headimg"/>
+				<img src={require('./../../../img/touxiang.jpg')} className="headimg j-headimg"/>
 				<p className="user">
 					<span className="uname j-uname">
 						快樂永随
@@ -38,7 +38,7 @@ class Comment extends Component {
 				<input type="hidden" name="cid" value=""/>
 				<input type="hidden" name="tipstr" value=""/>
 				<input type="hidden" name="uid" value=""/>
-				<img src={require('../../../img/touxiang.jpg')} className="headimg j-headimg"/>
+				<img src={require('./../../../img/touxiang.jpg')} className="headimg j-headimg"/>
 				<p className="user">
 					<span className="uname j-uname">
 					手机用户_0836
